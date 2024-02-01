@@ -14,6 +14,7 @@ public:
 	void exit();
 
     ofxImGui::Gui gui;
+	ofEasyCam camera;
     ImVec4 backgroundColor;
 };
 
