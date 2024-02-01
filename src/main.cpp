@@ -4,13 +4,15 @@
 //========================================================================
 int main( ){
 
-	//Use ofGLFWWindowSettings for more options like multi-monitor fullscreen
 	ofGLWindowSettings settings;
-	settings.setSize(1024, 768);
-	settings.windowMode = OF_WINDOW; //can also be OF_FULLSCREEN
+	#if defined(TARGET_OSX)
+	settings.setGLVersion(3,2);
+	#else
+	settings.setGLVersion(4,1);
+	#endif
+	
+    settings.setSize(1280, 720);
+    ofCreateWindow(settings);
 
-	auto window = ofCreateWindow(settings);
-
-	ofRunApp(window, make_shared<ofApp>());
-	ofRunMainLoop();
+    ofRunApp( new ofApp());
 }
