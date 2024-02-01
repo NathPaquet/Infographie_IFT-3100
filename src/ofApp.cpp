@@ -1,4 +1,6 @@
 #include "ofApp.h"
+#include "ImHelpers.h"
+#include <iostream>
 
 //--------------------------------------------------------------
 void ofApp::setup() {
@@ -18,6 +20,7 @@ void ofApp::exit() {
 //--------------------------------------------------------------
 void ofApp::update() {
 	//ofSetCircleResolution(circleResolution);
+
 }
 
 //--------------------------------------------------------------
@@ -27,7 +30,14 @@ void ofApp::draw() {
     // Show the ImGui test window. Most of the sample code is in ImGui::ShowDemoWindow()
     ImGui::SetNextWindowPos( ofVec2f( ofGetWindowPositionX(), ofGetWindowPositionY()), ImGuiCond_Once);
     ImGui::SetNextWindowSize( ofVec2f(ofGetWidth(), ofGetHeight()), ImGuiCond_Once);
-    ImGui::ShowDemoWindow();
+    ImGui::Begin("Main window !");
+
+	if (ImGui::Button("Hello world", ImVec2(200.f, 200.f))){
+		std::cout << "ahah" << std::endl;
+	}
+	
+	ImGui::End();
+	// ImGui::ShowDemoWindow();
 
     //required to call this at end
     gui.end();
