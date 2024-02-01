@@ -25,6 +25,7 @@ void ofApp::update() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
+	cursor.drawCursor(ofGetMouseX(), ofGetMouseY());
 	camera.begin();
 	ofNoFill();
 	ofDrawSphere(64);
