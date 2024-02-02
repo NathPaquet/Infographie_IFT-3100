@@ -13,22 +13,33 @@ void ofApp::setup() {
     //Initialize scene manager
     sceneManager = new SceneManager();
 
+    //Initialize camera
+	camera.setDistance(200.f);
+
     //backgroundColor is stored as an ImVec4 type but can handle ofColor
     backgroundColor = ofColor(114, 144, 154);
 }
 
 //--------------------------------------------------------------
 void ofApp::exit() {
+	gui.exit();
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
 	//ofSetCircleResolution(circleResolution);
-
 }
 
 //--------------------------------------------------------------
 void ofApp::draw() {
+	cursor.drawCursor(ofGetMouseX(), ofGetMouseY());
+	camera.begin();
+	ofNoFill();
+	ofDrawSphere(64);
+	ofDrawCircle(0, 0, 72);
+
+	camera.end();
+
     gui.begin();
     
     // Show the ImGui test window. Most of the sample code is in ImGui::ShowDemoWindow()
