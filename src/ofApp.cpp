@@ -4,10 +4,14 @@
 
 //--------------------------------------------------------------
 void ofApp::setup() {
+    ofSetWindowTitle("BasedEngine");
 	ofSetLogLevel(OF_LOG_VERBOSE);
     
     //required call
     gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable );
+
+    //Initialize scene manager
+    sceneManager = new SceneManager();
 
     //backgroundColor is stored as an ImVec4 type but can handle ofColor
     backgroundColor = ofColor(114, 144, 154);
@@ -38,6 +42,7 @@ void ofApp::draw() {
 	
 	ImGui::End();
 	// ImGui::ShowDemoWindow();
+    sceneManager->drawScene();
 
     //required to call this at end
     gui.end();
