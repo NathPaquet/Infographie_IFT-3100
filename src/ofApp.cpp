@@ -45,14 +45,33 @@ void ofApp::draw() {
     // Show the ImGui test window. Most of the sample code is in ImGui::ShowDemoWindow()
     ImGui::SetNextWindowPos( ofVec2f( ofGetWindowPositionX(), ofGetWindowPositionY()), ImGuiCond_Once);
     ImGui::SetNextWindowSize( ofVec2f(ofGetWidth(), ofGetHeight()), ImGuiCond_Once);
-    ImGui::Begin("Main window !");
+    ImGui::Begin("Test !");
 
 	if (ImGui::Button("Hello world", ImVec2(200.f, 200.f))){
 		std::cout << "ahah" << std::endl;
 	}
 	
 	ImGui::End();
-	// ImGui::ShowDemoWindow();
+	
+    // Draw left menu (Scene Element)
+    ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX(), ofGetWindowPositionY()), ImGuiCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(200, ofGetHeight()), ImGuiCond_Always);
+    ImGui::Begin("Scene Element", nullptr, ImGuiWindowFlags_NoMove);
+
+    // Add your menu items here
+    if (ImGui::Button("Add Element", ImVec2(180, 30))) {
+        // Code to add element to the scene
+    }
+
+    if (ImGui::Button("Remove Element", ImVec2(180, 30))) {
+        // Code to remove element from the scene
+    }
+
+    // Add more menu items as needed
+
+    ImGui::End();
+
+
 
     //required to call this at end
     gui.end();
