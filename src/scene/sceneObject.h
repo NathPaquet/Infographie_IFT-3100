@@ -5,9 +5,9 @@
 class SceneObject
 {
 public:
-	ofVec2f position;
+	ofVec3f position;
 	ofColor color;
 
-	void draw();
+	void draw() const;
 };
 

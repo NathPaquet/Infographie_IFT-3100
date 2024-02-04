@@ -37,11 +37,11 @@ void ofApp::draw() {
 	ofNoFill();
 	ofDrawSphere(64);
 	ofDrawCircle(0, 0, 72);
+    sceneManager->drawScene();
 
 	camera.end();
 
     gui.begin();
-    
     // Show the ImGui test window. Most of the sample code is in ImGui::ShowDemoWindow()
     ImGui::SetNextWindowPos( ofVec2f( ofGetWindowPositionX(), ofGetWindowPositionY()), ImGuiCond_Once);
     ImGui::SetNextWindowSize( ofVec2f(ofGetWidth(), ofGetHeight()), ImGuiCond_Once);
@@ -53,7 +53,6 @@ void ofApp::draw() {
 	
 	ImGui::End();
 	// ImGui::ShowDemoWindow();
-    sceneManager->drawScene();
 
     //required to call this at end
     gui.end();

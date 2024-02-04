@@ -1,4 +1,5 @@
 #pragma once
+
 #include "ofMain.h"
 #include "sceneObject.h"
 
@@ -8,13 +9,13 @@ public:
 	SceneManager();
 	~SceneManager();
 
-	void addElement(SceneObject* element);
-	void removeElement(int index);
+	void addElement(SceneObject & element);
+	void removeElement(size_t index);
 	void drawScene();
 
 private:
 	void clearScene();
 
-	std::vector<SceneObject*> sceneElements;
+	std::vector<SceneObject> sceneElements;
 };
 
