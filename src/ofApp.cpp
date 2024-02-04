@@ -1,5 +1,6 @@
 #include "ofApp.h"
 #include "ImHelpers.h"
+#include "scene/Planet.h"
 #include <iostream>
 
 //--------------------------------------------------------------
@@ -35,7 +36,6 @@ void ofApp::draw() {
 	cursor.drawCursor(ofGetMouseX(), ofGetMouseY());
 	camera.begin();
 	ofNoFill();
-	ofDrawSphere(64);
 	ofDrawCircle(0, 0, 72);
 	sceneManager->drawScene();
 

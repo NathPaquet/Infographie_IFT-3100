@@ -8,5 +8,5 @@ public:
 	ofVec3f position;
 	ofColor color;
 
-	void draw() const;
+	virtual void draw() const;
 };

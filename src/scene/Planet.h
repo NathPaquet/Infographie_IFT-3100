@@ -4,6 +4,6 @@
 
 class Planet : public SceneObject{
     public :
-        void draw() const;
+        void draw() const override;
         Planet(const float x, const float y, const float z);
 };
