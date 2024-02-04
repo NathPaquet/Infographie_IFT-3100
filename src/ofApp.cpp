@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include "of3dUtils.h"
 #include "ImHelpers.h"
 #include "scene/Planet.h"
 #include <iostream>
