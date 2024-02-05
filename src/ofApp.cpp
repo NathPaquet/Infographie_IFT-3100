@@ -6,6 +6,9 @@
 void ofApp::setup() {
     ofSetWindowTitle("BasedEngine");
 	ofSetLogLevel(OF_LOG_VERBOSE);
+
+    //Initialize SceneMode;
+    isScene3D = true;
     
     //required call
     gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable );
@@ -42,21 +45,11 @@ void ofApp::draw() {
 	camera.end();
 
     gui.begin();
-    // Show the ImGui test window. Most of the sample code is in ImGui::ShowDemoWindow()
-    ImGui::SetNextWindowPos( ofVec2f( ofGetWindowPositionX(), ofGetWindowPositionY()), ImGuiCond_Once);
-    ImGui::SetNextWindowSize( ofVec2f(ofGetWidth(), ofGetHeight()), ImGuiCond_Once);
-    ImGui::Begin("Test !");
 
-	if (ImGui::Button("Hello world", ImVec2(200.f, 200.f))){
-		std::cout << "ahah" << std::endl;
-	}
-	
-	ImGui::End();
-	
-    // Draw left menu (Scene Element)
+    // Draw left menu (Scene Element Manager)
     ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX(), ofGetWindowPositionY()), ImGuiCond_Always);
     ImGui::SetNextWindowSize(ImVec2(200, ofGetHeight()), ImGuiCond_Always);
-    ImGui::Begin("Scene Element", nullptr, ImGuiWindowFlags_NoMove);
+    ImGui::Begin("Scene Element", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
 
     // Add your menu items here
     if (ImGui::Button("Add Element", ImVec2(180, 30))) {
@@ -70,6 +63,53 @@ void ofApp::draw() {
     // Add more menu items as needed
 
     ImGui::End();
+
+    //Draw the scene window
+    ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + 200, ofGetWindowPositionY()), ImGuiCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(ofGetWidth() - 200, ofGetHeight()), ImGuiCond_Always);
+    ImGui::PushStyleColor(ImGuiCol_MenuBarBg, (ImVec4)ImColor(51, 56, 68, 255));
+    ImGui::Begin("Dear ImGui Demo", nullptr, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground);
+   
+    ImGui::BeginMenuBar();
+    if (ImGui::BeginMenu("File")) {
+        if (ImGui::MenuItem("New")) {
+            ofLogNotice() << "New button pressed";
+			// Code to create a new scene
+		}
+        if (ImGui::MenuItem("Open", "Ctrl+O")) {
+            ofLogNotice() << "Open button pressed";
+			// Code to open a scene
+		}
+        if (ImGui::MenuItem("Save", "Ctrl+S")) {
+            ofLogNotice() << "Save button pressed";
+			// Code to save the scene
+		}
+        if (ImGui::MenuItem("Save As..")) {
+            ofLogNotice() << "Save As button pressed";
+			// Code to save the scene as a new file
+		}
+        if (ImGui::MenuItem("Exit")) {
+            ofLogNotice() << "Exit button pressed";
+			// Code to exit the application
+		}
+		ImGui::EndMenu();
+	}
+
+    if (ImGui::BeginMenu("View")) {
+        if (ImGui::MenuItem("3D Scene")) {
+			ofLogNotice() << "3D Scene button pressed";
+			isScene3D = true;
+		}
+        if (ImGui::MenuItem("2D Scene")) {
+			ofLogNotice() << "2D Scene button pressed";
+			isScene3D = false;
+		}
+		ImGui::EndMenu();
+    }
+    ImGui::EndMenuBar();
+    ImGui::End();
+    ImGui::PopStyleColor();
+
 
 
 
