@@ -15,10 +15,10 @@ public:
 	void exit();
 
 	SceneManager* sceneManager;
-    ofxImGui::Gui gui;
+	ofxImGui::Gui gui;
 	ofEasyCam camera;
 	Cursor cursor = Cursor(CursorType::DRAWING);
-    ImVec4 backgroundColor;
+	ImVec4 backgroundColor;
 
 private:
 	void drawSceneElementMenu();

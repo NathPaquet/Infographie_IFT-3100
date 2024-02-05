@@ -9,7 +9,7 @@ public:
 	SceneManager();
 	~SceneManager();
 
-	void addElement(SceneObject & element);
+	void addElement(SceneObject& element);
 	void removeElement(size_t index);
 	void drawScene();
 

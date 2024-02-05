@@ -4,20 +4,20 @@
 
 //--------------------------------------------------------------
 void ofApp::setup() {
-    ofSetWindowTitle("BasedEngine");
+	ofSetWindowTitle("BasedEngine");
 	ofSetLogLevel(OF_LOG_VERBOSE);
-    
-    //required call
-    gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable );
 
-    //Initialize scene manager
-    sceneManager = new SceneManager();
+	//required call
+	gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable);
 
-    //Initialize camera
+	//Initialize scene manager
+	sceneManager = new SceneManager();
+
+	//Initialize camera
 	camera.setDistance(200.f);
 
-    //backgroundColor is stored as an ImVec4 type but can handle ofColor
-    backgroundColor = ofColor(114, 144, 154);
+	//backgroundColor is stored as an ImVec4 type but can handle ofColor
+	backgroundColor = ofColor(114, 144, 154);
 }
 
 //--------------------------------------------------------------
@@ -37,102 +37,102 @@ void ofApp::draw() {
 	ofNoFill();
 	ofDrawSphere(64);
 	ofDrawCircle(0, 0, 72);
-    sceneManager->drawScene();
+	sceneManager->drawScene();
 
 	camera.end();
 
-    gui.begin();
+	gui.begin();
 
 	// Draw scene element menu
-    drawSceneElementMenu();
+	drawSceneElementMenu();
 
 	// Draw scene top menu
-    drawSceneTopMenu();
+	drawSceneTopMenu();
 
-    gui.end();
+	gui.end();
 }
 
 void ofApp::drawSceneElementMenu()
 {
-    ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX(), ofGetWindowPositionY()), ImGuiCond_Always);
-    ImGui::SetNextWindowSize(ImVec2(200, ofGetHeight()), ImGuiCond_Always);
+	ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX(), ofGetWindowPositionY()), ImGuiCond_Always);
+	ImGui::SetNextWindowSize(ImVec2(200, ofGetHeight()), ImGuiCond_Always);
 
-    if (ImGui::Begin("Scene Element", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse)) 
-    {
-        if (ImGui::Button("Add Element", ImVec2(180, 30))) 
-        {
-            ofLogNotice() << "Add Element button pressed";
-        }
+	if (ImGui::Begin("Scene Element", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse))
+	{
+		if (ImGui::Button("Add Element", ImVec2(180, 30)))
+		{
+			ofLogNotice() << "Add Element button pressed";
+		}
 
-        if (ImGui::Button("Remove Element", ImVec2(180, 30))) 
-        {
-            ofLogNotice() << "Remove Element button pressed";
-        }
-        ImGui::End();
-    }
+		if (ImGui::Button("Remove Element", ImVec2(180, 30)))
+		{
+			ofLogNotice() << "Remove Element button pressed";
+		}
+		ImGui::End();
+	}
 }
 
 void ofApp::drawSceneTopMenu()
 {
-    ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + 200, ofGetWindowPositionY()), ImGuiCond_Always);
-    ImGui::SetNextWindowSize(ImVec2(ofGetWidth() - 200, ofGetHeight()), ImGuiCond_Always);
+	ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + 200, ofGetWindowPositionY()), ImGuiCond_Always);
+	ImGui::SetNextWindowSize(ImVec2(ofGetWidth() - 200, ofGetHeight()), ImGuiCond_Always);
 
-    ImGui::PushStyleColor(ImGuiCol_MenuBarBg, (ImVec4)ImColor(51, 56, 68, 255)); //Set the color of the menu bar
+	ImGui::PushStyleColor(ImGuiCol_MenuBarBg, (ImVec4)ImColor(51, 56, 68, 255)); //Set the color of the menu bar
 
-    if (ImGui::Begin("Menu bar", nullptr, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground)) {
-        if (ImGui::BeginMenuBar())
-        {
-            createFileMenu();
-            createViewMenu();
+	if (ImGui::Begin("Menu bar", nullptr, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground)) {
+		if (ImGui::BeginMenuBar())
+		{
+			createFileMenu();
+			createViewMenu();
 
-            ImGui::EndMenuBar();
-        }
-        ImGui::End();
-    }
+			ImGui::EndMenuBar();
+		}
+		ImGui::End();
+	}
 
-    ImGui::PopStyleColor();
+	ImGui::PopStyleColor();
 }
 
 void ofApp::createFileMenu()
 {
-    if (ImGui::BeginMenu("File"))
-    {
-        if (ImGui::MenuItem("New"))
-        {
-            ofLogNotice() << "New button pressed";
-        }
-        if (ImGui::MenuItem("Open", "Ctrl+O"))
-        {
-            ofLogNotice() << "Open button pressed";
-        }
-        if (ImGui::MenuItem("Save", "Ctrl+S"))
-        {
-            ofLogNotice() << "Save button pressed";
-        }
-        if (ImGui::MenuItem("Save As.."))
-        {
-            ofLogNotice() << "Save As button pressed";
-        }
-        if (ImGui::MenuItem("Exit"))
-        {
-            ofLogNotice() << "Exit button pressed";
-        }
-        ImGui::EndMenu();
-    }
+	if (ImGui::BeginMenu("File"))
+	{
+		if (ImGui::MenuItem("New"))
+		{
+			ofLogNotice() << "New button pressed";
+		}
+		if (ImGui::MenuItem("Open", "Ctrl+O"))
+		{
+			ofLogNotice() << "Open button pressed";
+		}
+		if (ImGui::MenuItem("Save", "Ctrl+S"))
+		{
+			ofLogNotice() << "Save button pressed";
+		}
+		if (ImGui::MenuItem("Save As.."))
+		{
+			ofLogNotice() << "Save As button pressed";
+		}
+		if (ImGui::MenuItem("Exit"))
+		{
+			ofLogNotice() << "Exit button pressed";
+		}
+		ImGui::EndMenu();
+	}
 }
 
 void ofApp::createViewMenu()
 {
-    if (ImGui::BeginMenu("View"))
-    {
-        if (ImGui::MenuItem("3D Scene"))
-        {
-            ofLogNotice() << "3D Scene button pressed";
-        }
-        if (ImGui::MenuItem("2D Scene"))
-        {
-            ofLogNotice() << "2D Scene button pressed";
-        }
-        ImGui::EndMenu();
-    }
+	if (ImGui::BeginMenu("View"))
+	{
+		if (ImGui::MenuItem("3D Scene"))
+		{
+			ofLogNotice() << "3D Scene button pressed";
+		}
+		if (ImGui::MenuItem("2D Scene"))
+		{
+			ofLogNotice() << "2D Scene button pressed";
+		}
+		ImGui::EndMenu();
+	}
 }
