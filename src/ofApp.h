@@ -19,7 +19,11 @@ public:
 	ofEasyCam camera;
 	Cursor cursor = Cursor(CursorType::DRAWING);
     ImVec4 backgroundColor;
+
 private:
-	bool isScene3D;
+	void drawSceneElementMenu();
+	void drawSceneTopMenu();
+	void createFileMenu();
+	void createViewMenu();
 };
 

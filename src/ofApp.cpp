@@ -6,9 +6,6 @@
 void ofApp::setup() {
     ofSetWindowTitle("BasedEngine");
 	ofSetLogLevel(OF_LOG_VERBOSE);
-
-    //Initialize SceneMode;
-    isScene3D = true;
     
     //required call
     gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable );
@@ -46,73 +43,96 @@ void ofApp::draw() {
 
     gui.begin();
 
-    // Draw left menu (Scene Element Manager)
+	// Draw scene element menu
+    drawSceneElementMenu();
+
+	// Draw scene top menu
+    drawSceneTopMenu();
+
+    gui.end();
+}
+
+void ofApp::drawSceneElementMenu()
+{
     ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX(), ofGetWindowPositionY()), ImGuiCond_Always);
     ImGui::SetNextWindowSize(ImVec2(200, ofGetHeight()), ImGuiCond_Always);
-    ImGui::Begin("Scene Element", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
 
-    // Add your menu items here
-    if (ImGui::Button("Add Element", ImVec2(180, 30))) {
-        // Code to add element to the scene
+    if (ImGui::Begin("Scene Element", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse)) 
+    {
+        if (ImGui::Button("Add Element", ImVec2(180, 30))) 
+        {
+            ofLogNotice() << "Add Element button pressed";
+        }
+
+        if (ImGui::Button("Remove Element", ImVec2(180, 30))) 
+        {
+            ofLogNotice() << "Remove Element button pressed";
+        }
+        ImGui::End();
     }
+}
 
-    if (ImGui::Button("Remove Element", ImVec2(180, 30))) {
-        // Code to remove element from the scene
-    }
-
-    // Add more menu items as needed
-
-    ImGui::End();
-
-    //Draw the scene window
+void ofApp::drawSceneTopMenu()
+{
     ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + 200, ofGetWindowPositionY()), ImGuiCond_Always);
     ImGui::SetNextWindowSize(ImVec2(ofGetWidth() - 200, ofGetHeight()), ImGuiCond_Always);
-    ImGui::PushStyleColor(ImGuiCol_MenuBarBg, (ImVec4)ImColor(51, 56, 68, 255));
-    ImGui::Begin("Dear ImGui Demo", nullptr, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground);
-   
-    ImGui::BeginMenuBar();
-    if (ImGui::BeginMenu("File")) {
-        if (ImGui::MenuItem("New")) {
-            ofLogNotice() << "New button pressed";
-			// Code to create a new scene
-		}
-        if (ImGui::MenuItem("Open", "Ctrl+O")) {
-            ofLogNotice() << "Open button pressed";
-			// Code to open a scene
-		}
-        if (ImGui::MenuItem("Save", "Ctrl+S")) {
-            ofLogNotice() << "Save button pressed";
-			// Code to save the scene
-		}
-        if (ImGui::MenuItem("Save As..")) {
-            ofLogNotice() << "Save As button pressed";
-			// Code to save the scene as a new file
-		}
-        if (ImGui::MenuItem("Exit")) {
-            ofLogNotice() << "Exit button pressed";
-			// Code to exit the application
-		}
-		ImGui::EndMenu();
-	}
 
-    if (ImGui::BeginMenu("View")) {
-        if (ImGui::MenuItem("3D Scene")) {
-			ofLogNotice() << "3D Scene button pressed";
-			isScene3D = true;
-		}
-        if (ImGui::MenuItem("2D Scene")) {
-			ofLogNotice() << "2D Scene button pressed";
-			isScene3D = false;
-		}
-		ImGui::EndMenu();
+    ImGui::PushStyleColor(ImGuiCol_MenuBarBg, (ImVec4)ImColor(51, 56, 68, 255)); //Set the color of the menu bar
+
+    if (ImGui::Begin("Menu bar", nullptr, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground)) {
+        if (ImGui::BeginMenuBar())
+        {
+            createFileMenu();
+            createViewMenu();
+
+            ImGui::EndMenuBar();
+        }
+        ImGui::End();
     }
-    ImGui::EndMenuBar();
-    ImGui::End();
+
     ImGui::PopStyleColor();
+}
 
+void ofApp::createFileMenu()
+{
+    if (ImGui::BeginMenu("File"))
+    {
+        if (ImGui::MenuItem("New"))
+        {
+            ofLogNotice() << "New button pressed";
+        }
+        if (ImGui::MenuItem("Open", "Ctrl+O"))
+        {
+            ofLogNotice() << "Open button pressed";
+        }
+        if (ImGui::MenuItem("Save", "Ctrl+S"))
+        {
+            ofLogNotice() << "Save button pressed";
+        }
+        if (ImGui::MenuItem("Save As.."))
+        {
+            ofLogNotice() << "Save As button pressed";
+        }
+        if (ImGui::MenuItem("Exit"))
+        {
+            ofLogNotice() << "Exit button pressed";
+        }
+        ImGui::EndMenu();
+    }
+}
 
-
-
-    //required to call this at end
-    gui.end();
+void ofApp::createViewMenu()
+{
+    if (ImGui::BeginMenu("View"))
+    {
+        if (ImGui::MenuItem("3D Scene"))
+        {
+            ofLogNotice() << "3D Scene button pressed";
+        }
+        if (ImGui::MenuItem("2D Scene"))
+        {
+            ofLogNotice() << "2D Scene button pressed";
+        }
+        ImGui::EndMenu();
+    }
 }
