@@ -8,4 +8,3 @@ void Planet::draw() const{
 Planet::Planet(const float x, const float y, const float z){
     this->position = ofVec3f(x,y,z);
 }
-
