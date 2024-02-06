@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxImGui.h"
+#include "raycasting/ray.h"
 #include "scene/sceneManager.h"
 #include "Cursor.h"
 
@@ -14,11 +15,15 @@ public:
 	void draw();
 	void exit();
 
+	glm::highp_vec3 findMouseClick3DPosition();
+
 	SceneManager* sceneManager;
 	ofxImGui::Gui gui;
 	ofEasyCam camera;
 	Cursor cursor = Cursor(CursorType::DRAWING);
-	ImVec4 backgroundColor;
+    ImVec4 backgroundColor;
+	Ray ray;
+};
 
 private:
 	void drawSceneElementMenu();

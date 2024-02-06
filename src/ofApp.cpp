@@ -17,14 +17,22 @@ void ofApp::setup() {
 
 	//Initialize camera
 	camera.setDistance(200.f);
-
-	//backgroundColor is stored as an ImVec4 type but can handle ofColor
-	backgroundColor = ofColor(114, 144, 154);
+	this->ray = Ray();
+    //backgroundColor is stored as an ImVec4 type but can handle ofColor
+    backgroundColor = ofColor(114, 144, 154);
 }
 
 //--------------------------------------------------------------
 void ofApp::exit() {
 	gui.exit();
+}
+
+glm::highp_vec3 ofApp::findMouseClick3DPosition(){
+	glm::vec3 screenMouse (ofGetMouseX(),ofGetMouseY(),0);
+	auto worldMouse = camera.screenToWorld(screenMouse);
+	auto worldMouseEnd = camera.screenToWorld(glm::vec3(screenMouse.x, screenMouse.y, 1.0f));
+	auto worldMouseDirection = worldMouseEnd - worldMouse;
+	return glm::normalize(worldMouseDirection);
 }
 
 //--------------------------------------------------------------
@@ -40,9 +48,19 @@ void ofApp::draw() {
 	ofDrawCircle(0, 0, 72);
 	sceneManager->drawScene();
 
-	camera.end();
+    gui.begin();
+	
+	auto worldMouseDirection = findMouseClick3DPosition();
+	this->ray.set(camera.getGlobalPosition(), worldMouseDirection);
 
-	gui.begin();
+	//drawing showcase
+	float radius = 10.f;
+	this->ray.draw(radius);
+	if(ImGui::IsMouseReleased(ImGuiMouseButton_Left)){
+		sceneManager->addElement(ray.getOrigin() + ray.getDirection() * radius * 10.f);
+	}
+	
+	camera.end();
 
 	// Draw scene element menu
 	drawSceneElementMenu();
