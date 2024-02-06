@@ -1,4 +1,4 @@
-###########################
+14###########################
 # ignore generated binaries
 # but not the data folder
 ###########################
@@ -52,7 +52,6 @@ Makefile
 # Visual Studio
 *.vs
 *.pdb
-*.sln
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
