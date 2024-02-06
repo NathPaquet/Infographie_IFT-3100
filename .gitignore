@@ -52,8 +52,6 @@ Makefile
 # Visual Studio
 *.vs
 *.pdb
-*.vcxproj
-*.vcxproj.filters
 *.vcxproj.user
 *.aps
 *.rc
