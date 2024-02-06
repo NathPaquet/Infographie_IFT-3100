@@ -5,6 +5,7 @@
 #include "ofxImGui.h"
 #include "scene/sceneManager.h"
 #include "Cursor.h"
+#include "Tools.h"
 
 class ofApp : public ofBaseApp {
 
@@ -21,6 +22,7 @@ public:
 	ImVec4 backgroundColor;
 
 private:
+	Tools tools;
 	void drawSceneElementMenu();
 	void drawSceneTopMenu();
 	void createFileMenu();

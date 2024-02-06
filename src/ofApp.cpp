@@ -84,6 +84,7 @@ void ofApp::drawSceneTopMenu()
 		{
 			createFileMenu();
 			createViewMenu();
+			tools.createToolsMenu();
 
 			ImGui::EndMenuBar();
 		}
