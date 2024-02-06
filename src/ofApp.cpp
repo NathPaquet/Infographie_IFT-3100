@@ -60,7 +60,25 @@ void ofApp::draw() {
 
 	//drawing showcase
 	float radius = 10.f;
-	this->ray.draw(radius);
+
+	glm::vec2 baricentricCoordinates;
+	float distance;
+	bool found = false;
+    float distanceToClosestIntersection = numeric_limits<float>::max();
+	ofColor color;
+	for (auto &&object : this->sceneManager->getObjects()){
+		bool intersects = ray.isRayCollidingWithPrimitive(object.get()->getPrimitive(),  baricentricCoordinates, distance);
+		color = ofColor(240, 233, 233);
+		if (intersects && (distance < distanceToClosestIntersection)) {
+            found = true;
+            distanceToClosestIntersection = distance;
+        }
+
+	}
+	if (found){
+		color = ofColor(255, 0, 0);
+	}
+	this->ray.draw(radius, color);
 	if(ImGui::IsMouseReleased(ImGuiMouseButton_Left)){
 		sceneManager->addElement(ray.getOrigin() + ray.getDirection() * radius * 10.f);
 	}

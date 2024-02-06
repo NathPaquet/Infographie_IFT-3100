@@ -1,6 +1,6 @@
 #pragma once
 #include "ofMain.h"
-
+#include "glm/gtx/intersect.hpp"
 
 class Ray {
 public:
@@ -10,7 +10,8 @@ public:
 
     const glm::vec3 getOrigin();
     const glm::vec3  getDirection();
-    void draw(float radius = 20.);
+    bool isRayCollidingWithPrimitive(const of3dPrimitive& primitive, glm::vec2 & baricentricCoords, float &distance);
+    void draw(float radius, const ofColor &color);
 
 private:
     glm::vec3 origin;

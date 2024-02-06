@@ -29,6 +29,10 @@ void SceneManager::drawScene() {
     }
 }
 
+const std::vector<std::unique_ptr<SceneObject>> &SceneManager::getObjects() const {
+   return this->sceneElements;
+}
+
 void SceneManager::clearScene() {
 	sceneElements.clear();
 }

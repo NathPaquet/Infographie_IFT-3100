@@ -23,4 +23,3 @@ Planet::Planet(const float x, const float y, const float z){
     this->primitive->setGlobalPosition(x,y,z);
     this->position = ofVec3f(x,y,z);
 }
-
