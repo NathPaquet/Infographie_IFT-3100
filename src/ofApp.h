@@ -23,7 +23,6 @@ public:
 	Cursor cursor = Cursor(CursorType::DRAWING);
     ImVec4 backgroundColor;
 	Ray ray;
-};
 
 private:
 	void drawSceneElementMenu();
