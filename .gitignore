@@ -55,3 +55,8 @@ Makefile
 *.vcxproj.user
 *.aps
 *.rc
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
