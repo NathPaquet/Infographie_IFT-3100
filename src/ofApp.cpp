@@ -8,15 +8,18 @@
 void ofApp::setup() {
 	ofSetWindowTitle("BasedEngine");
 	ofSetLogLevel(OF_LOG_VERBOSE);
-
+	ofDisableAlphaBlending();
+    ofEnableDepthTest();
 	//required call
 	gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable);
 
 	//Initialize scene manager
 	sceneManager = new SceneManager();
-
+	
 	//Initialize camera
 	camera.setDistance(200.f);
+	this->light.setPosition(-500,500,500);
+	this->light.enable();
 	this->ray = Ray();
     //backgroundColor is stored as an ImVec4 type but can handle ofColor
     backgroundColor = ofColor(114, 144, 154);
@@ -45,6 +48,8 @@ void ofApp::draw() {
 	cursor.drawCursor(ofGetMouseX(), ofGetMouseY());
 	camera.begin();
 	ofNoFill();
+	// drawSphere();
+
 	ofDrawCircle(0, 0, 72);
 	sceneManager->drawScene();
 
@@ -70,6 +75,43 @@ void ofApp::draw() {
 
 	gui.end();
 }
+
+void ofApp::drawSphere() {
+    const float du = PI / 30;
+    const float dv = PI / 30;
+    const float r = 500.f; // Radius of the sphere
+    const float scale = 0.1f; // Scale factor for noise
+    const float coeff = 0.5f; // Coefficient for noise
+
+    for (float u = 0; u < 2 * PI; u += du) {
+        for (float v = -PI / 2; v < PI / 2; v += dv) {
+            vector<glm::vec3> vertices;
+            for (int i = 0; i < 4; i++) {
+                float uu = i == 0 || i == 3 ? u : u + du;
+                float vv = i == 0 || i == 1 ? v : v + dv;
+                vertices.push_back(position(uu, vv, r, scale, coeff));
+            }
+            ofSetColor(255); // Set color to white (you can change the color as needed)
+            ofDrawTriangle(vertices[0], vertices[1], vertices[2]);
+            ofDrawTriangle(vertices[0], vertices[2], vertices[3]);
+        }
+    }
+}
+
+//--------------------------------------------------------------
+glm::vec3 ofApp::position(float u, float v, float r, float scale, float coeff) {
+    // Calculate sphere point
+    float x = r * cos(v) * cos(u);
+    float y = r * cos(v) * sin(u);
+    float z = r * sin(v);
+
+    // Noise value at this point on sphere
+    float offset = ofNoise(x * scale, y * scale, z * scale);
+
+    // Apply noise to sphere point
+    return glm::vec3(x * (1 + coeff * offset), y * (1 + coeff * offset), z * (1 + coeff * offset));
+}
+
 
 void ofApp::drawSceneElementMenu()
 {
