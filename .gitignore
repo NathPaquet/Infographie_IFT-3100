@@ -52,9 +52,11 @@ Makefile
 # Visual Studio
 *.vs
 *.pdb
-*.sln
-*.vcxproj
-*.vcxproj.filters
 *.vcxproj.user
 *.aps
 *.rc
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
