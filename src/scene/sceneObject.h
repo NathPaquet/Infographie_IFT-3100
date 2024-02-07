@@ -9,6 +9,7 @@ public:
 	ofColor color;
 
 	virtual void draw() const;
+	virtual void draw_properties();
 	const of3dPrimitive &getPrimitive() const;
 protected:
 	std::unique_ptr<of3dPrimitive> primitive;

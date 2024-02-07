@@ -65,32 +65,42 @@ void ofApp::draw() {
 	float distance;
 	bool found = false;
     float distanceToClosestIntersection = numeric_limits<float>::max();
+	const SceneObject *foundSceneObject;
 	ofColor color;
 	for (auto &&object : this->sceneManager->getObjects()){
 		bool intersects = ray.isRayCollidingWithPrimitive(object.get()->getPrimitive(),  baricentricCoordinates, distance);
 		color = ofColor(240, 233, 233);
 		if (intersects && (distance < distanceToClosestIntersection)) {
             found = true;
+			foundSceneObject = object.get();
             distanceToClosestIntersection = distance;
         }
 
 	}
-	if (found){
-		color = ofColor(255, 0, 0);
+	if (!found){
+		this->ray.draw(radius, color);
 	}
-	this->ray.draw(radius, color);
-	if(ImGui::IsMouseReleased(ImGuiMouseButton_Left)){
-		sceneManager->addElement(ray.getOrigin() + ray.getDirection() * radius * 10.f);
+
+	if(ImGui::IsMouseReleased(ImGuiMouseButton_Left) && isMouseClickInScene()){
+		if (found){
+			sceneManager->setSelectedSceneObject(foundSceneObject);
+		}
+		else{
+			sceneManager->addElement(ray.getOrigin() + ray.getDirection() * radius * 10.f);
+		}
 	}
 	
 	camera.end();
+
+
+	// Draw properties panel menu
+	drawPropertiesPanel();
 
 	// Draw scene element menu
 	drawSceneElementMenu();
 
 	// Draw scene top menu
 	drawSceneTopMenu();
-
 	gui.end();
 }
 
@@ -130,21 +140,31 @@ glm::vec3 ofApp::position(float u, float v, float r, float scale, float coeff) {
     return glm::vec3(x * (1 + coeff * offset), y * (1 + coeff * offset), z * (1 + coeff * offset));
 }
 
+void ofApp::drawPropertiesPanel() {
+	float window_width = 200.f;
+	ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + ofGetWidth() - window_width, ofGetWindowPositionY()), ImGuiCond_Always);
+	ImGui::SetNextWindowSize(ImVec2(window_width, ofGetHeight()), ImGuiCond_Always);
+	if (ImGui::Begin("PropertiesPanel", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse)){
+		this->sceneManager->drawPropertiesPanel();
+		ImGui::End();
+	}
+}
+
+bool ofApp::isMouseClickInScene() {
+  return ofGetMouseX() > 200 && ofGetMouseX() < ofGetWidth() - 200;
+}
 
 void ofApp::drawSceneElementMenu()
 {
 	ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX(), ofGetWindowPositionY()), ImGuiCond_Always);
 	ImGui::SetNextWindowSize(ImVec2(200, ofGetHeight()), ImGuiCond_Always);
 
-	if (ImGui::Begin("Scene Element", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse))
-	{
-		if (ImGui::Button("Add Element", ImVec2(180, 30)))
-		{
+	if (ImGui::Begin("Scene Element", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse)){
+		if (ImGui::Button("Add Element", ImVec2(180, 30))){
 			ofLogNotice() << "Add Element button pressed";
 		}
 
-		if (ImGui::Button("Remove Element", ImVec2(180, 30)))
-		{
+		if (ImGui::Button("Remove Element", ImVec2(180, 30))){
 			ofLogNotice() << "Remove Element button pressed";
 		}
 		ImGui::End();
@@ -154,7 +174,7 @@ void ofApp::drawSceneElementMenu()
 void ofApp::drawSceneTopMenu()
 {
 	ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + 200, ofGetWindowPositionY()), ImGuiCond_Always);
-	ImGui::SetNextWindowSize(ImVec2(ofGetWidth() - 200, ofGetHeight()), ImGuiCond_Always);
+	ImGui::SetNextWindowSize(ImVec2(ofGetWidth() - 200 * 2, ofGetHeight()), ImGuiCond_Always);
 
 	ImGui::PushStyleColor(ImGuiCol_MenuBarBg, (ImVec4)ImColor(51, 56, 68, 255)); //Set the color of the menu bar
 

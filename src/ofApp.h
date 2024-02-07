@@ -28,6 +28,8 @@ public:
 private:
 	void drawSphere(); 
 	glm::vec3 position(float u, float v, float r, float scale, float coeff);
+	void drawPropertiesPanel();
+	bool isMouseClickInScene();
 	void drawSceneElementMenu();
 	void drawSceneTopMenu();
 	void createFileMenu();
