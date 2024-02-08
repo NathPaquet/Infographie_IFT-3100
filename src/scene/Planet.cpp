@@ -46,3 +46,4 @@ void Planet::set_radius(const float radius) {
     this->primitive = std::make_unique<ofSpherePrimitive>(std::move(sphere));
     this->primitive->setGlobalPosition(position.x,position.y,position.z);
 }
+

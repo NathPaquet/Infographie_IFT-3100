@@ -1,21 +1,21 @@
 #include "Ray.h"
 
-Ray::Ray(glm::vec3 origin, glm::vec3 direction){
-    this->origin = origin;
-    this->direction = glm::normalize(direction);
+Ray::Ray(glm::vec3 origin, glm::vec3 direction) {
+	this->origin = origin;
+	this->direction = glm::normalize(direction);
 }
 
-void Ray::set(glm::vec3 origin, glm::vec3 direction){
-    this->origin = origin;
-    this->direction = direction;
+void Ray::set(glm::vec3 origin, glm::vec3 direction) {
+	this->origin = origin;
+	this->direction = glm::normalize(direction);
 }
 
 const glm::vec3 Ray::getOrigin() {
-    return this->origin;
+	return this->origin;
 }
 
 const glm::vec3 Ray::getDirection() {
-    return this->direction;
+	return this->direction;
 }
 
 bool Ray::isRayCollidingWithPrimitive(const of3dPrimitive &primitive, glm::vec2 &baricentricCoords, float &distance){
@@ -40,14 +40,14 @@ bool Ray::isRayCollidingWithPrimitive(const of3dPrimitive &primitive, glm::vec2 
 }
 
 void Ray::draw(float radius, const ofColor &color){
-    ofPushStyle();
-    // draw origin
+	ofPushStyle();
+	// draw origin
     ofSetColor(color);
-    // draw direction
-    auto end = this->origin + (this->direction * (radius*10.0f));
-    ofDrawSphere(end, 20.f);
-    ofSetLineWidth(3);
-    ofDrawLine(origin,end);
-    ofSetLineWidth(1);
-    ofPopStyle();
+	// draw direction
+	auto end = this->origin + (this->direction * (radius * 10.0f));
+	ofDrawSphere(end, 20.f);
+	ofSetLineWidth(3);
+	ofDrawLine(origin, end);
+	ofSetLineWidth(1);
+	ofPopStyle();
 }

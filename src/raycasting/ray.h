@@ -2,6 +2,7 @@
 #include "ofMain.h"
 #include "glm/gtx/intersect.hpp"
 
+
 class Ray {
 public:
     Ray(){};
