@@ -2,16 +2,15 @@
 
 #include "ofMain.h"
 
-class SceneObject
-{
+class SceneObject {
 public:
-	ofVec3f position;
-	ofColor color;
+  ofVec3f position;
+  ofColor color;
 
-	virtual void draw() const;
-	virtual void draw_properties();
-	const of3dPrimitive &getPrimitive() const;
+  virtual void draw() const;
+  virtual void draw_properties();
+  const of3dPrimitive &getPrimitive() const;
+
 protected:
-	std::unique_ptr<of3dPrimitive> primitive;
-
+  std::unique_ptr<of3dPrimitive> primitive;
 };

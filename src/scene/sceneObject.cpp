@@ -1,12 +1,12 @@
 #include "sceneObject.h"
 
 void SceneObject::draw() const {
-	ofLogNotice() << "SceneObject::draw()";
+  ofLogNotice() << "SceneObject::draw()";
 }
 
 void SceneObject::draw_properties() {
 }
 
 const of3dPrimitive &SceneObject::getPrimitive() const {
-    return *this->primitive.get();
+  return *this->primitive.get();
 }

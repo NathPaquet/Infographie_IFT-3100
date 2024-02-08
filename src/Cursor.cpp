@@ -1,39 +1,40 @@
 #include "Cursor.h"
+
 #include "ofxGui.h"
 
-Cursor::Cursor(CursorType cursorType): type(cursorType){
+Cursor::Cursor(CursorType cursorType):
+    type(cursorType) {
 }
 
-void Cursor::drawCursor(float x, float y)
-{
-    switch (type){
+void Cursor::drawCursor(float x, float y) {
+  switch (type) {
     case SELECTION:
-        drawSelectionCursor(x,y);
-        break;
+      drawSelectionCursor(x, y);
+      break;
     case NORMAL:
-        drawNormalCursor(x,y);
-        break;
+      drawNormalCursor(x, y);
+      break;
     case NAVIGATION:
-        drawNavigationCursor(x,y);
-        break;
+      drawNavigationCursor(x, y);
+      break;
     case DRAWING:
-        drawDrawingCursor(x,y);
-        break;
+      drawDrawingCursor(x, y);
+      break;
     default:
-        break;
-    }
+      break;
+  }
 }
 
-void Cursor::drawNormalCursor(float x, float y){
+void Cursor::drawNormalCursor(float x, float y) {
 }
 
-void Cursor::drawNavigationCursor(float x, float y){
+void Cursor::drawNavigationCursor(float x, float y) {
 }
 
-void Cursor::drawSelectionCursor(float x, float y){
+void Cursor::drawSelectionCursor(float x, float y) {
 }
 
-void Cursor::drawDrawingCursor(float x, float y){
+void Cursor::drawDrawingCursor(float x, float y) {
   ofPushStyle();
   // paramètres de dessin
   float length = 10.0f;
@@ -52,6 +53,6 @@ void Cursor::drawDrawingCursor(float x, float y){
   ofPopStyle();
 }
 
-void Cursor::SetCursorType(CursorType type){
-    this->type = type;
+void Cursor::SetCursorType(CursorType type) {
+  this->type = type;
 }
