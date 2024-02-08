@@ -6,6 +6,7 @@
 #include "raycasting/ray.h"
 #include "scene/sceneManager.h"
 #include "Cursor.h"
+#include "Tools.h"
 
 class ofApp : public ofBaseApp {
 
@@ -28,6 +29,7 @@ public:
 	Ray ray;
 
 private:
+	Tools tools;
 	void drawSphere(); 
 	glm::vec3 position(float u, float v, float r, float scale, float coeff);
 	void drawPropertiesPanel();
