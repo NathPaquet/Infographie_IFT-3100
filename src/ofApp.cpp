@@ -18,8 +18,8 @@ void ofApp::setup() {
 	//Initialize camera
 	camera.setDistance(200.f);
 	this->ray = Ray();
-    //backgroundColor is stored as an ImVec4 type but can handle ofColor
-    backgroundColor = ofColor(114, 144, 154);
+	//backgroundColor is stored as an ImVec4 type but can handle ofColor
+	backgroundColor = ofColor(114, 144, 154);
 }
 
 //--------------------------------------------------------------
@@ -27,12 +27,12 @@ void ofApp::exit() {
 	gui.exit();
 }
 
-glm::highp_vec3 ofApp::findMouseClick3DPosition(){
-	glm::vec3 screenMouse (ofGetMouseX(),ofGetMouseY(),0);
+glm::highp_vec3 ofApp::findMouseClick3DPosition() {
+	glm::vec3 screenMouse(ofGetMouseX(), ofGetMouseY(), 0);
 	auto worldMouse = camera.screenToWorld(screenMouse);
 	auto worldMouseEnd = camera.screenToWorld(glm::vec3(screenMouse.x, screenMouse.y, 1.0f));
 	auto worldMouseDirection = worldMouseEnd - worldMouse;
-	return glm::normalize(worldMouseDirection);
+	return worldMouseDirection;
 }
 
 //--------------------------------------------------------------
@@ -48,18 +48,15 @@ void ofApp::draw() {
 	ofDrawCircle(0, 0, 72);
 	sceneManager->drawScene();
 
-    gui.begin();
-	
+	gui.begin();
+
 	auto worldMouseDirection = findMouseClick3DPosition();
 	this->ray.set(camera.getGlobalPosition(), worldMouseDirection);
 
 	//drawing showcase
 	float radius = 10.f;
 	this->ray.draw(radius);
-	if(ImGui::IsMouseReleased(ImGuiMouseButton_Left)){
-		sceneManager->addElement(ray.getOrigin() + ray.getDirection() * radius * 10.f);
-	}
-	
+
 	camera.end();
 
 	// Draw scene element menu
@@ -153,5 +150,15 @@ void ofApp::createViewMenu()
 			ofLogNotice() << "2D Scene button pressed";
 		}
 		ImGui::EndMenu();
+	}
+}
+
+void ofApp::mouseReleased(int x, int y, int button)
+{
+	float radius = 10.f;
+
+	if (button == 0) // Left mouse button
+	{
+		sceneManager->addElement(ray.getOrigin() + ray.getDirection() * radius * 10.f);
 	}
 }
