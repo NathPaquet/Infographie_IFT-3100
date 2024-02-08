@@ -8,5 +8,10 @@ public:
 	ofVec3f position;
 	ofColor color;
 
-	void draw() const;
+	virtual void draw() const;
+	virtual void draw_properties();
+	const of3dPrimitive &getPrimitive() const;
+protected:
+	std::unique_ptr<of3dPrimitive> primitive;
+
 };

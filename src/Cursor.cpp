@@ -34,6 +34,7 @@ void Cursor::drawSelectionCursor(float x, float y){
 }
 
 void Cursor::drawDrawingCursor(float x, float y){
+  ofPushStyle();
   // paramètres de dessin
   float length = 10.0f;
   float offset = 5.0f;
@@ -48,6 +49,7 @@ void Cursor::drawDrawingCursor(float x, float y){
   ofDrawLine(x - offset, y, x - offset - length, y);
   ofDrawLine(x, y + offset, x, y + offset + length);
   ofDrawLine(x, y - offset, x, y - offset - length);
+  ofPopStyle();
 }
 
 void Cursor::SetCursorType(CursorType type){
