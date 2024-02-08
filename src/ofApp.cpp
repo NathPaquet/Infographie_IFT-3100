@@ -1,5 +1,7 @@
 #include "ofApp.h"
+#include "of3dUtils.h"
 #include "ImHelpers.h"
+#include "scene/Planet.h"
 #include <iostream>
 
 //--------------------------------------------------------------
@@ -15,7 +17,7 @@ void ofApp::setup() {
 
 	//Initialize camera
 	camera.setDistance(200.f);
-
+	this->ray = Ray();
 	//backgroundColor is stored as an ImVec4 type but can handle ofColor
 	backgroundColor = ofColor(114, 144, 154);
 }
@@ -23,6 +25,14 @@ void ofApp::setup() {
 //--------------------------------------------------------------
 void ofApp::exit() {
 	gui.exit();
+}
+
+glm::highp_vec3 ofApp::findMouseClick3DPosition() {
+	glm::vec3 screenMouse(ofGetMouseX(), ofGetMouseY(), 0);
+	auto worldMouse = camera.screenToWorld(screenMouse);
+	auto worldMouseEnd = camera.screenToWorld(glm::vec3(screenMouse.x, screenMouse.y, 1.0f));
+	auto worldMouseDirection = worldMouseEnd - worldMouse;
+	return worldMouseDirection;
 }
 
 //--------------------------------------------------------------
@@ -35,13 +45,19 @@ void ofApp::draw() {
 	cursor.drawCursor(ofGetMouseX(), ofGetMouseY());
 	camera.begin();
 	ofNoFill();
-	ofDrawSphere(64);
 	ofDrawCircle(0, 0, 72);
 	sceneManager->drawScene();
 
-	camera.end();
-
 	gui.begin();
+
+	auto worldMouseDirection = findMouseClick3DPosition();
+	this->ray.set(camera.getGlobalPosition(), worldMouseDirection);
+
+	//drawing showcase
+	float radius = 10.f;
+	this->ray.draw(radius);
+
+	camera.end();
 
 	// Draw scene element menu
 	drawSceneElementMenu();
@@ -134,5 +150,15 @@ void ofApp::createViewMenu()
 			ofLogNotice() << "2D Scene button pressed";
 		}
 		ImGui::EndMenu();
+	}
+}
+
+void ofApp::mouseReleased(int x, int y, int button)
+{
+	float radius = 10.f;
+
+	if (button == 0) // Left mouse button
+	{
+		sceneManager->addElement(ray.getOrigin() + ray.getDirection() * radius * 10.f);
 	}
 }

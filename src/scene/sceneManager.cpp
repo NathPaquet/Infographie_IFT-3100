@@ -1,4 +1,5 @@
 #include "sceneManager.h"
+#include "Planet.h"
 
 SceneManager::SceneManager()
 {
@@ -9,9 +10,10 @@ SceneManager::~SceneManager() {
 	clearScene();
 }
 
-void SceneManager::addElement(SceneObject& element)
-{
-	sceneElements.push_back(std::move(element));
+void SceneManager::addElement(const ofVec3f &position)
+{   
+    // TODO : Add scene object factory here
+    sceneElements.emplace_back(std::make_unique<Planet>(Planet(position.x, position.y, position.z)));
 }
 
 void SceneManager::removeElement(size_t index) {
@@ -22,9 +24,9 @@ void SceneManager::removeElement(size_t index) {
 }
 
 void SceneManager::drawScene() {
-	for (auto&& element : sceneElements) {
-		element.draw();
-	}
+    for (auto &&element : sceneElements) {
+        element->draw();
+    }
 }
 
 void SceneManager::clearScene() {
