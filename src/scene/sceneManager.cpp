@@ -1,4 +1,6 @@
 #include "sceneManager.h"
+#include "ImHelpers.h"
+#include "ofxImGui.h"
 #include "Planet.h"
 
 SceneManager::SceneManager()
@@ -29,6 +31,27 @@ void SceneManager::drawScene() {
     }
 }
 
+void SceneManager::drawPropertiesPanel() {
+	ImGui::Text("Object Properties :");
+	ImGui::Separator();
+	if (!this->selectedSceneOject){
+		return;
+	}
+	ImGui::BeginGroup();
+	this->selectedSceneOject->draw_properties();
+	ImGui::EndGroup();
+}
+
+const std::vector<std::unique_ptr<SceneObject>> &SceneManager::getObjects() const {
+   return this->sceneElements;
+}
+
+void SceneManager::setSelectedSceneObject(const SceneObject *sceneObject) {
+	auto it = std::find_if(this->sceneElements.begin(), this->sceneElements.end(), [&](auto &&obj){return obj.get() == sceneObject;});
+	this->selectedSceneOject = it->get();
+}
+
 void SceneManager::clearScene() {
+	this->selectedSceneOject = nullptr;
 	sceneElements.clear();
 }
