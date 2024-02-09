@@ -130,6 +130,9 @@
     <ClCompile Include="src\utils\ImageCapture.cpp">
       <Filter>src\utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\utils\ImageImporter.cpp">
+      <Filter>src\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -609,6 +612,9 @@
       <Filter>src\layouts</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\ImageCapture.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\ImageImporter.h">
       <Filter>src\utils</Filter>
     </ClInclude>
   </ItemGroup>
