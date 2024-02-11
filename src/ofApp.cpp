@@ -163,6 +163,9 @@ void ofApp::drawSceneElementMenu() {
     if (ImGui::Button("Remove Element", ImVec2(180, 30))) {
       ofLogNotice() << "Remove Element button pressed";
     }
+
+    colorPicker.createColorPicker();
+
     ImGui::End();
   }
 }
