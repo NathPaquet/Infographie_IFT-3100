@@ -1,5 +1,6 @@
 #pragma once
 
+#include "./layouts/ColorPicker.h"
 #include "sceneObject.h"
 
 class Planet : public SceneObject {
@@ -13,4 +14,5 @@ private:
   float radius = 20.f;
   ofMesh mainMesh;
   ofTexture mTex;
+  ColorPicker colorPicker;
 };

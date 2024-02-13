@@ -164,8 +164,6 @@ void ofApp::drawSceneElementMenu() {
       ofLogNotice() << "Remove Element button pressed";
     }
 
-    colorPicker.createColorPicker();
-
     ImGui::End();
   }
 }

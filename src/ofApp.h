@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Cursor.h"
-#include "layouts/ColorPicker.h"
 #include "layouts/Tools.h"
 #include "ofMain.h"
 #include "ofxGui.h"
@@ -30,7 +29,6 @@ public:
 
 private:
   Tools tools;
-  ColorPicker colorPicker;
   void drawSphere();
   glm::vec3 position(float u, float v, float r, float scale, float coeff);
   void drawPropertiesPanel();
