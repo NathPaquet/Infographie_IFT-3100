@@ -13,4 +13,7 @@ public:
 
 protected:
   std::unique_ptr<of3dPrimitive> primitive;
+  ofMesh mainMesh;
+  ofTexture mTex;
+  ofImage image;
 };

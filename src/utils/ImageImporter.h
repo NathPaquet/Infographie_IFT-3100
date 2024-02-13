@@ -2,7 +2,6 @@
 #include "ofMain.h"
 
 class ImageImporter {
-
 public:
-  void importImage(ofImage& image);
+  static void importImage(ofImage &image);
 };

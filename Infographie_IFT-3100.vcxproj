@@ -109,7 +109,9 @@
     <ClCompile Include="src\layouts\ColorPicker.cpp" />
     <ClCompile Include="src\layouts\Tools.cpp" />
     <ClCompile Include="src\raycasting\ray.cpp" />
+    <ClCompile Include="src\scene\CubicPlanet.cpp" />
     <ClCompile Include="src\scene\Planet.cpp" />
+    <ClCompile Include="src\scene\SceneElementFactory.cpp" />
     <ClCompile Include="src\scene\sceneManager.cpp" />
     <ClCompile Include="src\scene\sceneObject.cpp" />
     <ClCompile Include="src\utils\ImageCapture.cpp" />
@@ -153,7 +155,9 @@
     <ClInclude Include="src\layouts\ColorPicker.h" />
     <ClInclude Include="src\layouts\Tools.h" />
     <ClInclude Include="src\raycasting\ray.h" />
+    <ClInclude Include="src\scene\CubicPlanet.h" />
     <ClInclude Include="src\scene\Planet.h" />
+    <ClInclude Include="src\scene\SceneElementFactory.h" />
     <ClInclude Include="src\scene\sceneManager.h" />
     <ClInclude Include="src\scene\sceneObject.h" />
     <ClInclude Include="src\utils\ImageCapture.h" />
@@ -289,12 +293,6 @@
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
       <Project>{5837595d-aca9-485c-8e76-729040ce4b0b}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="icon.rc">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(OF_ROOT)\libs\openFrameworksCompiled\project\vs</AdditionalIncludeDirectories>
-    </ResourceCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ProjectExtensions>

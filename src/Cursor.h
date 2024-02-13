@@ -1,22 +1,23 @@
-enum CursorType {
-  NORMAL,
+enum class CursorMode {
   NAVIGATION,
   SELECTION,
-  DRAWING
+  DRAWING,
+  ADDING,
+  REMOVING
 };
 
 class Cursor {
 public:
-  Cursor(CursorType type);
+  Cursor(CursorMode type);
 
   void drawCursor(float x, float y);
 
-  void SetCursorType(CursorType cursorType);
+  void setCursorMode(CursorMode cursorType);
+  CursorMode getCursorMode() const;
 
 private:
-  void drawNormalCursor(float x, float y);
   void drawNavigationCursor(float x, float y);
   void drawSelectionCursor(float x, float y);
   void drawDrawingCursor(float x, float y);
-  CursorType type;
+  CursorMode mode;
 };

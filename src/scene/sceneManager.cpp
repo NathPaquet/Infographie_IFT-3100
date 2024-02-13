@@ -1,5 +1,6 @@
 #include "sceneManager.h"
 
+#include "CubicPlanet.h"
 #include "ImHelpers.h"
 #include "Planet.h"
 #include "ofxImGui.h"
@@ -12,16 +13,16 @@ SceneManager::~SceneManager() {
   clearScene();
 }
 
-void SceneManager::addElement(const ofVec3f &position) {
-  // TODO : Add scene object factory here
-  sceneElements.emplace_back(std::make_unique<Planet>(Planet(position.x, position.y, position.z)));
+void SceneManager::addElement(const ofVec3f &position, const ElementType primitiveType) {
+  sceneElements.emplace_back(SceneElementFactory::createSceneObject(position, primitiveType));
 }
 
-void SceneManager::removeElement(size_t index) {
-  if (index < 0 || index >= sceneElements.size()) {
-    return;
+void SceneManager::removeElement(const SceneObject *sceneObject) {
+  auto it = std::find_if(this->sceneElements.begin(), this->sceneElements.end(), [&](auto &&obj) { return obj.get() == sceneObject; });
+  if (it->get() == this->selectedSceneOject) {
+    this->selectedSceneOject = nullptr;
   }
-  sceneElements.erase(std::next(sceneElements.begin(), index));
+  sceneElements.erase(it);
 }
 
 void SceneManager::drawScene() {

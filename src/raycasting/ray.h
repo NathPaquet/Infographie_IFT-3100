@@ -2,6 +2,8 @@
 #include "glm/gtx/intersect.hpp"
 #include "ofMain.h"
 
+enum class ElementType;
+
 class Ray {
 public:
   Ray(){};
@@ -11,7 +13,7 @@ public:
   const glm::vec3 getOrigin();
   const glm::vec3 getDirection();
   bool isRayCollidingWithPrimitive(const of3dPrimitive &primitive, glm::vec2 &baricentricCoords, float &distance);
-  void draw(float radius, const ofColor &color);
+  void drawPrimitivePreview(const ofColor &color, ElementType elementType, float distance);
 
 private:
   glm::vec3 origin;

@@ -17,24 +17,24 @@ public:
 
   void mouseReleased(int x, int y, int button);
 
-  glm::highp_vec3 findMouseClick3DPosition();
+  glm::highp_vec3 findMouseClick3DPosition() const;
 
   SceneManager *sceneManager;
   ofxImGui::Gui gui;
   ofEasyCam camera;
   ofLight light;
-  Cursor cursor = Cursor(CursorType::DRAWING);
+  Cursor cursor = Cursor(CursorMode::NAVIGATION);
+  ElementType currentElementToAdd;
   ImVec4 backgroundColor;
   Ray ray;
 
 private:
   Tools tools;
-  void drawSphere();
-  glm::vec3 position(float u, float v, float r, float scale, float coeff);
   void drawPropertiesPanel();
   bool isMouseClickInScene();
   void drawSceneElementMenu();
   void drawSceneTopMenu();
   void createFileMenu();
   void createViewMenu();
+  void processMouseActions();
 };

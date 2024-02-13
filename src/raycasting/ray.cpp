@@ -1,5 +1,7 @@
 #include "Ray.h"
 
+#include "SceneElementFactory.h"
+
 Ray::Ray(glm::vec3 origin, glm::vec3 direction) {
   this->origin = origin;
   this->direction = glm::normalize(direction);
@@ -39,13 +41,23 @@ bool Ray::isRayCollidingWithPrimitive(const of3dPrimitive &primitive, glm::vec2 
   return found;
 }
 
-void Ray::draw(float radius, const ofColor &color) {
+void Ray::drawPrimitivePreview(const ofColor &color, ElementType elementType, float distance) {
   ofPushStyle();
   // draw origin
   ofSetColor(color);
   // draw direction
-  auto end = this->origin + (this->direction * (radius * 10.0f));
-  ofDrawSphere(end, 20.f);
+  auto end = this->origin + (this->direction * (distance * 10.0f));
+  switch (elementType) {
+    case ElementType::CUBIC:
+      ofDrawBox(end, 20.f, 20.f, 20.f);
+      break;
+    case ElementType::SPHERE:
+      ofDrawSphere(end, 20.f);
+      break;
+    default:
+      ofDrawSphere(end, 20.f);
+      break;
+  }
   ofSetLineWidth(3);
   ofDrawLine(origin, end);
   ofSetLineWidth(1);
