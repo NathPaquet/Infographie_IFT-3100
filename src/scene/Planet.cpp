@@ -12,7 +12,7 @@ void Planet::draw() const {
   } else {
     primitive->draw();
   }
-  
+
   ofPopStyle();
 }
 
@@ -31,11 +31,14 @@ void Planet::draw_properties() {
     imageImporter.importImage(this->image);
     if (this->image.isAllocated()) {
       this->mTex = image.getTexture();
+      this->mTex.enableMipmap();
+      this->mTex.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+      this->mTex.generateMipmap();
     }
   }
   if (ImGui::Button("Remove image", ImVec2(100.f, 30.f))) {
-      mTex.clear();
-      image.clear();
+    mTex.clear();
+    image.clear();
   }
 }
 

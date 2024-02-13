@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sceneObject.h"
+
 #include <utils/ImageImporter.h>
 
 class Planet : public SceneObject {
