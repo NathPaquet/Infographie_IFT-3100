@@ -1,5 +1,6 @@
 #pragma once
 
+#include "layouts/ColorPicker.h"
 #include "ofMain.h"
 
 class SceneObject {
@@ -16,4 +17,5 @@ protected:
   ofMesh mainMesh;
   ofTexture mTex;
   ofImage image;
+  ColorPicker colorPicker;
 };

@@ -7,9 +7,9 @@ void SceneObject::draw() const {
     primitive->draw();
     mTex.unbind();
   } else {
+    ofSetColor(colorPicker.getNormalizedColor());
     primitive->draw();
   }
-
   ofPopStyle();
 }
 

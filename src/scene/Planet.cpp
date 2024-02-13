@@ -24,7 +24,7 @@ void Planet::draw_properties() {
     image.clear();
   }
 
-  colorPicker.createColorPicker();
+  this->colorPicker.createColorPicker();
 }
 
 Planet::Planet(const float x, const float y, const float z) {

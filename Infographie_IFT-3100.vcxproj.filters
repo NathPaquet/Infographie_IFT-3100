@@ -25,7 +25,13 @@
 		<ClCompile Include="src\raycasting\ray.cpp">
 			<Filter>src\raycasting</Filter>
 		</ClCompile>
+		<ClCompile Include="src\scene\CubicPlanet.cpp">
+			<Filter>src\scene</Filter>
+		</ClCompile>
 		<ClCompile Include="src\scene\Planet.cpp">
+			<Filter>src\scene</Filter>
+		</ClCompile>
+		<ClCompile Include="src\scene\SceneElementFactory.cpp">
 			<Filter>src\scene</Filter>
 		</ClCompile>
 		<ClCompile Include="src\scene\sceneManager.cpp">
@@ -230,7 +236,13 @@
 		<ClInclude Include="src\raycasting\ray.h">
 			<Filter>src\raycasting</Filter>
 		</ClInclude>
+		<ClInclude Include="src\scene\CubicPlanet.h">
+			<Filter>src\scene</Filter>
+		</ClInclude>
 		<ClInclude Include="src\scene\Planet.h">
+			<Filter>src\scene</Filter>
+		</ClInclude>
+		<ClInclude Include="src\scene\SceneElementFactory.h">
 			<Filter>src\scene</Filter>
 		</ClInclude>
 		<ClInclude Include="src\scene\sceneManager.h">
@@ -623,5 +635,8 @@
 		<ClInclude Include="..\..\addons\ofxImGui\libs\imgui\src\imstb_truetype.h">
 			<Filter>addons\ofxImGui\libs\imgui\src</Filter>
 		</ClInclude>
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="icon.rc" />
 	</ItemGroup>
 </Project>
