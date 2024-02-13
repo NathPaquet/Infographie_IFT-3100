@@ -145,6 +145,7 @@
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_tables.cpp" />
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_widgets.cpp" />
     <ClCompile Include="src\utils\ImageCapture.cpp" />
+    <ClCompile Include="src\utils\ImageImporter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\layouts\Tools.h" />
@@ -281,6 +282,7 @@
     <ClInclude Include="..\..\addons\ofxImGui\libs\imgui\src\imstb_textedit.h" />
     <ClInclude Include="..\..\addons\ofxImGui\libs\imgui\src\imstb_truetype.h" />
     <ClInclude Include="src\utils\ImageCapture.h" />
+    <ClInclude Include="src\utils\ImageImporter.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">

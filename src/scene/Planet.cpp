@@ -5,9 +5,14 @@
 
 void Planet::draw() const {
   ofPushStyle();
-  mTex.bind();
-  primitive->draw();
-  mTex.unbind();
+  if (mTex.isAllocated()) {
+    mTex.bind();
+    primitive->draw();
+    mTex.unbind();
+  } else {
+    primitive->draw();
+  }
+
   ofPopStyle();
 }
 
@@ -22,6 +27,19 @@ void Planet::draw_properties() {
   if (ImGui::SliderFloat("Radius", &radius_temp, 0.f, 500.f, "sss")) {
     set_radius(radius_temp);
   }
+  if (ImGui::Button("Import image", ImVec2(100.f, 30.f))) {
+    imageImporter.importImage(this->image);
+    if (this->image.isAllocated()) {
+      this->mTex = image.getTexture();
+      this->mTex.enableMipmap();
+      this->mTex.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+      this->mTex.generateMipmap();
+    }
+  }
+  if (ImGui::Button("Remove image", ImVec2(100.f, 30.f))) {
+    mTex.clear();
+    image.clear();
+  }
 }
 
 Planet::Planet(const float x, const float y, const float z) {
@@ -31,9 +49,9 @@ Planet::Planet(const float x, const float y, const float z) {
   //     box.setSideColor(side , ofColor::fromHsb(ofRandom(255), 255, 255));
   // }
   ofDisableArbTex();
-  mTex.enableMipmap();
-  ofLoadImage(mTex, "earth.jpg");
-  mTex.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+  this->mTex.enableMipmap();
+  this->mTex.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+  this->mTex.generateMipmap();
 
   this->primitive = std::make_unique<ofSpherePrimitive>(std::move(sphere));
   this->primitive->setGlobalPosition(x, y, z);

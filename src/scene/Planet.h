@@ -2,6 +2,8 @@
 
 #include "sceneObject.h"
 
+#include <utils/ImageImporter.h>
+
 class Planet : public SceneObject {
 public:
   void draw() const override;
@@ -13,4 +15,6 @@ private:
   float radius = 20.f;
   ofMesh mainMesh;
   ofTexture mTex;
+  ofImage image;
+  ImageImporter imageImporter;
 };
