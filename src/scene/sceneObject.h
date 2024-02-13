@@ -1,5 +1,6 @@
 #pragma once
 
+#include "layouts/ColorPicker.h"
 #include "ofMain.h"
 
 class SceneObject {
@@ -13,4 +14,8 @@ public:
 
 protected:
   std::unique_ptr<of3dPrimitive> primitive;
+  ofMesh mainMesh;
+  ofTexture mTex;
+  ofImage image;
+  ColorPicker colorPicker;
 };

@@ -3,6 +3,7 @@
 #include "ImHelpers.h"
 #include "of3dUtils.h"
 #include "scene/Planet.h"
+#include "scene/SceneElementFactory.h"
 
 #include <iostream>
 
@@ -14,8 +15,6 @@ void ofApp::setup() {
   ofEnableDepthTest();
   // required call
   gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable);
-
-  // Initialize scene manager
   sceneManager = new SceneManager();
 
   // Initialize camera
@@ -32,11 +31,11 @@ void ofApp::exit() {
   gui.exit();
 }
 
-glm::highp_vec3 ofApp::findMouseClick3DPosition() {
-  glm::vec3 screenMouse(ofGetMouseX(), ofGetMouseY(), 0);
-  auto worldMouse = camera.screenToWorld(screenMouse);
-  auto worldMouseEnd = camera.screenToWorld(glm::vec3(screenMouse.x, screenMouse.y, 1.0f));
-  auto worldMouseDirection = worldMouseEnd - worldMouse;
+glm::highp_vec3 ofApp::findMouseClick3DPosition() const {
+  const glm::vec3 screenMouse(ofGetMouseX(), ofGetMouseY(), 0);
+  auto &&worldMouse = camera.screenToWorld(screenMouse);
+  auto &&worldMouseEnd = camera.screenToWorld(glm::vec3(screenMouse.x, screenMouse.y, 1.0f));
+  auto &&worldMouseDirection = worldMouseEnd - worldMouse;
   return worldMouseDirection;
 }
 
@@ -55,38 +54,7 @@ void ofApp::draw() {
 
   gui.begin();
 
-  auto worldMouseDirection = findMouseClick3DPosition();
-  this->ray.set(camera.getGlobalPosition(), worldMouseDirection);
-
-  // drawing showcase
-  float radius = 10.f;
-
-  glm::vec2 baricentricCoordinates;
-  float distance;
-  bool found = false;
-  float distanceToClosestIntersection = numeric_limits<float>::max();
-  const SceneObject *foundSceneObject;
-  ofColor color;
-  for (auto &&object : this->sceneManager->getObjects()) {
-    bool intersects = ray.isRayCollidingWithPrimitive(object.get()->getPrimitive(), baricentricCoordinates, distance);
-    color = ofColor(240, 233, 233);
-    if (intersects && (distance < distanceToClosestIntersection)) {
-      found = true;
-      foundSceneObject = object.get();
-      distanceToClosestIntersection = distance;
-    }
-  }
-  if (!found) {
-    this->ray.draw(radius, color);
-  }
-
-  if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) && isMouseClickInScene()) {
-    if (found) {
-      sceneManager->setSelectedSceneObject(foundSceneObject);
-    } else {
-      sceneManager->addElement(ray.getOrigin() + ray.getDirection() * radius * 10.f);
-    }
-  }
+  processMouseActions();
 
   camera.end();
 
@@ -99,42 +67,6 @@ void ofApp::draw() {
   // Draw scene top menu
   drawSceneTopMenu();
   gui.end();
-}
-
-void ofApp::drawSphere() {
-  const float du = PI / 30;
-  const float dv = PI / 30;
-  const float r = 500.f;    // Radius of the sphere
-  const float scale = 0.1f; // Scale factor for noise
-  const float coeff = 0.5f; // Coefficient for noise
-
-  for (float u = 0; u < 2 * PI; u += du) {
-    for (float v = -PI / 2; v < PI / 2; v += dv) {
-      vector<glm::vec3> vertices;
-      for (int i = 0; i < 4; i++) {
-        float uu = i == 0 || i == 3 ? u : u + du;
-        float vv = i == 0 || i == 1 ? v : v + dv;
-        vertices.push_back(position(uu, vv, r, scale, coeff));
-      }
-      ofSetColor(255); // Set color to white (you can change the color as needed)
-      ofDrawTriangle(vertices[0], vertices[1], vertices[2]);
-      ofDrawTriangle(vertices[0], vertices[2], vertices[3]);
-    }
-  }
-}
-
-//--------------------------------------------------------------
-glm::vec3 ofApp::position(float u, float v, float r, float scale, float coeff) {
-  // Calculate sphere point
-  float x = r * cos(v) * cos(u);
-  float y = r * cos(v) * sin(u);
-  float z = r * sin(v);
-
-  // Noise value at this point on sphere
-  float offset = ofNoise(x * scale, y * scale, z * scale);
-
-  // Apply noise to sphere point
-  return glm::vec3(x * (1 + coeff * offset), y * (1 + coeff * offset), z * (1 + coeff * offset));
 }
 
 void ofApp::drawPropertiesPanel() {
@@ -156,12 +88,17 @@ void ofApp::drawSceneElementMenu() {
   ImGui::SetNextWindowSize(ImVec2(200, ofGetHeight()), ImGuiCond_Always);
 
   if (ImGui::Begin("Scene Element", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse)) {
-    if (ImGui::Button("Add Element", ImVec2(180, 30))) {
-      ofLogNotice() << "Add Element button pressed";
+    if (ImGui::Button("Add Sphere", ImVec2(180, 30))) {
+      currentElementToAdd = ElementType::SPHERE;
+      this->cursor.setCursorMode(CursorMode::ADDING);
     }
 
+    if (ImGui::Button("Add Cube", ImVec2(180, 30))) {
+      currentElementToAdd = ElementType::CUBIC;
+      this->cursor.setCursorMode(CursorMode::ADDING);
+    }
     if (ImGui::Button("Remove Element", ImVec2(180, 30))) {
-      ofLogNotice() << "Remove Element button pressed";
+      this->cursor.setCursorMode(CursorMode::REMOVING);
     }
 
     ImGui::End();
@@ -221,11 +158,46 @@ void ofApp::createViewMenu() {
   }
 }
 
-void ofApp::mouseReleased(int x, int y, int button) {
-  // float radius = 10.f;
+void ofApp::processMouseActions() {
+  auto worldMouseDirection = findMouseClick3DPosition();
+  this->ray.set(camera.getGlobalPosition(), worldMouseDirection);
 
-  // if (button == 0) // Left mouse button
-  //{
-  //	sceneManager->addElement(ray.getOrigin() + ray.getDirection() * radius * 10.f);
-  // }
+  // drawing showcase
+  float radius = 10.f;
+
+  glm::vec2 baricentricCoordinates;
+  float distance;
+  bool found = false;
+  float distanceToClosestIntersection = numeric_limits<float>::max();
+  const SceneObject *foundSceneObject;
+  ofColor color;
+  for (auto &&object : this->sceneManager->getObjects()) {
+    bool intersects = ray.isRayCollidingWithPrimitive(object.get()->getPrimitive(), baricentricCoordinates, distance);
+    color = ofColor(240, 233, 233);
+    if (intersects && (distance < distanceToClosestIntersection)) {
+      found = true;
+      foundSceneObject = object.get();
+      distanceToClosestIntersection = distance;
+    }
+  }
+  if (!found && this->cursor.getCursorMode() == CursorMode::ADDING) {
+    this->ray.drawPrimitivePreview(color, this->currentElementToAdd, 20.f);
+  }
+
+  if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) && isMouseClickInScene()) {
+    if (found && this->cursor.getCursorMode() == CursorMode::NAVIGATION) {
+      sceneManager->setSelectedSceneObject(foundSceneObject);
+
+    } else if (found && this->cursor.getCursorMode() == CursorMode::REMOVING) {
+      sceneManager->removeElement(foundSceneObject);
+      this->cursor.setCursorMode(CursorMode::NAVIGATION);
+
+    } else if (this->cursor.getCursorMode() == CursorMode::ADDING) {
+      sceneManager->addElement(ray.getOrigin() + ray.getDirection() * 20.f * 10.f, this->currentElementToAdd);
+      this->cursor.setCursorMode(CursorMode::NAVIGATION);
+    }
+  }
+}
+
+void ofApp::mouseReleased(int x, int y, int button) {
 }

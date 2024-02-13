@@ -2,30 +2,27 @@
 
 #include "ofxGui.h"
 
-Cursor::Cursor(CursorType cursorType):
-    type(cursorType) {
+Cursor::Cursor(CursorMode cursorType):
+    mode(cursorType) {
 }
 
 void Cursor::drawCursor(float x, float y) {
-  switch (type) {
-    case SELECTION:
+  switch (mode) {
+    case CursorMode::SELECTION:
       drawSelectionCursor(x, y);
       break;
-    case NORMAL:
-      drawNormalCursor(x, y);
-      break;
-    case NAVIGATION:
+    case CursorMode::ADDING:
       drawNavigationCursor(x, y);
       break;
-    case DRAWING:
+    case CursorMode::NAVIGATION:
+      drawNavigationCursor(x, y);
+      break;
+    case CursorMode::DRAWING:
       drawDrawingCursor(x, y);
       break;
     default:
       break;
   }
-}
-
-void Cursor::drawNormalCursor(float x, float y) {
 }
 
 void Cursor::drawNavigationCursor(float x, float y) {
@@ -53,6 +50,10 @@ void Cursor::drawDrawingCursor(float x, float y) {
   ofPopStyle();
 }
 
-void Cursor::SetCursorType(CursorType type) {
-  this->type = type;
+void Cursor::setCursorMode(CursorMode type) {
+  this->mode = type;
+}
+
+CursorMode Cursor::getCursorMode() const {
+  return this->mode;
 }
