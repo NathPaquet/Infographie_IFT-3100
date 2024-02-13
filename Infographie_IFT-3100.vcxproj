@@ -61,7 +61,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;src\raycasting;src\scene;..\..\addons\ofxAssimpModelLoader\libs;..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port\AndroidJNI;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\emscripten;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Debug;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Release;..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\addons\ofxAssimpModelLoader\src;..\..\addons\ofxGui\src;..\..\addons\ofxImGui\libs;..\..\addons\ofxImGui\libs\imgui;..\..\addons\ofxImGui\libs\imgui\backends;..\..\addons\ofxImGui\libs\imgui\docs;..\..\addons\ofxImGui\libs\imgui\extras;..\..\addons\ofxImGui\libs\imgui\src;..\..\addons\ofxImGui\src</AdditionalIncludeDirectories>
+<AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;src\raycasting;src\scene;..\..\addons\ofxAssimpModelLoader\libs;..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port\AndroidJNI;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\emscripten;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Debug;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Release;..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\addons\ofxAssimpModelLoader\src;..\..\addons\ofxGui\src;..\..\addons\ofxImGui\libs;..\..\addons\ofxImGui\libs\imgui;..\..\addons\ofxImGui\libs\imgui\backends;..\..\addons\ofxImGui\libs\imgui\docs;..\..\addons\ofxImGui\libs\imgui\extras;..\..\addons\ofxImGui\libs\imgui\src;..\..\addons\ofxImGui\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>$(IntDir)\Build\%(RelativeDir)\$(Configuration)\</ObjectFileName>
@@ -84,8 +84,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;src\raycasting;src\scene;..\..\addons\ofxAssimpModelLoader\libs;..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port\AndroidJNI;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\emscripten;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Debug;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Release;..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\addons\ofxAssimpModelLoader\src;..\..\addons\ofxGui\src;..\..\addons\ofxImGui\libs;..\..\addons\ofxImGui\libs\imgui;..\..\addons\ofxImGui\libs\imgui\backends;..\..\addons\ofxImGui\libs\imgui\docs;..\..\addons\ofxImGui\libs\imgui\extras;..\..\addons\ofxImGui\libs\imgui\src;..\..\addons\ofxImGui\src</AdditionalIncludeDirectories>
-      <CompileAs>CompileAsCpp</CompileAs>
+<AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;src\raycasting;src\scene;..\..\addons\ofxAssimpModelLoader\libs;..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port\AndroidJNI;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\emscripten;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Debug;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Release;..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\addons\ofxAssimpModelLoader\src;..\..\addons\ofxGui\src;..\..\addons\ofxImGui\libs;..\..\addons\ofxImGui\libs\imgui;..\..\addons\ofxImGui\libs\imgui\backends;..\..\addons\ofxImGui\libs\imgui\docs;..\..\addons\ofxImGui\libs\imgui\extras;..\..\addons\ofxImGui\libs\imgui\src;..\..\addons\ofxImGui\src</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)\Build\%(RelativeDir)\$(Configuration)\</ObjectFileName>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
@@ -104,14 +103,17 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\layouts\Tools.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="src\Cursor.cpp" />
+    <ClCompile Include="src\layouts\ColorPicker.cpp" />
+    <ClCompile Include="src\layouts\Tools.cpp" />
     <ClCompile Include="src\raycasting\ray.cpp" />
     <ClCompile Include="src\scene\Planet.cpp" />
     <ClCompile Include="src\scene\sceneManager.cpp" />
     <ClCompile Include="src\scene\sceneObject.cpp" />
+    <ClCompile Include="src\utils\ImageCapture.cpp" />
+    <ClCompile Include="src\utils\ImageImporter.cpp" />
     <ClCompile Include="..\..\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.cpp" />
     <ClCompile Include="..\..\addons\ofxAssimpModelLoader\src\ofxAssimpMeshHelper.cpp" />
     <ClCompile Include="..\..\addons\ofxAssimpModelLoader\src\ofxAssimpModelLoader.cpp" />
@@ -144,17 +146,18 @@
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_draw.cpp" />
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_tables.cpp" />
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_widgets.cpp" />
-    <ClCompile Include="src\utils\ImageCapture.cpp" />
-    <ClCompile Include="src\utils\ImageImporter.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\layouts\Tools.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\Cursor.h" />
+    <ClInclude Include="src\layouts\ColorPicker.h" />
+    <ClInclude Include="src\layouts\Tools.h" />
     <ClInclude Include="src\raycasting\ray.h" />
     <ClInclude Include="src\scene\Planet.h" />
     <ClInclude Include="src\scene\sceneManager.h" />
     <ClInclude Include="src\scene\sceneObject.h" />
+    <ClInclude Include="src\utils\ImageCapture.h" />
+    <ClInclude Include="src\utils\ImageImporter.h" />
     <ClInclude Include="..\..\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.h" />
     <ClInclude Include="..\..\addons\ofxAssimpModelLoader\src\ofxAssimpMeshHelper.h" />
     <ClInclude Include="..\..\addons\ofxAssimpModelLoader\src\ofxAssimpModelLoader.h" />
@@ -281,8 +284,6 @@
     <ClInclude Include="..\..\addons\ofxImGui\libs\imgui\src\imstb_rectpack.h" />
     <ClInclude Include="..\..\addons\ofxImGui\libs\imgui\src\imstb_textedit.h" />
     <ClInclude Include="..\..\addons\ofxImGui\libs\imgui\src\imstb_truetype.h" />
-    <ClInclude Include="src\utils\ImageCapture.h" />
-    <ClInclude Include="src\utils\ImageImporter.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">

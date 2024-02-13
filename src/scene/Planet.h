@@ -1,5 +1,6 @@
 #pragma once
 
+#include "./layouts/ColorPicker.h"
 #include "sceneObject.h"
 
 #include <utils/ImageImporter.h>
@@ -17,4 +18,5 @@ private:
   ofTexture mTex;
   ofImage image;
   ImageImporter imageImporter;
+  ColorPicker colorPicker;
 };

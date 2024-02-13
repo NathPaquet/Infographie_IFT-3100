@@ -10,9 +10,9 @@ void Planet::draw() const {
     primitive->draw();
     mTex.unbind();
   } else {
+    ofSetColor(colorPicker.getNormalizedColor());
     primitive->draw();
   }
-
   ofPopStyle();
 }
 
@@ -27,6 +27,7 @@ void Planet::draw_properties() {
   if (ImGui::SliderFloat("Radius", &radius_temp, 0.f, 500.f, "sss")) {
     set_radius(radius_temp);
   }
+
   if (ImGui::Button("Import image", ImVec2(100.f, 30.f))) {
     imageImporter.importImage(this->image);
     if (this->image.isAllocated()) {
@@ -40,6 +41,8 @@ void Planet::draw_properties() {
     mTex.clear();
     image.clear();
   }
+
+  colorPicker.createColorPicker();
 }
 
 Planet::Planet(const float x, const float y, const float z) {
