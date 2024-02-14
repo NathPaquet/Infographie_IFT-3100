@@ -104,7 +104,6 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CylinderPlanet.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="src\Cursor.cpp" />
@@ -112,6 +111,7 @@
     <ClCompile Include="src\layouts\Tools.cpp" />
     <ClCompile Include="src\raycasting\ray.cpp" />
     <ClCompile Include="src\scene\CubicPlanet.cpp" />
+    <ClCompile Include="src\scene\CylinderPlanet.cpp" />
     <ClCompile Include="src\scene\Planet.cpp" />
     <ClCompile Include="src\scene\SceneElementFactory.cpp" />
     <ClCompile Include="src\scene\sceneManager.cpp" />
@@ -152,13 +152,13 @@
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CylinderPlanet.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\Cursor.h" />
     <ClInclude Include="src\layouts\ColorPicker.h" />
     <ClInclude Include="src\layouts\Tools.h" />
     <ClInclude Include="src\raycasting\ray.h" />
     <ClInclude Include="src\scene\CubicPlanet.h" />
+    <ClInclude Include="src\scene\CylinderPlanet.h" />
     <ClInclude Include="src\scene\Planet.h" />
     <ClInclude Include="src\scene\SceneElementFactory.h" />
     <ClInclude Include="src\scene\sceneManager.h" />

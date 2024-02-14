@@ -1,7 +1,7 @@
 #include "SceneElementFactory.h"
 
-#include "..\..\CylinderPlanet.h"
 #include "CubicPlanet.h"
+#include "CylinderPlanet.h"
 #include "Planet.h"
 
 std::unique_ptr<SceneObject> SceneElementFactory::createSceneObject(const ofVec3f &position, const ElementType primitiveType) {
