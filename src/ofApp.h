@@ -23,6 +23,9 @@ public:
   ofxImGui::Gui gui;
   ofEasyCam camera;
   ofLight light;
+  ofImage backgroundImage;
+  ofTexture backgroundTexture;
+  ofSpherePrimitive sphere = ofSpherePrimitive(20, 60, OF_PRIMITIVE_TRIANGLES);
   Cursor cursor = Cursor(CursorMode::NAVIGATION);
   ElementType currentElementToAdd;
   ImVec4 backgroundColor;

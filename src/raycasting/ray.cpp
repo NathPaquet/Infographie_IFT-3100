@@ -54,6 +54,9 @@ void Ray::drawPrimitivePreview(const ofColor &color, ElementType elementType, fl
     case ElementType::SPHERE:
       ofDrawSphere(end, 20.f);
       break;
+    case ElementType::CYLINDER:
+      ofDrawCylinder(end, 20.f, 20.f);
+      break;
     default:
       ofDrawSphere(end, 20.f);
       break;

@@ -6,7 +6,7 @@
 class SceneObject {
 public:
   ofVec3f position;
-  ofColor color;
+  ofColor color = ofColor::fromHsb(ofRandom(255), 255, 255);
 
   virtual void draw() const;
   virtual void draw_properties();

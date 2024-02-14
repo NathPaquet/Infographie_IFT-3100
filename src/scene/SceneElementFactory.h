@@ -3,7 +3,8 @@
 
 enum class ElementType {
   SPHERE,
-  CUBIC
+  CUBIC,
+  CYLINDER
 };
 
 class SceneElementFactory {

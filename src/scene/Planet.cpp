@@ -4,27 +4,12 @@
 #include "ofxImGui.h"
 
 void Planet::draw_properties() {
+  SceneObject::draw_properties();
   float radius_temp = this->radius;
 
-  if (ImGui::SliderFloat("Radius", &radius_temp, 0.f, 500.f, "sss")) {
+  if (ImGui::SliderFloat("Radius", &radius_temp, 0.f, 500.f, "radius")) {
     set_radius(radius_temp);
   }
-
-  if (ImGui::Button("Import image", ImVec2(100.f, 30.f))) {
-    ImageImporter::importImage(this->image);
-    if (this->image.isAllocated()) {
-      this->mTex = image.getTexture();
-      this->mTex.enableMipmap();
-      this->mTex.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
-      this->mTex.generateMipmap();
-    }
-  }
-  if (ImGui::Button("Remove image", ImVec2(100.f, 30.f))) {
-    mTex.clear();
-    image.clear();
-  }
-
-  this->colorPicker.createColorPicker();
 }
 
 Planet::Planet(const float x, const float y, const float z) {

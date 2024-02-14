@@ -10,5 +10,5 @@ public:
 
 private:
   float size = 20.f;
-  void set_size(float size);
+  void set_size(const float size);
 };

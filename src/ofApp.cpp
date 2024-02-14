@@ -16,7 +16,15 @@ void ofApp::setup() {
   // required call
   gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable);
   sceneManager = new SceneManager();
+  backgroundImage.load("background.jpg");
 
+  ofDisableArbTex();
+  backgroundTexture = backgroundImage.getTexture();
+  backgroundTexture.enableMipmap();
+  backgroundTexture.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+  backgroundTexture.generateMipmap();
+
+  sphere.enableTextures();
   // Initialize camera
   camera.setDistance(200.f);
   this->light.setPosition(-500, 500, 500);
@@ -48,7 +56,13 @@ void ofApp::update() {
 void ofApp::draw() {
   cursor.drawCursor(ofGetMouseX(), ofGetMouseY());
   camera.begin();
-  ofNoFill();
+
+  ofPushStyle();
+  backgroundTexture.bind();
+  sphere.draw();
+  backgroundTexture.unbind();
+  ofPopStyle();
+
   ofDrawCircle(0, 0, 72);
   sceneManager->drawScene();
 
@@ -97,6 +111,12 @@ void ofApp::drawSceneElementMenu() {
       currentElementToAdd = ElementType::CUBIC;
       this->cursor.setCursorMode(CursorMode::ADDING);
     }
+
+    if (ImGui::Button("Add Cylinder", ImVec2(180, 30))) {
+      currentElementToAdd = ElementType::CYLINDER;
+      this->cursor.setCursorMode(CursorMode::ADDING);
+    }
+
     if (ImGui::Button("Remove Element", ImVec2(180, 30))) {
       this->cursor.setCursorMode(CursorMode::REMOVING);
     }
@@ -195,6 +215,7 @@ void ofApp::processMouseActions() {
     } else if (this->cursor.getCursorMode() == CursorMode::ADDING) {
       sceneManager->addElement(ray.getOrigin() + ray.getDirection() * 20.f * 10.f, this->currentElementToAdd);
       this->cursor.setCursorMode(CursorMode::NAVIGATION);
+      sceneManager->setSelectedSceneObject(sceneManager->getObjects().back().get());
     }
   }
 }

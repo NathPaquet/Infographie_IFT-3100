@@ -1,21 +1,39 @@
 #include "sceneObject.h"
 
+#include "ImageImporter.h"
+
 void SceneObject::draw() const {
   ofPushStyle();
   if (mTex.isAllocated()) {
-    mTex.bind();
+    this->mTex.bind();
+    ofSetColor(this->color);
     primitive->draw();
-    mTex.unbind();
+    this->mTex.unbind();
   } else {
-    ofSetColor(colorPicker.getNormalizedColor());
+    ofSetColor(this->color);
     primitive->draw();
   }
   ofPopStyle();
 }
 
 void SceneObject::draw_properties() {
+  if (ImGui::Button("Import image", ImVec2(100.f, 30.f))) {
+    ImageImporter::importImage(this->image);
+    if (this->image.isAllocated()) {
+      this->mTex = image.getTexture();
+      this->mTex.enableMipmap();
+      this->mTex.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+      this->mTex.generateMipmap();
+    }
+  }
+  if (ImGui::Button("Remove image", ImVec2(100.f, 30.f))) {
+    mTex.clear();
+    image.clear();
+  }
+
+  this->colorPicker.createColorPicker(this->color);
 }
 
 const of3dPrimitive &SceneObject::getPrimitive() const {
-  return *this->primitive.get();
+  return *this->primitive;
 }
