@@ -16,6 +16,7 @@ void ofApp::setup() {
   // required call
   gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable);
   sceneManager = new SceneManager();
+  sceneGraph = new SceneGraph(*sceneManager);
   backgroundImage.load("background.jpg");
 
   ofDisableArbTex();

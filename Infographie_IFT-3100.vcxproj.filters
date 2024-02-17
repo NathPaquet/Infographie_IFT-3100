@@ -145,6 +145,9 @@
     <ClCompile Include="src\scene\CylinderPlanet.cpp">
       <Filter>src\scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\scene\sceneGraph.cpp">
+      <Filter>src\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -639,6 +642,9 @@
       <Filter>addons\ofxImGui\libs\imgui\src</Filter>
     </ClInclude>
     <ClInclude Include="src\scene\CylinderPlanet.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\sceneGraph.h">
       <Filter>src\scene</Filter>
     </ClInclude>
   </ItemGroup>

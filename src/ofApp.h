@@ -6,6 +6,7 @@
 #include "ofxGui.h"
 #include "ofxImGui.h"
 #include "raycasting/ray.h"
+#include "scene/sceneGraph.h"
 #include "scene/sceneManager.h"
 
 class ofApp : public ofBaseApp {
@@ -20,6 +21,7 @@ public:
   glm::highp_vec3 findMouseClick3DPosition() const;
 
   SceneManager *sceneManager;
+  SceneGraph *sceneGraph;
   ofxImGui::Gui gui;
   ofEasyCam camera;
   ofLight light;
