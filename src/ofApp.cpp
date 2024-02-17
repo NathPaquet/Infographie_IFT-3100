@@ -101,8 +101,9 @@ bool ofApp::isMouseClickInScene() {
 void ofApp::drawSceneElementMenu() {
   ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX(), ofGetWindowPositionY()), ImGuiCond_Always);
   ImGui::SetNextWindowSize(ImVec2(200, ofGetHeight()), ImGuiCond_Always);
-
   if (ImGui::Begin("Scene Element", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse)) {
+    this->sceneGraph->drawSceneGraphElement();
+
     if (ImGui::Button("Add Sphere", ImVec2(180, 30))) {
       currentElementToAdd = ElementType::SPHERE;
       this->cursor.setCursorMode(CursorMode::ADDING);
