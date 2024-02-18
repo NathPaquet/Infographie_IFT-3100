@@ -26,8 +26,9 @@ void SceneManager::removeElement(const SceneObject *sceneObject) {
 }
 
 void SceneManager::drawScene() {
-  for (auto &&element : sceneElements) {
-    element->draw();
+  for (const auto &element : sceneElements) {
+    bool isSelected = element.get() == this->selectedSceneOject;
+    element.get()->draw(isSelected);
   }
 }
 
