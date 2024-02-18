@@ -20,8 +20,8 @@ void SceneGraph::drawSceneGraphElement() {
     ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 2.0f);
 
     if (isSelected) {
-      ImGui::PushStyleColor(ImGuiCol_Border, (ImVec4)ImColor(199, 41, 67, 255));
-      ImGui::PushStyleColor(ImGuiCol_ChildBg, (ImVec4)ImColor(199, 41, 67, 100));
+      ImGui::PushStyleColor(ImGuiCol_Border, (ImVec4)ImColor(209, 45, 73, 255));
+      ImGui::PushStyleColor(ImGuiCol_ChildBg, (ImVec4)ImColor(209, 45, 73, 100));
     }
 
     ImGui::BeginChild(("Object " + std::to_string(count)).c_str(), ImVec2(ImGui::GetContentRegionAvail().x, elementBoxHeight), true);
