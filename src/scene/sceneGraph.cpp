@@ -7,13 +7,9 @@ SceneGraph::SceneGraph(SceneManager &sceneManager):
 void SceneGraph::drawSceneGraphElements() {
   const auto &sceneObjects = sceneManager.getObjects();
 
-  int count = 0;
   float elementBoxHeight = 50.0f;
-  static int item_current_idx = 0;
 
   for (const auto &sceneObjectPtr : sceneObjects) {
-    count++;
-
     bool isSelected = (sceneObjectPtr.get() == sceneManager.getSelectedObject());
 
     ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 2.0f);
@@ -24,9 +20,10 @@ void SceneGraph::drawSceneGraphElements() {
       ImGui::PushStyleColor(ImGuiCol_ChildBg, (ImVec4)ImColor(209, 45, 73, 100));
     }
 
-    ImGui::BeginChild(("Object " + std::to_string(count)).c_str(), ImVec2(ImGui::GetContentRegionAvail().x, elementBoxHeight), true);
+    ImGui::BeginChild(std::to_string(reinterpret_cast<uintptr_t>(sceneObjectPtr.get())).c_str(), ImVec2(ImGui::GetContentRegionAvail().x, elementBoxHeight), true);
 
-    ImGui::Text("Objet numero %d", count);
+    ImGui::Text("%s", typeid(*sceneObjectPtr).name());
+    ImGui::Text("ID : %p", sceneObjectPtr.get());
 
     ImGui::PopStyleVar(2);
     if (isSelected) {
@@ -36,7 +33,6 @@ void SceneGraph::drawSceneGraphElements() {
     ImGui::EndChild();
 
     if (ImGui::IsItemClicked()) {
-      ofLogNotice("SceneGraph") << "Objet numero " << count << " cliqué";
       sceneManager.setSelectedSceneObject(sceneObjectPtr.get());
     }
   }
