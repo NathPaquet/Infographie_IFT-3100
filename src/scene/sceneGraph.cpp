@@ -17,21 +17,22 @@ void SceneGraph::drawSceneGraphElement() {
     bool isSelected = (&sceneObject == sceneManager.getSelectedObject());
 
     ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 2.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 1.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 2.0f);
 
     if (isSelected) {
-      ImGui::PushStyleColor(ImGuiCol_Border, (ImVec4)ImColor(255, 0, 0, 255));
+      ImGui::PushStyleColor(ImGuiCol_Border, (ImVec4)ImColor(199, 41, 67, 255));
+      ImGui::PushStyleColor(ImGuiCol_ChildBg, (ImVec4)ImColor(199, 41, 67, 100));
     }
 
     ImGui::BeginChild(("Object " + std::to_string(count)).c_str(), ImVec2(ImGui::GetContentRegionAvail().x, elementBoxHeight), true);
 
     ImGui::Text("Objet numero %d", count);
 
-    if (isSelected) {
-      ImGui::PopStyleColor();
-    }
-    ImGui::EndChild();
-
     ImGui::PopStyleVar(2);
+    if (isSelected) {
+      ImGui::PopStyleColor(2);
+    }
+
+    ImGui::EndChild();
   }
 }
