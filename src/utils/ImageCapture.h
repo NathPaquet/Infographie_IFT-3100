@@ -7,6 +7,7 @@ public:
   ImageCapture();
   ~ImageCapture();
 
+  void takeScreenshot();
   void startRecording(int interval, int duration);
   bool isRecording();
 

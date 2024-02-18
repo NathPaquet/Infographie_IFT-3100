@@ -2,12 +2,20 @@
 
 ImageCapture::ImageCapture() {
   ofAddListener(ofEvents().update, this, &ImageCapture::update);
-  ofLogNotice("ImageCapture") << "Listener to update added";
 }
 
 ImageCapture::~ImageCapture() {
   ofRemoveListener(ofEvents().update, this, &ImageCapture::update);
-  ofLogNotice("ImageCapture") << "Listener to update removed";
+}
+
+void ImageCapture::takeScreenshot() {
+  ofFileDialogResult result = ofSystemSaveDialog("default", "Save Image");
+
+  if (result.bSuccess) {
+    ofImage screenshot;
+    screenshot.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
+    screenshot.save(result.getPath());
+  }
 }
 
 void ImageCapture::startRecording(int interval, int duration) {
@@ -31,7 +39,6 @@ void ImageCapture::update(ofEventArgs &event) {
         lastExecutionTime = ofGetElapsedTimeMillis();
       }
     } else {
-      ofLogNotice("ImageCapture") << "interval has ended";
       recordingStatus = false;
       ofFileDialogResult result = ofSystemSaveDialog("default", "Save Image");
 
@@ -45,8 +52,6 @@ void ImageCapture::update(ofEventArgs &event) {
 }
 
 void ImageCapture::addScreenshot() {
-  ofLogNotice("ImageCapture") << "screenshot +1";
-
   ofImage screenshot;
   screenshot.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
 

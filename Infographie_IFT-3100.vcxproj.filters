@@ -145,6 +145,7 @@
     <ClCompile Include="src\scene\CylinderPlanet.cpp">
       <Filter>src\scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\layouts\export\ExportMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -641,6 +642,7 @@
     <ClInclude Include="src\scene\CylinderPlanet.h">
       <Filter>src\scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\layouts\export\ExportMenu.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
