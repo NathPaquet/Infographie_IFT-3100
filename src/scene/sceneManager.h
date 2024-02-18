@@ -15,6 +15,7 @@ public:
   void drawPropertiesPanel();
   const std::vector<std::unique_ptr<SceneObject>> &getObjects() const;
   void setSelectedSceneObject(const SceneObject *sceneObject);
+  const SceneObject *getSelectedObject() const;
 
 private:
   void clearScene();

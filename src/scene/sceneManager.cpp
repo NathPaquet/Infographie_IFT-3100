@@ -51,6 +51,10 @@ void SceneManager::setSelectedSceneObject(const SceneObject *sceneObject) {
   this->selectedSceneOject = it->get();
 }
 
+const SceneObject *SceneManager::getSelectedObject() const {
+  return this->selectedSceneOject;
+}
+
 void SceneManager::clearScene() {
   this->selectedSceneOject = nullptr;
   sceneElements.clear();
