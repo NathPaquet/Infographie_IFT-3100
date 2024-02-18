@@ -15,8 +15,8 @@ void ofApp::setup() {
   ofEnableDepthTest();
   // required call
   gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable);
-  sceneManager = new SceneManager();
-  sceneGraph = new SceneGraph(*sceneManager);
+  sceneManager = std::make_unique<SceneManager>();
+  sceneGraph = std::make_unique<SceneGraph>(*sceneManager);
   backgroundImage.load("background.jpg");
 
   ofDisableArbTex();

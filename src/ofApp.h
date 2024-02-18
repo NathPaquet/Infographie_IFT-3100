@@ -20,8 +20,8 @@ public:
 
   glm::highp_vec3 findMouseClick3DPosition() const;
 
-  SceneManager *sceneManager;
-  SceneGraph *sceneGraph;
+  std::unique_ptr<SceneManager> sceneManager;
+  std::unique_ptr<SceneGraph> sceneGraph;
   ofxImGui::Gui gui;
   ofEasyCam camera;
   ofLight light;
