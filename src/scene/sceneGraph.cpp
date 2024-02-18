@@ -4,11 +4,12 @@ SceneGraph::SceneGraph(SceneManager &sceneManager):
     sceneManager(sceneManager) {
 }
 
-void SceneGraph::drawSceneGraphElement() {
+void SceneGraph::drawSceneGraphElements() {
   const auto &sceneObjects = sceneManager.getObjects();
 
   int count = 0;
   float elementBoxHeight = 50.0f;
+  static int item_current_idx = 0;
 
   for (const auto &sceneObjectPtr : sceneObjects) {
     count++;
@@ -34,5 +35,10 @@ void SceneGraph::drawSceneGraphElement() {
     }
 
     ImGui::EndChild();
+
+    if (ImGui::IsItemClicked()) {
+      ofLogNotice("SceneGraph") << "Objet numero " << count << " cliqué";
+      sceneManager.setSelectedSceneObject(&sceneObject);
+    }
   }
 }

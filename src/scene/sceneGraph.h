@@ -5,7 +5,7 @@ class SceneGraph {
 public:
   SceneGraph(SceneManager &sceneManager);
 
-  void drawSceneGraphElement();
+  void drawSceneGraphElements();
 
 private:
   SceneManager &sceneManager;
