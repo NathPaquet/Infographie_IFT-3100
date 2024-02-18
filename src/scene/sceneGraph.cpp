@@ -13,9 +13,8 @@ void SceneGraph::drawSceneGraphElements() {
 
   for (const auto &sceneObjectPtr : sceneObjects) {
     count++;
-    const SceneObject &sceneObject = *sceneObjectPtr;
 
-    bool isSelected = (&sceneObject == sceneManager.getSelectedObject());
+    bool isSelected = (sceneObjectPtr.get() == sceneManager.getSelectedObject());
 
     ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 2.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 2.0f);
@@ -38,7 +37,7 @@ void SceneGraph::drawSceneGraphElements() {
 
     if (ImGui::IsItemClicked()) {
       ofLogNotice("SceneGraph") << "Objet numero " << count << " cliqué";
-      sceneManager.setSelectedSceneObject(&sceneObject);
+      sceneManager.setSelectedSceneObject(sceneObjectPtr.get());
     }
   }
 }
