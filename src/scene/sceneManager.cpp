@@ -4,9 +4,11 @@
 #include "ImHelpers.h"
 #include "Planet.h"
 #include "ofxImGui.h"
+#include "raycasting/ray.h"
 
-SceneManager::SceneManager() {
+SceneManager::SceneManager(const ofEasyCam *camera) {
   ofLogNotice("SceneManager") << "SceneManager constructor";
+  this->camera = camera;
 }
 
 SceneManager::~SceneManager() {
@@ -15,6 +17,7 @@ SceneManager::~SceneManager() {
 
 void SceneManager::addElement(const ofVec3f &position, const ElementType primitiveType) {
   this->sceneObjects.emplace_back(SceneElementFactory::createSceneObject(position, primitiveType));
+  ofAddListener(ofEvents().mouseDragged, this /* this->sceneObjects.back().get() */, &SceneManager::mouseDragged);
 }
 
 void SceneManager::removeObject(const SceneObject *sceneObject) {
@@ -89,4 +92,25 @@ std::vector<SceneObject *> &SceneManager::getSelectedObjectReference() {
 void SceneManager::clearScene() {
   this->selectedSceneObjects.clear();
   this->sceneObjects.clear();
+}
+
+// Planet::~Planet() {
+//   ofRemoveListener(ofEvents().mouseDragged, this, &SceneObject::mouseDragged);
+// }
+
+void SceneManager::mouseDragged(ofMouseEventArgs &mouse) {
+  if (mouse.button == OF_MOUSE_BUTTON_LEFT) {
+    const glm::vec3 screenMouse(mouse.x, mouse.y, 0);
+    auto &&worldMouse = this->camera->screenToWorld(screenMouse);
+    auto &&worldMouseEnd = this->camera->screenToWorld(glm::vec3(screenMouse.x, screenMouse.y, 1.0f));
+    auto &&worldMouseDirection = worldMouseEnd - worldMouse;
+
+    Ray ray;
+    ray.set(this->camera->getGlobalPosition(), worldMouseDirection);
+
+    ofVec3f newPosition = ray.getOrigin() + ray.getDirection() * 10.0f * 20.0f;
+    getSelectedObject().at(0)->setPosition(newPosition);
+
+    ofLogNotice("Mouse dragged SceneObject") << mouse;
+  }
 }

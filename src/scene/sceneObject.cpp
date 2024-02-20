@@ -52,3 +52,8 @@ void SceneObject::updateProperties() {
 const of3dPrimitive &SceneObject::getPrimitive() const {
   return *this->primitive;
 }
+
+void SceneObject::setPosition(ofVec3f vec) {
+  this->position = vec;
+  this->primitive->setGlobalPosition(vec);
+}

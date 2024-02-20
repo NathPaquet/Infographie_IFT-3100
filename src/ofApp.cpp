@@ -15,7 +15,7 @@ void ofApp::setup() {
   ofEnableDepthTest();
   // required call
   gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable);
-  sceneManager = std::make_unique<SceneManager>();
+  sceneManager = std::make_unique<SceneManager>(&camera);
   sceneGraph = std::make_unique<SceneGraph>(*sceneManager);
   propertiesPanel = std::make_unique<PropertiesPanel>();
   backgroundImage.load("background.jpg");
@@ -205,6 +205,14 @@ void ofApp::processMouseActions() {
   }
   if (!found && this->cursor.getCursorMode() == CursorMode::ADDING) {
     this->ray.drawPrimitivePreview(color, this->currentElementToAdd, 20.f);
+  }
+
+  if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && isMouseClickInScene()) {
+    if (found && this->cursor.getCursorMode() == CursorMode::NAVIGATION) {
+      this->camera.disableMouseInput();
+    } else {
+      this->camera.enableMouseInput();
+    }
   }
 
   if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) && isMouseClickInScene()) {

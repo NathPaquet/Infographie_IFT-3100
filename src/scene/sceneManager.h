@@ -6,7 +6,7 @@
 
 class SceneManager {
 public:
-  SceneManager();
+  SceneManager(const ofEasyCam *camera);
   ~SceneManager();
 
   void addElement(const ofVec3f &position, const ElementType primitiveType);
@@ -20,8 +20,12 @@ public:
   const std::vector<SceneObject *> &getSelectedObject() const;
   std::vector<SceneObject *> &getSelectedObjectReference();
 
+  const ofEasyCam *camera;
+
 private:
   void clearScene();
   std::vector<SceneObject *> selectedSceneObjects;
   std::vector<std::unique_ptr<SceneObject>> sceneObjects;
+
+  void mouseDragged(ofMouseEventArgs &mouse);
 };

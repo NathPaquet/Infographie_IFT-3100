@@ -12,6 +12,7 @@ public:
   virtual void draw(bool isSelected);
   virtual void draw_properties();
   const of3dPrimitive &getPrimitive() const;
+  void setPosition(ofVec3f vec);
   std::map<PROPERTY_ID, std::unique_ptr<PropertyBase>> &getProperties();
 
   template<typename T>
