@@ -17,6 +17,7 @@ void ofApp::setup() {
   gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable);
   sceneManager = std::make_unique<SceneManager>();
   sceneGraph = std::make_unique<SceneGraph>(*sceneManager);
+  propertiesPanel = std::make_unique<PropertiesPanel>();
   backgroundImage.load("background.jpg");
 
   ofDisableArbTex();
@@ -89,7 +90,7 @@ void ofApp::drawPropertiesPanel() {
   ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + ofGetWidth() - window_width, ofGetWindowPositionY()), ImGuiCond_Always);
   ImGui::SetNextWindowSize(ImVec2(window_width, ofGetHeight()), ImGuiCond_Always);
   if (ImGui::Begin("PropertiesPanel", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse)) {
-    this->sceneManager->drawPropertiesPanel();
+    this->propertiesPanel->drawPanel(this->sceneManager->getSelectedObjectReference());
     ImGui::End();
   }
 }
@@ -211,7 +212,7 @@ void ofApp::processMouseActions() {
       sceneManager->setSelectedSceneObject(foundSceneObject);
 
     } else if (found && this->cursor.getCursorMode() == CursorMode::REMOVING) {
-      sceneManager->removeElement(foundSceneObject);
+      sceneManager->removeObject(foundSceneObject); // TODO : Ajouter une nouvelle m�thode pour supprimer un objet
       this->cursor.setCursorMode(CursorMode::NAVIGATION);
 
     } else if (this->cursor.getCursorMode() == CursorMode::ADDING) {

@@ -10,15 +10,18 @@ public:
   ~SceneManager();
 
   void addElement(const ofVec3f &position, const ElementType primitiveType);
-  void removeElement(const SceneObject *sceneObject);
+  void removeObject(const SceneObject *sceneObject);
+  void removeAllSelectedObjects();
   void drawScene();
   void drawPropertiesPanel();
   const std::vector<std::unique_ptr<SceneObject>> &getObjects() const;
   void setSelectedSceneObject(const SceneObject *sceneObject);
-  const SceneObject *getSelectedObject() const;
+  void addSelectedSceneObject(const SceneObject *sceneObject);
+  const std::vector<SceneObject *> &getSelectedObject() const;
+  std::vector<SceneObject *> &getSelectedObjectReference();
 
 private:
   void clearScene();
-  SceneObject *selectedSceneOject{nullptr};
-  std::vector<std::unique_ptr<SceneObject>> sceneElements;
+  std::vector<SceneObject *> selectedSceneObjects;
+  std::vector<std::unique_ptr<SceneObject>> sceneObjects;
 };

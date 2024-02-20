@@ -1,19 +1,14 @@
 #include "Planet.h"
 
+#include "CylinderPlanet.h"
 #include "ImHelpers.h"
 #include "ofxImGui.h"
 
-void Planet::draw_properties() {
-  SceneObject::draw_properties();
-  float radius_temp = this->radius;
-
-  if (ImGui::SliderFloat("Radius", &radius_temp, 0.f, 500.f, "radius")) {
-    set_radius(radius_temp);
-  }
-}
-
 Planet::Planet(const float x, const float y, const float z) {
-  auto sphere = ofSpherePrimitive(this->radius, 20, OF_PRIMITIVE_TRIANGLES);
+  SceneObject();
+  this->addProperty<float>(PROPERTY_ID::RADIUS, 20.f);
+
+  auto sphere = ofSpherePrimitive(this->getPropertyValue<float>(PROPERTY_ID::RADIUS), 20, OF_PRIMITIVE_TRIANGLES);
   this->mainMesh = sphere.getMesh();
 
   ofDisableArbTex();
@@ -26,9 +21,15 @@ Planet::Planet(const float x, const float y, const float z) {
   this->position = ofVec3f(x, y, z);
 }
 
-void Planet::set_radius(const float radius) {
-  this->radius = radius;
-  auto sphere = ofSpherePrimitive(this->radius, 20, OF_PRIMITIVE_TRIANGLES);
+void Planet::updateProperties() {
+  SceneObject::updateProperties();
+  if (this->properties.at(PROPERTY_ID::RADIUS)->isValueChanged()) {
+    this->updatePrimitive();
+    this->properties.at(PROPERTY_ID::RADIUS)->setChanged(false);
+  }
+}
+void Planet::updatePrimitive() {
+  auto sphere = ofSpherePrimitive(this->getPropertyValue<float>(PROPERTY_ID::RADIUS), 20, OF_PRIMITIVE_TRIANGLES);
   this->primitive.reset(nullptr);
   this->primitive = std::make_unique<ofSpherePrimitive>(std::move(sphere));
   this->primitive->setGlobalPosition(position.x, position.y, position.z);
