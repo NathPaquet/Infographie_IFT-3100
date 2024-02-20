@@ -182,6 +182,11 @@ void ofApp::createViewMenu() {
 }
 
 void ofApp::processMouseActions() {
+  if (!isMouseClickInScene()) {
+    this->camera.disableMouseInput();
+    return;
+  }
+  this->camera.enableMouseInput();
   auto worldMouseDirection = findMouseClick3DPosition();
   this->ray.set(camera.getGlobalPosition(), worldMouseDirection);
 
@@ -207,15 +212,25 @@ void ofApp::processMouseActions() {
     this->ray.drawPrimitivePreview(color, this->currentElementToAdd, 20.f);
   }
 
-  if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && isMouseClickInScene()) {
-    if (found && this->cursor.getCursorMode() == CursorMode::NAVIGATION) {
-      this->camera.disableMouseInput();
-    } else {
-      this->camera.enableMouseInput();
-    }
+  bool foundSelected = std::find(this->sceneManager->getSelectedObject().begin(), this->sceneManager->getSelectedObject().end(), foundSceneObject) != this->sceneManager->getSelectedObject().end();
+
+  if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && foundSelected) {
+    shouldDragObject = true;
   }
 
-  if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) && isMouseClickInScene()) {
+  if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
+    shouldDragObject = false;
+  }
+
+  if (ImGui::IsMouseDown(ImGuiMouseButton_Left)
+      && shouldDragObject
+      && foundSelected
+      && this->cursor.getCursorMode() == CursorMode::NAVIGATION) {
+    this->sceneManager->setObjectPosition(foundSceneObject, ray.getOrigin() + ray.getDirection() * 20.f * 10.f);
+    this->camera.disableMouseInput();
+  }
+
+  if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
     if (found && this->cursor.getCursorMode() == CursorMode::NAVIGATION) {
       sceneManager->setSelectedSceneObject(foundSceneObject);
 

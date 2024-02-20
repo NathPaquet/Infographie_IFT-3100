@@ -34,6 +34,7 @@ public:
   ElementType currentElementToAdd;
   ImVec4 backgroundColor;
   Ray ray;
+  bool shouldDragObject = false;
 
 private:
   Tools tools;

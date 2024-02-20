@@ -17,7 +17,6 @@ SceneManager::~SceneManager() {
 
 void SceneManager::addElement(const ofVec3f &position, const ElementType primitiveType) {
   this->sceneObjects.emplace_back(SceneElementFactory::createSceneObject(position, primitiveType));
-  ofAddListener(ofEvents().mouseDragged, this /* this->sceneObjects.back().get() */, &SceneManager::mouseDragged);
 }
 
 void SceneManager::removeObject(const SceneObject *sceneObject) {
@@ -98,19 +97,9 @@ void SceneManager::clearScene() {
 //   ofRemoveListener(ofEvents().mouseDragged, this, &SceneObject::mouseDragged);
 // }
 
-void SceneManager::mouseDragged(ofMouseEventArgs &mouse) {
-  if (mouse.button == OF_MOUSE_BUTTON_LEFT) {
-    const glm::vec3 screenMouse(mouse.x, mouse.y, 0);
-    auto &&worldMouse = this->camera->screenToWorld(screenMouse);
-    auto &&worldMouseEnd = this->camera->screenToWorld(glm::vec3(screenMouse.x, screenMouse.y, 1.0f));
-    auto &&worldMouseDirection = worldMouseEnd - worldMouse;
+void SceneManager::setObjectPosition(const SceneObject *object, const ofVec3f &position) {
+  auto it = std::find_if(this->sceneObjects.begin(), this->sceneObjects.end(), [&](auto &&obj) { return obj.get() == object; });
+  it->get()->setPosition(position);
 
-    Ray ray;
-    ray.set(this->camera->getGlobalPosition(), worldMouseDirection);
-
-    ofVec3f newPosition = ray.getOrigin() + ray.getDirection() * 10.0f * 20.0f;
-    getSelectedObject().at(0)->setPosition(newPosition);
-
-    ofLogNotice("Mouse dragged SceneObject") << mouse;
-  }
+  ofLogNotice("object dragged to") << position.x << "," << position.y << "," << position.z;
 }

@@ -19,6 +19,7 @@ public:
   void addSelectedSceneObject(const SceneObject *sceneObject);
   const std::vector<SceneObject *> &getSelectedObject() const;
   std::vector<SceneObject *> &getSelectedObjectReference();
+  void setObjectPosition(const SceneObject *object, const ofVec3f &position);
 
   const ofEasyCam *camera;
 
@@ -26,6 +27,4 @@ private:
   void clearScene();
   std::vector<SceneObject *> selectedSceneObjects;
   std::vector<std::unique_ptr<SceneObject>> sceneObjects;
-
-  void mouseDragged(ofMouseEventArgs &mouse);
 };
