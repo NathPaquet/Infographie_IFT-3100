@@ -1,7 +1,8 @@
 #pragma once
 #include "ofMain.h"
+#include "properties/Property.h"
 
 class ImageImporter {
 public:
-  static void importImage(ofImage &image);
+  static void importImage(Property<ofImage> *property);
 };

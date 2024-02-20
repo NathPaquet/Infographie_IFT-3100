@@ -5,8 +5,13 @@
 
 class PropertiesPanel {
 public:
-  void drawFloat(Property<float> *property);
-  void drawColorProperty(Property<ofColor> &color);
-
+  PropertiesPanel();
+  void drawFloatProperty(Property<float> *property);
+  void drawColorProperty(Property<ofColor> *property);
+  void drawImageImport(Property<ofImage> *property);
   void drawPanel(std::vector<SceneObject *> &objects);
+
+private:
+  std::map<PROPERTY_ID, std::function<void(PropertyBase *)>> propertyDrawFunctions;
+  ColorPicker colorPicker;
 };

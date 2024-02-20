@@ -17,6 +17,7 @@ void ofApp::setup() {
   gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable);
   sceneManager = std::make_unique<SceneManager>();
   sceneGraph = std::make_unique<SceneGraph>(*sceneManager);
+  propertiesPanel = std::make_unique<PropertiesPanel>();
   backgroundImage.load("background.jpg");
 
   ofDisableArbTex();
@@ -211,7 +212,7 @@ void ofApp::processMouseActions() {
       sceneManager->setSelectedSceneObject(foundSceneObject);
 
     } else if (found && this->cursor.getCursorMode() == CursorMode::REMOVING) {
-      sceneManager->removeObject(foundSceneObject); // TODO : Ajouter une nouvelle méthode pour supprimer un objet
+      sceneManager->removeObject(foundSceneObject); // TODO : Ajouter une nouvelle mï¿½thode pour supprimer un objet
       this->cursor.setCursorMode(CursorMode::NAVIGATION);
 
     } else if (this->cursor.getCursorMode() == CursorMode::ADDING) {

@@ -3,20 +3,12 @@
 #include "ImageImporter.h"
 #include "properties/Property.h"
 
-void CubicPlanet::draw_properties() {
-  SceneObject::draw_properties();
-  float size_temp = this->size;
-
-  if (ImGui::SliderFloat("Radius", &size_temp, 0.f, 500.f, "size")) {
-    this->set_size(size_temp);
-  }
-}
-
 CubicPlanet::CubicPlanet(const float x, const float y, const float z) {
-  this->properties.emplace(std::make_pair("Size", std::make_unique<Property<float>>("Size", 20.f)));
+  SceneObject();
+  this->addProperty<float>(PROPERTY_ID::SIZE, 20.f);
 
-  auto box = ofBoxPrimitive(this->size, this->size, this->size);
-  this->mainMesh = box.getMesh();
+  float size = this->getPropertyValue<float>(PROPERTY_ID::SIZE);
+  auto box = ofBoxPrimitive(size, size, size);
 
   ofDisableArbTex();
   this->mTex.enableMipmap();
@@ -28,9 +20,16 @@ CubicPlanet::CubicPlanet(const float x, const float y, const float z) {
   this->position = ofVec3f(x, y, z);
 }
 
+void CubicPlanet::updateProperties() {
+  SceneObject::updateProperties();
+  if (this->properties.at(PROPERTY_ID::SIZE)->isValueChanged()) {
+    this->set_size(this->getPropertyValue<float>(PROPERTY_ID::SIZE));
+    this->properties.at(PROPERTY_ID::SIZE)->setChanged(false);
+  }
+}
+
 void CubicPlanet::set_size(const float size) {
-  this->size = size;
-  auto box = ofBoxPrimitive(this->size, this->size, this->size);
+  auto box = ofBoxPrimitive(size, size, size);
   this->primitive.reset(nullptr);
   this->primitive = std::make_unique<ofBoxPrimitive>(std::move(box));
   this->primitive->setGlobalPosition(position.x, position.y, position.z);

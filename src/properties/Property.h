@@ -1,39 +1,78 @@
 #pragma once
 #include <string>
 
+enum class PROPERTY_ID {
+  SIZE,
+  COLOR,
+  IMAGE_IMPORT,
+  RADIUS,
+  HEIGHT
+};
+
+static inline const char *toString(PROPERTY_ID v) {
+  switch (v) {
+    case PROPERTY_ID::SIZE:
+      return "Size";
+    case PROPERTY_ID::RADIUS:
+      return "Radius";
+    case PROPERTY_ID::HEIGHT:
+      return "Height";
+    case PROPERTY_ID::COLOR:
+      return "Color";
+    case PROPERTY_ID::IMAGE_IMPORT:
+      return "Image Import";
+    default:
+      return "Unknown";
+  }
+}
 // Déclaration d'une classe de base polymorphique pour Property
 class PropertyBase {
 public:
   virtual ~PropertyBase() {}
-  virtual std::string getId() const = 0;
+  PropertyBase(PROPERTY_ID id):
+      id(id) {}
+  virtual PROPERTY_ID getId() {
+    return this->id;
+  }
+  void setChanged(bool changed) {
+    this->changed = changed;
+  }
+  bool isValueChanged() {
+    return this->changed;
+  }
+
+protected:
+  PROPERTY_ID id;
+  bool changed = false;
 };
 
 template<typename T>
 class Property : public PropertyBase {
 public:
-  Property(const std::string &id, const T &value):
-      id(id), value(value) {}
+  Property(const PROPERTY_ID &id, const T &value):
+      PropertyBase(id),
+      value(value) {}
 
-  std::string getId() const override {
-    return id;
-  }
-
-  T getValue() const;
+  T &getValue();
   void setValue(T value);
 
 private:
   T value;
-  std::string id;
 };
 
 // DEFINITIONS
 
 template<typename T>
-T Property<T>::getValue() const {
+T &Property<T>::getValue() {
   return this->value;
 }
 
 template<typename T>
 void Property<T>::setValue(T value) {
+  if (this->value == value) {
+    return;
+  }
+
   this->value = value;
+  this->setChanged(true);
 }
