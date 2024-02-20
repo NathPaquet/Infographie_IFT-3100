@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -115,6 +115,7 @@
     <ClCompile Include="src\scene\CylinderPlanet.cpp" />
     <ClCompile Include="src\scene\Planet.cpp" />
     <ClCompile Include="src\scene\SceneElementFactory.cpp" />
+    <ClCompile Include="src\scene\sceneGraph.cpp" />
     <ClCompile Include="src\scene\sceneManager.cpp" />
     <ClCompile Include="src\scene\sceneObject.cpp" />
     <ClCompile Include="src\utils\ImageCapture.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="src\scene\CylinderPlanet.h" />
     <ClInclude Include="src\scene\Planet.h" />
     <ClInclude Include="src\scene\SceneElementFactory.h" />
+    <ClInclude Include="src\scene\sceneGraph.h" />
     <ClInclude Include="src\scene\sceneManager.h" />
     <ClInclude Include="src\scene\sceneObject.h" />
     <ClInclude Include="src\utils\ImageCapture.h" />

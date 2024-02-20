@@ -26,8 +26,9 @@ void SceneManager::removeElement(const SceneObject *sceneObject) {
 }
 
 void SceneManager::drawScene() {
-  for (auto &&element : sceneElements) {
-    element->draw();
+  for (const auto &element : sceneElements) {
+    bool isSelected = element.get() == this->selectedSceneOject;
+    element.get()->draw(isSelected);
   }
 }
 
@@ -49,6 +50,10 @@ const std::vector<std::unique_ptr<SceneObject>> &SceneManager::getObjects() cons
 void SceneManager::setSelectedSceneObject(const SceneObject *sceneObject) {
   auto it = std::find_if(this->sceneElements.begin(), this->sceneElements.end(), [&](auto &&obj) { return obj.get() == sceneObject; });
   this->selectedSceneOject = it->get();
+}
+
+const SceneObject *SceneManager::getSelectedObject() const {
+  return this->selectedSceneOject;
 }
 
 void SceneManager::clearScene() {

@@ -2,8 +2,14 @@
 
 #include "ImageImporter.h"
 
-void SceneObject::draw() const {
+void SceneObject::draw(bool isSelected) const {
   ofPushStyle();
+  if (isSelected) {
+    ofColor complementaryColor(255 - this->color.r, 255 - this->color.g, 255 - this->color.b);
+    ofSetColor(complementaryColor);
+    primitive->drawWireframe();
+  }
+
   if (mTex.isAllocated()) {
     this->mTex.bind();
     ofSetColor(this->color);

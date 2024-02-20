@@ -145,6 +145,8 @@
     <ClCompile Include="src\scene\CylinderPlanet.cpp">
       <Filter>src\scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\scene\sceneGraph.cpp">
+      <Filter>src\scene</Filter>
     <ClCompile Include="src\layouts\export\ExportMenu.cpp">
       <Filter>src\layouts\export</Filter>
     </ClCompile>
@@ -647,6 +649,8 @@
     <ClInclude Include="src\scene\CylinderPlanet.h">
       <Filter>src\scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\scene\sceneGraph.h">
+      <Filter>src\scene</Filter>
     <ClInclude Include="src\layouts\export\ExportMenu.h">
       <Filter>src\layouts\export</Filter>
     </ClInclude>
