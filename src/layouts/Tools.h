@@ -1,17 +1,13 @@
 #pragma once
 
+#include "./export/ExportMenu.h"
 #include "ofxImGui.h"
-#include "utils/ImageCapture.h"
 
 class Tools {
 public:
   void createToolsMenu();
 
 private:
-  ImageCapture imageCapture;
+  ExportMenu exportMenu;
   bool showExportMenu = false;
-
-  int duration = 3;
-  float step = 1;
-  int numberOfImages;
 };
