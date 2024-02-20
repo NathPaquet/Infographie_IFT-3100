@@ -211,7 +211,7 @@ void ofApp::processMouseActions() {
       sceneManager->setSelectedSceneObject(foundSceneObject);
 
     } else if (found && this->cursor.getCursorMode() == CursorMode::REMOVING) {
-      sceneManager->removeElement(foundSceneObject);
+      sceneManager->removeObject(foundSceneObject); // TODO : Ajouter une nouvelle méthode pour supprimer un objet
       this->cursor.setCursorMode(CursorMode::NAVIGATION);
 
     } else if (this->cursor.getCursorMode() == CursorMode::ADDING) {

@@ -14,42 +14,72 @@ SceneManager::~SceneManager() {
 }
 
 void SceneManager::addElement(const ofVec3f &position, const ElementType primitiveType) {
-  sceneElements.emplace_back(SceneElementFactory::createSceneObject(position, primitiveType));
+  this->sceneObjects.emplace_back(SceneElementFactory::createSceneObject(position, primitiveType));
 }
 
-void SceneManager::removeElement(const SceneObject *sceneObject) {
-  auto it = std::find_if(this->sceneElements.begin(), this->sceneElements.end(), [&](auto &&obj) { return obj.get() == sceneObject; });
-  if (it->get() == this->selectedSceneOject) {
-    this->selectedSceneOject = nullptr;
+void SceneManager::removeObject(const SceneObject *sceneObject) {
+  auto it = std::find_if(this->sceneObjects.begin(), this->sceneObjects.end(), [&](auto &&obj) { return obj.get() == sceneObject; });
+  auto selectedIt = std::find(this->selectedSceneObjects.begin(), this->selectedSceneObjects.end(), sceneObject);
+
+  if (it != this->sceneObjects.end()) {
+    this->sceneObjects.erase(it);
   }
-  sceneElements.erase(it);
+  if (selectedIt != this->selectedSceneObjects.end()) {
+    this->selectedSceneObjects.erase(selectedIt);
+  }
+}
+
+void SceneManager::removeAllSelectedObjects() {
+  for (auto &&selectedObject : this->selectedSceneObjects) {
+    auto it = std::find_if(this->sceneObjects.begin(), this->sceneObjects.end(), [&](auto &&obj) { return obj.get() == selectedObject; });
+    if (it != this->sceneObjects.end()) {
+      this->sceneObjects.erase(it);
+    }
+  }
+
+  this->selectedSceneObjects.clear();
 }
 
 void SceneManager::drawScene() {
-  for (const auto &element : sceneElements) {
-    bool isSelected = element.get() == this->selectedSceneOject;
+  for (auto &&element : this->sceneObjects) {
+    bool isSelected = std::find(this->selectedSceneObjects.begin(), this->selectedSceneObjects.end(), element.get()) != this->selectedSceneObjects.end();
     element.get()->draw(isSelected);
   }
 }
 
 void SceneManager::drawPropertiesPanel() {
-  ImGui::Text("Object Properties :");
-  ImGui::Separator();
-  if (!this->selectedSceneOject) {
-    return;
-  }
-  ImGui::BeginGroup();
-  this->selectedSceneOject->draw_properties();
-  ImGui::EndGroup();
+  // TODO : Implement this
+  // ImGui::Text("Object Properties :");
+  // ImGui::Separator();
+  // if (!this->selectedSceneOject) {
+  //   return;
+  // }
+  // ImGui::BeginGroup();
+  // this->selectedSceneOject->draw_properties();
+  // ImGui::EndGroup();
 }
 
 const std::vector<std::unique_ptr<SceneObject>> &SceneManager::getObjects() const {
-  return this->sceneElements;
+  return this->sceneObjects;
 }
 
 void SceneManager::setSelectedSceneObject(const SceneObject *sceneObject) {
-  auto it = std::find_if(this->sceneElements.begin(), this->sceneElements.end(), [&](auto &&obj) { return obj.get() == sceneObject; });
-  this->selectedSceneOject = it->get();
+  auto it = std::find_if(this->sceneObjects.begin(), this->sceneObjects.end(), [&](auto &&obj) { return obj.get() == sceneObject; });
+  if (it != this->sceneObjects.end()) {
+    this->selectedSceneObjects.clear();
+    this->selectedSceneObjects.push_back(it->get());
+  }
+}
+
+void SceneManager::addSelectedSceneObject(const SceneObject *sceneObject) {
+  auto it = std::find_if(this->sceneObjects.begin(), this->sceneObjects.end(), [&](auto &&obj) { return obj.get() == sceneObject; });
+  if (it != this->sceneObjects.end()) {
+    this->selectedSceneObjects.push_back(it->get());
+  }
+}
+
+const std::vector<SceneObject *> &SceneManager::getSelectedObject() const {
+  return this->selectedSceneObjects;
 }
 
 const SceneObject *SceneManager::getSelectedObject() const {
@@ -57,6 +87,6 @@ const SceneObject *SceneManager::getSelectedObject() const {
 }
 
 void SceneManager::clearScene() {
-  this->selectedSceneOject = nullptr;
-  sceneElements.clear();
+  this->selectedSceneObjects.clear();
+  this->sceneObjects.clear();
 }
