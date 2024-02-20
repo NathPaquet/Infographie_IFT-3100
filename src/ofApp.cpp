@@ -103,8 +103,6 @@ void ofApp::drawSceneElementMenu() {
   ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX(), ofGetWindowPositionY()), ImGuiCond_Always);
   ImGui::SetNextWindowSize(ImVec2(200, ofGetHeight()), ImGuiCond_Always);
   if (ImGui::Begin("Scene Element", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse)) {
-    this->sceneGraph->drawSceneGraphElements();
-
     if (ImGui::Button("Add Sphere", ImVec2(180, 30))) {
       currentElementToAdd = ElementType::SPHERE;
       this->cursor.setCursorMode(CursorMode::ADDING);
@@ -123,6 +121,8 @@ void ofApp::drawSceneElementMenu() {
     if (ImGui::Button("Remove Element", ImVec2(180, 30))) {
       this->cursor.setCursorMode(CursorMode::REMOVING);
     }
+
+    this->sceneGraph->drawSceneGraphElements();
 
     ImGui::End();
   }
