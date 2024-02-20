@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ofMain.h"
 #include "sceneObject.h"
 
 class CubicPlanet : public SceneObject {

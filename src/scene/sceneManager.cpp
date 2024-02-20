@@ -82,8 +82,8 @@ const std::vector<SceneObject *> &SceneManager::getSelectedObject() const {
   return this->selectedSceneObjects;
 }
 
-const SceneObject *SceneManager::getSelectedObject() const {
-  return this->selectedSceneOject;
+std::vector<SceneObject *> &SceneManager::getSelectedObjectReference() {
+  return this->selectedSceneObjects;
 }
 
 void SceneManager::clearScene() {

@@ -1,6 +1,7 @@
 #include "CubicPlanet.h"
 
 #include "ImageImporter.h"
+#include "properties/Property.h"
 
 void CubicPlanet::draw_properties() {
   SceneObject::draw_properties();
@@ -12,6 +13,8 @@ void CubicPlanet::draw_properties() {
 }
 
 CubicPlanet::CubicPlanet(const float x, const float y, const float z) {
+  this->properties.emplace(std::make_pair("Size", std::make_unique<Property<float>>("Size", 20.f)));
+
   auto box = ofBoxPrimitive(this->size, this->size, this->size);
   this->mainMesh = box.getMesh();
 

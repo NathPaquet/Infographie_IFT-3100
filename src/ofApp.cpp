@@ -89,7 +89,7 @@ void ofApp::drawPropertiesPanel() {
   ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + ofGetWidth() - window_width, ofGetWindowPositionY()), ImGuiCond_Always);
   ImGui::SetNextWindowSize(ImVec2(window_width, ofGetHeight()), ImGuiCond_Always);
   if (ImGui::Begin("PropertiesPanel", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse)) {
-    this->sceneManager->drawPropertiesPanel();
+    this->propertiesPanel->drawPanel(this->sceneManager->getSelectedObjectReference());
     ImGui::End();
   }
 }

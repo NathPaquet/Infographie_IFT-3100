@@ -5,6 +5,7 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxImGui.h"
+#include "properties/PropertiesPanel.h"
 #include "raycasting/ray.h"
 #include "scene/sceneGraph.h"
 #include "scene/sceneManager.h"
@@ -22,6 +23,7 @@ public:
 
   std::unique_ptr<SceneManager> sceneManager;
   std::unique_ptr<SceneGraph> sceneGraph;
+  std::unique_ptr<PropertiesPanel> propertiesPanel;
   ofxImGui::Gui gui;
   ofEasyCam camera;
   ofLight light;

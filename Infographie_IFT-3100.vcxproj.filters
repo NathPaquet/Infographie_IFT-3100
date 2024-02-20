@@ -150,6 +150,12 @@
     <ClCompile Include="src\layouts\export\ExportMenu.cpp">
       <Filter>src\layouts\export</Filter>
     </ClCompile>
+    <ClCompile Include="src\properties\Property.cpp">
+      <Filter>src\properties</Filter>
+    </ClCompile>
+    <ClCompile Include="src\properties\PropertiesPanel.cpp">
+      <Filter>src\properties</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -224,6 +230,8 @@
     <Filter Include="addons\ofxImGui\libs\imgui\src">
       <UniqueIdentifier>{49317644--66E-0-49-B7-9-A1D-E77674B0F901}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\properties">
+      <UniqueIdentifier>{4debb71c-ac7e-4ab1-a703-af43346f5e6f}</UniqueIdentifier>
     <Filter Include="src\layouts\export">
       <UniqueIdentifier>{975cd857-29f2-4ffd-8662-ee869bc1870a}</UniqueIdentifier>
     </Filter>
@@ -653,6 +661,12 @@
       <Filter>src\scene</Filter>
     <ClInclude Include="src\layouts\export\ExportMenu.h">
       <Filter>src\layouts\export</Filter>
+    </ClInclude>
+    <ClInclude Include="src\properties\Property.h">
+      <Filter>src\properties</Filter>
+    </ClInclude>
+    <ClInclude Include="src\properties\PropertiesPanel.h">
+      <Filter>src\properties</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

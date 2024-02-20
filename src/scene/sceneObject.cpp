@@ -40,6 +40,11 @@ void SceneObject::draw_properties() {
   this->colorPicker.createColorPicker(this->color);
 }
 
+std::map<std::string, std::unique_ptr<PropertyBase>> &SceneObject::getProperties() {
+  // TODO : we shouldn't make a copy here
+  return this->properties;
+}
+
 const of3dPrimitive &SceneObject::getPrimitive() const {
   return *this->primitive;
 }

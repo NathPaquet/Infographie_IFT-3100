@@ -18,6 +18,7 @@ public:
   void setSelectedSceneObject(const SceneObject *sceneObject);
   void addSelectedSceneObject(const SceneObject *sceneObject);
   const std::vector<SceneObject *> &getSelectedObject() const;
+  std::vector<SceneObject *> &getSelectedObjectReference();
 
 private:
   void clearScene();
