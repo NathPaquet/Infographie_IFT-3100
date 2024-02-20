@@ -47,18 +47,6 @@ void SceneManager::drawScene() {
   }
 }
 
-void SceneManager::drawPropertiesPanel() {
-  // TODO : Implement this
-  // ImGui::Text("Object Properties :");
-  // ImGui::Separator();
-  // if (!this->selectedSceneOject) {
-  //   return;
-  // }
-  // ImGui::BeginGroup();
-  // this->selectedSceneOject->draw_properties();
-  // ImGui::EndGroup();
-}
-
 const std::vector<std::unique_ptr<SceneObject>> &SceneManager::getObjects() const {
   return this->sceneObjects;
 }
@@ -71,10 +59,14 @@ void SceneManager::setSelectedSceneObject(const SceneObject *sceneObject) {
   }
 }
 
-void SceneManager::addSelectedSceneObject(const SceneObject *sceneObject) {
+void SceneManager::clickSelectionSceneObject(const SceneObject *sceneObject) {
   auto it = std::find_if(this->sceneObjects.begin(), this->sceneObjects.end(), [&](auto &&obj) { return obj.get() == sceneObject; });
   if (it != this->sceneObjects.end()) {
-    this->selectedSceneObjects.push_back(it->get());
+    if (std::find(this->selectedSceneObjects.begin(), this->selectedSceneObjects.end(), it->get()) != this->selectedSceneObjects.end()) {
+      this->selectedSceneObjects.erase(std::remove(this->selectedSceneObjects.begin(), this->selectedSceneObjects.end(), it->get()), this->selectedSceneObjects.end());
+    } else {
+      this->selectedSceneObjects.push_back(it->get());
+    }
   }
 }
 

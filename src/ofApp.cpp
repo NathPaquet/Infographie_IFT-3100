@@ -209,7 +209,11 @@ void ofApp::processMouseActions() {
 
   if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) && isMouseClickInScene()) {
     if (found && this->cursor.getCursorMode() == CursorMode::NAVIGATION) {
-      sceneManager->setSelectedSceneObject(foundSceneObject);
+      if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftCtrl))) {
+        sceneManager->clickSelectionSceneObject(foundSceneObject);
+      } else {
+        sceneManager->setSelectedSceneObject(foundSceneObject);
+      }
 
     } else if (found && this->cursor.getCursorMode() == CursorMode::REMOVING) {
       sceneManager->removeObject(foundSceneObject); // TODO : Ajouter une nouvelle m�thode pour supprimer un objet
