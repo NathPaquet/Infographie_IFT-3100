@@ -6,12 +6,13 @@
 class PropertiesPanel {
 public:
   PropertiesPanel();
-  void drawFloatProperty(Property<float> *property);
-  void drawColorProperty(Property<ofColor> *property);
-  void drawImageImport(Property<ofImage> *property);
-  void drawPanel(std::vector<SceneObject *> &objects);
+  void drawFloatProperty(std::vector<PropertyBase *> &objectsProperty);
+  void drawColorProperty(std::vector<PropertyBase *> &objectsProperty);
+  void drawImageImport(std::vector<PropertyBase *> &objectsProperty);
+  void drawPropertiesPanel(std::vector<SceneObject *> &objects);
 
 private:
-  std::map<PROPERTY_ID, std::function<void(PropertyBase *)>> propertyDrawFunctions;
+  std::map<PROPERTY_ID, std::function<void(std::vector<PropertyBase *>)>> propertyDrawFunctions;
+  std::map<PROPERTY_ID, std::vector<PropertyBase *>> findCommonProperties(const std::vector<SceneObject *> &objects);
   ColorPicker colorPicker;
 };
