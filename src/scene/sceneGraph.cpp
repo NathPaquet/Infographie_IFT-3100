@@ -33,7 +33,11 @@ void SceneGraph::drawSceneGraphElements() {
     ImGui::EndChild();
 
     if (ImGui::IsItemClicked()) {
-      sceneManager.setSelectedSceneObject(sceneObjectPtr.get());
+      if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftCtrl))) {
+        sceneManager.clickSelectionSceneObject(sceneObjectPtr.get());
+      } else {
+        sceneManager.setSelectedSceneObject(sceneObjectPtr.get());
+      }
     }
   }
 }
