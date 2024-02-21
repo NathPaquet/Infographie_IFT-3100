@@ -2,9 +2,11 @@
 #include <string>
 
 enum class PROPERTY_ID {
-  SIZE,
+  // Place common properties here
   COLOR,
   IMAGE_IMPORT,
+  // Place object specific properties here
+  SIZE,
   RADIUS,
   HEIGHT
 };
