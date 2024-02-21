@@ -48,8 +48,8 @@ void SceneObject::updateProperties() {
     this->mTex.clear();
     this->properties.at(PROPERTY_ID::IMAGE_IMPORT)->setChanged(false);
   } else if (this->properties.at(PROPERTY_ID::ANGLES)->isValueChanged()) {
-    auto angle = this->getPropertyValue<ofVec3f>(PROPERTY_ID::ANGLES);
-    this->primitive.get()->setOrientation(angle);
+    auto angles = this->getPropertyValue<ofVec3f>(PROPERTY_ID::ANGLES);
+    this->primitive.get()->setOrientation(angles);
   }
 }
 
