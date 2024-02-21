@@ -3,6 +3,9 @@
 #include "ImageImporter.h"
 #include "imgui.h"
 
+const float PropertiesPanel::MIN_FLOAT_VALUE = 0.0f;
+const float PropertiesPanel::MAX_FLOAT_VALUE = 500.0f;
+
 PropertiesPanel::PropertiesPanel() {
   auto floatDraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawFloatProperty(objectsProperty); };
   auto imageImportDraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawImageImport(objectsProperty); };
@@ -20,7 +23,7 @@ void PropertiesPanel::drawFloatProperty(std::vector<PropertyBase *> &objectsProp
   auto firstObjectProperty = dynamic_cast<Property<float> *>(objectsProperty[0]);
   auto propertyValue = firstObjectProperty->getValue();
 
-  if (ImGui::SliderFloat(toString(firstObjectProperty->getId()), &propertyValue, 0.f, 500.f, "size")) {
+  if (ImGui::SliderFloat(toString(firstObjectProperty->getId()), &propertyValue, MIN_FLOAT_VALUE, MAX_FLOAT_VALUE, "size")) { // Returns true if the value was changed
     for (auto &&objectProperty : objectsProperty) {
       auto property = dynamic_cast<Property<float> *>(objectProperty);
       property->setValue(propertyValue);
@@ -32,7 +35,7 @@ void PropertiesPanel::drawColorProperty(std::vector<PropertyBase *> &objectsProp
   auto firstObjectProperty = dynamic_cast<Property<ofColor> *>(objectsProperty[0]);
   auto propertyValue = firstObjectProperty->getValue();
 
-  if (this->colorPicker.createColorPicker(propertyValue)) {
+  if (this->colorPicker.createColorPicker(propertyValue)) { // Returns true if the value was changed
     for (auto &&objectProperty : objectsProperty) {
       auto property = dynamic_cast<Property<ofColor> *>(objectProperty);
       property->setValue(propertyValue);
@@ -41,10 +44,10 @@ void PropertiesPanel::drawColorProperty(std::vector<PropertyBase *> &objectsProp
 }
 
 void PropertiesPanel::drawImageImport(std::vector<PropertyBase *> &objectsProperty) {
-  if (ImGui::Button("Import image", ImVec2(100.f, 30.f))) {
+  if (ImGui::Button("Import image", ImVec2(100.f, 30.f))) { // Returns true if the button was pressed
     ImageImporter::importImage(objectsProperty);
   }
-  if (ImGui::Button("Remove image", ImVec2(100.f, 30.f))) {
+  if (ImGui::Button("Remove image", ImVec2(100.f, 30.f))) { // Returns true if the button was pressed
     for (auto &&objectProperty : objectsProperty) {
       auto property = dynamic_cast<Property<ofImage> *>(objectProperty);
       property->getValue().clear();
