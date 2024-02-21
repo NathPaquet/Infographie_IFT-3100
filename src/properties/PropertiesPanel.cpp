@@ -22,18 +22,23 @@ PropertiesPanel::PropertiesPanel() {
 void PropertiesPanel::drawFloatProperty(std::vector<PropertyBase *> &objectsProperty) {
   auto firstObjectProperty = dynamic_cast<Property<float> *>(objectsProperty[0]);
   auto propertyValue = firstObjectProperty->getValue();
+
   ImGui::SeparatorText(toString(firstObjectProperty->getId()));
-  if (ImGui::SliderFloat(" ", &propertyValue, MIN_FLOAT_VALUE, MAX_FLOAT_VALUE, NULL)) { // Returns true if the value was changed
+
+  if (ImGui::SliderFloat(toString(firstObjectProperty->getId()), &propertyValue, MIN_FLOAT_VALUE, MAX_FLOAT_VALUE, NULL, ImGuiSliderFlags_AlwaysClamp)) { // Returns true if the value was changed
     for (auto &&objectProperty : objectsProperty) {
       auto property = dynamic_cast<Property<float> *>(objectProperty);
       property->setValue(propertyValue);
     }
   }
+  ImGui::SetItemTooltip("CTRL+Click to input value.");
 }
 
 void PropertiesPanel::drawColorProperty(std::vector<PropertyBase *> &objectsProperty) {
   auto firstObjectProperty = dynamic_cast<Property<ofColor> *>(objectsProperty[0]);
   auto propertyValue = firstObjectProperty->getValue();
+
+  ImGui::SeparatorText(toString(firstObjectProperty->getId()));
 
   if (this->colorPicker.createColorPicker(propertyValue)) { // Returns true if the value was changed
     for (auto &&objectProperty : objectsProperty) {
@@ -44,6 +49,9 @@ void PropertiesPanel::drawColorProperty(std::vector<PropertyBase *> &objectsProp
 }
 
 void PropertiesPanel::drawImageImport(std::vector<PropertyBase *> &objectsProperty) {
+  auto firstObjectProperty = dynamic_cast<Property<ofImage> *>(objectsProperty[0]);
+  ImGui::SeparatorText(toString(firstObjectProperty->getId()));
+
   if (ImGui::Button("Import image", ImVec2(100.f, 30.f))) { // Returns true if the button was pressed
     ImageImporter::importImage(objectsProperty);
   }

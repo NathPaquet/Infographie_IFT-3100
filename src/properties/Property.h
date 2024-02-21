@@ -11,8 +11,8 @@ enum class PROPERTY_ID {
   HEIGHT
 };
 
-static inline const char *toString(PROPERTY_ID v) {
-  switch (v) {
+static inline const char *toString(PROPERTY_ID propertyId) {
+  switch (propertyId) {
     case PROPERTY_ID::SIZE:
       return "Size";
     case PROPERTY_ID::RADIUS:
