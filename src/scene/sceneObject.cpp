@@ -5,6 +5,7 @@
 SceneObject::SceneObject() {
   this->addProperty<ofImage>(PROPERTY_ID::IMAGE_IMPORT, ofImage());
   this->addProperty<ofColor>(PROPERTY_ID::COLOR, ofColor::fromHsb(ofRandom(255), 255, 255));
+  this->addProperty<ofVec3f>(PROPERTY_ID::ANGLES, ofVec3f(0.f, 0.f, 0.f));
 }
 
 void SceneObject::draw(bool isSelected) {
@@ -46,6 +47,9 @@ void SceneObject::updateProperties() {
   } else if (this->properties.at(PROPERTY_ID::IMAGE_IMPORT)->isValueChanged()) {
     this->mTex.clear();
     this->properties.at(PROPERTY_ID::IMAGE_IMPORT)->setChanged(false);
+  } else if (this->properties.at(PROPERTY_ID::ANGLES)->isValueChanged()) {
+    auto angle = this->getPropertyValue<ofVec3f>(PROPERTY_ID::ANGLES);
+    this->primitive.get()->setOrientation(angle);
   }
 }
 

@@ -6,7 +6,8 @@ enum class PROPERTY_ID {
   COLOR,
   IMAGE_IMPORT,
   RADIUS,
-  HEIGHT
+  HEIGHT,
+  ANGLES
 };
 
 static inline const char *toString(PROPERTY_ID v) {
@@ -21,6 +22,8 @@ static inline const char *toString(PROPERTY_ID v) {
       return "Color";
     case PROPERTY_ID::IMAGE_IMPORT:
       return "Image Import";
+    case PROPERTY_ID::ANGLES:
+      return "Angles";
     default:
       return "Unknown";
   }

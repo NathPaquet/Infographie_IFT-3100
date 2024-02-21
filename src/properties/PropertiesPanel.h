@@ -9,6 +9,7 @@ public:
   void drawFloatProperty(Property<float> *property);
   void drawColorProperty(Property<ofColor> *property);
   void drawImageImport(Property<ofImage> *property);
+  void drawAngles(Property<ofVec3f> *property);
   void drawPanel(std::vector<SceneObject *> &objects);
 
 private:
