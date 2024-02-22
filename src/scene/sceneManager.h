@@ -13,15 +13,15 @@ public:
   void removeObject(const SceneObject *sceneObject);
   void removeAllSelectedObjects();
   void drawScene();
-  void drawPropertiesPanel();
   const std::vector<std::unique_ptr<SceneObject>> &getObjects() const;
   void setSelectedSceneObject(const SceneObject *sceneObject);
-  void addSelectedSceneObject(const SceneObject *sceneObject);
+  void clickSelectionSceneObject(const SceneObject *sceneObject);
   const std::vector<SceneObject *> &getSelectedObject() const;
   std::vector<SceneObject *> &getSelectedObjectReference();
 
 private:
   void clearScene();
+
   std::vector<SceneObject *> selectedSceneObjects;
   std::vector<std::unique_ptr<SceneObject>> sceneObjects;
 };

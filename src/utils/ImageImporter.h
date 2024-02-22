@@ -4,5 +4,5 @@
 
 class ImageImporter {
 public:
-  static void importImage(Property<ofImage> *property);
+  static void importImage(std::vector<PropertyBase *> objectsProperty);
 };

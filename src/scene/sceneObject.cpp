@@ -11,8 +11,7 @@ void SceneObject::draw(bool isSelected) {
   this->updateProperties();
   ofPushStyle();
   if (isSelected) {
-    ofColor complementaryColor(255 - this->color.r, 255 - this->color.g, 255 - this->color.b);
-    ofSetColor(complementaryColor);
+    ofSetColor(ofColor::white);
     primitive->drawWireframe();
   }
 

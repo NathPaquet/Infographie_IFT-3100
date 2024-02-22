@@ -4,11 +4,13 @@ ImVec4 ColorPicker::getNormalizedColor() const {
   return normalizedColor;
 }
 
-void ColorPicker::createColorPicker(ofColor &color) {
+bool ColorPicker::createColorPicker(ofColor &color) {
+  bool changed = false;
   normalizedColor = color;
   ImGui::Text("Color picker:");
   if (ImGui::ColorPicker3("Color Picker", (float *)&normalizedColor, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel)) {
     color = normalizedColor;
+    changed = true;
   }
 
   ImGui::Text("RGB slider:");
@@ -19,6 +21,7 @@ void ColorPicker::createColorPicker(ofColor &color) {
   if (rUsed || gUsed || bUsed) {
     normalizedColor = rgbToNormalized(ImVec4(rSlider, gSlider, bSlider, normalizedColor.w));
     color = normalizedColor;
+    changed = true;
   } else {
     ImVec4 rgb = normalizedToRgb(normalizedColor);
     rSlider = rgb.x;
@@ -34,12 +37,14 @@ void ColorPicker::createColorPicker(ofColor &color) {
   if (hUsed || sUsed || BUsed) {
     normalizedColor = hsbToNormalized(ImVec4(hSlider, sSlider, BSlider, normalizedColor.w));
     color = normalizedColor;
+    changed = true;
   } else {
     ImVec4 hsb = normalizedToHsb(normalizedColor);
     hSlider = hsb.x;
     sSlider = hsb.y;
     BSlider = hsb.z;
   }
+  return changed;
 }
 
 ImVec4 ColorPicker::normalizedToRgb(const ImVec4 &normalized) {
