@@ -92,7 +92,7 @@ void ofApp::drawPropertiesPanel() {
   ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + ofGetWidth() - window_width, ofGetWindowPositionY()), ImGuiCond_Always);
   ImGui::SetNextWindowSize(ImVec2(window_width, ofGetHeight()), ImGuiCond_Always);
   if (ImGui::Begin("PropertiesPanel", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize)) {
-    this->propertiesPanel->drawPanel(this->currentSceneManager->getSelectedObjectReference());
+    this->propertiesPanel->drawPropertiesPanel(this->currentSceneManager->getSelectedObjectReference());
     ImGui::End();
   }
 }
@@ -105,16 +105,22 @@ void ofApp::drawSceneElementMenu() {
   ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX(), ofGetWindowPositionY()), ImGuiCond_Always);
   ImGui::SetNextWindowSize(ImVec2(200, ofGetHeight()), ImGuiCond_Always);
   if (ImGui::Begin("Scene Element", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize)) {
-    this->sceneGraph->drawSceneGraphElements();
-
     if (this->isScene2D) {
       if (ImGui::Button("Add Triangle", ImVec2(180, 30))) {
         currentElementToAdd = ElementType::TRIANGLE;
         this->cursor.setCursorMode(CursorMode::ADDING);
       }
+      if (ImGui::Button("Add Square", ImVec2(180, 30))) {
+        currentElementToAdd = ElementType::SQUARE;
+        this->cursor.setCursorMode(CursorMode::ADDING);
+      }
+      if (ImGui::Button("Add circle", ImVec2(180, 30))) {
+        currentElementToAdd = ElementType::CIRCLE;
+        this->cursor.setCursorMode(CursorMode::ADDING);
+      }
     } else {
-        currentElementToAdd = ElementType::SPHERE;
       if (ImGui::Button("Add Sphere", ImVec2(180, 30))) {
+        currentElementToAdd = ElementType::SPHERE;
         this->cursor.setCursorMode(CursorMode::ADDING);
       }
 
@@ -220,7 +226,7 @@ void ofApp::processMouseActions() {
     this->camera.enableMouseInput();
   }
 
-  if (found && std::find(this->currentSceneManager->getSelectedObject().begin(), this->currentSceneManager->getSelectedObject().end(), maybeObject.value()) != this->sceneManager->getSelectedObject().end()) {
+  if (found && std::find(this->currentSceneManager->getSelectedObject().begin(), this->currentSceneManager->getSelectedObject().end(), maybeObject.value()) != this->currentSceneManager->getSelectedObject().end()) {
     if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
       shouldDragObject = true;
     }

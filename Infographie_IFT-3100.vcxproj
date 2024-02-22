@@ -113,6 +113,8 @@
     <ClCompile Include="src\properties\PropertiesPanel.cpp" />
     <ClCompile Include="src\properties\Property.cpp" />
     <ClCompile Include="src\raycasting\ray.cpp" />
+    <ClCompile Include="src\scene2D\Circle.cpp" />
+    <ClCompile Include="src\scene2D\Square.cpp" />
     <ClCompile Include="src\scene2D\Triangle.cpp" />
     <ClCompile Include="src\scene\CubicPlanet.cpp" />
     <ClCompile Include="src\scene\CylinderPlanet.cpp" />
@@ -165,6 +167,8 @@
     <ClInclude Include="src\properties\PropertiesPanel.h" />
     <ClInclude Include="src\properties\Property.h" />
     <ClInclude Include="src\raycasting\ray.h" />
+    <ClInclude Include="src\scene2D\Circle.h" />
+    <ClInclude Include="src\scene2D\Square.h" />
     <ClInclude Include="src\scene2D\Triangle.h" />
     <ClInclude Include="src\scene\CubicPlanet.h" />
     <ClInclude Include="src\scene\CylinderPlanet.h" />

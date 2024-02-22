@@ -160,6 +160,12 @@
     <ClCompile Include="src\scene2D\Triangle.cpp">
       <Filter>src\scene2D</Filter>
     </ClCompile>
+    <ClCompile Include="src\scene2D\Square.cpp">
+      <Filter>src\scene2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene2D\Circle.cpp">
+      <Filter>src\scene2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -678,6 +684,12 @@
       <Filter>addons\ofxImGui\libs\imgui\src</Filter>
     </ClInclude>
     <ClInclude Include="src\scene2D\Triangle.h">
+      <Filter>src\scene2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene2D\Square.h">
+      <Filter>src\scene2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene2D\Circle.h">
       <Filter>src\scene2D</Filter>
     </ClInclude>
   </ItemGroup>

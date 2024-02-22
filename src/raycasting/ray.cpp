@@ -2,6 +2,8 @@
 
 #include "SceneElementFactory.h"
 
+#include <scene2D/Circle.h>
+#include <scene2D/Square.h>
 #include <scene2D/Triangle.h>
 
 Ray::Ray(glm::vec3 origin, glm::vec3 direction) {
@@ -61,6 +63,12 @@ void Ray::drawPrimitivePreview(const ofColor &color, ElementType elementType, fl
       break;
     case ElementType::TRIANGLE:
       Triangle::drawDefaultPreview(*this, distance);
+      break;
+    case ElementType::SQUARE:
+      Square::drawDefaultPreview(*this, distance);
+      break;
+    case ElementType::CIRCLE:
+      Circle::drawDefaultPreview(*this, distance);
       break;
     default:
       ofDrawSphere(end, 20.f);
