@@ -28,11 +28,6 @@ Square::Square(const Ray &ray, const float &distance) {
 }
 
 void Square::drawDefaultPreview(const Ray &ray, const float &distance) {
-  ofPrimitiveMode mode = OF_PRIMITIVE_TRIANGLES;
-  std::vector<glm::vec3> vertices;
   auto centerPosition = ray.getOrigin() + distance * ray.getDirection();
-  ofDrawRectangle(
-      centerPosition,
-      20,
-      20);
+  ofDrawRectangle(centerPosition, 20, 20);
 }
