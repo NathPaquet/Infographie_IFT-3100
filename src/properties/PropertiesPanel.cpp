@@ -3,10 +3,10 @@
 #include "ImageImporter.h"
 #include "imgui.h"
 
-const float PropertiesPanel::MIN_FLOAT_VALUE = 0.0f;
-const float PropertiesPanel::MAX_FLOAT_VALUE = 500.0f;
-const float PropertiesPanel::MIN_ANGLE_VALUE = 0.0f;
-const float PropertiesPanel::MAX_ANGLE_VALUE = 360.0f;
+constexpr float MIN_FLOAT_VALUE = 0.0f;
+constexpr float MAX_FLOAT_VALUE = 500.0f;
+constexpr float MIN_ANGLE_VALUE = 0.0f;
+constexpr float MAX_ANGLE_VALUE = 360.0f;
 
 PropertiesPanel::PropertiesPanel() {
   auto floatDraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawFloatProperty(objectsProperty); };

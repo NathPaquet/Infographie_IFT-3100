@@ -6,7 +6,7 @@
 
 class SceneManager {
 public:
-  SceneManager(const ofEasyCam *camera);
+  SceneManager();
   ~SceneManager();
 
   void addElement(const ofVec3f &position, const ElementType primitiveType);
@@ -19,8 +19,6 @@ public:
   const std::vector<SceneObject *> &getSelectedObject() const;
   std::vector<SceneObject *> &getSelectedObjectReference();
   void setObjectPosition(const SceneObject *object, const ofVec3f &position);
-
-  const ofEasyCam *camera;
 
 private:
   void clearScene();

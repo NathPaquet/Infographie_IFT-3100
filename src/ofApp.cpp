@@ -15,7 +15,7 @@ void ofApp::setup() {
   ofEnableDepthTest();
   // required call
   gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable);
-  sceneManager = std::make_unique<SceneManager>(&camera);
+  sceneManager = std::make_unique<SceneManager>();
   sceneGraph = std::make_unique<SceneGraph>(*sceneManager);
   propertiesPanel = std::make_unique<PropertiesPanel>();
   backgroundImage.load("background.jpg");

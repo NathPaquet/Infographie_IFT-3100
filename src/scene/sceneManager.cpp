@@ -6,9 +6,8 @@
 #include "ofxImGui.h"
 #include "raycasting/ray.h"
 
-SceneManager::SceneManager(const ofEasyCam *camera) {
+SceneManager::SceneManager() {
   ofLogNotice("SceneManager") << "SceneManager constructor";
-  this->camera = camera;
 }
 
 SceneManager::~SceneManager() {
@@ -84,10 +83,6 @@ void SceneManager::clearScene() {
   this->selectedSceneObjects.clear();
   this->sceneObjects.clear();
 }
-
-// Planet::~Planet() {
-//   ofRemoveListener(ofEvents().mouseDragged, this, &SceneObject::mouseDragged);
-// }
 
 void SceneManager::setObjectPosition(const SceneObject *object, const ofVec3f &position) {
   auto it = std::find_if(this->sceneObjects.begin(), this->sceneObjects.end(), [&](auto &&obj) { return obj.get() == object; });
