@@ -8,7 +8,8 @@ enum class PROPERTY_ID {
   // Place object specific properties here
   SIZE,
   RADIUS,
-  HEIGHT
+  HEIGHT,
+  ANGLES
 };
 
 static inline const char *toString(PROPERTY_ID propertyId) {
@@ -23,6 +24,8 @@ static inline const char *toString(PROPERTY_ID propertyId) {
       return "Color";
     case PROPERTY_ID::IMAGE_IMPORT:
       return "Image Import";
+    case PROPERTY_ID::ANGLES:
+      return "Angles";
     default:
       return "Unknown";
   }

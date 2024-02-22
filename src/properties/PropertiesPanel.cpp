@@ -3,13 +3,16 @@
 #include "ImageImporter.h"
 #include "imgui.h"
 
-const float PropertiesPanel::MIN_FLOAT_VALUE = 0.0f;
-const float PropertiesPanel::MAX_FLOAT_VALUE = 500.0f;
+constexpr float MIN_FLOAT_VALUE = 0.0f;
+constexpr float MAX_FLOAT_VALUE = 500.0f;
+constexpr float MIN_ANGLE_VALUE = 0.0f;
+constexpr float MAX_ANGLE_VALUE = 360.0f;
 
 PropertiesPanel::PropertiesPanel() {
   auto floatDraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawFloatProperty(objectsProperty); };
   auto imageImportDraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawImageImport(objectsProperty); };
   auto colorDraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawColorProperty(objectsProperty); };
+  auto anglesDraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawAngles(objectsProperty); };
 
   propertyDrawFunctions.emplace(PROPERTY_ID::SIZE, floatDraw);
   propertyDrawFunctions.emplace(PROPERTY_ID::RADIUS, floatDraw);
@@ -17,6 +20,8 @@ PropertiesPanel::PropertiesPanel() {
 
   propertyDrawFunctions.emplace(PROPERTY_ID::COLOR, colorDraw);
   propertyDrawFunctions.emplace(PROPERTY_ID::IMAGE_IMPORT, imageImportDraw);
+
+  propertyDrawFunctions.emplace(PROPERTY_ID::ANGLES, anglesDraw);
 }
 
 void PropertiesPanel::drawFloatProperty(std::vector<PropertyBase *> &objectsProperty) {
@@ -31,7 +36,8 @@ void PropertiesPanel::drawFloatProperty(std::vector<PropertyBase *> &objectsProp
       property->setValue(propertyValue);
     }
   }
-  ImGui::SetItemTooltip("CTRL+Click to input value.");
+  if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
+    ImGui::SetItemTooltip("CTRL+Click to input value.");
 }
 
 void PropertiesPanel::drawColorProperty(std::vector<PropertyBase *> &objectsProperty) {
@@ -60,6 +66,29 @@ void PropertiesPanel::drawImageImport(std::vector<PropertyBase *> &objectsProper
       auto property = dynamic_cast<Property<ofImage> *>(objectProperty);
       property->getValue().clear();
       property->setChanged(true);
+    }
+  }
+}
+
+void PropertiesPanel::drawAngles(std::vector<PropertyBase *> &objectsProperty) {
+  auto firstObjectProperty = dynamic_cast<Property<ofVec3f> *>(objectsProperty[0]);
+  auto propertyValue = firstObjectProperty->getValue();
+
+  ImGui::SeparatorText(toString(firstObjectProperty->getId()));
+  bool angleXUsed = ImGui::SliderFloat("Angle X", &propertyValue.x, MIN_ANGLE_VALUE, MAX_ANGLE_VALUE, NULL, ImGuiSliderFlags_AlwaysClamp);
+  if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
+    ImGui::SetItemTooltip("CTRL+Click to input value.");
+  bool angleYUsed = ImGui::SliderFloat("Angle Y", &propertyValue.y, MIN_ANGLE_VALUE, MAX_ANGLE_VALUE, NULL, ImGuiSliderFlags_AlwaysClamp);
+  if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
+    ImGui::SetItemTooltip("CTRL+Click to input value.");
+  bool angleZUsed = ImGui::SliderFloat("Angle Z", &propertyValue.z, MIN_ANGLE_VALUE, MAX_ANGLE_VALUE, NULL, ImGuiSliderFlags_AlwaysClamp);
+  if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
+    ImGui::SetItemTooltip("CTRL+Click to input value.");
+
+  if (angleXUsed || angleYUsed || angleZUsed) {
+    for (auto &&objectProperty : objectsProperty) {
+      auto property = dynamic_cast<Property<ofVec3f> *>(objectProperty);
+      property->setValue(propertyValue);
     }
   }
 }

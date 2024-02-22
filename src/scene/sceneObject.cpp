@@ -5,6 +5,7 @@
 SceneObject::SceneObject() {
   this->addProperty<ofImage>(PROPERTY_ID::IMAGE_IMPORT, ofImage());
   this->addProperty<ofColor>(PROPERTY_ID::COLOR, ofColor::fromHsb(ofRandom(255), 255, 255));
+  this->addProperty<ofVec3f>(PROPERTY_ID::ANGLES, ofVec3f(0.f, 0.f, 0.f));
 }
 
 void SceneObject::draw(bool isSelected) {
@@ -42,12 +43,22 @@ void SceneObject::updateProperties() {
     this->mTex.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
     this->mTex.generateMipmap();
     this->properties.at(PROPERTY_ID::IMAGE_IMPORT)->setChanged(false);
-  } else if (this->properties.at(PROPERTY_ID::IMAGE_IMPORT)->isValueChanged()) {
+  }
+  if (this->properties.at(PROPERTY_ID::IMAGE_IMPORT)->isValueChanged()) {
     this->mTex.clear();
     this->properties.at(PROPERTY_ID::IMAGE_IMPORT)->setChanged(false);
+  }
+  if (this->properties.at(PROPERTY_ID::ANGLES)->isValueChanged()) {
+    this->primitive.get()->setOrientation(this->getPropertyValue<ofVec3f>(PROPERTY_ID::ANGLES));
+    this->properties.at(PROPERTY_ID::ANGLES)->setChanged(false);
   }
 }
 
 const of3dPrimitive &SceneObject::getPrimitive() const {
   return *this->primitive;
+}
+
+void SceneObject::setPosition(ofVec3f vec) {
+  this->position = vec;
+  this->primitive->setGlobalPosition(vec);
 }

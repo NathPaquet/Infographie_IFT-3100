@@ -3,9 +3,11 @@
 #include "ImageImporter.h"
 #include "properties/Property.h"
 
+constexpr float DEFAULT_SIZE = 20.0f;
+
 CubicPlanet::CubicPlanet(const float x, const float y, const float z) {
   SceneObject();
-  this->addProperty<float>(PROPERTY_ID::SIZE, 20.f);
+  this->addProperty<float>(PROPERTY_ID::SIZE, DEFAULT_SIZE);
 
   float size = this->getPropertyValue<float>(PROPERTY_ID::SIZE);
   auto box = ofBoxPrimitive(size, size, size);
@@ -29,8 +31,5 @@ void CubicPlanet::updateProperties() {
 }
 
 void CubicPlanet::set_size(const float size) {
-  auto box = ofBoxPrimitive(size, size, size);
-  this->primitive.reset(nullptr);
-  this->primitive = std::make_unique<ofBoxPrimitive>(std::move(box));
-  this->primitive->setGlobalPosition(position.x, position.y, position.z);
+  this->primitive.get()->setScale(size / DEFAULT_SIZE);
 }

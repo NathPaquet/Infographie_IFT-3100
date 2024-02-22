@@ -18,6 +18,7 @@ public:
   void clickSelectionSceneObject(const SceneObject *sceneObject);
   const std::vector<SceneObject *> &getSelectedObject() const;
   std::vector<SceneObject *> &getSelectedObjectReference();
+  void setObjectPosition(const SceneObject *object, const ofVec3f &position);
 
 private:
   void clearScene();
