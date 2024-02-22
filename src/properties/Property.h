@@ -2,16 +2,18 @@
 #include <string>
 
 enum class PROPERTY_ID {
-  SIZE,
+  // Place common properties here
   COLOR,
   IMAGE_IMPORT,
+  // Place object specific properties here
+  SIZE,
   RADIUS,
   HEIGHT,
   ANGLES
 };
 
-static inline const char *toString(PROPERTY_ID v) {
-  switch (v) {
+static inline const char *toString(PROPERTY_ID propertyId) {
+  switch (propertyId) {
     case PROPERTY_ID::SIZE:
       return "Size";
     case PROPERTY_ID::RADIUS:
