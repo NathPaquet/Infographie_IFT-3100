@@ -10,8 +10,8 @@ public:
   Ray(glm::vec3 origin, glm::vec3 direction);
   void set(glm::vec3 origin, glm::vec3 direction);
 
-  const glm::vec3 getOrigin();
-  const glm::vec3 getDirection();
+  const glm::vec3 &getOrigin() const;
+  const glm::vec3 &getDirection() const;
   bool isRayCollidingWithPrimitive(const of3dPrimitive &primitive, glm::vec2 &baricentricCoords, float &distance);
   void drawPrimitivePreview(const ofColor &color, ElementType elementType, float distance);
 

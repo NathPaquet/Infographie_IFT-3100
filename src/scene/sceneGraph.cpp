@@ -1,16 +1,19 @@
 #include "sceneGraph.h"
 
-SceneGraph::SceneGraph(SceneManager &sceneManager):
-    sceneManager(sceneManager) {
+SceneGraph::SceneGraph(SceneManager *sceneManager):
+    sceneManager(sceneManager) {}
+
+void SceneGraph::setSceneManager(SceneManager *sceneManager) {
+  this->sceneManager = sceneManager;
 }
 
 void SceneGraph::drawSceneGraphElements() {
-  const auto &sceneObjects = sceneManager.getObjects();
+  const auto &sceneObjects = sceneManager->getObjects();
 
   float elementBoxHeight = 50.0f;
 
   for (auto &&sceneObjectPtr : sceneObjects) {
-    bool isSelected = std::find(sceneManager.getSelectedObject().begin(), sceneManager.getSelectedObject().end(), sceneObjectPtr.get()) != sceneManager.getSelectedObject().end();
+    bool isSelected = std::find(sceneManager->getSelectedObject().begin(), sceneManager->getSelectedObject().end(), sceneObjectPtr.get()) != sceneManager->getSelectedObject().end();
 
     ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 2.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 2.0f);
@@ -34,9 +37,9 @@ void SceneGraph::drawSceneGraphElements() {
 
     if (ImGui::IsItemClicked()) {
       if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftCtrl))) {
-        sceneManager.clickSelectionSceneObject(sceneObjectPtr.get());
+        sceneManager->clickSelectionSceneObject(sceneObjectPtr.get());
       } else {
-        sceneManager.setSelectedSceneObject(sceneObjectPtr.get());
+        sceneManager->setSelectedSceneObject(sceneObjectPtr.get());
       }
     }
   }

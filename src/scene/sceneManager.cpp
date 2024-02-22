@@ -4,7 +4,6 @@
 #include "ImHelpers.h"
 #include "Planet.h"
 #include "ofxImGui.h"
-#include "raycasting/ray.h"
 
 SceneManager::SceneManager() {
   ofLogNotice("SceneManager") << "SceneManager constructor";
@@ -14,8 +13,8 @@ SceneManager::~SceneManager() {
   clearScene();
 }
 
-void SceneManager::addElement(const ofVec3f &position, const ElementType primitiveType) {
-  this->sceneObjects.emplace_back(SceneElementFactory::createSceneObject(position, primitiveType));
+void SceneManager::addElement(const Ray &ray, const float &distance, const ElementType primitiveType) {
+  this->sceneObjects.emplace_back(SceneElementFactory::createSceneObject(ray, distance, primitiveType));
 }
 
 void SceneManager::removeObject(const SceneObject *sceneObject) {

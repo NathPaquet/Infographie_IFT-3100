@@ -2,6 +2,7 @@
 
 #include "SceneElementFactory.h"
 #include "ofMain.h"
+#include "ray.h"
 #include "sceneObject.h"
 
 class SceneManager {
@@ -9,7 +10,7 @@ public:
   SceneManager();
   ~SceneManager();
 
-  void addElement(const ofVec3f &position, const ElementType primitiveType);
+  void addElement(const Ray &ray, const float &distance, const ElementType primitiveType);
   void removeObject(const SceneObject *sceneObject);
   void removeAllSelectedObjects();
   void drawScene();
