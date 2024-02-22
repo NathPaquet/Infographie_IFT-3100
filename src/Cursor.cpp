@@ -25,6 +25,32 @@ void Cursor::drawCursor(float x, float y) {
   }
 }
 
+glm::highp_vec3 Cursor::findMouseClick3DPosition(const ofEasyCam &camera) const {
+  const glm::vec3 screenMouse(ofGetMouseX(), ofGetMouseY(), 0);
+  auto &&worldMouse = camera.screenToWorld(screenMouse);
+  auto &&worldMouseEnd = camera.screenToWorld(glm::vec3(screenMouse.x, screenMouse.y, 1.0f));
+  auto &&worldMouseDirection = worldMouseEnd - worldMouse;
+  return worldMouseDirection;
+}
+
+std::optional<const SceneObject *> Cursor::setRayWithCollidingObject(const std::vector<std::unique_ptr<SceneObject>> &objects, const ofEasyCam &camera, Ray &ray) {
+  auto worldMouseDirection = findMouseClick3DPosition(camera);
+  ray.set(camera.getGlobalPosition(), worldMouseDirection);
+
+  glm::vec2 baricentricCoordinates;
+  float distance;
+  float distanceToClosestIntersection = numeric_limits<float>::max();
+  const SceneObject *foundSceneObject{nullptr};
+  for (auto &&object : objects) {
+    bool intersects = ray.isRayCollidingWithPrimitive(object.get()->getPrimitive(), baricentricCoordinates, distance);
+    if (intersects && (distance < distanceToClosestIntersection)) {
+      foundSceneObject = object.get();
+      distanceToClosestIntersection = distance;
+    }
+  }
+  return foundSceneObject ? std::optional(foundSceneObject) : std::nullopt;
+}
+
 void Cursor::drawNavigationCursor(float x, float y) {
 }
 

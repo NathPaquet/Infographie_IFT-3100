@@ -14,31 +14,33 @@ void ofApp::setup() {
   ofDisableAlphaBlending();
   ofEnableDepthTest();
   // required call
-  gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable);
-  sceneManager = std::make_unique<SceneManager>();
-  sceneGraph = std::make_unique<SceneGraph>(*sceneManager);
-  propertiesPanel = std::make_unique<PropertiesPanel>();
-  backgroundImage.load("background.jpg");
+  this->gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable);
+  this->sceneManager = std::make_unique<SceneManager>();
+  this->scene2DManager = std::make_unique<SceneManager>();
+  this->currentSceneManager = this->sceneManager.get();
+  this->sceneGraph = std::make_unique<SceneGraph>(this->currentSceneManager);
+  this->propertiesPanel = std::make_unique<PropertiesPanel>();
+  this->backgroundImage.load("background.jpg");
 
   ofDisableArbTex();
-  backgroundTexture = backgroundImage.getTexture();
-  backgroundTexture.enableMipmap();
-  backgroundTexture.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
-  backgroundTexture.generateMipmap();
+  this->backgroundTexture = this->backgroundImage.getTexture();
+  this->backgroundTexture.enableMipmap();
+  this->backgroundTexture.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+  this->backgroundTexture.generateMipmap();
 
-  sphere.enableTextures();
+  this->sphere.enableTextures();
   // Initialize camera
-  camera.setDistance(200.f);
+  this->camera.setDistance(200.f);
   this->light.setPosition(-500, 500, 500);
   this->light.enable();
   this->ray = Ray();
   // backgroundColor is stored as an ImVec4 type but can handle ofColor
-  backgroundColor = ofColor(114, 144, 154);
+  this->backgroundColor = ofColor(114, 144, 154);
 }
 
 //--------------------------------------------------------------
 void ofApp::exit() {
-  gui.exit();
+  this->gui.exit();
 }
 
 glm::highp_vec3 ofApp::findMouseClick3DPosition() const {
@@ -66,7 +68,7 @@ void ofApp::draw() {
   ofPopStyle();
 
   ofDrawCircle(0, 0, 72);
-  sceneManager->drawScene();
+  currentSceneManager->drawScene();
 
   gui.begin();
 
@@ -90,7 +92,7 @@ void ofApp::drawPropertiesPanel() {
   ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + ofGetWidth() - window_width, ofGetWindowPositionY()), ImGuiCond_Always);
   ImGui::SetNextWindowSize(ImVec2(window_width, ofGetHeight()), ImGuiCond_Always);
   if (ImGui::Begin("PropertiesPanel", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize)) {
-    this->propertiesPanel->drawPropertiesPanel(this->sceneManager->getSelectedObjectReference());
+    this->propertiesPanel->drawPanel(this->currentSceneManager->getSelectedObjectReference());
     ImGui::End();
   }
 }
@@ -103,19 +105,28 @@ void ofApp::drawSceneElementMenu() {
   ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX(), ofGetWindowPositionY()), ImGuiCond_Always);
   ImGui::SetNextWindowSize(ImVec2(200, ofGetHeight()), ImGuiCond_Always);
   if (ImGui::Begin("Scene Element", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize)) {
-    if (ImGui::Button("Add Sphere", ImVec2(180, 30))) {
-      currentElementToAdd = ElementType::SPHERE;
-      this->cursor.setCursorMode(CursorMode::ADDING);
-    }
+    this->sceneGraph->drawSceneGraphElements();
 
-    if (ImGui::Button("Add Cube", ImVec2(180, 30))) {
-      currentElementToAdd = ElementType::CUBIC;
-      this->cursor.setCursorMode(CursorMode::ADDING);
-    }
+    if (this->isScene2D) {
+      if (ImGui::Button("Add Triangle", ImVec2(180, 30))) {
+        currentElementToAdd = ElementType::TRIANGLE;
+        this->cursor.setCursorMode(CursorMode::ADDING);
+      }
+    } else {
+        currentElementToAdd = ElementType::SPHERE;
+      if (ImGui::Button("Add Sphere", ImVec2(180, 30))) {
+        this->cursor.setCursorMode(CursorMode::ADDING);
+      }
 
-    if (ImGui::Button("Add Cylinder", ImVec2(180, 30))) {
-      currentElementToAdd = ElementType::CYLINDER;
-      this->cursor.setCursorMode(CursorMode::ADDING);
+      if (ImGui::Button("Add Cube", ImVec2(180, 30))) {
+        currentElementToAdd = ElementType::CUBIC;
+        this->cursor.setCursorMode(CursorMode::ADDING);
+      }
+
+      if (ImGui::Button("Add Cylinder", ImVec2(180, 30))) {
+        currentElementToAdd = ElementType::CYLINDER;
+        this->cursor.setCursorMode(CursorMode::ADDING);
+      }
     }
 
     if (ImGui::Button("Remove Element", ImVec2(180, 30))) {
@@ -172,9 +183,16 @@ void ofApp::createFileMenu() {
 void ofApp::createViewMenu() {
   if (ImGui::BeginMenu("View")) {
     if (ImGui::MenuItem("3D Scene")) {
+      this->currentSceneManager = this->sceneManager.get();
+      this->isScene2D = false;
+      this->sceneGraph->setSceneManager(this->currentSceneManager);
       ofLogNotice() << "3D Scene button pressed";
     }
     if (ImGui::MenuItem("2D Scene")) {
+      this->currentSceneManager = this->scene2DManager.get();
+      this->sceneGraph->setSceneManager(this->currentSceneManager);
+      this->isScene2D = true;
+
       ofLogNotice() << "2D Scene button pressed";
     }
     ImGui::EndMenu();
@@ -182,70 +200,55 @@ void ofApp::createViewMenu() {
 }
 
 void ofApp::processMouseActions() {
+  if (this->shouldDragObject) {
+    this->camera.disableMouseInput();
+  }
   if (!isMouseClickInScene()) {
     this->camera.disableMouseInput();
     return;
   }
-  this->camera.enableMouseInput();
-  auto worldMouseDirection = findMouseClick3DPosition();
-  this->ray.set(camera.getGlobalPosition(), worldMouseDirection);
 
-  // drawing showcase
-  float radius = 10.f;
-
-  glm::vec2 baricentricCoordinates;
-  float distance;
-  bool found = false;
-  float distanceToClosestIntersection = numeric_limits<float>::max();
-  const SceneObject *foundSceneObject;
-  ofColor color;
-  for (auto &&object : this->sceneManager->getObjects()) {
-    bool intersects = ray.isRayCollidingWithPrimitive(object.get()->getPrimitive(), baricentricCoordinates, distance);
-    color = ofColor(240, 233, 233);
-    if (intersects && (distance < distanceToClosestIntersection)) {
-      found = true;
-      foundSceneObject = object.get();
-      distanceToClosestIntersection = distance;
-    }
-  }
+  auto &&maybeObject = cursor.setRayWithCollidingObject(this->currentSceneManager->getObjects(), this->camera, this->ray);
+  auto &&found = maybeObject.has_value();
+  const float distance = 200;
   if (!found && this->cursor.getCursorMode() == CursorMode::ADDING) {
-    this->ray.drawPrimitivePreview(color, this->currentElementToAdd, 20.f);
-  }
-
-  bool foundSelected = std::find(this->sceneManager->getSelectedObject().begin(), this->sceneManager->getSelectedObject().end(), foundSceneObject) != this->sceneManager->getSelectedObject().end();
-
-  if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && foundSelected) {
-    shouldDragObject = true;
+    this->ray.drawPrimitivePreview(ofColor(240, 233, 233), this->currentElementToAdd, distance);
   }
 
   if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
     shouldDragObject = false;
+    this->camera.enableMouseInput();
   }
 
-  if (ImGui::IsMouseDown(ImGuiMouseButton_Left)
-      && shouldDragObject
-      && foundSelected
-      && this->cursor.getCursorMode() == CursorMode::NAVIGATION) {
-    this->sceneManager->setObjectPosition(foundSceneObject, ray.getOrigin() + ray.getDirection() * 20.f * 10.f);
-    this->camera.disableMouseInput();
+  if (found && std::find(this->currentSceneManager->getSelectedObject().begin(), this->currentSceneManager->getSelectedObject().end(), maybeObject.value()) != this->sceneManager->getSelectedObject().end()) {
+    if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
+      shouldDragObject = true;
+    }
+
+    if (ImGui::IsMouseDown(ImGuiMouseButton_Left)
+        && shouldDragObject
+        && this->cursor.getCursorMode() == CursorMode::NAVIGATION) {
+      this->currentSceneManager->setObjectPosition(maybeObject.value(), ray.getOrigin() + ray.getDirection() * distance);
+      this->camera.disableMouseInput();
+    }
   }
 
   if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
     if (found && this->cursor.getCursorMode() == CursorMode::NAVIGATION) {
       if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftCtrl))) {
-        sceneManager->clickSelectionSceneObject(foundSceneObject);
+        currentSceneManager->clickSelectionSceneObject(maybeObject.value());
       } else {
-        sceneManager->setSelectedSceneObject(foundSceneObject);
+        currentSceneManager->setSelectedSceneObject(maybeObject.value());
       }
 
     } else if (found && this->cursor.getCursorMode() == CursorMode::REMOVING) {
-      sceneManager->removeObject(foundSceneObject); // TODO : Ajouter une nouvelle m�thode pour supprimer un objet
+      currentSceneManager->removeObject(maybeObject.value()); // TODO : Ajouter une nouvelle m�thode pour supprimer un objet
       this->cursor.setCursorMode(CursorMode::NAVIGATION);
 
     } else if (this->cursor.getCursorMode() == CursorMode::ADDING) {
-      sceneManager->addElement(ray.getOrigin() + ray.getDirection() * 20.f * 10.f, this->currentElementToAdd);
+      currentSceneManager->addElement(ray, distance, this->currentElementToAdd);
       this->cursor.setCursorMode(CursorMode::NAVIGATION);
-      sceneManager->setSelectedSceneObject(sceneManager->getObjects().back().get());
+      currentSceneManager->setSelectedSceneObject(currentSceneManager->getObjects().back().get());
     }
   }
 }

@@ -2,6 +2,8 @@
 
 #include "SceneElementFactory.h"
 
+#include <scene2D/Triangle.h>
+
 Ray::Ray(glm::vec3 origin, glm::vec3 direction) {
   this->origin = origin;
   this->direction = glm::normalize(direction);
@@ -12,11 +14,11 @@ void Ray::set(glm::vec3 origin, glm::vec3 direction) {
   this->direction = glm::normalize(direction);
 }
 
-const glm::vec3 Ray::getOrigin() {
+const glm::vec3 &Ray::getOrigin() const {
   return this->origin;
 }
 
-const glm::vec3 Ray::getDirection() {
+const glm::vec3 &Ray::getDirection() const {
   return this->direction;
 }
 
@@ -46,7 +48,7 @@ void Ray::drawPrimitivePreview(const ofColor &color, ElementType elementType, fl
   // draw origin
   ofSetColor(color);
   // draw direction
-  auto end = this->origin + (this->direction * (distance * 10.0f));
+  auto end = this->origin + (this->direction * (distance));
   switch (elementType) {
     case ElementType::CUBIC:
       ofDrawBox(end, 20.f, 20.f, 20.f);
@@ -57,12 +59,12 @@ void Ray::drawPrimitivePreview(const ofColor &color, ElementType elementType, fl
     case ElementType::CYLINDER:
       ofDrawCylinder(end, 20.f, 20.f);
       break;
+    case ElementType::TRIANGLE:
+      Triangle::drawDefaultPreview(*this, distance);
+      break;
     default:
       ofDrawSphere(end, 20.f);
       break;
   }
-  ofSetLineWidth(3);
-  ofDrawLine(origin, end);
-  ofSetLineWidth(1);
   ofPopStyle();
 }

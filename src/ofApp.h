@@ -22,6 +22,8 @@ public:
   glm::highp_vec3 findMouseClick3DPosition() const;
 
   std::unique_ptr<SceneManager> sceneManager;
+  std::unique_ptr<SceneManager> scene2DManager;
+  SceneManager *currentSceneManager;
   std::unique_ptr<SceneGraph> sceneGraph;
   std::unique_ptr<PropertiesPanel> propertiesPanel;
   ofxImGui::Gui gui;
@@ -35,6 +37,7 @@ public:
   ImVec4 backgroundColor;
   Ray ray;
   bool shouldDragObject = false;
+  bool isScene2D = false;
 
 private:
   Tools tools;
