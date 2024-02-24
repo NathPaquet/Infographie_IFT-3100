@@ -166,6 +166,9 @@
     <ClCompile Include="src\scene2D\Circle.cpp">
       <Filter>src\scene2D</Filter>
     </ClCompile>
+    <ClCompile Include="src\scene\Model3D.cpp">
+      <Filter>src\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -691,6 +694,9 @@
     </ClInclude>
     <ClInclude Include="src\scene2D\Circle.h">
       <Filter>src\scene2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\Model3D.h">
+      <Filter>src\scene</Filter>
     </ClInclude>
     <ClInclude Include="src\constants.h">
       <Filter>src</Filter>

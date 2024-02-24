@@ -119,6 +119,11 @@ void ofApp::drawSceneObjectGraph() {
       if (ImGui::Button("Delete Object", ImVec2(ImGui::GetContentRegionAvail().x, Constants::GRAPH_SCENE_BUTTON_HEIGHT))) {
         this->cursor.setCursorMode(CursorMode::REMOVING);
       }
+
+      if (ImGui::Button("Add 3D Model", ImVec2(180, 30))) {
+        currentElementToAdd = ElementType::MODEL3D;
+        this->cursor.setCursorMode(CursorMode::ADDING);
+      }
     }
 
     if (ImGui::Button("Delete Selection", ImVec2(ImGui::GetContentRegionAvail().x, Constants::GRAPH_SCENE_BUTTON_HEIGHT))) {
