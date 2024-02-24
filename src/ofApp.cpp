@@ -80,7 +80,7 @@ void ofApp::draw() {
   drawPropertiesPanel();
 
   // Draw scene element menu
-  drawSceneElementMenu();
+  drawSceneObjectGraph();
 
   // Draw scene top menu
   drawSceneTopMenu();
@@ -101,47 +101,60 @@ bool ofApp::isMouseClickInScene() {
   return ofGetMouseX() > 200 && ofGetMouseX() < ofGetWidth() - 200;
 }
 
-void ofApp::drawSceneElementMenu() {
+void ofApp::drawSceneObjectGraph() {
   ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX(), ofGetWindowPositionY()), ImGuiCond_Always);
   ImGui::SetNextWindowSize(ImVec2(200, ofGetHeight()), ImGuiCond_Always);
-  if (ImGui::Begin("Scene Element", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize)) {
-    if (this->isScene2D) {
-      if (ImGui::Button("Add Triangle", ImVec2(180, 30))) {
-        currentElementToAdd = ElementType::TRIANGLE;
-        this->cursor.setCursorMode(CursorMode::ADDING);
-      }
-      if (ImGui::Button("Add Square", ImVec2(180, 30))) {
-        currentElementToAdd = ElementType::SQUARE;
-        this->cursor.setCursorMode(CursorMode::ADDING);
-      }
-      if (ImGui::Button("Add circle", ImVec2(180, 30))) {
-        currentElementToAdd = ElementType::CIRCLE;
-        this->cursor.setCursorMode(CursorMode::ADDING);
-      }
-    } else {
-      if (ImGui::Button("Add Sphere", ImVec2(180, 30))) {
-        currentElementToAdd = ElementType::SPHERE;
-        this->cursor.setCursorMode(CursorMode::ADDING);
-      }
-
-      if (ImGui::Button("Add Cube", ImVec2(180, 30))) {
-        currentElementToAdd = ElementType::CUBIC;
-        this->cursor.setCursorMode(CursorMode::ADDING);
-      }
-
-      if (ImGui::Button("Add Cylinder", ImVec2(180, 30))) {
-        currentElementToAdd = ElementType::CYLINDER;
-        this->cursor.setCursorMode(CursorMode::ADDING);
-      }
-    }
-
+  if (ImGui::Begin("Scene Element", nullptr, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize)) {
     if (ImGui::Button("Remove Element", ImVec2(180, 30))) {
       this->cursor.setCursorMode(CursorMode::REMOVING);
+    }
+
+    if (ImGui::Button("Remove All Selected", ImVec2(180, 30))) {
+      this->currentSceneManager->removeAllSelectedObjects();
     }
 
     this->sceneGraph->drawSceneGraphElements();
 
     ImGui::End();
+  }
+}
+
+void ofApp::drawSceneObjectGraphCreationMenu() {
+  if (ImGui::BeginMenu("Add object")) {
+    if (this->isScene2D) {
+      ImGui::SeparatorText("2D object");
+      if (ImGui::MenuItem("Add Triangle")) {
+        currentElementToAdd = ElementType::TRIANGLE;
+        this->cursor.setCursorMode(CursorMode::ADDING);
+      }
+      if (ImGui::MenuItem("Add Square")) {
+        currentElementToAdd = ElementType::SQUARE;
+        this->cursor.setCursorMode(CursorMode::ADDING);
+      }
+      if (ImGui::MenuItem("Add circle")) {
+        currentElementToAdd = ElementType::CIRCLE;
+        this->cursor.setCursorMode(CursorMode::ADDING);
+      }
+    } else {
+      ImGui::SeparatorText("3D object");
+      if (ImGui::MenuItem("Add Sphere")) {
+        currentElementToAdd = ElementType::SPHERE;
+        this->cursor.setCursorMode(CursorMode::ADDING);
+      }
+
+      if (ImGui::MenuItem("Add Cube")) {
+        currentElementToAdd = ElementType::CUBIC;
+        this->cursor.setCursorMode(CursorMode::ADDING);
+      }
+
+      if (ImGui::MenuItem("Add Cylinder")) {
+        currentElementToAdd = ElementType::CYLINDER;
+        this->cursor.setCursorMode(CursorMode::ADDING);
+      }
+
+      ImGui::SeparatorText("3D model");
+    }
+    ImGui::EndMenu();
   }
 }
 
@@ -153,8 +166,9 @@ void ofApp::drawSceneTopMenu() {
 
   if (ImGui::Begin("Menu bar", nullptr, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoResize)) {
     if (ImGui::BeginMenuBar()) {
-      createFileMenu();
-      createViewMenu();
+      this->drawSceneObjectGraphCreationMenu();
+      this->createFileMenu();
+      this->createViewMenu();
       tools.createToolsMenu();
 
       ImGui::EndMenuBar();

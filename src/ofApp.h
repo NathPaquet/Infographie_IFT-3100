@@ -43,7 +43,8 @@ private:
   Tools tools;
   void drawPropertiesPanel();
   bool isMouseClickInScene();
-  void drawSceneElementMenu();
+  void drawSceneObjectGraph();
+  void drawSceneObjectGraphCreationMenu();
   void drawSceneTopMenu();
   void createFileMenu();
   void createViewMenu();
