@@ -104,14 +104,28 @@ bool ofApp::isMouseClickInScene() {
 void ofApp::drawSceneObjectGraph() {
   ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX(), ofGetWindowPositionY()), ImGuiCond_Always);
   ImGui::SetNextWindowSize(ImVec2(200, ofGetHeight()), ImGuiCond_Always);
-  if (ImGui::Begin("Scene Element", nullptr, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize)) {
-    if (ImGui::Button("Remove Element", ImVec2(180, 30))) {
-      this->cursor.setCursorMode(CursorMode::REMOVING);
+  if (ImGui::Begin("Scene Objects", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize)) {
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 2.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.0f);
+
+    if (this->cursor.getCursorMode() == CursorMode::REMOVING) {
+      ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor(102, 39, 55, 255));
+      ImGui::PushStyleColor(ImGuiCol_Border, (ImVec4)ImColor(209, 45, 73, 255));
+
+      if (ImGui::Button("Click on object to delete", ImVec2(ImGui::GetContentRegionAvail().x, 30))) {
+        this->cursor.setCursorMode(CursorMode::NAVIGATION);
+      }
+      ImGui::PopStyleColor(2);
+    } else {
+      if (ImGui::Button("Delete Object", ImVec2(ImGui::GetContentRegionAvail().x, 30))) {
+        this->cursor.setCursorMode(CursorMode::REMOVING);
+      }
     }
 
-    if (ImGui::Button("Remove All Selected", ImVec2(180, 30))) {
+    if (ImGui::Button("Delete Selection", ImVec2(ImGui::GetContentRegionAvail().x, 30))) {
       this->currentSceneManager->removeAllSelectedObjects();
     }
+    ImGui::PopStyleVar(2);
 
     this->sceneGraph->drawSceneGraphElements();
 
@@ -167,7 +181,6 @@ void ofApp::drawSceneTopMenu() {
   if (ImGui::Begin("Menu bar", nullptr, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoResize)) {
     if (ImGui::BeginMenuBar()) {
       this->drawSceneObjectGraphCreationMenu();
-      this->createFileMenu();
       this->createViewMenu();
       tools.createToolsMenu();
 
@@ -177,27 +190,6 @@ void ofApp::drawSceneTopMenu() {
   }
 
   ImGui::PopStyleColor();
-}
-
-void ofApp::createFileMenu() {
-  if (ImGui::BeginMenu("File")) {
-    if (ImGui::MenuItem("New")) {
-      ofLogNotice() << "New button pressed";
-    }
-    if (ImGui::MenuItem("Open", "Ctrl+O")) {
-      ofLogNotice() << "Open button pressed";
-    }
-    if (ImGui::MenuItem("Save", "Ctrl+S")) {
-      ofLogNotice() << "Save button pressed";
-    }
-    if (ImGui::MenuItem("Save As..")) {
-      ofLogNotice() << "Save As button pressed";
-    }
-    if (ImGui::MenuItem("Exit")) {
-      ofLogNotice() << "Exit button pressed";
-    }
-    ImGui::EndMenu();
-  }
 }
 
 void ofApp::createViewMenu() {

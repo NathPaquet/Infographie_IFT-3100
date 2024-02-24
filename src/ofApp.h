@@ -46,7 +46,6 @@ private:
   void drawSceneObjectGraph();
   void drawSceneObjectGraphCreationMenu();
   void drawSceneTopMenu();
-  void createFileMenu();
   void createViewMenu();
   void processMouseActions();
 };
