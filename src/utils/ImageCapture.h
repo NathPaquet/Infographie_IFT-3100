@@ -9,10 +9,12 @@ public:
 
   void takeScreenshot();
   void startRecording(int interval, int duration);
+  void setImageFormat(const std::string &imageFormat);
   bool isRecording();
 
 private:
   std::vector<ofImage> screenshots;
+  std::string imageFormat = "png";
   bool recordingStatus = false;
   int interval;
   int startTime;

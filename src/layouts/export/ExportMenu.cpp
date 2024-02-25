@@ -7,6 +7,8 @@ void ExportMenu::createExportMenu(bool *show) {
     createExportImageTabItem();
     createExportSequenceTabItem();
 
+    imageCapture.setImageFormat(imageFormatDropdown.getSelectedFormat());
+
     ImGui::EndTabBar();
   }
 
@@ -15,6 +17,8 @@ void ExportMenu::createExportMenu(bool *show) {
 
 void ExportMenu::createExportImageTabItem() {
   if (ImGui::BeginTabItem("Export image")) {
+    imageFormatDropdown.create();
+
     if (ImGui::Button("Take screenshot")) {
       imageCapture.takeScreenshot();
     }
@@ -25,6 +29,8 @@ void ExportMenu::createExportImageTabItem() {
 
 void ExportMenu::createExportSequenceTabItem() {
   if (ImGui::BeginTabItem("Export sequence")) {
+    imageFormatDropdown.create();
+
     ImGui::SliderInt("Duration (seconds)", &duration, 1, 10);
     ImGui::Separator();
     ImGui::SliderFloat("Step (seconds)", &step, 0.25f, 1.0f, "%.2f", 0.25f);

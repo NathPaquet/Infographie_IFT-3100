@@ -1,5 +1,6 @@
 #pragma once
 
+#include "./export/ImageFormatDropdown.h"
 #include "./utils/ImageCapture.h"
 #include "ofxImGui.h"
 
@@ -15,6 +16,7 @@ private:
   float step = 1;
   int numberOfImages;
 
+  ImageFormatDropdown imageFormatDropdown;
   void createExportImageTabItem();
   void createExportSequenceTabItem();
 };

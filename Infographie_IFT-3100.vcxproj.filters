@@ -169,6 +169,7 @@
     <ClCompile Include="src\scene\Model3D.cpp">
       <Filter>src\scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\layouts\export\ImageFormatDropdown.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -695,6 +696,7 @@
     <ClInclude Include="src\scene2D\Circle.h">
       <Filter>src\scene2D</Filter>
     </ClInclude>
+    <ClInclude Include="src\layouts\export\ImageFormatDropdown.h" />
     <ClInclude Include="src\scene\Model3D.h">
       <Filter>src\scene</Filter>
     </ClInclude>
