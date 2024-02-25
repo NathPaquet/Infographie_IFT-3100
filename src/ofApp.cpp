@@ -181,6 +181,7 @@ void ofApp::createFileMenu() {
     }
     if (ImGui::MenuItem("Exit")) {
       ofLogNotice() << "Exit button pressed";
+      ofExit();
     }
     ImGui::EndMenu();
   }
