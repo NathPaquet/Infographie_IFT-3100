@@ -30,5 +30,6 @@ protected:
   std::unique_ptr<of3dPrimitive> primitive;
   std::map<PROPERTY_ID, std::unique_ptr<PropertyBase>> properties;
   ofMesh mainMesh;
+  ofMaterial mMaterial;
   ofTexture mTex;
 };

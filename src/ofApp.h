@@ -17,8 +17,6 @@ public:
   void draw();
   void exit();
 
-  void mouseReleased(int x, int y, int button);
-
   glm::highp_vec3 findMouseClick3DPosition() const;
 
   std::unique_ptr<SceneManager> sceneManager;
@@ -43,9 +41,10 @@ private:
   Tools tools;
   void drawPropertiesPanel();
   bool isMouseClickInScene();
-  void drawSceneElementMenu();
+  void drawSceneObjectGraph();
+  void drawSceneObjectGraphCreationMenu();
   void drawSceneTopMenu();
-  void createFileMenu();
   void createViewMenu();
   void processMouseActions();
+  void generateRandomGalaxy(int nbElements);
 };

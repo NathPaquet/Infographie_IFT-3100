@@ -1,6 +1,7 @@
 #include "ofApp.h"
 
 #include "ImHelpers.h"
+#include "constants.h"
 #include "of3dUtils.h"
 #include "scene/Planet.h"
 #include "scene/SceneElementFactory.h"
@@ -30,12 +31,16 @@ void ofApp::setup() {
 
   this->sphere.enableTextures();
   // Initialize camera
-  this->camera.setDistance(200.f);
-  this->light.setPosition(-500, 500, 500);
+  this->camera.setDistance(Constants::DEFAULT_CAMERA_DISTANCE);
+
+  // Initialize light
+  this->light.setAmbientColor(Constants::AMBIANT_COLOR);
+  this->light.setPosition(Constants::LIGHT_POSITION);
+  ofEnableSmoothing();
+  ofEnableLighting();
   this->light.enable();
+
   this->ray = Ray();
-  // backgroundColor is stored as an ImVec4 type but can handle ofColor
-  this->backgroundColor = ofColor(114, 144, 154);
 }
 
 //--------------------------------------------------------------
@@ -61,13 +66,8 @@ void ofApp::draw() {
   cursor.drawCursor(ofGetMouseX(), ofGetMouseY());
   camera.begin();
 
-  ofPushStyle();
-  backgroundTexture.bind();
-  sphere.draw();
-  backgroundTexture.unbind();
-  ofPopStyle();
+  sphere.draw(); // Light representation
 
-  ofDrawCircle(0, 0, 72);
   currentSceneManager->drawScene();
 
   gui.begin();
@@ -80,7 +80,7 @@ void ofApp::draw() {
   drawPropertiesPanel();
 
   // Draw scene element menu
-  drawSceneElementMenu();
+  drawSceneObjectGraph();
 
   // Draw scene top menu
   drawSceneTopMenu();
@@ -88,9 +88,8 @@ void ofApp::draw() {
 }
 
 void ofApp::drawPropertiesPanel() {
-  float window_width = 200.f;
-  ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + ofGetWidth() - window_width, ofGetWindowPositionY()), ImGuiCond_Always);
-  ImGui::SetNextWindowSize(ImVec2(window_width, ofGetHeight()), ImGuiCond_Always);
+  ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + ofGetWidth() - Constants::PROPERTIES_PANEL_WIDTH, ofGetWindowPositionY()), ImGuiCond_Always);
+  ImGui::SetNextWindowSize(ImVec2(Constants::PROPERTIES_PANEL_WIDTH, ofGetHeight()), ImGuiCond_Always);
   if (ImGui::Begin("PropertiesPanel", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize)) {
     this->propertiesPanel->drawPropertiesPanel(this->currentSceneManager->getSelectedObjectReference());
     ImGui::End();
@@ -98,46 +97,34 @@ void ofApp::drawPropertiesPanel() {
 }
 
 bool ofApp::isMouseClickInScene() {
-  return ofGetMouseX() > 200 && ofGetMouseX() < ofGetWidth() - 200;
+  return ofGetMouseX() > Constants::SCENE_GRAPH_WIDTH && ofGetMouseX() < ofGetWidth() - Constants::PROPERTIES_PANEL_WIDTH;
 }
 
-void ofApp::drawSceneElementMenu() {
+void ofApp::drawSceneObjectGraph() {
   ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX(), ofGetWindowPositionY()), ImGuiCond_Always);
-  ImGui::SetNextWindowSize(ImVec2(200, ofGetHeight()), ImGuiCond_Always);
-  if (ImGui::Begin("Scene Element", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize)) {
-    if (this->isScene2D) {
-      if (ImGui::Button("Add Triangle", ImVec2(180, 30))) {
-        currentElementToAdd = ElementType::TRIANGLE;
-        this->cursor.setCursorMode(CursorMode::ADDING);
+  ImGui::SetNextWindowSize(ImVec2(Constants::SCENE_GRAPH_WIDTH, ofGetHeight()), ImGuiCond_Always);
+  if (ImGui::Begin("Scene Objects", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize)) {
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 2.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.0f);
+
+    if (this->cursor.getCursorMode() == CursorMode::REMOVING) {
+      ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)Constants::BUTTON_CLICKED_BACKGROUND_COLOR);
+      ImGui::PushStyleColor(ImGuiCol_Border, (ImVec4)Constants::BUTTON_CLICKED_BORDER_COLOR);
+
+      if (ImGui::Button("Click on object to delete", ImVec2(ImGui::GetContentRegionAvail().x, Constants::GRAPH_SCENE_BUTTON_HEIGHT))) {
+        this->cursor.setCursorMode(CursorMode::NAVIGATION);
       }
-      if (ImGui::Button("Add Square", ImVec2(180, 30))) {
-        currentElementToAdd = ElementType::SQUARE;
-        this->cursor.setCursorMode(CursorMode::ADDING);
-      }
-      if (ImGui::Button("Add circle", ImVec2(180, 30))) {
-        currentElementToAdd = ElementType::CIRCLE;
-        this->cursor.setCursorMode(CursorMode::ADDING);
-      }
+      ImGui::PopStyleColor(2);
     } else {
-      if (ImGui::Button("Add Sphere", ImVec2(180, 30))) {
-        currentElementToAdd = ElementType::SPHERE;
-        this->cursor.setCursorMode(CursorMode::ADDING);
-      }
-
-      if (ImGui::Button("Add Cube", ImVec2(180, 30))) {
-        currentElementToAdd = ElementType::CUBIC;
-        this->cursor.setCursorMode(CursorMode::ADDING);
-      }
-
-      if (ImGui::Button("Add Cylinder", ImVec2(180, 30))) {
-        currentElementToAdd = ElementType::CYLINDER;
-        this->cursor.setCursorMode(CursorMode::ADDING);
+      if (ImGui::Button("Delete Object", ImVec2(ImGui::GetContentRegionAvail().x, Constants::GRAPH_SCENE_BUTTON_HEIGHT))) {
+        this->cursor.setCursorMode(CursorMode::REMOVING);
       }
     }
 
-    if (ImGui::Button("Remove Element", ImVec2(180, 30))) {
-      this->cursor.setCursorMode(CursorMode::REMOVING);
+    if (ImGui::Button("Delete Selection", ImVec2(ImGui::GetContentRegionAvail().x, Constants::GRAPH_SCENE_BUTTON_HEIGHT))) {
+      this->currentSceneManager->removeAllSelectedObjects();
     }
+    ImGui::PopStyleVar(2);
 
     this->sceneGraph->drawSceneGraphElements();
 
@@ -145,16 +132,59 @@ void ofApp::drawSceneElementMenu() {
   }
 }
 
-void ofApp::drawSceneTopMenu() {
-  ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + 200, ofGetWindowPositionY()), ImGuiCond_Always);
-  ImGui::SetNextWindowSize(ImVec2(ofGetWidth() - 200 * 2, ofGetHeight()), ImGuiCond_Always);
+void ofApp::drawSceneObjectGraphCreationMenu() {
+  if (ImGui::BeginMenu("Add object")) {
+    if (this->isScene2D) {
+      ImGui::SeparatorText("2D object");
+      if (ImGui::MenuItem("Add Triangle")) {
+        currentElementToAdd = ElementType::TRIANGLE;
+        this->cursor.setCursorMode(CursorMode::ADDING);
+      }
+      if (ImGui::MenuItem("Add Square")) {
+        currentElementToAdd = ElementType::SQUARE;
+        this->cursor.setCursorMode(CursorMode::ADDING);
+      }
+      if (ImGui::MenuItem("Add circle")) {
+        currentElementToAdd = ElementType::CIRCLE;
+        this->cursor.setCursorMode(CursorMode::ADDING);
+      }
+    } else {
+      ImGui::SeparatorText("Automatic generation");
+      if (ImGui::MenuItem("Generate Random Galaxy")) {
+        generateRandomGalaxy(20);
+      }
+      ImGui::SeparatorText("3D object");
+      if (ImGui::MenuItem("Add Sphere")) {
+        currentElementToAdd = ElementType::SPHERE;
+        this->cursor.setCursorMode(CursorMode::ADDING);
+      }
 
-  ImGui::PushStyleColor(ImGuiCol_MenuBarBg, (ImVec4)ImColor(51, 56, 68, 255)); // Set the color of the menu bar
+      if (ImGui::MenuItem("Add Cube")) {
+        currentElementToAdd = ElementType::CUBIC;
+        this->cursor.setCursorMode(CursorMode::ADDING);
+      }
+
+      if (ImGui::MenuItem("Add Cylinder")) {
+        currentElementToAdd = ElementType::CYLINDER;
+        this->cursor.setCursorMode(CursorMode::ADDING);
+      }
+
+      ImGui::SeparatorText("3D model");
+    }
+    ImGui::EndMenu();
+  }
+}
+
+void ofApp::drawSceneTopMenu() {
+  ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + Constants::SCENE_GRAPH_WIDTH, ofGetWindowPositionY()), ImGuiCond_Always);
+  ImGui::SetNextWindowSize(ImVec2(ofGetWidth() - (Constants::SCENE_GRAPH_WIDTH + Constants::PROPERTIES_PANEL_WIDTH), ofGetHeight()), ImGuiCond_Always);
+
+  ImGui::PushStyleColor(ImGuiCol_MenuBarBg, (ImVec4)Constants::MENU_BAR_BACKGROUND_COLOR);
 
   if (ImGui::Begin("Menu bar", nullptr, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoResize)) {
     if (ImGui::BeginMenuBar()) {
-      createFileMenu();
-      createViewMenu();
+      this->drawSceneObjectGraphCreationMenu();
+      this->createViewMenu();
       tools.createToolsMenu();
 
       ImGui::EndMenuBar();
@@ -163,27 +193,6 @@ void ofApp::drawSceneTopMenu() {
   }
 
   ImGui::PopStyleColor();
-}
-
-void ofApp::createFileMenu() {
-  if (ImGui::BeginMenu("File")) {
-    if (ImGui::MenuItem("New")) {
-      ofLogNotice() << "New button pressed";
-    }
-    if (ImGui::MenuItem("Open", "Ctrl+O")) {
-      ofLogNotice() << "Open button pressed";
-    }
-    if (ImGui::MenuItem("Save", "Ctrl+S")) {
-      ofLogNotice() << "Save button pressed";
-    }
-    if (ImGui::MenuItem("Save As..")) {
-      ofLogNotice() << "Save As button pressed";
-    }
-    if (ImGui::MenuItem("Exit")) {
-      ofLogNotice() << "Exit button pressed";
-    }
-    ImGui::EndMenu();
-  }
 }
 
 void ofApp::createViewMenu() {
@@ -216,9 +225,9 @@ void ofApp::processMouseActions() {
 
   auto &&maybeObject = cursor.setRayWithCollidingObject(this->currentSceneManager->getObjects(), this->camera, this->ray);
   auto &&found = maybeObject.has_value();
-  const float distance = 200;
+  const float distance = Constants::DEFAULT_DISTANCE_TO_DRAW_PRIMITIVE;
   if (!found && this->cursor.getCursorMode() == CursorMode::ADDING) {
-    this->ray.drawPrimitivePreview(ofColor(240, 233, 233), this->currentElementToAdd, distance);
+    this->ray.drawPrimitivePreview(this->currentElementToAdd, distance);
   }
 
   if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
@@ -259,5 +268,20 @@ void ofApp::processMouseActions() {
   }
 }
 
-void ofApp::mouseReleased(int x, int y, int button) {
+void ofApp::generateRandomGalaxy(int nbElements) {
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_real_distribution<float> dis(-500, 500);
+  std::uniform_int_distribution intDistribution(0, 2);
+
+  for (int i = 0; i < nbElements; i++) {
+    Ray ray;
+    glm::vec3 randomPosition;
+    randomPosition.x = dis(gen);
+    randomPosition.y = dis(gen);
+    randomPosition.z = dis(gen);
+    auto distance = glm::length(randomPosition);
+    ray.set({0, 0, 0}, randomPosition);
+    this->currentSceneManager->addElement(ray, distance, static_cast<ElementType>(intDistribution(gen)));
+  }
 }
