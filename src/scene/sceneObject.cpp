@@ -18,12 +18,18 @@ void SceneObject::draw(bool isSelected) {
 
   if (mTex.isAllocated()) {
     this->mTex.bind();
-    ofSetColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
+    mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
+    // ofSetColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
+    mMaterial.begin();
     primitive->draw();
+    mMaterial.end();
     this->mTex.unbind();
   } else {
-    ofSetColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
+    mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
+    // ofSetColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
+    mMaterial.begin();
     primitive->draw();
+    mMaterial.end();
   }
   ofPopStyle();
 }

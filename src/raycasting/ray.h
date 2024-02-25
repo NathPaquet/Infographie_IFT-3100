@@ -13,7 +13,7 @@ public:
   const glm::vec3 &getOrigin() const;
   const glm::vec3 &getDirection() const;
   bool isRayCollidingWithPrimitive(const of3dPrimitive &primitive, glm::vec2 &baricentricCoords, float &distance);
-  void drawPrimitivePreview(const ofColor &color, ElementType elementType, float distance);
+  void drawPrimitivePreview(ElementType elementType, float distance);
 
 private:
   glm::vec3 origin;

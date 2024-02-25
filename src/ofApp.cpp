@@ -1,6 +1,7 @@
 #include "ofApp.h"
 
 #include "ImHelpers.h"
+#include "constants.h"
 #include "of3dUtils.h"
 #include "scene/Planet.h"
 #include "scene/SceneElementFactory.h"
@@ -30,12 +31,16 @@ void ofApp::setup() {
 
   this->sphere.enableTextures();
   // Initialize camera
-  this->camera.setDistance(200.f);
-  this->light.setPosition(-500, 500, 500);
+  this->camera.setDistance(Constants::DEFAULT_CAMERA_DISTANCE);
+
+  // Initialize light
+  this->light.setAmbientColor(Constants::AMBIANT_COLOR);
+  this->light.setPosition(Constants::LIGHT_POSITION);
+  ofEnableSmoothing();
+  ofEnableLighting();
   this->light.enable();
+
   this->ray = Ray();
-  // backgroundColor is stored as an ImVec4 type but can handle ofColor
-  this->backgroundColor = ofColor(114, 144, 154);
 }
 
 //--------------------------------------------------------------
@@ -61,13 +66,8 @@ void ofApp::draw() {
   cursor.drawCursor(ofGetMouseX(), ofGetMouseY());
   camera.begin();
 
-  ofPushStyle();
-  backgroundTexture.bind();
-  sphere.draw();
-  backgroundTexture.unbind();
-  ofPopStyle();
+  sphere.draw(); // Light representation
 
-  ofDrawCircle(0, 0, 72);
   currentSceneManager->drawScene();
 
   gui.begin();
@@ -88,9 +88,8 @@ void ofApp::draw() {
 }
 
 void ofApp::drawPropertiesPanel() {
-  float window_width = 200.f;
-  ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + ofGetWidth() - window_width, ofGetWindowPositionY()), ImGuiCond_Always);
-  ImGui::SetNextWindowSize(ImVec2(window_width, ofGetHeight()), ImGuiCond_Always);
+  ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + ofGetWidth() - Constants::PROPERTIES_PANEL_WIDTH, ofGetWindowPositionY()), ImGuiCond_Always);
+  ImGui::SetNextWindowSize(ImVec2(Constants::PROPERTIES_PANEL_WIDTH, ofGetHeight()), ImGuiCond_Always);
   if (ImGui::Begin("PropertiesPanel", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize)) {
     this->propertiesPanel->drawPropertiesPanel(this->currentSceneManager->getSelectedObjectReference());
     ImGui::End();
@@ -98,31 +97,31 @@ void ofApp::drawPropertiesPanel() {
 }
 
 bool ofApp::isMouseClickInScene() {
-  return ofGetMouseX() > 200 && ofGetMouseX() < ofGetWidth() - 200;
+  return ofGetMouseX() > Constants::SCENE_GRAPH_WIDTH && ofGetMouseX() < ofGetWidth() - Constants::PROPERTIES_PANEL_WIDTH;
 }
 
 void ofApp::drawSceneObjectGraph() {
   ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX(), ofGetWindowPositionY()), ImGuiCond_Always);
-  ImGui::SetNextWindowSize(ImVec2(200, ofGetHeight()), ImGuiCond_Always);
+  ImGui::SetNextWindowSize(ImVec2(Constants::SCENE_GRAPH_WIDTH, ofGetHeight()), ImGuiCond_Always);
   if (ImGui::Begin("Scene Objects", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize)) {
     ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 2.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.0f);
 
     if (this->cursor.getCursorMode() == CursorMode::REMOVING) {
-      ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor(102, 39, 55, 255));
-      ImGui::PushStyleColor(ImGuiCol_Border, (ImVec4)ImColor(209, 45, 73, 255));
+      ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)Constants::BUTTON_CLICKED_BACKGROUND_COLOR);
+      ImGui::PushStyleColor(ImGuiCol_Border, (ImVec4)Constants::BUTTON_CLICKED_BORDER_COLOR);
 
-      if (ImGui::Button("Click on object to delete", ImVec2(ImGui::GetContentRegionAvail().x, 30))) {
+      if (ImGui::Button("Click on object to delete", ImVec2(ImGui::GetContentRegionAvail().x, Constants::GRAPH_SCENE_BUTTON_HEIGHT))) {
         this->cursor.setCursorMode(CursorMode::NAVIGATION);
       }
       ImGui::PopStyleColor(2);
     } else {
-      if (ImGui::Button("Delete Object", ImVec2(ImGui::GetContentRegionAvail().x, 30))) {
+      if (ImGui::Button("Delete Object", ImVec2(ImGui::GetContentRegionAvail().x, Constants::GRAPH_SCENE_BUTTON_HEIGHT))) {
         this->cursor.setCursorMode(CursorMode::REMOVING);
       }
     }
 
-    if (ImGui::Button("Delete Selection", ImVec2(ImGui::GetContentRegionAvail().x, 30))) {
+    if (ImGui::Button("Delete Selection", ImVec2(ImGui::GetContentRegionAvail().x, Constants::GRAPH_SCENE_BUTTON_HEIGHT))) {
       this->currentSceneManager->removeAllSelectedObjects();
     }
     ImGui::PopStyleVar(2);
@@ -173,10 +172,10 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
 }
 
 void ofApp::drawSceneTopMenu() {
-  ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + 200, ofGetWindowPositionY()), ImGuiCond_Always);
-  ImGui::SetNextWindowSize(ImVec2(ofGetWidth() - 200 * 2, ofGetHeight()), ImGuiCond_Always);
+  ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + Constants::SCENE_GRAPH_WIDTH, ofGetWindowPositionY()), ImGuiCond_Always);
+  ImGui::SetNextWindowSize(ImVec2(ofGetWidth() - (Constants::SCENE_GRAPH_WIDTH + Constants::PROPERTIES_PANEL_WIDTH), ofGetHeight()), ImGuiCond_Always);
 
-  ImGui::PushStyleColor(ImGuiCol_MenuBarBg, (ImVec4)ImColor(51, 56, 68, 255)); // Set the color of the menu bar
+  ImGui::PushStyleColor(ImGuiCol_MenuBarBg, (ImVec4)Constants::MENU_BAR_BACKGROUND_COLOR);
 
   if (ImGui::Begin("Menu bar", nullptr, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoResize)) {
     if (ImGui::BeginMenuBar()) {
@@ -222,9 +221,9 @@ void ofApp::processMouseActions() {
 
   auto &&maybeObject = cursor.setRayWithCollidingObject(this->currentSceneManager->getObjects(), this->camera, this->ray);
   auto &&found = maybeObject.has_value();
-  const float distance = 200;
+  const float distance = Constants::DEFAULT_DISTANCE_TO_DRAW_PRIMITIVE;
   if (!found && this->cursor.getCursorMode() == CursorMode::ADDING) {
-    this->ray.drawPrimitivePreview(ofColor(240, 233, 233), this->currentElementToAdd, distance);
+    this->ray.drawPrimitivePreview(this->currentElementToAdd, distance);
   }
 
   if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {

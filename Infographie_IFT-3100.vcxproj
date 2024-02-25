@@ -159,6 +159,7 @@
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\constants.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\Cursor.h" />
     <ClInclude Include="src\layouts\ColorPicker.h" />

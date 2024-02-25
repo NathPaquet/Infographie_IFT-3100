@@ -692,6 +692,9 @@
     <ClInclude Include="src\scene2D\Circle.h">
       <Filter>src\scene2D</Filter>
     </ClInclude>
+    <ClInclude Include="src\constants.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

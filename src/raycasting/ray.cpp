@@ -1,6 +1,7 @@
 #include "Ray.h"
 
 #include "SceneElementFactory.h"
+#include "constants.h"
 
 #include <scene2D/Circle.h>
 #include <scene2D/Square.h>
@@ -45,12 +46,13 @@ bool Ray::isRayCollidingWithPrimitive(const of3dPrimitive &primitive, glm::vec2 
   return found;
 }
 
-void Ray::drawPrimitivePreview(const ofColor &color, ElementType elementType, float distance) {
+void Ray::drawPrimitivePreview(ElementType elementType, float distance) {
   ofPushStyle();
   // draw origin
-  ofSetColor(color);
+  ofSetColor((ImVec4)Constants::PRIMITIVE_PREVIEW_COLOR);
   // draw direction
   auto end = this->origin + (this->direction * (distance));
+  ofNoFill();
   switch (elementType) {
     case ElementType::CUBIC:
       ofDrawBox(end, 20.f, 20.f, 20.f);
