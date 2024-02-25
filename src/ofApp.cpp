@@ -149,6 +149,10 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
         this->cursor.setCursorMode(CursorMode::ADDING);
       }
     } else {
+      ImGui::SeparatorText("Automatic generation");
+      if (ImGui::MenuItem("Generate Random Galaxy")) {
+        generateRandomGalaxy(20);
+      }
       ImGui::SeparatorText("3D object");
       if (ImGui::MenuItem("Add Sphere")) {
         currentElementToAdd = ElementType::SPHERE;
@@ -264,5 +268,20 @@ void ofApp::processMouseActions() {
   }
 }
 
-void ofApp::mouseReleased(int x, int y, int button) {
+void ofApp::generateRandomGalaxy(int nbElements) {
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_real_distribution<float> dis(-500, 500);
+  std::uniform_int_distribution intDistribution(0, 2);
+
+  for (int i = 0; i < nbElements; i++) {
+    Ray ray;
+    glm::vec3 randomPosition;
+    randomPosition.x = dis(gen);
+    randomPosition.y = dis(gen);
+    randomPosition.z = dis(gen);
+    auto distance = glm::length(randomPosition);
+    ray.set({0, 0, 0}, randomPosition);
+    this->currentSceneManager->addElement(ray, distance, static_cast<ElementType>(intDistribution(gen)));
+  }
 }
