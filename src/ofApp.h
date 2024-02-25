@@ -48,4 +48,5 @@ private:
   void createFileMenu();
   void createViewMenu();
   void processMouseActions();
+  void generateRandomGalaxy(int nbElements);
 };

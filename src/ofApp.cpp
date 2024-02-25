@@ -170,6 +170,9 @@ void ofApp::createFileMenu() {
     if (ImGui::MenuItem("New")) {
       ofLogNotice() << "New button pressed";
     }
+    if (ImGui::MenuItem("Generate Random Galaxy")) {
+      generateRandomGalaxy(20);
+    }
     if (ImGui::MenuItem("Open", "Ctrl+O")) {
       ofLogNotice() << "Open button pressed";
     }
@@ -256,6 +259,24 @@ void ofApp::processMouseActions() {
       this->cursor.setCursorMode(CursorMode::NAVIGATION);
       currentSceneManager->setSelectedSceneObject(currentSceneManager->getObjects().back().get());
     }
+  }
+}
+
+void ofApp::generateRandomGalaxy(int nbElements) {
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_real_distribution<float> dis(-500, 500);
+  std::uniform_int_distribution intDistribution(0, 2);
+
+  for (int i = 0; i < nbElements; i++) {
+    Ray ray;
+    glm::vec3 randomPosition;
+    randomPosition.x = dis(gen);
+    randomPosition.y = dis(gen);
+    randomPosition.z = dis(gen);
+    auto distance = glm::length(randomPosition);
+    ray.set({0, 0, 0}, randomPosition);
+    this->currentSceneManager->addElement(ray, distance, static_cast<ElementType>(intDistribution(gen)));
   }
 }
 
