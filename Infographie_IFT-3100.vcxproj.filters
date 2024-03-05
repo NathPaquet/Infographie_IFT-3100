@@ -184,10 +184,10 @@
     <ClCompile Include="src\scene\scene3D.cpp">
       <Filter>src\scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\scene\Model3D.cpp">
-      <Filter>src\scene</Filter>
-    </ClCompile>
     <ClCompile Include="src\layouts\export\ImageFormatDropdown.cpp" />
+    <ClCompile Include="src\scene\object\object3D\\Model3D.cpp">
+      <Filter>src\scene\object\object3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -700,7 +700,6 @@
       <Filter>addons\ofxImGui\libs\imgui\src</Filter>
     </ClInclude>
     <ClInclude Include="src\layouts\export\ImageFormatDropdown.h" />
-
     <ClInclude Include="src\constants.h">
       <Filter>src</Filter>
     </ClInclude>

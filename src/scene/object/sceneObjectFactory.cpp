@@ -6,6 +6,8 @@
 #include "object3D/CubicPlanet.h"
 #include "object3D/CylinderPlanet.h"
 #include "object3D/Planet.h"
+#include "object3D/Model3D.h"
+
 
 std::unique_ptr<SceneObject> SceneObjectFactory::createSceneObject(const Ray &ray, const float &distance, const ElementType primitiveType) {
   const ofVec3f position = ray.getOrigin() + ray.getDirection() * distance;

@@ -143,8 +143,8 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
       ImGui::SeparatorText("3D model");
 
       if (ImGui::MenuItem("Add 3D Model")) {
-        currentElementToAdd = ElementType::MODEL3D;
-        this->cursor.setCursorMode(CursorMode::ADDING);
+        this->currentScene->setCurrentObjectToAdd(ElementType::MODEL3D);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
     }
     ImGui::EndMenu();
