@@ -1,50 +1,46 @@
 #pragma once
 
 #include "Cursor.h"
+#include "eventListener/scene2DEventListener.h"
+#include "eventListener/scene3DEventListener.h"
+#include "eventListener/sceneEventListener.h"
 #include "layouts/Tools.h"
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxImGui.h"
 #include "properties/PropertiesPanel.h"
 #include "raycasting/ray.h"
+#include "scene/scene.h"
+#include "scene/scene2D.h"
+#include "scene/scene3D.h"
 #include "scene/sceneGraph.h"
 #include "scene/sceneManager.h"
 
 class ofApp : public ofBaseApp {
 public:
   void setup();
-  void update();
   void draw();
   void exit();
 
-  glm::highp_vec3 findMouseClick3DPosition() const;
-
-  std::unique_ptr<SceneManager> sceneManager;
-  std::unique_ptr<SceneManager> scene2DManager;
-  SceneManager *currentSceneManager;
-  std::unique_ptr<SceneGraph> sceneGraph;
-  std::unique_ptr<PropertiesPanel> propertiesPanel;
   ofxImGui::Gui gui;
-  ofEasyCam camera;
-  ofLight light;
+
   ofImage backgroundImage;
   ofTexture backgroundTexture;
-  ofSpherePrimitive sphere = ofSpherePrimitive(20, 60, OF_PRIMITIVE_TRIANGLES);
-  Cursor cursor = Cursor(CursorMode::NAVIGATION);
-  ElementType currentElementToAdd;
-  ImVec4 backgroundColor;
-  Ray ray;
-  bool shouldDragObject = false;
-  bool isScene2D = false;
 
 private:
   Tools tools;
   void drawPropertiesPanel();
-  bool isMouseClickInScene();
   void drawSceneObjectGraph();
   void drawSceneObjectGraphCreationMenu();
   void drawSceneTopMenu();
   void createViewMenu();
-  void processMouseActions();
   void generateRandomGalaxy(int nbElements);
+
+  std::unique_ptr<SceneGraph> sceneGraph;
+  std::unique_ptr<PropertiesPanel> propertiesPanel;
+  std::unique_ptr<Scene> scene3D;
+  std::unique_ptr<Scene> scene2D;
+  std::unique_ptr<Cursor> cursor;
+  bool isScene2D = false;
+  Scene *currentScene;
 };

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "SceneElementFactory.h"
+#include "object/SceneObjectFactory.h"
+#include "object/sceneObject.h"
 #include "ofMain.h"
 #include "ray.h"
-#include "sceneObject.h"
 
 class SceneManager {
 public:
@@ -17,8 +17,8 @@ public:
   const std::vector<std::unique_ptr<SceneObject>> &getObjects() const;
   void setSelectedSceneObject(const SceneObject *sceneObject);
   void clickSelectionSceneObject(const SceneObject *sceneObject);
-  const std::vector<SceneObject *> &getSelectedObject() const;
-  std::vector<SceneObject *> &getSelectedObjectReference();
+  const std::vector<SceneObject *> &getSelectedObjects() const;
+  std::vector<SceneObject *> &getSelectedObjectsReference();
   void setObjectPosition(const SceneObject *object, const ofVec3f &position);
 
 private:

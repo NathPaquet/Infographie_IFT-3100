@@ -1,7 +1,7 @@
 #pragma once
 #include "Property.h"
+#include "object/sceneObject.h"
 #include "ofColor.h"
-#include "sceneObject.h"
 
 class PropertiesPanel {
 public:

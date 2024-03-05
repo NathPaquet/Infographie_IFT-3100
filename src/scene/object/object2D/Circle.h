@@ -1,7 +1,7 @@
 #pragma once
+#include "object/sceneObject.h"
 #include "ofMain.h"
 #include "raycasting/ray.h"
-#include "sceneObject.h"
 
 class Circle : public SceneObject {
 public:

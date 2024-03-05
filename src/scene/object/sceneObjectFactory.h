@@ -16,7 +16,7 @@ enum class ElementType {
   POINT,
 };
 
-class SceneElementFactory {
+class SceneObjectFactory {
 public:
   static std::unique_ptr<SceneObject> createSceneObject(const Ray &ray, const float &distance, const ElementType primitiveType);
 };

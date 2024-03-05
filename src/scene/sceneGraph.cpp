@@ -13,7 +13,7 @@ void SceneGraph::drawSceneGraphElements() {
   float elementBoxHeight = 50.0f;
 
   for (auto &&sceneObjectPtr : sceneObjects) {
-    bool isSelected = std::find(sceneManager->getSelectedObject().begin(), sceneManager->getSelectedObject().end(), sceneObjectPtr.get()) != sceneManager->getSelectedObject().end();
+    bool isSelected = std::find(sceneManager->getSelectedObjects().begin(), sceneManager->getSelectedObjects().end(), sceneObjectPtr.get()) != sceneManager->getSelectedObjects().end();
 
     ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 2.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 2.0f);

@@ -3,8 +3,8 @@
 #include "ImHelpers.h"
 #include "constants.h"
 #include "of3dUtils.h"
-#include "scene/Planet.h"
-#include "scene/SceneElementFactory.h"
+#include "scene/object/object3D/Planet.h"
+#include "scene/object/sceneObjectFactory.h"
 
 #include <iostream>
 
@@ -15,32 +15,29 @@ void ofApp::setup() {
   ofDisableAlphaBlending();
   ofEnableDepthTest();
   // required call
+
+  this->cursor = std::make_unique<Cursor>(CursorMode::NAVIGATION);
+
+  // Setup 3D scene
+  this->scene3D = std::make_unique<Scene3D>(std::make_unique<SceneManager>(), std::make_unique<Scene3DEventListener>(), cursor.get());
+  this->scene3D->setup();
+
+  // Setup 2D scene
+  this->scene2D = std::make_unique<Scene2D>(std::make_unique<SceneManager>(), std::make_unique<Scene2DEventListener>(), cursor.get());
+  this->scene2D->setup();
+
+  // Setup initial scene
+  this->currentScene = this->scene3D.get();
+
   this->gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable);
-  this->sceneManager = std::make_unique<SceneManager>();
-  this->scene2DManager = std::make_unique<SceneManager>();
-  this->currentSceneManager = this->sceneManager.get();
-  this->sceneGraph = std::make_unique<SceneGraph>(this->currentSceneManager);
+  this->sceneGraph = std::make_unique<SceneGraph>(this->currentScene->getSceneManager());
   this->propertiesPanel = std::make_unique<PropertiesPanel>();
-  this->backgroundImage.load("background.jpg");
 
   ofDisableArbTex();
   this->backgroundTexture = this->backgroundImage.getTexture();
   this->backgroundTexture.enableMipmap();
   this->backgroundTexture.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
   this->backgroundTexture.generateMipmap();
-
-  this->sphere.enableTextures();
-  // Initialize camera
-  this->camera.setDistance(Constants::DEFAULT_CAMERA_DISTANCE);
-
-  // Initialize light
-  this->light.setAmbientColor(Constants::AMBIANT_COLOR);
-  this->light.setPosition(Constants::LIGHT_POSITION);
-  ofEnableSmoothing();
-  ofEnableLighting();
-  this->light.enable();
-
-  this->ray = Ray();
 }
 
 //--------------------------------------------------------------
@@ -48,33 +45,11 @@ void ofApp::exit() {
   this->gui.exit();
 }
 
-glm::highp_vec3 ofApp::findMouseClick3DPosition() const {
-  const glm::vec3 screenMouse(ofGetMouseX(), ofGetMouseY(), 0);
-  auto &&worldMouse = camera.screenToWorld(screenMouse);
-  auto &&worldMouseEnd = camera.screenToWorld(glm::vec3(screenMouse.x, screenMouse.y, 1.0f));
-  auto &&worldMouseDirection = worldMouseEnd - worldMouse;
-  return worldMouseDirection;
-}
-
-//--------------------------------------------------------------
-void ofApp::update() {
-  // ofSetCircleResolution(circleResolution);
-}
-
 //--------------------------------------------------------------
 void ofApp::draw() {
-  cursor.drawCursor(ofGetMouseX(), ofGetMouseY());
-  camera.begin();
-
-  sphere.draw(); // Light representation
-
-  currentSceneManager->drawScene();
+  this->currentScene->drawScene();
 
   gui.begin();
-
-  processMouseActions();
-
-  camera.end();
 
   // Draw properties panel menu
   drawPropertiesPanel();
@@ -91,13 +66,9 @@ void ofApp::drawPropertiesPanel() {
   ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + ofGetWidth() - Constants::PROPERTIES_PANEL_WIDTH, ofGetWindowPositionY()), ImGuiCond_Always);
   ImGui::SetNextWindowSize(ImVec2(Constants::PROPERTIES_PANEL_WIDTH, ofGetHeight()), ImGuiCond_Always);
   if (ImGui::Begin("PropertiesPanel", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize)) {
-    this->propertiesPanel->drawPropertiesPanel(this->currentSceneManager->getSelectedObjectReference());
+    this->propertiesPanel->drawPropertiesPanel(this->currentScene->getSelectedObjectsReference());
     ImGui::End();
   }
-}
-
-bool ofApp::isMouseClickInScene() {
-  return ofGetMouseX() > Constants::SCENE_GRAPH_WIDTH && ofGetMouseX() < ofGetWidth() - Constants::PROPERTIES_PANEL_WIDTH;
 }
 
 void ofApp::drawSceneObjectGraph() {
@@ -107,22 +78,22 @@ void ofApp::drawSceneObjectGraph() {
     ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 2.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 2.0f);
 
-    if (this->cursor.getCursorMode() == CursorMode::REMOVING) {
+    if (this->cursor.get()->getCursorMode() == CursorMode::REMOVING) {
       ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)Constants::BUTTON_CLICKED_BACKGROUND_COLOR);
       ImGui::PushStyleColor(ImGuiCol_Border, (ImVec4)Constants::BUTTON_CLICKED_BORDER_COLOR);
 
       if (ImGui::Button("Click on object to delete", ImVec2(ImGui::GetContentRegionAvail().x, Constants::GRAPH_SCENE_BUTTON_HEIGHT))) {
-        this->cursor.setCursorMode(CursorMode::NAVIGATION);
+        this->cursor.get()->setCursorMode(CursorMode::NAVIGATION);
       }
       ImGui::PopStyleColor(2);
     } else {
       if (ImGui::Button("Delete Object", ImVec2(ImGui::GetContentRegionAvail().x, Constants::GRAPH_SCENE_BUTTON_HEIGHT))) {
-        this->cursor.setCursorMode(CursorMode::REMOVING);
+        this->cursor.get()->setCursorMode(CursorMode::REMOVING);
       }
     }
 
     if (ImGui::Button("Delete Selection", ImVec2(ImGui::GetContentRegionAvail().x, Constants::GRAPH_SCENE_BUTTON_HEIGHT))) {
-      this->currentSceneManager->removeAllSelectedObjects();
+      this->currentScene->removeAllSelectedObjects();
     }
     ImGui::PopStyleVar(2);
 
@@ -137,16 +108,16 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
     if (this->isScene2D) {
       ImGui::SeparatorText("2D object");
       if (ImGui::MenuItem("Add Triangle")) {
-        currentElementToAdd = ElementType::TRIANGLE;
-        this->cursor.setCursorMode(CursorMode::ADDING);
+        this->currentScene->setCurrentObjectToAdd(ElementType::TRIANGLE);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
       if (ImGui::MenuItem("Add Square")) {
-        currentElementToAdd = ElementType::SQUARE;
-        this->cursor.setCursorMode(CursorMode::ADDING);
+        this->currentScene->setCurrentObjectToAdd(ElementType::SQUARE);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
       if (ImGui::MenuItem("Add circle")) {
-        currentElementToAdd = ElementType::CIRCLE;
-        this->cursor.setCursorMode(CursorMode::ADDING);
+        this->currentScene->setCurrentObjectToAdd(ElementType::CIRCLE);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
     } else {
       ImGui::SeparatorText("Automatic generation");
@@ -155,18 +126,18 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
       }
       ImGui::SeparatorText("3D object");
       if (ImGui::MenuItem("Add Sphere")) {
-        currentElementToAdd = ElementType::SPHERE;
-        this->cursor.setCursorMode(CursorMode::ADDING);
+        this->currentScene->setCurrentObjectToAdd(ElementType::SPHERE);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
 
       if (ImGui::MenuItem("Add Cube")) {
-        currentElementToAdd = ElementType::CUBIC;
-        this->cursor.setCursorMode(CursorMode::ADDING);
+        this->currentScene->setCurrentObjectToAdd(ElementType::CUBIC);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
 
       if (ImGui::MenuItem("Add Cylinder")) {
-        currentElementToAdd = ElementType::CYLINDER;
-        this->cursor.setCursorMode(CursorMode::ADDING);
+        this->currentScene->setCurrentObjectToAdd(ElementType::CYLINDER);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
 
       ImGui::SeparatorText("3D model");
@@ -203,73 +174,18 @@ void ofApp::drawSceneTopMenu() {
 void ofApp::createViewMenu() {
   if (ImGui::BeginMenu("View")) {
     if (ImGui::MenuItem("3D Scene")) {
-      this->currentSceneManager = this->sceneManager.get();
+      this->currentScene = this->scene3D.get();
       this->isScene2D = false;
-      this->sceneGraph->setSceneManager(this->currentSceneManager);
+      this->sceneGraph->setSceneManager(this->currentScene->getSceneManager());
       ofLogNotice() << "3D Scene button pressed";
     }
     if (ImGui::MenuItem("2D Scene")) {
-      this->currentSceneManager = this->scene2DManager.get();
-      this->sceneGraph->setSceneManager(this->currentSceneManager);
+      this->currentScene = this->scene2D.get();
       this->isScene2D = true;
-
+      this->sceneGraph->setSceneManager(this->currentScene->getSceneManager());
       ofLogNotice() << "2D Scene button pressed";
     }
     ImGui::EndMenu();
-  }
-}
-
-void ofApp::processMouseActions() {
-  if (this->shouldDragObject) {
-    this->camera.disableMouseInput();
-  }
-  if (!isMouseClickInScene()) {
-    this->camera.disableMouseInput();
-    return;
-  }
-
-  auto &&maybeObject = cursor.setRayWithCollidingObject(this->currentSceneManager->getObjects(), this->camera, this->ray);
-  auto &&found = maybeObject.has_value();
-  const float distance = Constants::DEFAULT_DISTANCE_TO_DRAW_PRIMITIVE;
-  if (!found && this->cursor.getCursorMode() == CursorMode::ADDING) {
-    this->ray.drawPrimitivePreview(this->currentElementToAdd, distance);
-  }
-
-  if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
-    shouldDragObject = false;
-    this->camera.enableMouseInput();
-  }
-
-  if (found && std::find(this->currentSceneManager->getSelectedObject().begin(), this->currentSceneManager->getSelectedObject().end(), maybeObject.value()) != this->currentSceneManager->getSelectedObject().end()) {
-    if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
-      shouldDragObject = true;
-    }
-
-    if (ImGui::IsMouseDown(ImGuiMouseButton_Left)
-        && shouldDragObject
-        && this->cursor.getCursorMode() == CursorMode::NAVIGATION) {
-      this->currentSceneManager->setObjectPosition(maybeObject.value(), ray.getOrigin() + ray.getDirection() * distance);
-      this->camera.disableMouseInput();
-    }
-  }
-
-  if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
-    if (found && this->cursor.getCursorMode() == CursorMode::NAVIGATION) {
-      if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftCtrl))) {
-        currentSceneManager->clickSelectionSceneObject(maybeObject.value());
-      } else {
-        currentSceneManager->setSelectedSceneObject(maybeObject.value());
-      }
-
-    } else if (found && this->cursor.getCursorMode() == CursorMode::REMOVING) {
-      currentSceneManager->removeObject(maybeObject.value()); // TODO : Ajouter une nouvelle m�thode pour supprimer un objet
-      this->cursor.setCursorMode(CursorMode::NAVIGATION);
-
-    } else if (this->cursor.getCursorMode() == CursorMode::ADDING) {
-      currentSceneManager->addElement(ray, distance, this->currentElementToAdd);
-      this->cursor.setCursorMode(CursorMode::NAVIGATION);
-      currentSceneManager->setSelectedSceneObject(currentSceneManager->getObjects().back().get());
-    }
   }
 }
 
@@ -287,6 +203,7 @@ void ofApp::generateRandomGalaxy(int nbElements) {
     randomPosition.z = dis(gen);
     auto distance = glm::length(randomPosition);
     ray.set({0, 0, 0}, randomPosition);
-    this->currentSceneManager->addElement(ray, distance, static_cast<ElementType>(intDistribution(gen)));
+    // TODO : Add a new method in scene object ?
+    this->currentScene->getSceneManager()->addElement(ray, distance, static_cast<ElementType>(intDistribution(gen)));
   }
 }
