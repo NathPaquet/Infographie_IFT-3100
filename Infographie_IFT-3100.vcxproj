@@ -118,6 +118,7 @@
     <ClCompile Include="src\scene2D\Triangle.cpp" />
     <ClCompile Include="src\scene\CubicPlanet.cpp" />
     <ClCompile Include="src\scene\CylinderPlanet.cpp" />
+    <ClCompile Include="src\scene\Model3D.cpp" />
     <ClCompile Include="src\scene\Planet.cpp" />
     <ClCompile Include="src\scene\SceneElementFactory.cpp" />
     <ClCompile Include="src\scene\sceneGraph.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="src\scene2D\Triangle.h" />
     <ClInclude Include="src\scene\CubicPlanet.h" />
     <ClInclude Include="src\scene\CylinderPlanet.h" />
+    <ClInclude Include="src\scene\Model3D.h" />
     <ClInclude Include="src\scene\Planet.h" />
     <ClInclude Include="src\scene\SceneElementFactory.h" />
     <ClInclude Include="src\scene\sceneGraph.h" />

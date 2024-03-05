@@ -2,6 +2,7 @@
 
 #include "CubicPlanet.h"
 #include "CylinderPlanet.h"
+#include "Model3D.h"
 #include "Planet.h"
 #include "scene2D/Circle.h"
 #include "scene2D/Square.h"
@@ -16,6 +17,8 @@ std::unique_ptr<SceneObject> SceneElementFactory::createSceneObject(const Ray &r
       return std::make_unique<CubicPlanet>(CubicPlanet(position.x, position.y, position.z));
     case ElementType::CYLINDER:
       return std::make_unique<CylinderPlanet>(CylinderPlanet(position.x, position.y, position.z));
+    case ElementType::MODEL3D:
+      return std::make_unique<Model3D>(Model3D(ray, distance));
     case ElementType::TRIANGLE:
       return std::make_unique<Triangle>(Triangle(ray, distance));
     case ElementType::SQUARE:
