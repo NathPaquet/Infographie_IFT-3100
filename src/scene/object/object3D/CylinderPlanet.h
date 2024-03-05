@@ -1,5 +1,5 @@
 #pragma once
-#include "sceneObject.h"
+#include "object/sceneObject.h"
 
 class CylinderPlanet : public SceneObject {
 public:

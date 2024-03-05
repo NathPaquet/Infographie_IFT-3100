@@ -1,5 +1,6 @@
+#pragma once
+#include "object/sceneObject.h"
 #include "ray.h"
-#include "sceneObject.h"
 
 #include <optional>
 

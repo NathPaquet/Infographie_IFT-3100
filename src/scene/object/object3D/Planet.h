@@ -1,7 +1,7 @@
 #pragma once
 
 #include "./layouts/ColorPicker.h"
-#include "sceneObject.h"
+#include "object/sceneObject.h"
 
 #include <utils/ImageImporter.h>
 

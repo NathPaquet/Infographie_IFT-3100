@@ -1,8 +1,8 @@
 #include "sceneManager.h"
 
-#include "CubicPlanet.h"
 #include "ImHelpers.h"
-#include "Planet.h"
+#include "object/object3D/CubicPlanet.h"
+#include "object/object3D/Planet.h"
 #include "ofxImGui.h"
 
 SceneManager::SceneManager() {
@@ -14,7 +14,7 @@ SceneManager::~SceneManager() {
 }
 
 void SceneManager::addElement(const Ray &ray, const float &distance, const ElementType primitiveType) {
-  this->sceneObjects.emplace_back(SceneElementFactory::createSceneObject(ray, distance, primitiveType));
+  this->sceneObjects.emplace_back(SceneObjectFactory::createSceneObject(ray, distance, primitiveType));
 }
 
 void SceneManager::removeObject(const SceneObject *sceneObject) {
@@ -70,11 +70,11 @@ void SceneManager::clickSelectionSceneObject(const SceneObject *sceneObject) {
   }
 }
 
-const std::vector<SceneObject *> &SceneManager::getSelectedObject() const {
+const std::vector<SceneObject *> &SceneManager::getSelectedObjects() const {
   return this->selectedSceneObjects;
 }
 
-std::vector<SceneObject *> &SceneManager::getSelectedObjectReference() {
+std::vector<SceneObject *> &SceneManager::getSelectedObjectsReference() {
   return this->selectedSceneObjects;
 }
 

@@ -1,11 +1,10 @@
 #include "Ray.h"
 
-#include "SceneElementFactory.h"
 #include "constants.h"
-
-#include <scene2D/Circle.h>
-#include <scene2D/Square.h>
-#include <scene2D/Triangle.h>
+#include "object/object2D/Circle.h"
+#include "object/object2D/Square.h"
+#include "object/object2D/Triangle.h"
+#include "object/sceneObjectFactory.h"
 
 Ray::Ray(glm::vec3 origin, glm::vec3 direction) {
   this->origin = origin;

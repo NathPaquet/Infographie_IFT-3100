@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sceneObject.h"
+#include "object/sceneObject.h"
 
 class CubicPlanet : public SceneObject {
 public:

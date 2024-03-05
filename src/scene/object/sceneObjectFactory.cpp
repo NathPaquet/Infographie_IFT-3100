@@ -1,14 +1,15 @@
-#include "SceneElementFactory.h"
+#include "SceneObjectFactory.h"
 
-#include "CubicPlanet.h"
-#include "CylinderPlanet.h"
-#include "Model3D.h"
-#include "Planet.h"
-#include "scene2D/Circle.h"
-#include "scene2D/Square.h"
-#include "scene2D/Triangle.h"
+#include "object2D/Circle.h"
+#include "object2D/Square.h"
+#include "object2D/Triangle.h"
+#include "object3D/CubicPlanet.h"
+#include "object3D/CylinderPlanet.h"
+#include "object3D/Planet.h"
+#include "object3D/Model3D.h"
 
-std::unique_ptr<SceneObject> SceneElementFactory::createSceneObject(const Ray &ray, const float &distance, const ElementType primitiveType) {
+
+std::unique_ptr<SceneObject> SceneObjectFactory::createSceneObject(const Ray &ray, const float &distance, const ElementType primitiveType) {
   const ofVec3f position = ray.getOrigin() + ray.getDirection() * distance;
   switch (primitiveType) {
     case (ElementType::SPHERE):
