@@ -43,7 +43,7 @@ void Scene3D::processMouseActions() {
   auto position = this->ray.getOrigin() + this->ray.getDirection() * distance;
 
   if (!found && this->cursor->getCursorMode() == CursorMode::ADDING) {
-    this->ray.drawPrimitivePreview(this->currentObjectToAdd, distance, position);
+    this->ray.drawPrimitiveDefaultPreview(this->currentObjectToAdd, position);
   }
 
   if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
@@ -77,7 +77,7 @@ void Scene3D::processMouseActions() {
       this->cursor->setCursorMode(CursorMode::NAVIGATION);
 
     } else if (this->cursor->getCursorMode() == CursorMode::ADDING) {
-      this->sceneManager.get()->addElement(ray, distance, this->ray.getOrigin() + this->ray.getDirection() * distance, this->currentObjectToAdd);
+      this->sceneManager.get()->addElement(this->ray.getOrigin() + this->ray.getDirection() * distance, this->currentObjectToAdd);
       this->cursor->setCursorMode(CursorMode::NAVIGATION);
       this->sceneManager.get()->setSelectedSceneObject(this->sceneManager.get()->getObjects().back().get());
     }

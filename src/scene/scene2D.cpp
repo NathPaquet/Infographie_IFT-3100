@@ -29,8 +29,8 @@ void Scene2D::processMouseActions() {
   const float distance = Constants::DEFAULT_DISTANCE_TO_DRAW_PRIMITIVE;
   auto position = (this->ray.getOrigin() + this->ray.getDirection() * (distance / abs(ray.getDirection().z)));
   //this->ray.set(this->camera.getPosition(), this->camera.getZAxis());
-  if (!found && this->cursor->getCursorMode() == CursorMode::ADDING) {
-    this->ray.drawPrimitivePreview(this->currentObjectToAdd, distance, position);
+  if (this->wasDrawingFirstPositionClicked && this->cursor->getCursorMode() == CursorMode::ADDING) {
+    this->ray.drawPrimitivePreview(this->currentObjectToAdd, this->drawingFirstPosition, position);
   }
   /*
   if (found && std::find(this->sceneManager.get()->getSelectedObjects().begin(), this->sceneManager.get()->getSelectedObjects().end(), maybeObject.value()) != this->sceneManager.get()->getSelectedObjects().end()) {
@@ -48,6 +48,16 @@ void Scene2D::processMouseActions() {
 
   */
   if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
+    if (this->cursor->getCursorMode() == CursorMode::ADDING) {
+      if (this->wasDrawingFirstPositionClicked) {
+        this->sceneManager.get()->addElement(this->drawingFirstPosition, position, this->currentObjectToAdd);
+        this->cursor->setCursorMode(CursorMode::NAVIGATION);
+        this->sceneManager.get()->setSelectedSceneObject(this->sceneManager.get()->getObjects().back().get());
+      } else {
+        this->drawingFirstPosition = position;
+      }
+      this->wasDrawingFirstPositionClicked = !this->wasDrawingFirstPositionClicked;
+    }
     if (found && this->cursor->getCursorMode() == CursorMode::NAVIGATION) {
       if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftCtrl))) {
         this->sceneManager.get()->clickSelectionSceneObject(maybeObject.value());
@@ -59,10 +69,6 @@ void Scene2D::processMouseActions() {
       this->sceneManager.get()->removeObject(maybeObject.value()); // TODO : Ajouter une nouvelle m�thode pour supprimer un objet
       this->cursor->setCursorMode(CursorMode::NAVIGATION);
 
-    } else if (this->cursor->getCursorMode() == CursorMode::ADDING) {
-      this->sceneManager.get()->addElement(ray, distance, position, this->currentObjectToAdd);
-      this->cursor->setCursorMode(CursorMode::NAVIGATION);
-      this->sceneManager.get()->setSelectedSceneObject(this->sceneManager.get()->getObjects().back().get());
     }
   }
 }

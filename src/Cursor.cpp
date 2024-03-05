@@ -33,7 +33,7 @@ glm::highp_vec3 Cursor::findMouseClick3DPosition(const ofEasyCam &camera) const 
   return worldMouseDirection;
 }
 
-std::optional<const SceneObject *> Cursor::setRayWithCollidingObject(const std::vector<std::unique_ptr<SceneObject>> &objects, const ofEasyCam &camera, Ray &ray) {
+std::optional<const SceneObject *> Cursor::setRayWithCollidingObject(const std::list<std::unique_ptr<SceneObject>> &objects, const ofEasyCam &camera, Ray &ray) {
   auto worldMouseDirection = findMouseClick3DPosition(camera);
   ray.set(camera.getGlobalPosition(), worldMouseDirection);
 

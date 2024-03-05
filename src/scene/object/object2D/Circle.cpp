@@ -1,6 +1,23 @@
 #include "Circle.h"
 
-Circle::Circle(const glm::vec3 &centerPosition) {
+
+Circle::Circle(const glm::vec3 &centerPosition, const float radius){
+  initMesh(centerPosition, radius);
+} 
+
+Circle::Circle(const glm::vec3 &centerPosition, const glm::vec3 &outerPosition) {
+  initMesh(centerPosition, glm::length(outerPosition - centerPosition));
+}
+
+void Circle::drawPreview(const glm::vec3 &centerPosition, const float radius) {
+  ofDrawCircle(centerPosition, radius);
+}
+
+void Circle::drawPreview(const glm::vec3 &centerPosition, const glm::vec3 &outerPosition) {
+  ofDrawCircle(centerPosition, glm::length(outerPosition - centerPosition));
+}
+
+void Circle::initMesh(const glm::vec3 &centerPosition, const float radius) {
   std::vector<glm::vec3> vertices;
   // APROXIMATION VALID ONLY IF CAMERA IS LOOKING AT (0,0,1)
   auto vec1 = glm::vec3(1, 0, 0);
@@ -8,7 +25,7 @@ Circle::Circle(const glm::vec3 &centerPosition) {
 
   vertices.push_back({0, 0, 0});
 
-  glm::vec2 nextPoint = {20, 0};
+  glm::vec2 nextPoint = {radius, 0};
   vertices.push_back(nextPoint.x * vec1 + nextPoint.y * vec2);
   for (int i = 1; i < this->numberOfSection; i++) {
     nextPoint = this->rotationMatrix * nextPoint;
@@ -24,8 +41,4 @@ Circle::Circle(const glm::vec3 &centerPosition) {
 
   this->primitive = std::make_unique<of3dPrimitive>(of3dPrimitive(mesh));
   this->primitive->setPosition(centerPosition);
-}
-
-void Circle::drawDefaultPreview(const glm::vec3 &centerPosition) {
-  ofDrawCircle(centerPosition, 20);
 }

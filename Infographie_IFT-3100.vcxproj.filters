@@ -188,6 +188,9 @@
     <ClCompile Include="src\scene\object\object3D\\Model3D.cpp">
       <Filter>src\scene\object\object3D</Filter>
     </ClCompile>
+    <ClCompile Include="src\scene\object\object2D\Line.cpp">
+      <Filter>src\scene\object\object2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -747,6 +750,9 @@
     </ClInclude>
     <ClInclude Include="src\scene\scene2D.h">
       <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\object\object2D\Line.h">
+      <Filter>src\scene\object\object2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
