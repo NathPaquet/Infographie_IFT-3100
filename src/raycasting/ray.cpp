@@ -2,6 +2,7 @@
 
 #include "constants.h"
 #include "object/object2D/Circle.h"
+#include "object/object2D/Star.h"
 #include "object/object2D/Square.h"
 #include "object/object2D/Triangle.h"
 #include "object/object2D/Line.h"
@@ -103,6 +104,9 @@ void Ray::drawPrimitivePreview(ElementType elementType, const glm::vec3 &centerP
       break;
     case ElementType::CIRCLE:
       Circle::drawPreview(centerPosition, outerPosition);
+      break;
+    case ElementType::STAR:
+      Star::drawPreview(centerPosition, outerPosition);
       break;
     case ElementType::LINE:
       Line::drawPreview(centerPosition, outerPosition);

@@ -119,6 +119,10 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
         this->currentScene->setCurrentObjectToAdd(ElementType::CIRCLE);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
+      if (ImGui::MenuItem("Add Star")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::STAR);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
       if (ImGui::MenuItem("Add Line")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::LINE);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);

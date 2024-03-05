@@ -191,6 +191,9 @@
     <ClCompile Include="src\scene\object\object2D\Line.cpp">
       <Filter>src\scene\object\object2D</Filter>
     </ClCompile>
+    <ClCompile Include="Star.cpp">
+      <Filter>src\scene\object\object2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -752,6 +755,9 @@
       <Filter>src\scene</Filter>
     </ClInclude>
     <ClInclude Include="src\scene\object\object2D\Line.h">
+      <Filter>src\scene\object\object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Star.h">
       <Filter>src\scene\object\object2D</Filter>
     </ClInclude>
   </ItemGroup>

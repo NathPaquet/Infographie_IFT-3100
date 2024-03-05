@@ -1,15 +1,14 @@
 #include "SceneObjectFactory.h"
 
 #include "object2D/Circle.h"
-#include "object2D/Square.h"
-#include "object2D/Triangle.h"
 #include "object2D/Line.h"
-
+#include "object2D/Square.h"
+#include "object2D/Star.h"
+#include "object2D/Triangle.h"
 #include "object3D/CubicPlanet.h"
 #include "object3D/CylinderPlanet.h"
-#include "object3D/Planet.h"
 #include "object3D/Model3D.h"
-
+#include "object3D/Planet.h"
 
 std::unique_ptr<SceneObject> SceneObjectFactory::createDefaultSceneObject(const glm::vec3 &position, const ElementType primitiveType) {
   switch (primitiveType) {
@@ -27,6 +26,8 @@ std::unique_ptr<SceneObject> SceneObjectFactory::createDefaultSceneObject(const 
       return std::make_unique<Square>(Square(position));
     case ElementType::CIRCLE:
       return std::make_unique<Circle>(Circle(position));
+    case ElementType::STAR:
+      return std::make_unique<Star>(Star(position));
     default:
       return nullptr;
   }
@@ -48,6 +49,8 @@ std::unique_ptr<SceneObject> SceneObjectFactory::createSceneObject(const glm::ve
       return std::make_unique<Square>(Square(centerPosition, outerPosition));
     case ElementType::CIRCLE:
       return std::make_unique<Circle>(Circle(centerPosition, outerPosition));
+    case ElementType::STAR:
+      return std::make_unique<Star>(Star(centerPosition, outerPosition));
     case ElementType::LINE:
       return std::make_unique<Line>(Line(centerPosition, outerPosition));
     default:

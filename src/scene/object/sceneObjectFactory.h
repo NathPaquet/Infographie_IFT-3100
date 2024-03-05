@@ -13,7 +13,7 @@ enum class ElementType {
   CIRCLE,
   SQUARE,
   LINE,
-  POINT,
+  STAR,
 };
 
 class SceneObjectFactory {
