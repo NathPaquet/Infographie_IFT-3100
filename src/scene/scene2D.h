@@ -8,4 +8,10 @@ public:
       Scene(std::move(sceneManager), std::move(sceneEventListener), cursor) {}
   void setup() override;
   void drawScene() override;
+
+private:
+  void processMouseActions();
+  ofEasyCam camera;
+  Ray ray;
+
 };
