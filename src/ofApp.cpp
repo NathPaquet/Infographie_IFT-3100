@@ -204,6 +204,6 @@ void ofApp::generateRandomGalaxy(int nbElements) {
     auto distance = glm::length(randomPosition);
     ray.set({0, 0, 0}, randomPosition);
     // TODO : Add a new method in scene object ?
-    this->currentScene->getSceneManager()->addElement(ray, distance, static_cast<ElementType>(intDistribution(gen)));
+    this->currentScene->getSceneManager()->addElement(ray, distance, ray.getOrigin() + ray.getDirection() * distance, static_cast<ElementType>(intDistribution(gen)));
   }
 }

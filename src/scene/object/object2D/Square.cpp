@@ -1,15 +1,11 @@
 #include "Square.h"
+#include "constants.h"
 
-Square::Square(const Ray &ray, const float &distance) {
+Square::Square(const glm::vec3 &centerPosition) {
   std::vector<glm::vec3> vertices;
-  // generating an orthogonal base from the ray vector
-  auto u = glm::vec3(1, 0, 0);
-  if (glm::dot(ray.getDirection(), u) != 0) {
-    u = glm::vec3(0, 1, 0);
-  }
-  auto vec1 = glm::normalize(glm::cross(ray.getDirection(), u));
-  auto vec2 = glm::normalize(glm::cross(vec1, ray.getDirection()));
-  auto centerPosition = ray.getOrigin() + distance * ray.getDirection();
+  // APROXIMATION VALID ONLY IF CAMERA IS LOOKING AT (0,0,1)
+  auto vec1 = glm::vec3(1, 0, 0);
+  auto vec2 = glm::vec3(0, 1, 0);
 
   vertices.emplace_back(10 * vec1 + 10 * vec2);
   vertices.emplace_back(-10 * vec1 + 10 * vec2);
@@ -27,7 +23,6 @@ Square::Square(const Ray &ray, const float &distance) {
   this->primitive->setPosition(centerPosition);
 }
 
-void Square::drawDefaultPreview(const Ray &ray, const float &distance) {
-  auto centerPosition = ray.getOrigin() + distance * ray.getDirection();
-  ofDrawRectangle(centerPosition, 20, 20);
+void Square::drawDefaultPreview(const glm::vec3 &centerPosition) {
+  ofDrawRectangle(centerPosition.x-10,centerPosition.y-10, centerPosition.z, 20, 20);
 }

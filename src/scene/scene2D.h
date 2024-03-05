@@ -13,5 +13,6 @@ private:
   void processMouseActions();
   ofEasyCam camera;
   Ray ray;
-
+  ofColor backgroundColor = ofColor(255,255,255,255);
+  const float object_distance = 200.f;
 };

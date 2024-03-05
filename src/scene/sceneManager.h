@@ -10,7 +10,7 @@ public:
   SceneManager();
   ~SceneManager();
 
-  void addElement(const Ray &ray, const float &distance, const ElementType primitiveType);
+  void addElement(const Ray &ray, const float &distance, const glm::vec3 position, const ElementType primitiveType);
   void removeObject(const SceneObject *sceneObject);
   void removeAllSelectedObjects();
   void drawScene();

@@ -1,16 +1,11 @@
 #include "Triangle.h"
 
-Triangle::Triangle(const Ray &ray, const float &distance) {
+Triangle::Triangle(const Ray &ray, const glm::vec3 &centerPosition) {
   ofPrimitiveMode mode = OF_PRIMITIVE_TRIANGLES;
   std::vector<glm::vec3> vertices;
-  // generating an orthogonal base from the ray vector
-  auto u = glm::vec3(1, 0, 0);
-  if (glm::dot(ray.getDirection(), u) != 0) {
-    u = glm::vec3(0, 1, 0);
-  }
-  auto vec1 = glm::normalize(glm::cross(ray.getDirection(), u));
-  auto vec2 = glm::normalize(glm::cross(vec1, ray.getDirection()));
-  auto centerPosition = ray.getOrigin() + distance * ray.getDirection();
+  // APROXIMATION VALID ONLY IF CAMERA IS LOOKING AT (0,0,1)
+  auto vec1 = glm::vec3(1, 0, 0);
+  auto vec2 = glm::vec3(0, 1, 0);
 
   glm::vec2 firstPoint = glm::vec2(20, 20);
   std::array<float, 4> values1 = {-0.5f,
@@ -37,17 +32,12 @@ Triangle::Triangle(const Ray &ray, const float &distance) {
   this->primitive->setPosition(centerPosition);
 }
 
-void Triangle::drawDefaultPreview(const Ray &ray, const float &distance) {
+void Triangle::drawDefaultPreview(const glm::vec3 &centerPosition) {
   ofPrimitiveMode mode = OF_PRIMITIVE_TRIANGLES;
   std::vector<glm::vec3> vertices;
-  // generating an orthogonal base from the ray vector
-  auto u = glm::vec3(1, 0, 0);
-  if (glm::dot(ray.getDirection(), u) != 0) {
-    u = glm::vec3(0, 1, 0);
-  }
-  auto vec1 = glm::normalize(glm::cross(ray.getDirection(), u));
-  auto vec2 = glm::normalize(glm::cross(vec1, ray.getDirection()));
-  auto centerPosition = ray.getOrigin() + distance * ray.getDirection();
+  //APROXIMATION VALID ONLY IF CAMERA IS LOOKING AT (0,0,1)
+  auto vec1 = glm::vec3(1,0,0);
+  auto vec2 = glm::vec3(0,1,0);
 
   glm::vec2 firstPoint = glm::vec2(20, 20);
   std::array<float, 4> values1 = {-0.5f,

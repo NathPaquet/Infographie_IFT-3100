@@ -9,8 +9,7 @@
 #include "object3D/Model3D.h"
 
 
-std::unique_ptr<SceneObject> SceneObjectFactory::createSceneObject(const Ray &ray, const float &distance, const ElementType primitiveType) {
-  const ofVec3f position = ray.getOrigin() + ray.getDirection() * distance;
+std::unique_ptr<SceneObject> SceneObjectFactory::createSceneObject(const Ray &ray, const float &distance, const glm::vec3 &position, const ElementType primitiveType) {
   switch (primitiveType) {
     case (ElementType::SPHERE):
       return std::make_unique<Planet>(Planet(position.x, position.y, position.z));
@@ -21,11 +20,11 @@ std::unique_ptr<SceneObject> SceneObjectFactory::createSceneObject(const Ray &ra
     case ElementType::MODEL3D:
       return std::make_unique<Model3D>(Model3D(ray, distance));
     case ElementType::TRIANGLE:
-      return std::make_unique<Triangle>(Triangle(ray, distance));
+      return std::make_unique<Triangle>(Triangle(ray, position));
     case ElementType::SQUARE:
-      return std::make_unique<Square>(Square(ray, distance));
+      return std::make_unique<Square>(Square(position));
     case ElementType::CIRCLE:
-      return std::make_unique<Circle>(Circle(ray, distance));
+      return std::make_unique<Circle>(Circle(position));
     default:
       return nullptr;
   }

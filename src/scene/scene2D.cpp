@@ -3,35 +3,36 @@
 #include "constants.h"
 
 void Scene2D::setup() {
-  this->camera.setDistance(Constants::DEFAULT_CAMERA_DISTANCE);
+  //this->camera.setDistance(Constants::DEFAULT_CAMERA_DISTANCE);
   this->ray = Ray();
   this->camera.disableMouseInput();
+  ofDisableLighting();
 }
 
 void Scene2D::drawScene() {
+  ofPushStyle();
+  //ofBackground(this->backgroundColor);
   this->cursor->drawCursor(ofGetMouseX(), ofGetMouseY());
   this->camera.begin();
+  this->processMouseActions();
   this->sceneManager.get()->drawScene();
   this->camera.begin();
+  ofPopStyle();
 }
 
 void Scene2D::processMouseActions() {
   if (!isMouseClickInScene()) {
     return;
   }
-
   auto &&maybeObject = this->cursor->setRayWithCollidingObject(this->sceneManager.get()->getObjects(), this->camera, this->ray);
   auto &&found = maybeObject.has_value();
   const float distance = Constants::DEFAULT_DISTANCE_TO_DRAW_PRIMITIVE;
+  auto position = (this->ray.getOrigin() + this->ray.getDirection() * (distance / abs(ray.getDirection().z)));
+  //this->ray.set(this->camera.getPosition(), this->camera.getZAxis());
   if (!found && this->cursor->getCursorMode() == CursorMode::ADDING) {
-    this->ray.drawPrimitivePreview(this->currentObjectToAdd, distance);
+    this->ray.drawPrimitivePreview(this->currentObjectToAdd, distance, position);
   }
-
-  if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
-    shouldDragObject = false;
-    this->camera.enableMouseInput();
-  }
-
+  /*
   if (found && std::find(this->sceneManager.get()->getSelectedObjects().begin(), this->sceneManager.get()->getSelectedObjects().end(), maybeObject.value()) != this->sceneManager.get()->getSelectedObjects().end()) {
     if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
       shouldDragObject = true;
@@ -45,6 +46,7 @@ void Scene2D::processMouseActions() {
     }
   }
 
+  */
   if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
     if (found && this->cursor->getCursorMode() == CursorMode::NAVIGATION) {
       if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftCtrl))) {
@@ -58,7 +60,7 @@ void Scene2D::processMouseActions() {
       this->cursor->setCursorMode(CursorMode::NAVIGATION);
 
     } else if (this->cursor->getCursorMode() == CursorMode::ADDING) {
-      this->sceneManager.get()->addElement(ray, distance, this->currentObjectToAdd);
+      this->sceneManager.get()->addElement(ray, distance, position, this->currentObjectToAdd);
       this->cursor->setCursorMode(CursorMode::NAVIGATION);
       this->sceneManager.get()->setSelectedSceneObject(this->sceneManager.get()->getObjects().back().get());
     }

@@ -5,8 +5,8 @@
 
 class Circle : public SceneObject {
 public:
-  Circle(const Ray &ray, const float &distance);
-  static void drawDefaultPreview(const Ray &ray, const float &distance);
+  Circle(const glm::vec3 &centerPosition);
+  static void drawDefaultPreview(const glm::vec3 &centerPosition);
 
 private:
   const int numberOfSection = 45;

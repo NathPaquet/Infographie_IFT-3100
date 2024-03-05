@@ -45,34 +45,33 @@ bool Ray::isRayCollidingWithPrimitive(const of3dPrimitive &primitive, glm::vec2 
   return found;
 }
 
-void Ray::drawPrimitivePreview(ElementType elementType, float distance) {
+void Ray::drawPrimitivePreview(ElementType elementType, float distance, const glm::vec3 &centerPosition) {
   ofPushStyle();
   // draw origin
   ofSetColor((ImVec4)Constants::PRIMITIVE_PREVIEW_COLOR);
   // draw direction
-  auto end = this->origin + (this->direction * (distance));
   ofNoFill();
   switch (elementType) {
     case ElementType::CUBIC:
-      ofDrawBox(end, 20.f, 20.f, 20.f);
+      ofDrawBox(centerPosition, 20.f, 20.f, 20.f);
       break;
     case ElementType::SPHERE:
-      ofDrawSphere(end, 20.f);
+      ofDrawSphere(centerPosition, 20.f);
       break;
     case ElementType::CYLINDER:
-      ofDrawCylinder(end, 20.f, 20.f);
+      ofDrawCylinder(centerPosition, 20.f, 20.f);
       break;
     case ElementType::TRIANGLE:
-      Triangle::drawDefaultPreview(*this, distance);
+      Triangle::drawDefaultPreview(centerPosition);
       break;
     case ElementType::SQUARE:
-      Square::drawDefaultPreview(*this, distance);
+      Square::drawDefaultPreview(centerPosition);
       break;
     case ElementType::CIRCLE:
-      Circle::drawDefaultPreview(*this, distance);
+      Circle::drawDefaultPreview(centerPosition);
       break;
     default:
-      ofDrawSphere(end, 20.f);
+      ofDrawSphere(centerPosition, 20.f);
       break;
   }
   ofPopStyle();

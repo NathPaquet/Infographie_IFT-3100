@@ -1,15 +1,11 @@
 #include "Circle.h"
 
-Circle::Circle(const Ray &ray, const float &distance) {
+Circle::Circle(const glm::vec3 &centerPosition) {
   std::vector<glm::vec3> vertices;
-  // generating an orthogonal base from the ray vector
-  auto u = glm::vec3(1, 0, 0);
-  if (glm::dot(ray.getDirection(), u) != 0) {
-    u = glm::vec3(0, 1, 0);
-  }
-  auto vec1 = glm::normalize(glm::cross(ray.getDirection(), u));
-  auto vec2 = glm::normalize(glm::cross(vec1, ray.getDirection()));
-  auto centerPosition = ray.getOrigin() + distance * ray.getDirection();
+  // APROXIMATION VALID ONLY IF CAMERA IS LOOKING AT (0,0,1)
+  auto vec1 = glm::vec3(1, 0, 0);
+  auto vec2 = glm::vec3(0, 1, 0);
+
   vertices.push_back({0, 0, 0});
 
   glm::vec2 nextPoint = {20, 0};
@@ -30,7 +26,6 @@ Circle::Circle(const Ray &ray, const float &distance) {
   this->primitive->setPosition(centerPosition);
 }
 
-void Circle::drawDefaultPreview(const Ray &ray, const float &distance) {
-  auto centerPosition = ray.getOrigin() + distance * ray.getDirection();
+void Circle::drawDefaultPreview(const glm::vec3 &centerPosition) {
   ofDrawCircle(centerPosition, 20);
 }

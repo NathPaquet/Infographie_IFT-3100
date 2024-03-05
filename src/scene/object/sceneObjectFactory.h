@@ -18,5 +18,5 @@ enum class ElementType {
 
 class SceneObjectFactory {
 public:
-  static std::unique_ptr<SceneObject> createSceneObject(const Ray &ray, const float &distance, const ElementType primitiveType);
+  static std::unique_ptr<SceneObject> createSceneObject(const Ray &ray, const float &distance, const glm::vec3 &position, const ElementType primitiveType);
 };
