@@ -32,4 +32,10 @@ protected:
   ofMesh mainMesh;
   ofMaterial mMaterial;
   ofTexture mTex;
+
+private:
+  const ofVec3f getCenterOfPrimitive() const;
+  void drawBoundingBox(bool isAABB);
+  void drawAABB() const;
+  void drawOBB() const;
 };
