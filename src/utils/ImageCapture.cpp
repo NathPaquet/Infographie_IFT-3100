@@ -14,7 +14,9 @@ void ImageCapture::takeScreenshot() {
   if (result.bSuccess) {
     ofImage screenshot;
     screenshot.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
-    screenshot.save(result.getPath());
+
+    string filePath = result.getPath() + "." + imageFormat;
+    screenshot.save(filePath);
   }
 }
 
@@ -25,6 +27,10 @@ void ImageCapture::startRecording(int interval, int duration) {
     endTime = startTime + duration;
     this->interval = interval;
   }
+}
+
+void ImageCapture::setImageFormat(const std::string &imageFormat) {
+  this->imageFormat = imageFormat;
 }
 
 bool ImageCapture::isRecording() {
@@ -60,7 +66,7 @@ void ImageCapture::addScreenshot() {
 
 void ImageCapture::saveScreenshots(const string &path) {
   for (int i = 0; i < screenshots.size(); i++) {
-    string filePath = path + to_string(i + 1) + ".png";
+    string filePath = path + to_string(i + 1) + "." + imageFormat;
     screenshots.at(i).save(filePath);
   }
 }
