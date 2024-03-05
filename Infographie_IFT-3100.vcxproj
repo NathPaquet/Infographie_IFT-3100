@@ -121,6 +121,7 @@
     <ClCompile Include="src\scene\object\object2D\Line.cpp" />
     <ClCompile Include="src\scene\object\object2D\Square.cpp" />
     <ClCompile Include="src\scene\object\object2D\Triangle.cpp" />
+    <ClCompile Include="src\scene\object\object2D\Star.cpp" />
     <ClCompile Include="src\scene\object\object3D\CubicPlanet.cpp" />
     <ClCompile Include="src\scene\object\object3D\CylinderPlanet.cpp" />
     <ClCompile Include="src\scene\object\object3D\Planet.cpp" />
@@ -166,7 +167,6 @@
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_draw.cpp" />
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_tables.cpp" />
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_widgets.cpp" />
-    <ClCompile Include="Star.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\constants.h" />
@@ -186,6 +186,7 @@
     <ClInclude Include="src\scene\object\object2D\Line.h" />
     <ClInclude Include="src\scene\object\object2D\Square.h" />
     <ClInclude Include="src\scene\object\object2D\Triangle.h" />
+    <ClInclude Include="src\scene\object\object2D\Star.h" />
     <ClInclude Include="src\scene\object\object3D\CubicPlanet.h" />
     <ClInclude Include="src\scene\object\object3D\CylinderPlanet.h" />
     <ClInclude Include="src\scene\object\object3D\Planet.h" />
@@ -325,7 +326,6 @@
     <ClInclude Include="..\..\addons\ofxImGui\libs\imgui\src\imstb_rectpack.h" />
     <ClInclude Include="..\..\addons\ofxImGui\libs\imgui\src\imstb_textedit.h" />
     <ClInclude Include="..\..\addons\ofxImGui\libs\imgui\src\imstb_truetype.h" />
-    <ClInclude Include="Star.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
