@@ -25,6 +25,9 @@ public:
     this->properties.emplace(std::make_pair(propertyName, std::make_unique<Property<T>>(propertyName, initialValue)));
   }
 
+private:
+  void drawAxis();
+
 protected:
   virtual void updateProperties();
   std::unique_ptr<of3dPrimitive> primitive;

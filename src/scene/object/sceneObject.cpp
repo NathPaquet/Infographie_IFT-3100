@@ -13,6 +13,7 @@ void SceneObject::draw(bool isSelected) {
   ofPushStyle();
   if (isSelected) {
     ofSetColor(ofColor::white);
+    drawAxis();
     primitive->drawWireframe();
   }
 
@@ -40,6 +41,30 @@ void SceneObject::draw_properties() {
 std::map<PROPERTY_ID, std::unique_ptr<PropertyBase>> &SceneObject::getProperties() {
   // TODO : we shouldn't make a copy here
   return this->properties;
+}
+
+void SceneObject::drawAxis() {
+  ofVec3f xAxis = this->primitive->getXAxis();
+  ofVec3f yAxis = this->primitive->getYAxis();
+  ofVec3f zAxis = this->primitive->getZAxis();
+
+  auto vecScale = this->primitive->getScale();
+  auto vecRescale = vecScale * 25.f;
+  float scaleHeadArrow = vecRescale.x / 8;
+
+  ofPushMatrix();
+
+  ofTranslate(this->position);
+  ofSetColor(ofColor::red);
+  ofDrawArrow(ofPoint(0), ofPoint(xAxis * vecRescale.x), scaleHeadArrow);
+
+  ofSetColor(ofColor::green);
+  ofDrawArrow(ofPoint(0), ofPoint(yAxis * vecRescale.y), scaleHeadArrow);
+
+  ofSetColor(ofColor::blue);
+  ofDrawArrow(ofPoint(0), ofPoint(zAxis * vecRescale.z), scaleHeadArrow);
+
+  ofPopMatrix();
 }
 
 void SceneObject::updateProperties() {
