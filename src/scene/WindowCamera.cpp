@@ -6,7 +6,7 @@ WindowCamera::WindowCamera(SceneManager *sceneManager):
     sceneManager(sceneManager) {}
 
 void WindowCamera::draw() {
-  selectedCamera = sceneManager->getSelectedObjects().at(0);
+  // selectedCamera = std::make_unique<Camera>(sceneManager->getSelectedObjects().at(0));
 
   if (!isShown) {
     return;
