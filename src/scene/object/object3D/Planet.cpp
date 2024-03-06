@@ -32,5 +32,5 @@ void Planet::updateProperties() {
   }
 }
 void Planet::setSize(const float radius) {
-  this->primitive.get()->setScale(radius / DEFAULT_RADIUS);
+  this->primitive.get()->setScale(radius / Constants::DEFAULT_SIZE);
 }
