@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\ofApp.cpp">
@@ -191,7 +191,9 @@
     <ClCompile Include="src\scene\object\object2D\Line.cpp">
       <Filter>src\scene\object\object2D</Filter>
     </ClCompile>
-    <ClCompile Include="Star.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object2D\Star.cpp">
       <Filter>src\scene\object\object2D</Filter>
     </ClCompile>
   </ItemGroup>
@@ -757,7 +759,7 @@
     <ClInclude Include="src\scene\object\object2D\Line.h">
       <Filter>src\scene\object\object2D</Filter>
     </ClInclude>
-    <ClInclude Include="Star.h">
+    <ClInclude Include="src\scene\object\object2D\Star.h">
       <Filter>src\scene\object\object2D</Filter>
     </ClInclude>
   </ItemGroup>
