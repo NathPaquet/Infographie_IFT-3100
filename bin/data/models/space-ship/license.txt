@@ -1,0 +1,11 @@
+Model Information:
+* title:	Pixel Space Ship
+* source:	https://sketchfab.com/3d-models/pixel-space-ship-83e0e737151e4dc2b41ec3e2b8aa7f78
+* author:	Bucky_art (https://sketchfab.com/Bucky_art)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Pixel Space Ship" (https://sketchfab.com/3d-models/pixel-space-ship-83e0e737151e4dc2b41ec3e2b8aa7f78) by Bucky_art (https://sketchfab.com/Bucky_art) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

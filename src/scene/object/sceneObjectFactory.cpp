@@ -1,5 +1,6 @@
 #include "SceneObjectFactory.h"
 
+#include "constants.h"
 #include "object2D/Circle.h"
 #include "object2D/Line.h"
 #include "object2D/Square.h"
@@ -18,8 +19,12 @@ std::unique_ptr<SceneObject> SceneObjectFactory::createDefaultSceneObject(const 
       return std::make_unique<CubicPlanet>(CubicPlanet(position.x, position.y, position.z));
     case ElementType::CYLINDER:
       return std::make_unique<CylinderPlanet>(CylinderPlanet(position.x, position.y, position.z));
-    case ElementType::MODEL3D:
-      return std::make_unique<Model3D>(Model3D(position));
+    case ElementType::PLANET_EARTH:
+      return std::make_unique<Model3D>(Model3D(position, Constants::PLANET_EARTH_MODEL_PATH));
+    case ElementType::FREDDY_PLUSH:
+      return std::make_unique<Model3D>(Model3D(position, Constants::FREDDY_PLUSH_MODEL_PATH));
+    case ElementType::SPACE_SHIP:
+      return std::make_unique<Model3D>(Model3D(position, Constants::SPACE_SHIP_MODEL_PATH));
     case ElementType::TRIANGLE:
       return std::make_unique<Triangle>(Triangle(position));
     case ElementType::SQUARE:
@@ -41,8 +46,13 @@ std::unique_ptr<SceneObject> SceneObjectFactory::createSceneObject(const glm::ve
       return std::make_unique<CubicPlanet>(CubicPlanet(centerPosition.x, centerPosition.y, centerPosition.z));
     case ElementType::CYLINDER:
       return std::make_unique<CylinderPlanet>(CylinderPlanet(centerPosition.x, centerPosition.y, centerPosition.z));
-    case ElementType::MODEL3D:
-      return std::make_unique<Model3D>(Model3D(centerPosition));
+    case ElementType::PLANET_EARTH:
+      return std::make_unique<Model3D>(Model3D(centerPosition, Constants::PLANET_EARTH_MODEL_PATH));
+    case ElementType::FREDDY_PLUSH:
+      return std::make_unique<Model3D>(Model3D(centerPosition, Constants::FREDDY_PLUSH_MODEL_PATH));
+    case ElementType::SPACE_SHIP:
+      return std::make_unique<Model3D>(Model3D(centerPosition, Constants::SPACE_SHIP_MODEL_PATH));
+
     case ElementType::TRIANGLE:
       return std::make_unique<Triangle>(Triangle(centerPosition, outerPosition));
     case ElementType::SQUARE:

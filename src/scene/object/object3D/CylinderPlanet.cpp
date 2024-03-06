@@ -1,11 +1,12 @@
 #include "CylinderPlanet.h"
 
 #include "ImageImporter.h"
+#include "constants.h"
 
 CylinderPlanet::CylinderPlanet(const float x, const float y, const float z) {
   SceneObject();
-  this->addProperty<float>(PROPERTY_ID::HEIGHT, 20.f);
-  this->addProperty<float>(PROPERTY_ID::RADIUS, 20.f);
+  this->addProperty<float>(PROPERTY_ID::HEIGHT, Constants::DEFAULT_SIZE);
+  this->addProperty<float>(PROPERTY_ID::RADIUS, Constants::DEFAULT_SIZE);
   const float height = this->getPropertyValue<float>(PROPERTY_ID::HEIGHT);
   const float radius = this->getPropertyValue<float>(PROPERTY_ID::RADIUS);
 
@@ -24,7 +25,7 @@ CylinderPlanet::CylinderPlanet(const float x, const float y, const float z) {
 }
 
 void CylinderPlanet::setSize(const float radius, const float height) {
-  this->primitive.get()->setScale(radius / DEFAULT_RADIUS, height / DEFAULT_HEIGHT, radius / DEFAULT_RADIUS);
+  this->primitive.get()->setScale(radius / Constants::DEFAULT_SIZE, height / Constants::DEFAULT_SIZE, radius / Constants::DEFAULT_SIZE);
 }
 
 void CylinderPlanet::updateProperties() {

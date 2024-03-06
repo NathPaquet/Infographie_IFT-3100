@@ -3,17 +3,21 @@
 #include "sceneObject.h"
 
 enum class ElementType {
-  // 3D
+  // 3D primitives
   SPHERE,
   CUBIC,
   CYLINDER,
-  MODEL3D,
-  // 2D
+  // 2D primitives
   TRIANGLE,
   CIRCLE,
   SQUARE,
   LINE,
   STAR,
+  POINT,
+  // 3D models
+  PLANET_EARTH,
+  FREDDY_PLUSH,
+  SPACE_SHIP,
 };
 
 class SceneObjectFactory {

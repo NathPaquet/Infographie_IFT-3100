@@ -150,8 +150,16 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
 
       ImGui::SeparatorText("3D model");
 
-      if (ImGui::MenuItem("Add 3D Model")) {
-        this->currentScene->setCurrentObjectToAdd(ElementType::MODEL3D);
+      if (ImGui::MenuItem("Planet earth")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::PLANET_EARTH);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
+      if (ImGui::MenuItem("Freddy plush")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::FREDDY_PLUSH);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
+      if (ImGui::MenuItem("Space ship")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::SPACE_SHIP);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
     }

@@ -26,7 +26,7 @@ public:
   }
 
 private:
-  void drawAxis();
+  virtual void drawAxis();
 
 protected:
   virtual void updateProperties();

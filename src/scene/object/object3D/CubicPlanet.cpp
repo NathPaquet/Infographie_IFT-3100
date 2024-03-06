@@ -1,13 +1,12 @@
 #include "CubicPlanet.h"
 
 #include "ImageImporter.h"
+#include "constants.h"
 #include "properties/Property.h"
-
-constexpr float DEFAULT_SIZE = 20.0f;
 
 CubicPlanet::CubicPlanet(const float x, const float y, const float z) {
   SceneObject();
-  this->addProperty<float>(PROPERTY_ID::SIZE, DEFAULT_SIZE);
+  this->addProperty<float>(PROPERTY_ID::SIZE, Constants::DEFAULT_SIZE);
 
   float size = this->getPropertyValue<float>(PROPERTY_ID::SIZE);
   auto box = ofBoxPrimitive(size, size, size);
@@ -31,5 +30,5 @@ void CubicPlanet::updateProperties() {
 }
 
 void CubicPlanet::set_size(const float size) {
-  this->primitive.get()->setScale(size / DEFAULT_SIZE);
+  this->primitive.get()->setScale(size / Constants::DEFAULT_SIZE);
 }

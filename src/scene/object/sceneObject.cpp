@@ -1,6 +1,7 @@
 #include "sceneObject.h"
 
 #include "ImageImporter.h"
+#include "constants.h"
 
 SceneObject::SceneObject() {
   this->addProperty<ofImage>(PROPERTY_ID::IMAGE_IMPORT, ofImage());
@@ -12,8 +13,8 @@ void SceneObject::draw(bool isSelected, bool isBoundingBoxEnable) {
   this->updateProperties();
   ofPushStyle();
   if (isSelected) {
-    ofSetColor(ofColor::white);
     drawAxis();
+    ofSetColor(Constants::SELECTED_OBJECT_FRAME_COLOR);
     primitive->drawWireframe();
 
     if (isBoundingBoxEnable) {
@@ -23,18 +24,18 @@ void SceneObject::draw(bool isSelected, bool isBoundingBoxEnable) {
 
   if (mTex.isAllocated()) {
     this->mTex.bind();
-    //mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
-     ofSetColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
-    //mMaterial.begin();
+    // mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
+    ofSetColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
+    // mMaterial.begin();
     primitive->draw();
-    //mMaterial.end();
+    // mMaterial.end();
     this->mTex.unbind();
   } else {
-    //mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
+    // mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
     ofSetColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
-    //mMaterial.begin();
+    // mMaterial.begin();
     primitive->draw();
-    //mMaterial.end();
+    // mMaterial.end();
   }
   ofPopStyle();
 }
@@ -53,7 +54,7 @@ void SceneObject::drawAxis() {
   ofVec3f zAxis = this->primitive->getZAxis();
 
   auto vecScale = this->primitive->getScale();
-  auto vecRescale = vecScale * 25.f;
+  auto vecRescale = vecScale * (1.25f * Constants::DEFAULT_SIZE);
   float scaleHeadArrow = vecRescale.x / 8;
 
   ofPushMatrix();
