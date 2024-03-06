@@ -23,20 +23,18 @@ CylinderPlanet::CylinderPlanet(const float x, const float y, const float z) {
   this->position = ofVec3f(x, y, z);
 }
 
+void CylinderPlanet::setSize(const float radius, const float height) {
+  this->primitive.get()->setScale(radius / DEFAULT_RADIUS, height / DEFAULT_HEIGHT, radius / DEFAULT_RADIUS);
+}
+
 void CylinderPlanet::updateProperties() {
   SceneObject::updateProperties();
   if (this->properties.at(PROPERTY_ID::HEIGHT)->isValueChanged() || this->properties.at(PROPERTY_ID::RADIUS)->isValueChanged()) {
-    this->updatePrimitive();
+    const float radius = this->getPropertyValue<float>(PROPERTY_ID::RADIUS);
+    const float height = this->getPropertyValue<float>(PROPERTY_ID::HEIGHT);
+
+    this->setSize(radius, height);
     this->properties.at(PROPERTY_ID::HEIGHT)->setChanged(false);
     this->properties.at(PROPERTY_ID::RADIUS)->setChanged(false);
   }
-}
-
-void CylinderPlanet::updatePrimitive() {
-  const float radius = this->getPropertyValue<float>(PROPERTY_ID::RADIUS);
-  const float height = this->getPropertyValue<float>(PROPERTY_ID::HEIGHT);
-  auto cylinder = ofCylinderPrimitive(radius, height, 20, 20, 20, true, OF_PRIMITIVE_TRIANGLES);
-  this->primitive.reset(nullptr);
-  this->primitive = std::make_unique<ofCylinderPrimitive>(std::move(cylinder));
-  this->primitive->setGlobalPosition(position.x, position.y, position.z);
 }

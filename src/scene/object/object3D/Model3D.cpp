@@ -4,13 +4,12 @@
 
 constexpr float DEFAULT_SIZE = 40.0f;
 
-Model3D::Model3D(const Ray &ray, const float &distance, const string &modelPath) {
+Model3D::Model3D(const glm::vec3 &position, const string &modelPath) {
   this->addProperty<float>(PROPERTY_ID::SIZE, DEFAULT_SIZE);
   // TODO : find a way not to load mesh in this section !
 
   ofxAssimpModelLoader model;
   model.load(modelPath, ofxAssimpModelLoader::OPTIMIZE_DEFAULT);
-  auto position = ray.getOrigin() + ray.getDirection() * distance;
   this->primitive = std::make_unique<of3dPrimitive>(of3dPrimitive(model.getMesh(0)));
 
   model.setScaleNormalization(false);

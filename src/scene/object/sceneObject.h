@@ -9,7 +9,7 @@ public:
   ofVec3f position;
   ofColor color = ofColor::fromHsb(ofRandom(255), 255, 255);
   SceneObject();
-  virtual void draw(bool isSelected);
+  virtual void draw(bool isSelected, bool isBoundingBoxEnable);
   virtual void draw_properties();
   const of3dPrimitive &getPrimitive() const;
   void setPosition(ofVec3f vec);
@@ -25,6 +25,9 @@ public:
     this->properties.emplace(std::make_pair(propertyName, std::make_unique<Property<T>>(propertyName, initialValue)));
   }
 
+private:
+  void drawAxis();
+
 protected:
   virtual void updateProperties();
   std::unique_ptr<of3dPrimitive> primitive;
@@ -32,4 +35,8 @@ protected:
   ofMesh mainMesh;
   ofMaterial mMaterial;
   ofTexture mTex;
+
+private:
+  void drawBoundingBox();
+  void drawAABB() const;
 };
