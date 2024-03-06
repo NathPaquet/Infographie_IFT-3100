@@ -150,6 +150,10 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
         this->currentScene->setCurrentObjectToAdd(ElementType::FREDDY_PLUSH);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
+      if (ImGui::MenuItem("Space ship")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::SPACE_SHIP);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
     }
     ImGui::EndMenu();
   }

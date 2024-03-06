@@ -1,6 +1,7 @@
 #include "sceneObject.h"
 
 #include "ImageImporter.h"
+#include "constants.h"
 
 SceneObject::SceneObject() {
   this->addProperty<ofImage>(PROPERTY_ID::IMAGE_IMPORT, ofImage());
@@ -12,7 +13,7 @@ void SceneObject::draw(bool isSelected) {
   this->updateProperties();
   ofPushStyle();
   if (isSelected) {
-    ofSetColor(ofColor::white);
+    ofSetColor(Constants::SELECTED_OBJECT_FRAME_COLOR);
     primitive->drawWireframe();
   }
 

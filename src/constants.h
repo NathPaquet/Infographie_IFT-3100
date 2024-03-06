@@ -13,6 +13,7 @@ namespace Constants {
   constexpr ImColor BUTTON_CLICKED_BACKGROUND_COLOR = ImColor(102, 39, 55, 255);
   constexpr ImColor BUTTON_CLICKED_BORDER_COLOR = ImColor(209, 45, 73, 255);
   constexpr ImColor PRIMITIVE_PREVIEW_COLOR = ImColor(240, 233, 233, 255);
+  const ofColor SELECTED_OBJECT_FRAME_COLOR = ofColor(255, 255, 255, 100);
   const ofColor AMBIANT_COLOR = ofColor(0, 0, 0);
 
   // DISTANCES
@@ -25,4 +26,5 @@ namespace Constants {
   // MODELS PATH
   constexpr auto DRUID_MODEL_PATH = "models/druid/druid.gltf";
   constexpr auto FREDDY_PLUSH_MODEL_PATH = "models/fnaf-freddy-plush/scene.gltf";
+  constexpr auto SPACE_SHIP_MODEL_PATH = "models/space-ship/scene.gltf";
 }
