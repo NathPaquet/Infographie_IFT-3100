@@ -22,6 +22,10 @@ std::unique_ptr<SceneObject> SceneObjectFactory::createSceneObject(const Ray &ra
       return std::make_unique<Model3D>(Model3D(ray, distance, Constants::DRUID_MODEL_PATH));
     case ElementType::FREDDY_PLUSH:
       return std::make_unique<Model3D>(Model3D(ray, distance, Constants::FREDDY_PLUSH_MODEL_PATH));
+    case ElementType::EARTH_PLANET:
+      return std::make_unique<Model3D>(Model3D(ray, distance, Constants::EARTH_PLANET_MODEL_PATH));
+    case ElementType::VOLCANIC_PLANET:
+      return std::make_unique<Model3D>(Model3D(ray, distance, Constants::VOLCANIC_PLANET_MODEL_PATH));
     case ElementType::TRIANGLE:
       return std::make_unique<Triangle>(Triangle(ray, distance));
     case ElementType::SQUARE:

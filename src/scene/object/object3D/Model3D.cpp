@@ -1,6 +1,6 @@
 #include "Model3D.h"
 
-#include "ofxAssimpModelLoader.h"
+#include <ofxAssimpModelLoader.h>
 
 Model3D::Model3D(const Ray &ray, const float &distance, const string &modelPath) {
   // TODO find a way not to load mesh in this section !

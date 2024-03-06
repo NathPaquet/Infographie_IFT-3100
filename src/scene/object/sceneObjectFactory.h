@@ -15,7 +15,9 @@ enum class ElementType {
   POINT,
   // 3D models
   DRUID,
-  FREDDY_PLUSH
+  FREDDY_PLUSH,
+  VOLCANIC_PLANET,
+  EARTH_PLANET,
 };
 
 class SceneObjectFactory {

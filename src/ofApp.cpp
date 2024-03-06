@@ -150,6 +150,14 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
         this->currentScene->setCurrentObjectToAdd(ElementType::FREDDY_PLUSH);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
+      if (ImGui::MenuItem("Volcanic planet")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::VOLCANIC_PLANET);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
+      if (ImGui::MenuItem("Earth planet")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::EARTH_PLANET);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
     }
     ImGui::EndMenu();
   }
