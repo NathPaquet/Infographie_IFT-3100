@@ -47,7 +47,7 @@ void SceneManager::removeAllSelectedObjects() {
 void SceneManager::drawScene() {
   for (auto &&element : this->sceneObjects) {
     bool isSelected = std::find(this->selectedSceneObjects.begin(), this->selectedSceneObjects.end(), element.get()) != this->selectedSceneObjects.end();
-    element.get()->draw(isSelected);
+    element.get()->draw(isSelected, this->isBoundingBoxEnabled);
   }
 }
 
@@ -92,4 +92,8 @@ void SceneManager::setObjectPosition(const SceneObject *object, const ofVec3f &p
   it->get()->setPosition(position);
 
   ofLogNotice("object dragged to") << position.x << "," << position.y << "," << position.z;
+}
+
+void SceneManager::toggleActivationBoundingBox() {
+  this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
 }
