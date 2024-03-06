@@ -25,7 +25,7 @@ CylinderPlanet::CylinderPlanet(const float x, const float y, const float z) {
 }
 
 void CylinderPlanet::setSize(const float radius, const float height) {
-  this->primitive.get()->setScale(radius / DEFAULT_RADIUS, height / DEFAULT_HEIGHT, radius / DEFAULT_RADIUS);
+  this->primitive.get()->setScale(radius / Constants::DEFAULT_SIZE, height / Constants::DEFAULT_SIZE, radius / Constants::DEFAULT_SIZE);
 }
 
 void CylinderPlanet::updateProperties() {
