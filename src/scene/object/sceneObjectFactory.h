@@ -13,10 +13,11 @@ enum class ElementType {
   CIRCLE,
   SQUARE,
   LINE,
-  POINT,
+  STAR,
 };
 
 class SceneObjectFactory {
 public:
-  static std::unique_ptr<SceneObject> createSceneObject(const Ray &ray, const float &distance, const ElementType primitiveType);
+  static std::unique_ptr<SceneObject> createDefaultSceneObject(const glm::vec3 &position, const ElementType primitiveType);
+  static std::unique_ptr<SceneObject> createSceneObject(const glm::vec3 &centerPosition, const glm::vec3 &outerPosition, const ElementType primitiveType);
 };

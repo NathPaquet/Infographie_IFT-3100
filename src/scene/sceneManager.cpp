@@ -13,8 +13,12 @@ SceneManager::~SceneManager() {
   clearScene();
 }
 
-void SceneManager::addElement(const Ray &ray, const float &distance, const ElementType primitiveType) {
-  this->sceneObjects.emplace_back(SceneObjectFactory::createSceneObject(ray, distance, primitiveType));
+void SceneManager::addElement(const glm::vec3 position,  const ElementType primitiveType) {
+  this->sceneObjects.emplace_front(SceneObjectFactory::createDefaultSceneObject(position, primitiveType));
+}
+
+void SceneManager::addElement(const glm::vec3 position, const glm::vec3 outerPosition, const ElementType primitiveType) {
+  this->sceneObjects.emplace_front(SceneObjectFactory::createSceneObject(position, outerPosition, primitiveType));
 }
 
 void SceneManager::removeObject(const SceneObject *sceneObject) {
@@ -47,7 +51,7 @@ void SceneManager::drawScene() {
   }
 }
 
-const std::vector<std::unique_ptr<SceneObject>> &SceneManager::getObjects() const {
+const std::list<std::unique_ptr<SceneObject>> &SceneManager::getObjects() const {
   return this->sceneObjects;
 }
 

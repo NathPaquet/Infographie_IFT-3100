@@ -115,8 +115,16 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
         this->currentScene->setCurrentObjectToAdd(ElementType::SQUARE);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
-      if (ImGui::MenuItem("Add circle")) {
+      if (ImGui::MenuItem("Add Circle")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::CIRCLE);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
+      if (ImGui::MenuItem("Add Star")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::STAR);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
+      if (ImGui::MenuItem("Add Line")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::LINE);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
     } else {
@@ -212,6 +220,6 @@ void ofApp::generateRandomGalaxy(int nbElements) {
     auto distance = glm::length(randomPosition);
     ray.set({0, 0, 0}, randomPosition);
     // TODO : Add a new method in scene object ?
-    this->currentScene->getSceneManager()->addElement(ray, distance, static_cast<ElementType>(intDistribution(gen)));
+    this->currentScene->getSceneManager()->addElement(ray.getOrigin() + ray.getDirection() * distance, static_cast<ElementType>(intDistribution(gen)));
   }
 }

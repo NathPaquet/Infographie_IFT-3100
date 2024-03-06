@@ -40,8 +40,10 @@ void Scene3D::processMouseActions() {
   auto &&maybeObject = this->cursor->setRayWithCollidingObject(this->sceneManager.get()->getObjects(), this->camera, this->ray);
   auto &&found = maybeObject.has_value();
   const float distance = Constants::DEFAULT_DISTANCE_TO_DRAW_PRIMITIVE;
+  auto position = this->ray.getOrigin() + this->ray.getDirection() * distance;
+
   if (!found && this->cursor->getCursorMode() == CursorMode::ADDING) {
-    this->ray.drawPrimitivePreview(this->currentObjectToAdd, distance);
+    this->ray.drawPrimitiveDefaultPreview(this->currentObjectToAdd, position);
   }
 
   if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
@@ -75,7 +77,7 @@ void Scene3D::processMouseActions() {
       this->cursor->setCursorMode(CursorMode::NAVIGATION);
 
     } else if (this->cursor->getCursorMode() == CursorMode::ADDING) {
-      this->sceneManager.get()->addElement(ray, distance, this->currentObjectToAdd);
+      this->sceneManager.get()->addElement(this->ray.getOrigin() + this->ray.getDirection() * distance, this->currentObjectToAdd);
       this->cursor->setCursorMode(CursorMode::NAVIGATION);
       this->sceneManager.get()->setSelectedSceneObject(this->sceneManager.get()->getObjects().back().get());
     }

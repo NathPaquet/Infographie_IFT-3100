@@ -118,8 +118,10 @@
     <ClCompile Include="src\scene\eventListener\scene3DEventListener.cpp" />
     <ClCompile Include="src\scene\eventListener\sceneEventListener.cpp" />
     <ClCompile Include="src\scene\object\object2D\Circle.cpp" />
+    <ClCompile Include="src\scene\object\object2D\Line.cpp" />
     <ClCompile Include="src\scene\object\object2D\Square.cpp" />
     <ClCompile Include="src\scene\object\object2D\Triangle.cpp" />
+    <ClCompile Include="src\scene\object\object2D\Star.cpp" />
     <ClCompile Include="src\scene\object\object3D\CubicPlanet.cpp" />
     <ClCompile Include="src\scene\object\object3D\CylinderPlanet.cpp" />
     <ClCompile Include="src\scene\object\object3D\Planet.cpp" />
@@ -181,8 +183,10 @@
     <ClInclude Include="src\scene\eventListener\scene3DEventListener.h" />
     <ClInclude Include="src\scene\eventListener\sceneEventListener.h" />
     <ClInclude Include="src\scene\object\object2D\Circle.h" />
+    <ClInclude Include="src\scene\object\object2D\Line.h" />
     <ClInclude Include="src\scene\object\object2D\Square.h" />
     <ClInclude Include="src\scene\object\object2D\Triangle.h" />
+    <ClInclude Include="src\scene\object\object2D\Star.h" />
     <ClInclude Include="src\scene\object\object3D\CubicPlanet.h" />
     <ClInclude Include="src\scene\object\object3D\CylinderPlanet.h" />
     <ClInclude Include="src\scene\object\object3D\Planet.h" />
