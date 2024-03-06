@@ -25,6 +25,4 @@ namespace Constants {
   // MODELS PATH
   constexpr auto DRUID_MODEL_PATH = "models/druid/druid.gltf";
   constexpr auto FREDDY_PLUSH_MODEL_PATH = "models/fnaf-freddy-plush/scene.gltf";
-  constexpr auto VOLCANIC_PLANET_MODEL_PATH = "models/volcanic-planet/scene.gltf";
-  constexpr auto EARTH_PLANET_MODEL_PATH = "models/earth-planet/scene.gltf";
 }

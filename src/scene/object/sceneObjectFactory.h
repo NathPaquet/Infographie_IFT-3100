@@ -16,8 +16,6 @@ enum class ElementType {
   // 3D models
   DRUID,
   FREDDY_PLUSH,
-  VOLCANIC_PLANET,
-  EARTH_PLANET,
 };
 
 class SceneObjectFactory {
