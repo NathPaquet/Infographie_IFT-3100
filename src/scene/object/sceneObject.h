@@ -9,7 +9,7 @@ public:
   ofVec3f position;
   ofColor color = ofColor::fromHsb(ofRandom(255), 255, 255);
   SceneObject();
-  virtual void draw(bool isSelected);
+  virtual void draw(bool isSelected, bool isBoundingBoxEnable);
   virtual void draw_properties();
   const of3dPrimitive &getPrimitive() const;
   void setPosition(ofVec3f vec);
@@ -34,8 +34,6 @@ protected:
   ofTexture mTex;
 
 private:
-  const ofVec3f getCenterOfPrimitive() const;
-  void drawBoundingBox(bool isAABB);
+  void drawBoundingBox();
   void drawAABB() const;
-  void drawOBB() const;
 };

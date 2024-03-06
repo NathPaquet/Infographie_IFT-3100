@@ -173,17 +173,25 @@ void ofApp::drawSceneTopMenu() {
 
 void ofApp::createViewMenu() {
   if (ImGui::BeginMenu("View")) {
-    if (ImGui::MenuItem("3D Scene")) {
+    if (this->isScene2D && ImGui::MenuItem("Display 3D Scene")) {
       this->currentScene = this->scene3D.get();
       this->isScene2D = false;
       this->sceneGraph->setSceneManager(this->currentScene->getSceneManager());
-      ofLogNotice() << "3D Scene button pressed";
     }
-    if (ImGui::MenuItem("2D Scene")) {
+    if (!this->isScene2D && ImGui::MenuItem("Display 2D Scene")) {
       this->currentScene = this->scene2D.get();
       this->isScene2D = true;
       this->sceneGraph->setSceneManager(this->currentScene->getSceneManager());
       ofLogNotice() << "2D Scene button pressed";
+    }
+    if (this->isScene2D) {
+      ImGui::SeparatorText("2D scene options");
+    } else {
+      ImGui::SeparatorText("3D scene options");
+      if (ImGui::MenuItem((this->isBoundingBoxEnabled ? "Disable bounding box" : "Enable bounding box"))) {
+        this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
+        this->currentScene->getSceneManager()->toggleActivationBoundingBox();
+      }
     }
     ImGui::EndMenu();
   }

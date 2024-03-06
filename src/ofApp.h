@@ -42,5 +42,6 @@ private:
   std::unique_ptr<Scene> scene2D;
   std::unique_ptr<Cursor> cursor;
   bool isScene2D = false;
+  bool isBoundingBoxEnabled = false;
   Scene *currentScene;
 };
