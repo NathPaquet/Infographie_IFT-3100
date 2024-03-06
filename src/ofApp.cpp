@@ -142,8 +142,12 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
 
       ImGui::SeparatorText("3D model");
 
-      if (ImGui::MenuItem("Add 3D Model")) {
-        this->currentScene->setCurrentObjectToAdd(ElementType::MODEL3D);
+      if (ImGui::MenuItem("Wizard")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::DRUID);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
+      if (ImGui::MenuItem("Freddy plush")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::FREDDY_PLUSH);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
     }

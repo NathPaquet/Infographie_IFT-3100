@@ -2,10 +2,10 @@
 
 #include "ofxAssimpModelLoader.h"
 
-Model3D::Model3D(const Ray &ray, const float &distance) {
+Model3D::Model3D(const Ray &ray, const float &distance, const string &modelPath) {
   // TODO find a way not to load mesh in this section !
   ofxAssimpModelLoader model;
-  model.loadModel("druid.gltf", 20);
+  model.loadModel(modelPath, 20);
   auto position = ray.getOrigin() + ray.getDirection() * distance;
   this->primitive = std::make_unique<of3dPrimitive>(of3dPrimitive(model.getMesh(0)));
   this->primitive->setPosition(position);

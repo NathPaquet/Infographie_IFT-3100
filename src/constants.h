@@ -21,4 +21,8 @@ namespace Constants {
 
   // POSITION
   constexpr glm::vec3 LIGHT_POSITION = glm::vec3(0.0f, 0.0f, 0.0f);
+
+  // MODELS PATH
+  constexpr auto DRUID_MODEL_PATH = "models/druid/druid.gltf";
+  constexpr auto FREDDY_PLUSH_MODEL_PATH = "models/fnaf-freddy-plush/scene.gltf";
 }
