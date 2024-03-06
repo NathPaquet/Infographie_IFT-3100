@@ -5,7 +5,9 @@
 constexpr float DEFAULT_SIZE = 40.0f;
 
 Model3D::Model3D(const Ray &ray, const float &distance, const string &modelPath) {
+  this->addProperty<float>(PROPERTY_ID::SIZE, DEFAULT_SIZE);
   // TODO : find a way not to load mesh in this section !
+
   ofxAssimpModelLoader model;
   model.load(modelPath, ofxAssimpModelLoader::OPTIMIZE_DEFAULT);
   auto position = ray.getOrigin() + ray.getDirection() * distance;
@@ -30,8 +32,20 @@ Model3D::Model3D(const Ray &ray, const float &distance, const string &modelPath)
       yExtremes.second->y - yExtremes.first->y,
       zExtremes.second->z - zExtremes.first->z);
 
-  float scaleFactor = DEFAULT_SIZE / max(boundingBox.z, max(boundingBox.x, boundingBox.y));
+  this->initialScaleFactor = DEFAULT_SIZE / max(boundingBox.z, max(boundingBox.x, boundingBox.y));
 
   this->primitive->setPosition(position);
-  this->primitive->setScale(scaleFactor);
+  this->primitive->setScale(this->initialScaleFactor);
+}
+
+void Model3D::updateProperties() {
+  SceneObject::updateProperties();
+  if (this->properties.at(PROPERTY_ID::SIZE)->isValueChanged()) {
+    this->set_size(this->getPropertyValue<float>(PROPERTY_ID::SIZE));
+    this->properties.at(PROPERTY_ID::SIZE)->setChanged(false);
+  }
+}
+
+void Model3D::set_size(const float size) {
+  this->primitive.get()->setScale((size / DEFAULT_SIZE) * this->initialScaleFactor);
 }
