@@ -150,8 +150,8 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
 
       ImGui::SeparatorText("3D model");
 
-      if (ImGui::MenuItem("Wizard")) {
-        this->currentScene->setCurrentObjectToAdd(ElementType::DRUID);
+      if (ImGui::MenuItem("Planet earth")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::PLANET_EARTH);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
       if (ImGui::MenuItem("Freddy plush")) {

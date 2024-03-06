@@ -7,6 +7,7 @@ namespace Constants {
   constexpr float PROPERTIES_PANEL_WIDTH = 200.0f;
   constexpr float SCENE_GRAPH_WIDTH = 200.0f;
   constexpr float GRAPH_SCENE_BUTTON_HEIGHT = 30.0f;
+  constexpr float DEFAULT_SIZE = 20.0f;
 
   // COLORS
   constexpr ImColor MENU_BAR_BACKGROUND_COLOR = ImColor(51, 56, 68, 255);
@@ -24,7 +25,7 @@ namespace Constants {
   constexpr glm::vec3 LIGHT_POSITION = glm::vec3(0.0f, 0.0f, 0.0f);
 
   // MODELS PATH
-  constexpr auto DRUID_MODEL_PATH = "models/druid/druid.gltf";
+  constexpr auto PLANET_EARTH_MODEL_PATH = "models/planet-earth/scene.gltf";
   constexpr auto FREDDY_PLUSH_MODEL_PATH = "models/fnaf-freddy-plush/scene.gltf";
   constexpr auto SPACE_SHIP_MODEL_PATH = "models/space-ship/scene.gltf";
 }
