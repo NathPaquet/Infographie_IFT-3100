@@ -4,6 +4,12 @@
 #include "raycasting/ray.h"
 class Triangle : public SceneObject {
 public:
-  Triangle(const Ray &ray, const float &distance);
-  static void drawDefaultPreview(const Ray &ray, const float &distance);
+  Triangle(const glm::vec3 &centerPosition, const glm::vec2 &firstPoint = {20, 20});
+  Triangle(const glm::vec3 &centerPosition, const glm::vec3 &outerPosition);
+
+  static void drawPreview(const glm::vec3 &centerPosition, const glm::vec2 &firstPoint = {20,20});
+  static void drawPreview(const glm::vec3 &centerPosition, const glm::vec3 &outerPosition);
+
+private:
+  void initMesh(const glm::vec3 &centerPosition, const glm::vec2 &firstPoint);
 };

@@ -13,8 +13,12 @@ SceneManager::~SceneManager() {
   clearScene();
 }
 
-void SceneManager::addElement(const Ray &ray, const float &distance, const ElementType primitiveType) {
-  this->sceneObjects.emplace_back(SceneObjectFactory::createSceneObject(ray, distance, primitiveType));
+void SceneManager::addElement(const glm::vec3 position,  const ElementType primitiveType) {
+  this->sceneObjects.emplace_front(SceneObjectFactory::createDefaultSceneObject(position, primitiveType));
+}
+
+void SceneManager::addElement(const glm::vec3 position, const glm::vec3 outerPosition, const ElementType primitiveType) {
+  this->sceneObjects.emplace_front(SceneObjectFactory::createSceneObject(position, outerPosition, primitiveType));
 }
 
 void SceneManager::removeObject(const SceneObject *sceneObject) {
@@ -43,11 +47,11 @@ void SceneManager::removeAllSelectedObjects() {
 void SceneManager::drawScene() {
   for (auto &&element : this->sceneObjects) {
     bool isSelected = std::find(this->selectedSceneObjects.begin(), this->selectedSceneObjects.end(), element.get()) != this->selectedSceneObjects.end();
-    element.get()->draw(isSelected);
+    element.get()->draw(isSelected, this->isBoundingBoxEnabled);
   }
 }
 
-const std::vector<std::unique_ptr<SceneObject>> &SceneManager::getObjects() const {
+const std::list<std::unique_ptr<SceneObject>> &SceneManager::getObjects() const {
   return this->sceneObjects;
 }
 
@@ -88,4 +92,8 @@ void SceneManager::setObjectPosition(const SceneObject *object, const ofVec3f &p
   it->get()->setPosition(position);
 
   ofLogNotice("object dragged to") << position.x << "," << position.y << "," << position.z;
+}
+
+void SceneManager::toggleActivationBoundingBox() {
+  this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
 }
