@@ -4,7 +4,7 @@
 #include "imgui.h"
 
 constexpr float MIN_FLOAT_VALUE = 0.0f;
-constexpr float MAX_FLOAT_VALUE = 500.0f;
+constexpr float MAX_FLOAT_VALUE = 50.0f;
 constexpr float MIN_ANGLE_VALUE = 0.0f;
 constexpr float MAX_ANGLE_VALUE = 360.0f;
 

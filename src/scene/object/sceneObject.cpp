@@ -25,18 +25,20 @@ void SceneObject::draw(bool isSelected, bool isBoundingBoxEnable) {
   ofSetColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
 
   if (!this->getPropertyValue<bool>(PROPERTY_ID::SHOW_WIREFRAME)) {
-  if (mTex.isAllocated()) {
-    this->mTex.bind();
-    // mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
-    // mMaterial.begin();
-    primitive->draw();
-    // mMaterial.end();
-    this->mTex.unbind();
-  } else {
-    // mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
-    // mMaterial.begin();
-    primitive->draw();
-    // mMaterial.end();
+    if (mTex.isAllocated()) {
+      this->mTex.bind();
+      // mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
+      // mMaterial.begin();
+      primitive->draw();
+      // mMaterial.end();
+      this->mTex.unbind();
+    } else {
+      // mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
+      // mMaterial.begin();
+      primitive->draw();
+      // mMaterial.end();
+    }
+
   } else {
     ofNoFill();
     // primitive->draw();
@@ -76,31 +78,6 @@ void SceneObject::drawAxis() {
 
   ofPopMatrix();
   ofPopStyle();
-}
-
-void SceneObject::drawCustomWireFrame(const float lineThickness) {
-  ofMesh &mesh = this->primitive->getMesh();
-  auto mode = mesh.getMode();
-  mesh.setMode(OF_PRIMITIVE_LINES);
-  for (int i = 0; i < mesh.getNumVertices(); i += 2) {
-    ofVec3f v1 = mesh.getVertex(i);
-    ofVec3f v2 = mesh.getVertex(i + 1);
-    ofVec3f direction = (v2 - v1).getNormalized();
-    ofVec3f normal = direction.getCrossed(ofVec3f(0, 0, 1)).getNormalized(); // Cross product with Z-axis
-
-    ofVec3f offset = normal * lineThickness / 2.0;
-
-    ofBeginShape();
-    ofVertex(v1 + offset);
-    ofVertex(v2 + offset);
-    ofEndShape();
-
-    ofBeginShape();
-    ofVertex(v1 - offset);
-    ofVertex(v2 - offset);
-    ofEndShape();
-  }
-  mesh.setMode(mode);
 }
 
 void SceneObject::updateProperties() {
