@@ -1,8 +1,9 @@
 #pragma once
-#include "object/sceneObject.h"
+#include "object/object2D/Object2D.h"
 #include "ofMain.h"
 #include "raycasting/ray.h"
-class Triangle : public SceneObject {
+
+class Triangle : public Object2D {
 public:
   Triangle(const glm::vec3 &centerPosition, const glm::vec2 &firstPoint = {20, 20});
   Triangle(const glm::vec3 &centerPosition, const glm::vec3 &outerPosition);

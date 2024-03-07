@@ -1,7 +1,7 @@
 #pragma once
-#include "object/sceneObject.h"
+#include "object/object3D/object3D.h"
 
-class CylinderPlanet : public SceneObject {
+class CylinderPlanet : public Object3D {
 public:
   CylinderPlanet(const float x, const float y, const float z);
 

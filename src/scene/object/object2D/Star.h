@@ -1,7 +1,7 @@
 #pragma once
-#include "object/sceneObject.h"
+#include "object/object2D/Object2D.h"
 
-class Star : public SceneObject {
+class Star : public Object2D {
 public:
   Star(const glm::vec3 &centerPosition, const float radius = 20.f);
   Star(const glm::vec3 &centerPosition, const glm::vec3 &outerPosition);

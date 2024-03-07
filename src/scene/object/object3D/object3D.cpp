@@ -22,16 +22,16 @@ void Object3D::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxis
   if (!this->getPropertyValue<bool>(PROPERTY_ID::SHOW_WIREFRAME)) {
     if (mTex.isAllocated()) {
       this->mTex.bind();
-      // mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
-      // mMaterial.begin();
+      mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
+      mMaterial.begin();
       primitive->draw();
-      // mMaterial.end();
+      mMaterial.end();
       this->mTex.unbind();
     } else {
-      // mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
-      // mMaterial.begin();
+      mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
+      mMaterial.begin();
       primitive->draw();
-      // mMaterial.end();
+      mMaterial.end();
     }
 
   } else {
@@ -43,7 +43,28 @@ void Object3D::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxis
 }
 
 void Object3D::drawAxis() {
-  SceneObject::drawAxis();
+  ofVec3f xAxis = this->primitive->getXAxis();
+  ofVec3f yAxis = this->primitive->getYAxis();
+  ofVec3f zAxis = this->primitive->getZAxis();
+
+  auto vecScale = this->primitive->getScale();
+  auto vecRescale = vecScale * (1.25f * Constants::DEFAULT_SIZE);
+  float scaleHeadArrow = vecRescale.x / 8;
+  ofPushStyle();
+  ofPushMatrix();
+
+  ofTranslate(this->position);
+  ofSetColor(ofColor::red);
+  ofDrawArrow(ofPoint(0), ofPoint(xAxis * vecRescale.x), scaleHeadArrow);
+
+  ofSetColor(ofColor::green);
+  ofDrawArrow(ofPoint(0), ofPoint(yAxis * vecRescale.y), scaleHeadArrow);
+
+  ofSetColor(ofColor::blue);
+  ofDrawArrow(ofPoint(0), ofPoint(zAxis * vecRescale.z), scaleHeadArrow);
+
+  ofPopMatrix();
+  ofPopStyle();
 }
 
 void Object3D::drawBoundingBox() {

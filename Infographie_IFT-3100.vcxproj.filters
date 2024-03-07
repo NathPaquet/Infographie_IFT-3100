@@ -194,6 +194,7 @@
       <Filter>addons\ofxImGui\libs\imgui\src</Filter>
     </ClCompile>
     <ClCompile Include="src\scene\object\object3D\object3D.cpp" />
+    <ClCompile Include="src\scene\object\object2D\object2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -760,6 +761,7 @@
       <Filter>addons\ofxImGui\libs\imgui\src</Filter>
     </ClInclude>
     <ClInclude Include="src\scene\object\object3D\object3D.h" />
+    <ClInclude Include="src\scene\object\object2D\object2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

@@ -114,6 +114,7 @@
     <ClCompile Include="src\properties\PropertiesPanel.cpp" />
     <ClCompile Include="src\properties\Property.cpp" />
     <ClCompile Include="src\raycasting\ray.cpp" />
+    <ClCompile Include="src\scene\object\object2D\object2D.cpp" />
     <ClCompile Include="src\scene\object\object3D\object3D.cpp" />
     <ClCompile Include="src\scene\WindowCamera.cpp" />
     <ClCompile Include="src\scene\object\object2D\Circle.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="src\properties\PropertiesPanel.h" />
     <ClInclude Include="src\properties\Property.h" />
     <ClInclude Include="src\raycasting\ray.h" />
+    <ClInclude Include="src\scene\object\object2D\object2D.h" />
     <ClInclude Include="src\scene\object\object3D\object3D.h" />
     <ClInclude Include="src\scene\WindowCamera.h" />
     <ClInclude Include="src\scene\object\object2D\Circle.h" />
