@@ -9,7 +9,7 @@ public:
   ofVec3f position;
   ofColor color = ofColor::fromHsb(ofRandom(255), 255, 255);
   SceneObject();
-  virtual void draw(bool isSelected, bool isBoundingBoxEnable);
+  virtual void draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable);
   virtual void draw_properties();
   const of3dPrimitive &getPrimitive() const;
   void setPosition(ofVec3f vec);

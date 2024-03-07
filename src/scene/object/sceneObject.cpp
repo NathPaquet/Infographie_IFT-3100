@@ -9,16 +9,19 @@ SceneObject::SceneObject() {
   this->addProperty<ofVec3f>(PROPERTY_ID::ANGLES, ofVec3f(0.f, 0.f, 0.f));
 }
 
-void SceneObject::draw(bool isSelected, bool isBoundingBoxEnable) {
+void SceneObject::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) {
   this->updateProperties();
   ofPushStyle();
   if (isSelected) {
-    drawAxis();
     ofSetColor(Constants::SELECTED_OBJECT_FRAME_COLOR);
     primitive->drawWireframe();
 
     if (isBoundingBoxEnable) {
       this->drawBoundingBox();
+    }
+
+    if (isObjectAxisEnable) {
+      this->drawAxis();
     }
   }
 
@@ -70,6 +73,7 @@ void SceneObject::drawAxis() {
   ofDrawArrow(ofPoint(0), ofPoint(zAxis * vecRescale.z), scaleHeadArrow);
 
   ofPopMatrix();
+  ofPopStyle();
 }
 
 void SceneObject::updateProperties() {

@@ -23,11 +23,13 @@ public:
   std::vector<SceneObject *> &getSelectedObjectsReference();
   void setObjectPosition(const SceneObject *object, const ofVec3f &position);
   void toggleActivationBoundingBox();
+  void toggleActivationObjectAxis();
 
 private:
   void clearScene();
 
   bool isBoundingBoxEnabled = false;
+  bool isObjectAxisEnabled = false;
   std::vector<SceneObject *> selectedSceneObjects;
   std::list<std::unique_ptr<SceneObject>> sceneObjects;
 };
