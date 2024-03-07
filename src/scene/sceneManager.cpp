@@ -26,7 +26,7 @@ void SceneManager::addElement(const glm::vec3 position, const glm::vec3 outerPos
 
 void SceneManager::addCamera(const SceneObject *sceneObject, const ElementType primitiveType) {
   if (primitiveType == ElementType::CAMERA) {
-    auto camera = (Camera *)sceneObject; // dynamic_cast<Camera *>(sceneObject);
+    auto camera = (Camera *)sceneObject;
     this->cameras.push_back(camera);
   }
 }
