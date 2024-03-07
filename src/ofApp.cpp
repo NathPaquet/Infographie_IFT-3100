@@ -208,6 +208,10 @@ void ofApp::createViewMenu() {
         this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
         this->currentScene->getSceneManager()->toggleActivationBoundingBox();
       }
+      if (ImGui::MenuItem((this->isObjectAxisEnabled ? "Disable object axis" : "Enable object axis"))) {
+        this->isObjectAxisEnabled = !this->isObjectAxisEnabled;
+        this->currentScene->getSceneManager()->toggleActivationObjectAxis();
+      }
     }
     ImGui::EndMenu();
   }

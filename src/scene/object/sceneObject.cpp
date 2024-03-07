@@ -10,16 +10,19 @@ SceneObject::SceneObject() {
   this->addProperty<bool>(PROPERTY_ID::SHOW_WIREFRAME, false);
 }
 
-void SceneObject::draw(bool isSelected, bool isBoundingBoxEnable) {
+void SceneObject::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) {
   this->updateProperties();
   ofPushStyle();
   if (isSelected) {
-    drawAxis();
     ofSetColor(Constants::SELECTED_OBJECT_FRAME_COLOR);
     primitive->drawWireframe();
 
     if (isBoundingBoxEnable) {
       this->drawBoundingBox();
+    }
+
+    if (isObjectAxisEnable) {
+      this->drawAxis();
     }
   }
   ofSetColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
