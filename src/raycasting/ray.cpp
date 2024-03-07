@@ -28,9 +28,8 @@ const glm::vec3 &Ray::getDirection() const {
 
 bool Ray::isRayCollidingWithPrimitive(const of3dPrimitive &primitive, glm::vec2 &baricentricCoords, float &distance) {
   bool found = false;
-  float distanceToTheClosestSurface = numeric_limits<float>::max();
+  float distanceToTheClosestSurface = std::numeric_limits<float>::max();
 
-  glm::vec3 viewDirection = viewDirection = -glm::normalize(direction);
   for (auto &&face : primitive.getMesh().getUniqueFaces()) {
     bool intersection = glm::intersectRayTriangle(
         origin,
@@ -41,13 +40,8 @@ bool Ray::isRayCollidingWithPrimitive(const of3dPrimitive &primitive, glm::vec2 
         baricentricCoords,
         distance);
     if (intersection && distance < distanceToTheClosestSurface) {
-      glm::vec3 intersectionPoint = origin + direction * distance;
-      glm::vec3 surfaceNormal = glm::cross(face.getVertex(1) - face.getVertex(0), face.getVertex(2) - face.getVertex(0));
-      if (glm::dot(surfaceNormal, viewDirection) > 0) {
-        // Le point d'intersection est dans la direction de vue de la caméra
-        found = true;
-        distanceToTheClosestSurface = distance;
-      }
+      found = true;
+      distanceToTheClosestSurface = distance;
     }
   }
   distance = distanceToTheClosestSurface;

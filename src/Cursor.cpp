@@ -25,17 +25,20 @@ void Cursor::drawCursor(float x, float y) {
   }
 }
 
-glm::highp_vec3 Cursor::findMouseClick3DPosition(const ofEasyCam &camera) const {
-  const glm::vec3 screenMouse(ofGetMouseX(), ofGetMouseY(), 0);
-  auto &&worldMouse = camera.screenToWorld(screenMouse);
-  auto &&cameraPosition = camera.getGlobalPosition();
-  auto &&worldMouseDirection = worldMouse - cameraPosition;
+glm::highp_vec3 Cursor::findMouseDirectionInWorld(const ofEasyCam &camera) const {
+  const glm::vec3 screenMouse0(ofGetMouseX(), ofGetMouseY(), 0);
+  const glm::vec3 screenMouse1(ofGetMouseX(), ofGetMouseY(), 1);
+  auto &&worldMouse0 = camera.screenToWorld(screenMouse0);
+  auto &&worldMouse1 = camera.screenToWorld(screenMouse1);
+  auto &&worldMouseDirection = worldMouse1 - worldMouse0;
   return worldMouseDirection;
 }
 
 std::optional<const SceneObject *> Cursor::setRayWithCollidingObject(const std::list<std::unique_ptr<SceneObject>> &objects, const ofEasyCam &camera, Ray &ray) {
-  auto worldMouseDirection = findMouseClick3DPosition(camera);
-  ray.set(camera.getGlobalPosition(), worldMouseDirection);
+  auto mouseWorldDirection = findMouseDirectionInWorld(camera);
+  const glm::vec3 cameraPositionInScreen(ofGetMouseX(), ofGetMouseY(), 0);
+  auto &&cameraPostionInWorld = camera.screenToWorld(cameraPositionInScreen);
+  ray.set(cameraPostionInWorld, mouseWorldDirection);
 
   glm::vec2 baricentricCoordinates;
   float distance;

@@ -24,10 +24,9 @@ void Scene3D::drawScene() {
   this->cursor->drawCursor(ofGetMouseX(), ofGetMouseY());
 
   this->currentCamera->begin();
-  // ofLogNotice("Camera Position") << this->currentCamera->getPosition();
 
   ofDrawGrid(10, 100, false, false, true, false);
-  ofDrawSphere(0, 0, 0, 1);
+  ofDrawSphere(0, 0, 0, 1); // Draw (0,0,0)
   this->sceneManager.get()->drawScene();
 
   this->processMouseActions();
@@ -51,6 +50,7 @@ void Scene3D::processMouseActions() {
   if (this->shouldDragObject) {
     this->currentCamera->disableMouseInput();
   }
+
   if (!isMouseClickInScene()) {
     this->currentCamera->disableMouseInput();
     return;
@@ -93,7 +93,7 @@ void Scene3D::processMouseActions() {
       }
 
     } else if (found && this->cursor->getCursorMode() == CursorMode::REMOVING) {
-      this->sceneManager.get()->removeObject(maybeObject.value()); // TODO : Ajouter une nouvelle m�thode pour supprimer un objet
+      this->sceneManager.get()->removeObject(maybeObject.value());
       this->cursor->setCursorMode(CursorMode::NAVIGATION);
 
     } else if (this->cursor->getCursorMode() == CursorMode::ADDING) {
