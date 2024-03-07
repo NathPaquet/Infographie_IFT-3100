@@ -17,6 +17,7 @@ private:
   ofEasyCam *currentCamera;
   Ray ray;
   ofSpherePrimitive sphere = ofSpherePrimitive(20, 60, OF_PRIMITIVE_TRIANGLES);
+  SceneObject *draggedObject = nullptr;
 
   void processMouseActions();
   void setupPerspectiveCamera();

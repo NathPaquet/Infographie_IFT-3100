@@ -55,14 +55,16 @@ void Scene3D::processMouseActions() {
     this->currentCamera->disableMouseInput();
     return;
   }
-
-  auto &&maybeObject = this->cursor->setRayWithCollidingObject(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
-  auto &&found = maybeObject.has_value();
   const float distance = Constants::DEFAULT_DISTANCE_TO_DRAW_PRIMITIVE;
-  auto position = this->ray.getOrigin() + this->ray.getDirection() * distance;
 
-  if (!found && this->cursor->getCursorMode() == CursorMode::ADDING) {
-    this->ray.drawPrimitiveDefaultPreview(this->currentObjectToAdd, position);
+  if (this->cursor->getCursorMode() == CursorMode::ADDING) {
+    auto &&maybeObject = this->cursor->setRayWithCollidingObject(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
+    auto &&found = maybeObject.has_value();
+    auto position = this->ray.getOrigin() + this->ray.getDirection() * distance;
+
+    if (!found) {
+      this->ray.drawPrimitiveDefaultPreview(this->currentObjectToAdd, position);
+    }
   }
 
   if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
@@ -70,21 +72,19 @@ void Scene3D::processMouseActions() {
     this->currentCamera->enableMouseInput();
   }
 
-  if (found && std::find(this->sceneManager.get()->getSelectedObjects().begin(), this->sceneManager.get()->getSelectedObjects().end(), maybeObject.value()) != this->sceneManager.get()->getSelectedObjects().end()) {
-    if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
-      shouldDragObject = true;
-    }
-
-    if (ImGui::IsMouseDown(ImGuiMouseButton_Left)
-        && shouldDragObject
-        && this->cursor->getCursorMode() == CursorMode::NAVIGATION) {
-      // TODO
-      this->sceneManager.get()->setObjectPosition(maybeObject.value(), ray.getOrigin() + ray.getDirection() * distance);
-      this->currentCamera->disableMouseInput();
-    }
-  }
-
   if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
+    auto &&maybeObject = this->cursor->setRayWithCollidingObject(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
+    auto &&found = maybeObject.has_value();
+
+    if (found) {
+      auto it = std::find(this->sceneManager.get()->getSelectedObjects().begin(), this->sceneManager.get()->getSelectedObjects().end(), maybeObject.value());
+
+      if (it != this->sceneManager.get()->getSelectedObjects().end()) {
+        draggedObject = *it;
+        shouldDragObject = true;
+      }
+    }
+
     if (found && this->cursor->getCursorMode() == CursorMode::NAVIGATION) {
       if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftCtrl))) {
         this->sceneManager.get()->clickSelectionSceneObject(maybeObject.value());
@@ -102,17 +102,21 @@ void Scene3D::processMouseActions() {
       this->sceneManager.get()->setSelectedSceneObject(this->sceneManager.get()->getObjects().back().get());
     }
   }
+
+  if (ImGui::IsMouseDown(ImGuiMouseButton_Left)
+      && shouldDragObject
+      && this->cursor->getCursorMode() == CursorMode::NAVIGATION) {
+    this->cursor->computeRay(*this->currentCamera, this->ray);
+    this->sceneManager.get()->setObjectPosition(this->draggedObject, ray.getOrigin() + ray.getDirection() * distance);
+    this->currentCamera->disableMouseInput();
+  }
 }
 
 void Scene3D::setupPerspectiveCamera() {
   this->perspectiveCamera = std::make_unique<ofEasyCam>();
 
-  this->perspectiveCamera.get()->setPosition(0, 0, 200);
-  // this->perspectiveCamera.get()->lookAt(glm::vec3(0, 0, 0));
-
-  // this->perspectiveCamera.get()->setNearClip(Constants::DEFAULT_CAMERA_NEAR_CLIP);
-  // this->perspectiveCamera.get()->setFarClip(Constants::DEFAULT_CAMERA_FAR_CLIP);
-  // this->perspectiveCamera.get()->setFov(Constants::DEFAULT_CAMERA_FOV);
+  this->perspectiveCamera.get()->setPosition(200, 50, 200);
+  this->perspectiveCamera.get()->lookAt(glm::vec3(0, 0, 0));
 }
 
 void Scene3D::setupOrthographicCamera() {

@@ -17,6 +17,7 @@ public:
   Cursor(CursorMode type);
 
   void drawCursor(float x, float y);
+  void computeRay(const ofEasyCam &camera, Ray &ray) const;
 
   std::optional<const SceneObject *> setRayWithCollidingObject(const std::list<std::unique_ptr<SceneObject>> &objects, const ofEasyCam &camera, Ray &ray);
   glm::highp_vec3 findMouseDirectionInWorld(const ofEasyCam &camera) const;
