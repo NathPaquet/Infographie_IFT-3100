@@ -28,7 +28,8 @@ const glm::vec3 &Ray::getDirection() const {
 
 bool Ray::isRayCollidingWithPrimitive(const of3dPrimitive &primitive, glm::vec2 &baricentricCoords, float &distance) {
   bool found = false;
-  float distanceToTheClosestSurface = numeric_limits<float>::max();
+  float distanceToTheClosestSurface = std::numeric_limits<float>::max();
+
   for (auto &&face : primitive.getMesh().getUniqueFaces()) {
     bool intersection = glm::intersectRayTriangle(
         origin,

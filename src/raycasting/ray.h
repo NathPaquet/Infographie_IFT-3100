@@ -16,8 +16,6 @@ public:
   void drawPrimitivePreview(ElementType elementType, const glm::vec3 &centerPosition, const glm::vec3 &outerPosition);
   void drawPrimitiveDefaultPreview(ElementType elementType, const glm::vec3 &centerPosition);
 
-
-
 private:
   glm::vec3 origin;
   glm::vec3 direction;

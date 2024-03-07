@@ -7,13 +7,18 @@ public:
       Scene(std::move(sceneManager), cursor) {}
   void setup() override;
   void drawScene() override;
+  void toggleProjectionMode();
 
 private:
   ofLight light;
-  ofEasyCam camera;
+  std::unique_ptr<ofEasyCam> perspectiveCamera;
+  std::unique_ptr<ofEasyCam> orthographicCamera;
+  ofEasyCam *currentCamera;
   Ray ray;
   ofSpherePrimitive sphere = ofSpherePrimitive(20, 60, OF_PRIMITIVE_TRIANGLES);
+  SceneObject *draggedObject = nullptr;
 
   void processMouseActions();
-  glm::highp_vec3 findMouseClick3DPosition() const;
+  void setupPerspectiveCamera();
+  void setupOrthographicCamera();
 };

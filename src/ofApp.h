@@ -35,10 +35,11 @@ private:
 
   std::unique_ptr<SceneGraph> sceneGraph;
   std::unique_ptr<PropertiesPanel> propertiesPanel;
-  std::unique_ptr<Scene> scene3D;
-  std::unique_ptr<Scene> scene2D;
+  std::unique_ptr<Scene3D> scene3D;
+  std::unique_ptr<Scene2D> scene2D;
   std::unique_ptr<Cursor> cursor;
   bool isScene2D = false;
+  bool isViewOrtho = false;
   bool isBoundingBoxEnabled = false;
   bool isObjectAxisEnabled = false;
   Scene *currentScene;

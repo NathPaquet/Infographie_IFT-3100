@@ -17,6 +17,11 @@ namespace Constants {
   const ofColor SELECTED_OBJECT_FRAME_COLOR = ofColor(255, 255, 255, 100);
   const ofColor AMBIANT_COLOR = ofColor(0, 0, 0);
 
+  // CAMERA
+  constexpr float DEFAULT_CAMERA_NEAR_CLIP = 0.1f;
+  constexpr float DEFAULT_CAMERA_FAR_CLIP = 10000.0f;
+  constexpr float DEFAULT_CAMERA_FOV = 60.0f;
+
   // DISTANCES
   constexpr float DEFAULT_DISTANCE_TO_DRAW_PRIMITIVE = 200.0f;
   constexpr float DEFAULT_CAMERA_DISTANCE = 200.0f;

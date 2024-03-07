@@ -14,6 +14,7 @@ void ofApp::setup() {
   ofSetLogLevel(OF_LOG_VERBOSE);
   ofDisableAlphaBlending();
   ofEnableDepthTest();
+  ofSetVerticalSync(true);
   // required call
 
   this->cursor = std::make_unique<Cursor>(CursorMode::NAVIGATION);
@@ -207,6 +208,11 @@ void ofApp::createViewMenu() {
       if (ImGui::MenuItem((this->isBoundingBoxEnabled ? "Disable bounding box" : "Enable bounding box"))) {
         this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
         this->currentScene->getSceneManager()->toggleActivationBoundingBox();
+      }
+      if (ImGui::MenuItem((this->isViewOrtho ? "Enable perspective projection" : "Enable orthographic projection"))) {
+        this->isViewOrtho = !this->isViewOrtho;
+        assert(this->currentScene != nullptr && this->currentScene == this->scene3D.get());
+        this->scene3D.get()->toggleProjectionMode();
       }
       if (ImGui::MenuItem((this->isObjectAxisEnabled ? "Disable object axis" : "Enable object axis"))) {
         this->isObjectAxisEnabled = !this->isObjectAxisEnabled;
