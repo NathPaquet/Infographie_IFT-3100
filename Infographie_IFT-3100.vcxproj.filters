@@ -58,16 +58,16 @@
     <ClCompile Include="src\scene\object\object3D\Camera.cpp">
       <Filter>src\scene\object\object3D</Filter>
     </ClCompile>
-    <ClCompile Include="src\scene\object\object3D\CubicPlanet.cpp">
+    <ClCompile Include="src\scene\object\object3D\primitive\CubicPlanet.cpp">
       <Filter>src\scene\object\object3D</Filter>
     </ClCompile>
-    <ClCompile Include="src\scene\object\object3D\CylinderPlanet.cpp">
+    <ClCompile Include="src\scene\object\object3D\primitive\CylinderPlanet.cpp">
       <Filter>src\scene\object\object3D</Filter>
     </ClCompile>
-    <ClCompile Include="src\scene\object\object3D\Model3D.cpp">
+    <ClCompile Include="src\scene\object\object3D\model\Model3D.cpp">
       <Filter>src\scene\object\object3D</Filter>
     </ClCompile>
-    <ClCompile Include="src\scene\object\object3D\Planet.cpp">
+    <ClCompile Include="src\scene\object\object3D\primitive\Planet.cpp">
       <Filter>src\scene\object\object3D</Filter>
     </ClCompile>
     <ClCompile Include="src\scene\object\sceneObject.cpp">
@@ -193,6 +193,7 @@
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_widgets.cpp">
       <Filter>addons\ofxImGui\libs\imgui\src</Filter>
     </ClCompile>
+    <ClCompile Include="src\scene\object\object3D\object3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -341,16 +342,16 @@
     <ClInclude Include="src\scene\object\object3D\Camera.h">
       <Filter>src\scene\object\object3D</Filter>
     </ClInclude>
-    <ClInclude Include="src\scene\object\object3D\CubicPlanet.h">
+    <ClInclude Include="src\scene\object\object3D\primitive\CubicPlanet.h">
       <Filter>src\scene\object\object3D</Filter>
     </ClInclude>
-    <ClInclude Include="src\scene\object\object3D\CylinderPlanet.h">
+    <ClInclude Include="src\scene\object\object3D\primitive\CylinderPlanet.h">
       <Filter>src\scene\object\object3D</Filter>
     </ClInclude>
-    <ClInclude Include="src\scene\object\object3D\Model3D.h">
+    <ClInclude Include="src\scene\object\object3D\model\Model3D.h">
       <Filter>src\scene\object\object3D</Filter>
     </ClInclude>
-    <ClInclude Include="src\scene\object\object3D\Planet.h">
+    <ClInclude Include="src\scene\object\object3D\primitive\Planet.h">
       <Filter>src\scene\object\object3D</Filter>
     </ClInclude>
     <ClInclude Include="src\scene\object\sceneObject.h">
@@ -758,6 +759,7 @@
     <ClInclude Include="..\..\addons\ofxImGui\libs\imgui\src\imstb_truetype.h">
       <Filter>addons\ofxImGui\libs\imgui\src</Filter>
     </ClInclude>
+    <ClInclude Include="src\scene\object\object3D\object3D.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

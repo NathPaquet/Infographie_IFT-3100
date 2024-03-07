@@ -3,7 +3,7 @@
 #include "ImHelpers.h"
 #include "constants.h"
 #include "of3dUtils.h"
-#include "scene/object/object3D/Planet.h"
+#include "scene/object/object3D/primitive/Planet.h"
 #include "scene/object/sceneObjectFactory.h"
 
 #include <iostream>

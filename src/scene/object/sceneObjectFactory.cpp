@@ -6,10 +6,10 @@
 #include "object2D/Square.h"
 #include "object2D/Star.h"
 #include "object2D/Triangle.h"
-#include "object3D/CubicPlanet.h"
-#include "object3D/CylinderPlanet.h"
-#include "object3D/Model3D.h"
-#include "object3D/Planet.h"
+#include "object3D/model/Model3D.h"
+#include "object3D/primitive/CubicPlanet.h"
+#include "object3D/primitive/CylinderPlanet.h"
+#include "object3D/primitive/Planet.h"
 
 std::unique_ptr<SceneObject> SceneObjectFactory::createDefaultSceneObject(const glm::vec3 &position, const ElementType primitiveType) {
   switch (primitiveType) {

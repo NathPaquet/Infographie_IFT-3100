@@ -25,18 +25,13 @@ public:
     this->properties.emplace(std::make_pair(propertyName, std::make_unique<Property<T>>(propertyName, initialValue)));
   }
 
-private:
-  virtual void drawAxis();
-
 protected:
   virtual void updateProperties();
+  virtual void drawAxis();
+  virtual void drawBoundingBox();
   std::unique_ptr<of3dPrimitive> primitive;
   std::map<PROPERTY_ID, std::unique_ptr<PropertyBase>> properties;
   ofMesh mainMesh;
   ofMaterial mMaterial;
   ofTexture mTex;
-
-private:
-  void drawBoundingBox();
-  void drawAABB() const;
 };

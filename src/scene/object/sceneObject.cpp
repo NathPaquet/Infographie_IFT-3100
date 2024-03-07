@@ -83,6 +83,10 @@ void SceneObject::drawAxis() {
   ofPopStyle();
 }
 
+void SceneObject::drawBoundingBox() {
+  // TODO : To remove
+}
+
 void SceneObject::updateProperties() {
   if (this->properties.at(PROPERTY_ID::IMAGE_IMPORT)->isValueChanged() && this->getPropertyValue<ofImage>(PROPERTY_ID::IMAGE_IMPORT).isAllocated()) {
     this->mTex = this->getPropertyValue<ofImage>(PROPERTY_ID::IMAGE_IMPORT).getTexture();
@@ -99,53 +103,6 @@ void SceneObject::updateProperties() {
     this->primitive.get()->setOrientation(this->getPropertyValue<ofVec3f>(PROPERTY_ID::ANGLES));
     this->properties.at(PROPERTY_ID::ANGLES)->setChanged(false);
   }
-}
-
-void SceneObject::drawBoundingBox() {
-  ofPushStyle();
-  ofNoFill();
-  ofSetColor(ofColor::yellow);
-
-  this->drawAABB();
-
-  ofPopStyle();
-}
-
-void SceneObject::drawAABB() const {
-  vector<glm::vec3> vertices = this->primitive.get()->getMesh().getVertices();
-  if (vertices.empty()) {
-    return;
-  }
-
-  ofQuaternion rotation = primitive->getOrientationQuat();
-  ofVec3f scale = primitive->getScale();
-
-  for (auto &vertex : vertices) {
-    vertex *= scale;
-    vertex = rotation * vertex;
-  }
-
-  ofVec3f minBound(vertices[0]), maxBound(vertices[0]);
-  for (const auto &vertex : vertices) {
-    minBound.x = min(minBound.x, vertex.x);
-    minBound.y = min(minBound.y, vertex.y);
-    minBound.z = min(minBound.z, vertex.z);
-
-    maxBound.x = max(maxBound.x, vertex.x);
-    maxBound.y = max(maxBound.y, vertex.y);
-    maxBound.z = max(maxBound.z, vertex.z);
-  }
-
-  ofVec3f center = ofVec3f(
-      (maxBound.x + minBound.x) / 2,
-      (maxBound.y + minBound.y) / 2,
-      (maxBound.z + minBound.z) / 2);
-
-  center += this->primitive.get()->getGlobalPosition();
-
-  ofVec3f boundingBoxDimensions = maxBound - minBound;
-
-  ofDrawBox(center.x, center.y, center.z, boundingBoxDimensions.x, boundingBoxDimensions.y, boundingBoxDimensions.z);
 }
 
 const of3dPrimitive &SceneObject::getPrimitive() const {

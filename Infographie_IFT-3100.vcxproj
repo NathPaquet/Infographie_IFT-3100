@@ -114,6 +114,7 @@
     <ClCompile Include="src\properties\PropertiesPanel.cpp" />
     <ClCompile Include="src\properties\Property.cpp" />
     <ClCompile Include="src\raycasting\ray.cpp" />
+    <ClCompile Include="src\scene\object\object3D\object3D.cpp" />
     <ClCompile Include="src\scene\WindowCamera.cpp" />
     <ClCompile Include="src\scene\object\object2D\Circle.cpp" />
     <ClCompile Include="src\scene\object\object2D\Line.cpp" />
@@ -121,10 +122,10 @@
     <ClCompile Include="src\scene\object\object2D\Star.cpp" />
     <ClCompile Include="src\scene\object\object2D\Triangle.cpp" />
     <ClCompile Include="src\scene\object\object3D\Camera.cpp" />
-    <ClCompile Include="src\scene\object\object3D\CubicPlanet.cpp" />
-    <ClCompile Include="src\scene\object\object3D\CylinderPlanet.cpp" />
-    <ClCompile Include="src\scene\object\object3D\Model3D.cpp" />
-    <ClCompile Include="src\scene\object\object3D\Planet.cpp" />
+    <ClCompile Include="src\scene\object\object3D\primitive\CubicPlanet.cpp" />
+    <ClCompile Include="src\scene\object\object3D\primitive\CylinderPlanet.cpp" />
+    <ClCompile Include="src\scene\object\object3D\model\Model3D.cpp" />
+    <ClCompile Include="src\scene\object\object3D\primitive\Planet.cpp" />
     <ClCompile Include="src\scene\object\sceneObject.cpp" />
     <ClCompile Include="src\scene\object\sceneObjectFactory.cpp" />
     <ClCompile Include="src\scene\scene.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="src\properties\PropertiesPanel.h" />
     <ClInclude Include="src\properties\Property.h" />
     <ClInclude Include="src\raycasting\ray.h" />
+    <ClInclude Include="src\scene\object\object3D\object3D.h" />
     <ClInclude Include="src\scene\WindowCamera.h" />
     <ClInclude Include="src\scene\object\object2D\Circle.h" />
     <ClInclude Include="src\scene\object\object2D\Line.h" />
@@ -185,10 +187,10 @@
     <ClInclude Include="src\scene\object\object2D\Star.h" />
     <ClInclude Include="src\scene\object\object2D\Triangle.h" />
     <ClInclude Include="src\scene\object\object3D\Camera.h" />
-    <ClInclude Include="src\scene\object\object3D\CubicPlanet.h" />
-    <ClInclude Include="src\scene\object\object3D\CylinderPlanet.h" />
-    <ClInclude Include="src\scene\object\object3D\Model3D.h" />
-    <ClInclude Include="src\scene\object\object3D\Planet.h" />
+    <ClInclude Include="src\scene\object\object3D\primitive\CubicPlanet.h" />
+    <ClInclude Include="src\scene\object\object3D\primitive\CylinderPlanet.h" />
+    <ClInclude Include="src\scene\object\object3D\model\Model3D.h" />
+    <ClInclude Include="src\scene\object\object3D\primitive\Planet.h" />
     <ClInclude Include="src\scene\object\sceneObject.h" />
     <ClInclude Include="src\scene\object\sceneObjectFactory.h" />
     <ClInclude Include="src\scene\scene.h" />
