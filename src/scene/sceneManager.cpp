@@ -15,10 +15,29 @@ SceneManager::~SceneManager() {
 
 void SceneManager::addElement(const glm::vec3 position, const ElementType primitiveType) {
   this->sceneObjects.emplace_front(SceneObjectFactory::createDefaultSceneObject(position, primitiveType));
+
+  auto cameraPtr = this->sceneObjects.front().get();
+  addCamera(cameraPtr, primitiveType);
 }
 
 void SceneManager::addElement(const glm::vec3 position, const glm::vec3 outerPosition, const ElementType primitiveType) {
   this->sceneObjects.emplace_front(SceneObjectFactory::createSceneObject(position, outerPosition, primitiveType));
+}
+
+void SceneManager::addCamera(const SceneObject *sceneObject, const ElementType primitiveType) {
+  if (primitiveType == ElementType::CAMERA) {
+    auto camera = (Camera *)sceneObject; // dynamic_cast<Camera *>(sceneObject);
+    this->cameras.push_back(camera);
+  }
+}
+
+void SceneManager::removeCamera(const SceneObject *sceneObject) {
+  for (int i = 0; i < cameras.size(); i++) {
+    if (cameras.at(i) == sceneObject) {
+      this->cameras.erase(cameras.begin() + i);
+      return;
+    }
+  }
 }
 
 void SceneManager::removeObject(const SceneObject *sceneObject) {
@@ -53,6 +72,10 @@ void SceneManager::drawScene() {
 
 const std::list<std::unique_ptr<SceneObject>> &SceneManager::getObjects() const {
   return this->sceneObjects;
+}
+
+const std::vector<Camera *> &SceneManager::getCameras() const {
+  return this->cameras;
 }
 
 void SceneManager::setSelectedSceneObject(const SceneObject *sceneObject) {

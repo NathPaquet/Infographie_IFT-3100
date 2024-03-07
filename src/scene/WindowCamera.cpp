@@ -1,13 +1,13 @@
 #include "WindowCamera.h"
 
-#include "SceneManager.h"
-
 WindowCamera::WindowCamera(SceneManager *sceneManager):
     sceneManager(sceneManager) {}
 
-void WindowCamera::draw() {
-  // selectedCamera = std::make_unique<Camera>(sceneManager->getSelectedObjects().at(0));
+void WindowCamera::setSelectedCamera(Camera *camera) {
+  this->selectedCamera = camera;
+}
 
+void WindowCamera::draw() {
   if (!isShown) {
     return;
   }
@@ -23,16 +23,16 @@ void WindowCamera::draw() {
   // Constants::SCENE_GRAPH_WIDTH / 2
   ofDrawRectangle(0, 0, ofGetWidth() / 2, ofGetHeight() / 2);
 
-  ofViewport(0, 0, ofGetWidth() / 2, ofGetHeight() / 2);
+  ofViewport(0, 0, ofGetWidth() / 2, ofGetHeight() / 2); // Pourquoi change pas avec translate ?
 
   ofPopStyle();
   ofPopMatrix();
 
-  selectedCamera.get()->getCamera()->disableMouseInput();
+  selectedCamera->getCamera()->disableMouseInput();
 
-  selectedCamera.get()->getCamera()->begin();
+  selectedCamera->getCamera()->begin();
   sceneManager->drawScene();
-  selectedCamera.get()->getCamera()->end();
+  selectedCamera->getCamera()->end();
 }
 
 void WindowCamera::setIsShown(bool isShown) {

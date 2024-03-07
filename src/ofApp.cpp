@@ -32,6 +32,8 @@ void ofApp::setup() {
 
   this->gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable);
   this->sceneGraph = std::make_unique<SceneGraph>(this->currentScene->getSceneManager());
+  this->windowCamera = new WindowCamera(this->currentScene->getSceneManager());
+  this->cameraPanel = std::make_unique<CameraPanel>(this->currentScene->getSceneManager(), windowCamera);
   this->propertiesPanel = std::make_unique<PropertiesPanel>();
 
   ofDisableArbTex();
@@ -57,6 +59,9 @@ void ofApp::draw() {
 
   // Draw scene element menu
   drawSceneObjectGraph();
+
+  windowCamera->setIsShown(ImGui::IsMouseDown(ImGuiMouseButton_Middle));
+  windowCamera->draw();
 
   // Draw scene top menu
   drawSceneTopMenu();
@@ -171,6 +176,12 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
         this->currentScene->setCurrentObjectToAdd(ElementType::SPACE_SHIP);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
+
+      ImGui::SeparatorText("Camera");
+      if (ImGui::MenuItem("Add Camera")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::CAMERA);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
     }
     ImGui::EndMenu();
   }
@@ -187,6 +198,7 @@ void ofApp::drawSceneTopMenu() {
       this->drawSceneObjectGraphCreationMenu();
       this->createViewMenu();
       tools.createToolsMenu();
+      cameraPanel.get()->create();
 
       ImGui::EndMenuBar();
     }

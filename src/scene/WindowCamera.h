@@ -1,12 +1,13 @@
 #pragma once
 
-#include "SceneManager.h"
 #include "object/object3D/Camera.h"
 #include "ofMain.h"
+#include "sceneManager.h"
 
 class WindowCamera {
 public:
   WindowCamera(SceneManager *sceneManager);
+  void setSelectedCamera(Camera *camera);
   void draw();
   void setIsShown(bool isShown);
 
@@ -15,6 +16,6 @@ private:
   const float CAMERA_LINE_LENGTH = 5.f;
 
   SceneManager *sceneManager;
-  std::unique_ptr<Camera> selectedCamera;
+  Camera *selectedCamera;
   bool isShown = false;
 };

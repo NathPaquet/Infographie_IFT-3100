@@ -1,8 +1,9 @@
 #include "SceneObjectFactory.h"
 
-#include "MagicSword.h"
-#include "SpaceRocket.h"
+
 #include "constants.h"
+#include "object2D/model/MagicSword.h"
+#include "object2D/model/SpaceRocket.h"
 #include "object2D/primitive/Circle.h"
 #include "object2D/primitive/Line.h"
 #include "object2D/primitive/Square.h"
@@ -27,6 +28,10 @@ std::unique_ptr<SceneObject> SceneObjectFactory::createDefaultSceneObject(const 
       return std::make_unique<Model3D>(Model3D(position, Constants::FREDDY_PLUSH_MODEL_PATH));
     case ElementType::SPACE_SHIP:
       return std::make_unique<Model3D>(Model3D(position, Constants::SPACE_SHIP_MODEL_PATH));
+    case ElementType::MODEL3D:
+      return std::make_unique<Model3D>(Model3D(position));
+    case ElementType::CAMERA:
+      return std::make_unique<Camera>(Camera(position));
     case ElementType::TRIANGLE:
       return std::make_unique<Triangle>(Triangle(position));
     case ElementType::SQUARE:
