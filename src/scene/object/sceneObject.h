@@ -10,7 +10,6 @@ public:
   ofColor color = ofColor::fromHsb(ofRandom(255), 255, 255);
   SceneObject();
   virtual void draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) = 0;
-  virtual void draw_properties();
   const of3dPrimitive &getPrimitive() const;
   void setPosition(ofVec3f vec);
   std::map<PROPERTY_ID, std::unique_ptr<PropertyBase>> &getProperties();
