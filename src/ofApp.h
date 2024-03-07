@@ -1,9 +1,6 @@
 #pragma once
 
 #include "Cursor.h"
-#include "eventListener/scene2DEventListener.h"
-#include "eventListener/scene3DEventListener.h"
-#include "eventListener/sceneEventListener.h"
 #include "layouts/Tools.h"
 #include "ofMain.h"
 #include "ofxGui.h"
@@ -44,5 +41,6 @@ private:
   bool isScene2D = false;
   bool isViewOrtho = false;
   bool isBoundingBoxEnabled = false;
+  bool isObjectAxisEnabled = false;
   Scene *currentScene;
 };

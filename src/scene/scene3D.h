@@ -3,9 +3,8 @@
 class Scene3D : public Scene {
 public:
   Scene3D(std::unique_ptr<SceneManager> sceneManager,
-      std::unique_ptr<SceneEventListener> sceneEventListener,
       Cursor *cursor):
-      Scene(std::move(sceneManager), std::move(sceneEventListener), cursor) {}
+      Scene(std::move(sceneManager), cursor) {}
   void setup() override;
   void drawScene() override;
   void toggleProjectionMode();

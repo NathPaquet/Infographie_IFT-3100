@@ -13,7 +13,7 @@ SceneManager::~SceneManager() {
   clearScene();
 }
 
-void SceneManager::addElement(const glm::vec3 position,  const ElementType primitiveType) {
+void SceneManager::addElement(const glm::vec3 position, const ElementType primitiveType) {
   this->sceneObjects.emplace_front(SceneObjectFactory::createDefaultSceneObject(position, primitiveType));
 }
 
@@ -47,7 +47,7 @@ void SceneManager::removeAllSelectedObjects() {
 void SceneManager::drawScene() {
   for (auto &&element : this->sceneObjects) {
     bool isSelected = std::find(this->selectedSceneObjects.begin(), this->selectedSceneObjects.end(), element.get()) != this->selectedSceneObjects.end();
-    element.get()->draw(isSelected, this->isBoundingBoxEnabled);
+    element.get()->draw(isSelected, this->isBoundingBoxEnabled, this->isObjectAxisEnabled);
   }
 }
 
@@ -96,4 +96,8 @@ void SceneManager::setObjectPosition(const SceneObject *object, const ofVec3f &p
 
 void SceneManager::toggleActivationBoundingBox() {
   this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
+}
+
+void SceneManager::toggleActivationObjectAxis() {
+  this->isObjectAxisEnabled = !this->isObjectAxisEnabled;
 }

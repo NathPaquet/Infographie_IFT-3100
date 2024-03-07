@@ -6,7 +6,7 @@ Line::Line(const glm::vec3 &startPoint, const glm::vec3 &endPoint) {
   initMesh(startPoint, endPoint);
 }
 
-void Line::drawPreview(const glm::vec3& startPoint, const glm::vec3& endPoint) {
+void Line::drawPreview(const glm::vec3 &startPoint, const glm::vec3 &endPoint) {
   ofDrawLine(startPoint, endPoint);
 }
 

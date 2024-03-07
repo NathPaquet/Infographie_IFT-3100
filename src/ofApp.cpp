@@ -20,11 +20,11 @@ void ofApp::setup() {
   this->cursor = std::make_unique<Cursor>(CursorMode::NAVIGATION);
 
   // Setup 3D scene
-  this->scene3D = std::make_unique<Scene3D>(std::make_unique<SceneManager>(), std::make_unique<Scene3DEventListener>(), cursor.get());
+  this->scene3D = std::make_unique<Scene3D>(std::make_unique<SceneManager>(), cursor.get());
   this->scene3D->setup();
 
   // Setup 2D scene
-  this->scene2D = std::make_unique<Scene2D>(std::make_unique<SceneManager>(), std::make_unique<Scene2DEventListener>(), cursor.get());
+  this->scene2D = std::make_unique<Scene2D>(std::make_unique<SceneManager>(), cursor.get());
   this->scene2D->setup();
 
   // Setup initial scene
@@ -213,7 +213,9 @@ void ofApp::createViewMenu() {
         this->isViewOrtho = !this->isViewOrtho;
         assert(this->currentScene != nullptr && this->currentScene == this->scene3D.get());
         this->scene3D.get()->toggleProjectionMode();
-        // Brise probablement tout les principes solides lol
+      if (ImGui::MenuItem((this->isObjectAxisEnabled ? "Disable object axis" : "Enable object axis"))) {
+        this->isObjectAxisEnabled = !this->isObjectAxisEnabled;
+        this->currentScene->getSceneManager()->toggleActivationObjectAxis();
       }
     }
     ImGui::EndMenu();

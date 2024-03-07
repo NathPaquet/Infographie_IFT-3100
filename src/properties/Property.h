@@ -1,6 +1,15 @@
 #pragma once
 #include <string>
 
+struct LineParameter {
+  bool shouldDrawWireFrame;
+  float lineThickness;
+
+  bool operator==(const LineParameter &other) {
+    return this->lineThickness == other.lineThickness && this->shouldDrawWireFrame == other.shouldDrawWireFrame;
+  }
+};
+
 enum class PROPERTY_ID {
   // Place common properties here
   COLOR,
@@ -9,7 +18,9 @@ enum class PROPERTY_ID {
   SIZE,
   RADIUS,
   HEIGHT,
-  ANGLES
+  ANGLES,
+  SHOW_WIREFRAME,
+  RATIO,
 };
 
 static inline const char *toString(PROPERTY_ID propertyId) {
@@ -26,6 +37,10 @@ static inline const char *toString(PROPERTY_ID propertyId) {
       return "Image Import";
     case PROPERTY_ID::ANGLES:
       return "Angles";
+    case PROPERTY_ID::SHOW_WIREFRAME:
+      return "Line thickness";
+    case PROPERTY_ID::RATIO:
+      return "Ratio";
     default:
       return "Unknown";
   }
