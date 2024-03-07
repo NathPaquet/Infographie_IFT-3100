@@ -46,6 +46,7 @@ void SceneManager::removeObject(const SceneObject *sceneObject) {
 
   if (it != this->sceneObjects.end()) {
     this->sceneObjects.erase(it);
+    removeCamera(sceneObject);
   }
   if (selectedIt != this->selectedSceneObjects.end()) {
     this->selectedSceneObjects.erase(selectedIt);
@@ -57,6 +58,7 @@ void SceneManager::removeAllSelectedObjects() {
     auto it = std::find_if(this->sceneObjects.begin(), this->sceneObjects.end(), [&](auto &&obj) { return obj.get() == selectedObject; });
     if (it != this->sceneObjects.end()) {
       this->sceneObjects.erase(it);
+      removeCamera(selectedObject);
     }
   }
 

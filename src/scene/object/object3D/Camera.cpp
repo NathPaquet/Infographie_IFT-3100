@@ -14,8 +14,8 @@ void Camera::updateProperties() {
 
   auto cameraViewAxis = -this->primitive.get()->getZAxis();
 
-  camera.get()->setPosition(this->primitive.get()->getPosition());
-  camera.get()->setTarget(cameraViewAxis);
+  getCamera()->setPosition(this->primitive.get()->getPosition());
+  getCamera()->setOrientation(this->primitive.get()->getOrientationQuat());
 
   ofPushMatrix();
   ofPushStyle();
@@ -28,6 +28,6 @@ void Camera::updateProperties() {
   ofPopMatrix();
 }
 
-ofEasyCam *Camera::getCamera() {
+ofCamera *Camera::getCamera() {
   return camera.get();
 }

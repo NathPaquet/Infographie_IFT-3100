@@ -13,7 +13,7 @@ void CameraPanel::create() {
       for (int i = 0; i < cameras.size(); i++) {
         int index = i + 1;
 
-        std::string cameraName = "Camera" + std::to_string(index);
+        std::string cameraName = "Camera " + std::to_string(index);
         if (ImGui::MenuItem(cameraName.c_str())) {
           windowCamera->setSelectedCamera(cameras.at(i));
         }

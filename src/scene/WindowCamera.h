@@ -8,14 +8,13 @@ class WindowCamera {
 public:
   WindowCamera(SceneManager *sceneManager);
   void setSelectedCamera(Camera *camera);
-  void draw();
+  void drawScene();
   void setIsShown(bool isShown);
 
 private:
-  const float CAMERA_RADIUS = 2.f;
-  const float CAMERA_LINE_LENGTH = 5.f;
+  bool hasASelectedCamera() const;
 
   SceneManager *sceneManager;
-  Camera *selectedCamera;
+  Camera *selectedCamera = nullptr;
   bool isShown = false;
 };

@@ -52,6 +52,12 @@ void ofApp::exit() {
 void ofApp::draw() {
   this->currentScene->drawScene();
 
+  if (ImGui::IsKeyPressed(ImGuiKey_C)) {
+    isWindowCameraShown = !isWindowCameraShown;
+  }
+  windowCamera->setIsShown(isWindowCameraShown);
+  windowCamera->drawScene();
+
   gui.begin();
 
   // Draw properties panel menu
@@ -59,9 +65,6 @@ void ofApp::draw() {
 
   // Draw scene element menu
   drawSceneObjectGraph();
-
-  windowCamera->setIsShown(ImGui::IsMouseDown(ImGuiMouseButton_Middle));
-  windowCamera->draw();
 
   // Draw scene top menu
   drawSceneTopMenu();
