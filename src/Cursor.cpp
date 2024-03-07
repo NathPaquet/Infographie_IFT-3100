@@ -28,8 +28,8 @@ void Cursor::drawCursor(float x, float y) {
 glm::highp_vec3 Cursor::findMouseClick3DPosition(const ofEasyCam &camera) const {
   const glm::vec3 screenMouse(ofGetMouseX(), ofGetMouseY(), 0);
   auto &&worldMouse = camera.screenToWorld(screenMouse);
-  auto &&worldMouseEnd = camera.screenToWorld(glm::vec3(screenMouse.x, screenMouse.y, 1.0f));
-  auto &&worldMouseDirection = worldMouseEnd - worldMouse;
+  auto &&cameraPosition = camera.getGlobalPosition();
+  auto &&worldMouseDirection = worldMouse - cameraPosition;
   return worldMouseDirection;
 }
 

@@ -14,6 +14,7 @@ void ofApp::setup() {
   ofSetLogLevel(OF_LOG_VERBOSE);
   ofDisableAlphaBlending();
   ofEnableDepthTest();
+  ofSetVerticalSync(true);
   // required call
 
   this->cursor = std::make_unique<Cursor>(CursorMode::NAVIGATION);

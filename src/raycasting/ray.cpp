@@ -2,10 +2,10 @@
 
 #include "constants.h"
 #include "object/object2D/Circle.h"
-#include "object/object2D/Star.h"
-#include "object/object2D/Square.h"
-#include "object/object2D/Triangle.h"
 #include "object/object2D/Line.h"
+#include "object/object2D/Square.h"
+#include "object/object2D/Star.h"
+#include "object/object2D/Triangle.h"
 #include "object/sceneObjectFactory.h"
 
 Ray::Ray(glm::vec3 origin, glm::vec3 direction) {
@@ -29,6 +29,8 @@ const glm::vec3 &Ray::getDirection() const {
 bool Ray::isRayCollidingWithPrimitive(const of3dPrimitive &primitive, glm::vec2 &baricentricCoords, float &distance) {
   bool found = false;
   float distanceToTheClosestSurface = numeric_limits<float>::max();
+
+  glm::vec3 viewDirection = viewDirection = -glm::normalize(direction);
   for (auto &&face : primitive.getMesh().getUniqueFaces()) {
     bool intersection = glm::intersectRayTriangle(
         origin,
@@ -39,8 +41,13 @@ bool Ray::isRayCollidingWithPrimitive(const of3dPrimitive &primitive, glm::vec2 
         baricentricCoords,
         distance);
     if (intersection && distance < distanceToTheClosestSurface) {
-      found = true;
-      distanceToTheClosestSurface = distance;
+      glm::vec3 intersectionPoint = origin + direction * distance;
+      glm::vec3 surfaceNormal = glm::cross(face.getVertex(1) - face.getVertex(0), face.getVertex(2) - face.getVertex(0));
+      if (glm::dot(surfaceNormal, viewDirection) > 0) {
+        // Le point d'intersection est dans la direction de vue de la caméra
+        found = true;
+        distanceToTheClosestSurface = distance;
+      }
     }
   }
   distance = distanceToTheClosestSurface;
@@ -78,7 +85,6 @@ void Ray::drawPrimitiveDefaultPreview(ElementType elementType, const glm::vec3 &
   }
   ofPopStyle();
 }
-
 
 void Ray::drawPrimitivePreview(ElementType elementType, const glm::vec3 &centerPosition, const glm::vec3 &outerPosition) {
   ofPushStyle();

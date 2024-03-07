@@ -12,10 +12,13 @@ public:
 
 private:
   ofLight light;
-  ofEasyCam camera;
+  std::unique_ptr<ofEasyCam> perspectiveCamera;
+  std::unique_ptr<ofEasyCam> orthographicCamera;
+  ofEasyCam *currentCamera;
   Ray ray;
   ofSpherePrimitive sphere = ofSpherePrimitive(20, 60, OF_PRIMITIVE_TRIANGLES);
 
   void processMouseActions();
-  glm::highp_vec3 findMouseClick3DPosition() const;
+  void setupPerspectiveCamera();
+  void setupOrthographicCamera();
 };
