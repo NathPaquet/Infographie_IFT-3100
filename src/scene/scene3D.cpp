@@ -28,6 +28,10 @@ void Scene3D::drawScene() {
   camera.end();
 }
 
+void Scene3D::toggleProjectionMode() {
+  this->camera.getOrtho() ? camera.disableOrtho() : camera.enableOrtho();
+}
+
 void Scene3D::processMouseActions() {
   if (this->shouldDragObject) {
     this->camera.disableMouseInput();

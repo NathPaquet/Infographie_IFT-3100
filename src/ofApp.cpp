@@ -208,6 +208,12 @@ void ofApp::createViewMenu() {
         this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
         this->currentScene->getSceneManager()->toggleActivationBoundingBox();
       }
+      if (ImGui::MenuItem((this->isViewOrtho ? "Enable perspective projection" : "Enable orthographic projection"))) {
+        this->isViewOrtho = !this->isViewOrtho;
+        assert(this->currentScene != nullptr && this->currentScene == this->scene3D.get());
+        this->scene3D.get()->toggleProjectionMode();
+        // Brise probablement tout les principes solides lol
+      }
     }
     ImGui::EndMenu();
   }
