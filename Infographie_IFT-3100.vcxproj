@@ -115,9 +115,6 @@
     <ClCompile Include="src\properties\Property.cpp" />
     <ClCompile Include="src\raycasting\ray.cpp" />
     <ClCompile Include="src\scene\WindowCamera.cpp" />
-    <ClCompile Include="src\scene\eventListener\scene2DEventListener.cpp" />
-    <ClCompile Include="src\scene\eventListener\scene3DEventListener.cpp" />
-    <ClCompile Include="src\scene\eventListener\sceneEventListener.cpp" />
     <ClCompile Include="src\scene\object\object2D\Circle.cpp" />
     <ClCompile Include="src\scene\object\object2D\Line.cpp" />
     <ClCompile Include="src\scene\object\object2D\Square.cpp" />
@@ -182,9 +179,6 @@
     <ClInclude Include="src\properties\Property.h" />
     <ClInclude Include="src\raycasting\ray.h" />
     <ClInclude Include="src\scene\WindowCamera.h" />
-    <ClInclude Include="src\scene\eventListener\scene2DEventListener.h" />
-    <ClInclude Include="src\scene\eventListener\scene3DEventListener.h" />
-    <ClInclude Include="src\scene\eventListener\sceneEventListener.h" />
     <ClInclude Include="src\scene\object\object2D\Circle.h" />
     <ClInclude Include="src\scene\object\object2D\Line.h" />
     <ClInclude Include="src\scene\object\object2D\Square.h" />
