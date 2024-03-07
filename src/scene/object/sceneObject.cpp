@@ -7,6 +7,7 @@ SceneObject::SceneObject() {
   this->addProperty<ofImage>(PROPERTY_ID::IMAGE_IMPORT, ofImage());
   this->addProperty<ofColor>(PROPERTY_ID::COLOR, ofColor::fromHsb(ofRandom(255), 255, 255));
   this->addProperty<ofVec3f>(PROPERTY_ID::ANGLES, ofVec3f(0.f, 0.f, 0.f));
+  this->addProperty<bool>(PROPERTY_ID::SHOW_WIREFRAME, false);
 }
 
 void SceneObject::draw(bool isSelected, bool isBoundingBoxEnable) {
@@ -21,21 +22,27 @@ void SceneObject::draw(bool isSelected, bool isBoundingBoxEnable) {
       this->drawBoundingBox();
     }
   }
+  ofSetColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
 
-  if (mTex.isAllocated()) {
-    this->mTex.bind();
-    // mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
-    ofSetColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
-    // mMaterial.begin();
-    primitive->draw();
-    // mMaterial.end();
-    this->mTex.unbind();
+  if (!this->getPropertyValue<bool>(PROPERTY_ID::SHOW_WIREFRAME)) {
+    if (mTex.isAllocated()) {
+      this->mTex.bind();
+      // mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
+      // mMaterial.begin();
+      primitive->draw();
+      // mMaterial.end();
+      this->mTex.unbind();
+    } else {
+      // mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
+      // mMaterial.begin();
+      primitive->draw();
+      // mMaterial.end();
+    }
+
   } else {
-    // mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
-    ofSetColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
-    // mMaterial.begin();
-    primitive->draw();
-    // mMaterial.end();
+    ofNoFill();
+    // primitive->draw();
+    primitive->drawWireframe();
   }
   ofPopStyle();
 }
@@ -56,7 +63,7 @@ void SceneObject::drawAxis() {
   auto vecScale = this->primitive->getScale();
   auto vecRescale = vecScale * (1.25f * Constants::DEFAULT_SIZE);
   float scaleHeadArrow = vecRescale.x / 8;
-
+  ofPushStyle();
   ofPushMatrix();
 
   ofTranslate(this->position);
@@ -70,6 +77,7 @@ void SceneObject::drawAxis() {
   ofDrawArrow(ofPoint(0), ofPoint(zAxis * vecRescale.z), scaleHeadArrow);
 
   ofPopMatrix();
+  ofPopStyle();
 }
 
 void SceneObject::updateProperties() {

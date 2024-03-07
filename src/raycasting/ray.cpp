@@ -2,10 +2,10 @@
 
 #include "constants.h"
 #include "object/object2D/Circle.h"
-#include "object/object2D/Star.h"
-#include "object/object2D/Square.h"
-#include "object/object2D/Triangle.h"
 #include "object/object2D/Line.h"
+#include "object/object2D/Square.h"
+#include "object/object2D/Star.h"
+#include "object/object2D/Triangle.h"
 #include "object/sceneObjectFactory.h"
 
 Ray::Ray(glm::vec3 origin, glm::vec3 direction) {
@@ -78,7 +78,6 @@ void Ray::drawPrimitiveDefaultPreview(ElementType elementType, const glm::vec3 &
   }
   ofPopStyle();
 }
-
 
 void Ray::drawPrimitivePreview(ElementType elementType, const glm::vec3 &centerPosition, const glm::vec3 &outerPosition) {
   ofPushStyle();
