@@ -6,11 +6,10 @@
 
 class SceneObject {
 public:
-  ofVec3f position;
-  ofColor color = ofColor::fromHsb(ofRandom(255), 255, 255);
   SceneObject();
   virtual void draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) = 0;
   const of3dPrimitive &getPrimitive() const;
+  const ofVec3f &getPosition() const;
   void setPosition(ofVec3f vec);
   std::map<PROPERTY_ID, std::unique_ptr<PropertyBase>> &getProperties();
 
@@ -28,8 +27,10 @@ protected:
   virtual void updateProperties();
   virtual void drawAxis() = 0;
   virtual void drawBoundingBox() = 0;
+
   std::unique_ptr<of3dPrimitive> primitive;
   std::map<PROPERTY_ID, std::unique_ptr<PropertyBase>> properties;
+  ofVec3f position;
   ofMesh mainMesh;
   ofMaterial mMaterial;
   ofTexture mTex;
