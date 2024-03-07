@@ -19,11 +19,11 @@ void ofApp::setup() {
   this->cursor = std::make_unique<Cursor>(CursorMode::NAVIGATION);
 
   // Setup 3D scene
-  this->scene3D = std::make_unique<Scene3D>(std::make_unique<SceneManager>(), std::make_unique<Scene3DEventListener>(), cursor.get());
+  this->scene3D = std::make_unique<Scene3D>(std::make_unique<SceneManager>(), cursor.get());
   this->scene3D->setup();
 
   // Setup 2D scene
-  this->scene2D = std::make_unique<Scene2D>(std::make_unique<SceneManager>(), std::make_unique<Scene2DEventListener>(), cursor.get());
+  this->scene2D = std::make_unique<Scene2D>(std::make_unique<SceneManager>(), cursor.get());
   this->scene2D->setup();
 
   // Setup initial scene
