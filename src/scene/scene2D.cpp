@@ -3,19 +3,25 @@
 #include "constants.h"
 
 void Scene2D::setup() {
-  //this->camera.setDistance(Constants::DEFAULT_CAMERA_DISTANCE);
+  // this->camera.setDistance(Constants::DEFAULT_CAMERA_DISTANCE);
   this->ray = Ray();
+  this->camera.removeAllInteractions();
+  this->camera.disableMouseMiddleButton();
   this->camera.disableMouseInput();
+
+  this->camera.addInteraction(ofEasyCam::TRANSFORM_TRANSLATE_XY, OF_MOUSE_BUTTON_LEFT);
+  this->camera.addInteraction(ofEasyCam::TRANSFORM_NONE, OF_MOUSE_BUTTON_MIDDLE);
+
   ofDisableLighting();
 }
 
 void Scene2D::drawScene() {
   ofPushStyle();
-  //ofBackground(this->backgroundColor);
+  // ofBackground(this->backgroundColor);
   this->cursor->drawCursor(ofGetMouseX(), ofGetMouseY());
   this->camera.begin();
   this->processMouseActions();
-  this->sceneManager.get()->drawScene();
+  this->sceneManager->drawScene();
   this->camera.begin();
   ofPopStyle();
 }
@@ -24,11 +30,15 @@ void Scene2D::processMouseActions() {
   if (!isMouseClickInScene()) {
     return;
   }
-  auto &&maybeObject = this->cursor->setRayWithCollidingObject(this->sceneManager.get()->getObjects(), this->camera, this->ray);
+
+  if (!isMouseClickInScene()) {
+    return;
+  }
+  auto &&maybeObject = this->cursor->setRayWithCollidingObject(this->sceneManager->getObjects(), this->camera, this->ray);
   auto &&found = maybeObject.has_value();
   const float distance = Constants::DEFAULT_DISTANCE_TO_DRAW_PRIMITIVE;
   auto position = (this->ray.getOrigin() + this->ray.getDirection() * (distance / abs(ray.getDirection().z)));
-  //this->ray.set(this->camera.getPosition(), this->camera.getZAxis());
+  // this->ray.set(this->camera.getPosition(), this->camera.getZAxis());
   if (this->wasDrawingFirstPositionClicked && this->cursor->getCursorMode() == CursorMode::ADDING) {
     this->ray.drawPrimitivePreview(this->currentObjectToAdd, this->drawingFirstPosition, position);
   }
@@ -50,9 +60,9 @@ void Scene2D::processMouseActions() {
   if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
     if (this->cursor->getCursorMode() == CursorMode::ADDING) {
       if (this->wasDrawingFirstPositionClicked) {
-        this->sceneManager.get()->addElement(this->drawingFirstPosition, position, this->currentObjectToAdd);
+        this->sceneManager->addElement(this->drawingFirstPosition, position, this->currentObjectToAdd);
         this->cursor->setCursorMode(CursorMode::NAVIGATION);
-        this->sceneManager.get()->setSelectedSceneObject(this->sceneManager.get()->getObjects().back().get());
+        this->sceneManager->setSelectedSceneObject(this->sceneManager->getObjects().back().get());
       } else {
         this->drawingFirstPosition = position;
       }
@@ -60,15 +70,14 @@ void Scene2D::processMouseActions() {
     }
     if (found && this->cursor->getCursorMode() == CursorMode::NAVIGATION) {
       if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftCtrl))) {
-        this->sceneManager.get()->clickSelectionSceneObject(maybeObject.value());
+        this->sceneManager->clickSelectionSceneObject(maybeObject.value());
       } else {
-        this->sceneManager.get()->setSelectedSceneObject(maybeObject.value());
+        this->sceneManager->setSelectedSceneObject(maybeObject.value());
       }
 
     } else if (found && this->cursor->getCursorMode() == CursorMode::REMOVING) {
-      this->sceneManager.get()->removeObject(maybeObject.value()); // TODO : Ajouter une nouvelle m�thode pour supprimer un objet
+      this->sceneManager->removeObject(maybeObject.value()); // TODO : Ajouter une nouvelle m�thode pour supprimer un objet
       this->cursor->setCursorMode(CursorMode::NAVIGATION);
-
     }
   }
 }

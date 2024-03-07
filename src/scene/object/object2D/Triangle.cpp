@@ -5,17 +5,17 @@ Triangle::Triangle(const glm::vec3 &centerPosition, const glm::vec2 &firstPoint)
 }
 
 Triangle::Triangle(const glm::vec3 &centerPosition, const glm::vec3 &outerPosition) {
-    auto vecFirst = outerPosition - centerPosition;
-    glm::vec2 firstPoint = glm::vec2(vecFirst.x, vecFirst.y);
-   initMesh(centerPosition, firstPoint);
+  auto vecFirst = outerPosition - centerPosition;
+  glm::vec2 firstPoint = glm::vec2(vecFirst.x, vecFirst.y);
+  initMesh(centerPosition, firstPoint);
 }
 
 void Triangle::drawPreview(const glm::vec3 &centerPosition, const glm::vec2 &firstPoint) {
   ofPrimitiveMode mode = OF_PRIMITIVE_TRIANGLES;
   std::vector<glm::vec3> vertices;
-  //APROXIMATION VALID ONLY IF CAMERA IS LOOKING AT (0,0,1)
-  auto vec1 = glm::vec3(1,0,0);
-  auto vec2 = glm::vec3(0,1,0);
+  // APROXIMATION VALID ONLY IF CAMERA IS LOOKING AT (0,0,1)
+  auto vec1 = glm::vec3(1, 0, 0);
+  auto vec2 = glm::vec3(0, 1, 0);
 
   std::array<float, 4> values1 = {-0.5f,
       std::sqrt(3) / 2,

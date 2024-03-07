@@ -11,4 +11,8 @@ public:
 
 private:
   void initMesh(const glm::vec3 &centerPosition, const float radius);
+  void initContourMesh(const glm::vec3 &centerPosition, const float radius);
+  void initProperties(const float radius, const float ratio);
+  void setSize(const float radius);
+  void updateProperties() override;
 };

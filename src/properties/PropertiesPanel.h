@@ -10,6 +10,7 @@ public:
   void drawColorProperty(std::vector<PropertyBase *> &objectsProperty);
   void drawImageImport(std::vector<PropertyBase *> &objectsProperty);
   void drawAngles(std::vector<PropertyBase *> &objectsProperty);
+  void drawToggle(std::vector<PropertyBase *> &objectsProperty);
   void drawPropertiesPanel(std::vector<SceneObject *> &objects);
 
 private:

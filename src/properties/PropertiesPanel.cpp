@@ -13,11 +13,12 @@ PropertiesPanel::PropertiesPanel() {
   auto imageImportDraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawImageImport(objectsProperty); };
   auto colorDraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawColorProperty(objectsProperty); };
   auto anglesDraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawAngles(objectsProperty); };
-
+  auto toggleDraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawToggle(objectsProperty); };
   propertyDrawFunctions.emplace(PROPERTY_ID::SIZE, floatDraw);
   propertyDrawFunctions.emplace(PROPERTY_ID::RADIUS, floatDraw);
   propertyDrawFunctions.emplace(PROPERTY_ID::HEIGHT, floatDraw);
-
+  propertyDrawFunctions.emplace(PROPERTY_ID::SHOW_WIREFRAME, toggleDraw);
+  propertyDrawFunctions.emplace(PROPERTY_ID::RATIO, floatDraw);
   propertyDrawFunctions.emplace(PROPERTY_ID::COLOR, colorDraw);
   propertyDrawFunctions.emplace(PROPERTY_ID::IMAGE_IMPORT, imageImportDraw);
 
@@ -89,6 +90,20 @@ void PropertiesPanel::drawAngles(std::vector<PropertyBase *> &objectsProperty) {
     for (auto &&objectProperty : objectsProperty) {
       auto property = dynamic_cast<Property<ofVec3f> *>(objectProperty);
       property->setValue(propertyValue);
+    }
+  }
+}
+
+void PropertiesPanel::drawToggle(std::vector<PropertyBase *> &objectsProperty) {
+  auto &&firstObjectProperty = dynamic_cast<Property<bool> *>(objectsProperty[0]);
+  auto &&propertyValue = firstObjectProperty->getValue();
+
+  ImGui::SeparatorText(toString(firstObjectProperty->getId()));
+  bool temp = propertyValue;
+  if (ImGui::Checkbox("Draw Wireframe Only", &temp)) {
+    for (auto &&objectProperty : objectsProperty) {
+      auto property = dynamic_cast<Property<bool> *>(objectProperty);
+      property->setValue(temp);
     }
   }
 }
