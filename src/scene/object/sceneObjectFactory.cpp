@@ -1,5 +1,7 @@
 #include "SceneObjectFactory.h"
 
+#include "MagicSword.h"
+#include "SpaceRocket.h"
 #include "constants.h"
 #include "object2D/primitive/Circle.h"
 #include "object2D/primitive/Line.h"
@@ -33,6 +35,10 @@ std::unique_ptr<SceneObject> SceneObjectFactory::createDefaultSceneObject(const 
       return std::make_unique<Circle>(Circle(position));
     case ElementType::STAR:
       return std::make_unique<Star>(Star(position));
+    case ElementType::SPACE_ROCKET:
+      return std::make_unique<SpaceRocket>(SpaceRocket(position));
+    case ElementType::MAGIC_SWORD:
+      return std::make_unique<MagicSword>(MagicSword(position));
     default:
       return nullptr;
   }
@@ -63,6 +69,10 @@ std::unique_ptr<SceneObject> SceneObjectFactory::createSceneObject(const glm::ve
       return std::make_unique<Star>(Star(centerPosition, outerPosition));
     case ElementType::LINE:
       return std::make_unique<Line>(Line(centerPosition, outerPosition));
+    case ElementType::SPACE_ROCKET:
+      return std::make_unique<SpaceRocket>(SpaceRocket(centerPosition, outerPosition));
+    case ElementType::MAGIC_SWORD:
+      return std::make_unique<MagicSword>(MagicSword(centerPosition, outerPosition));
     default:
       return nullptr;
   }
