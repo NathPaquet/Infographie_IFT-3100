@@ -67,28 +67,18 @@ void Scene3D::processMouseActions() {
     }
   }
 
-  if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
+  bool NAVIGATION_OR_SELECTION = this->cursor->getCursorMode() == CursorMode::NAVIGATION || this->cursor->getCursorMode() == CursorMode::SELECTION;
+
+  if (NAVIGATION_OR_SELECTION && ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
     shouldDragObject = false;
     this->draggedObject = nullptr;
     this->currentCamera->enableMouseInput();
+    this->cursor->setCursorMode(CursorMode::NAVIGATION);
   }
-
-  bool NAVIGATION_OR_SELECTION = this->cursor->getCursorMode() == CursorMode::NAVIGATION || this->cursor->getCursorMode() == CursorMode::SELECTION;
 
   if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
     auto &&maybeObject = this->cursor->setRayWithCollidingObject(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
     auto &&found = maybeObject.has_value();
-
-    if (found) {
-      auto it = std::find(this->sceneManager.get()->getSelectedObjects().begin(), this->sceneManager.get()->getSelectedObjects().end(), maybeObject.value());
-
-      if (it != this->sceneManager.get()->getSelectedObjects().end()) {
-        draggedObject = *it;
-        shouldDragObject = true;
-      }
-
-      this->cursor->setCursorMode(CursorMode::SELECTION);
-    }
 
     if (found && NAVIGATION_OR_SELECTION) {
       if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftCtrl))) {
@@ -96,6 +86,14 @@ void Scene3D::processMouseActions() {
       } else {
         this->sceneManager.get()->setSelectedSceneObject(maybeObject.value());
       }
+
+      auto it = std::find(this->sceneManager.get()->getSelectedObjects().begin(), this->sceneManager.get()->getSelectedObjects().end(), maybeObject.value());
+
+      if (it != this->sceneManager.get()->getSelectedObjects().end()) {
+        draggedObject = *it;
+        shouldDragObject = true;
+      }
+      this->cursor->setCursorMode(CursorMode::SELECTION);
 
     } else if (found && this->cursor->getCursorMode() == CursorMode::REMOVING) {
       this->sceneManager.get()->removeObject(maybeObject.value());
@@ -105,6 +103,8 @@ void Scene3D::processMouseActions() {
       this->sceneManager.get()->addElement(this->ray.getOrigin() + this->ray.getDirection() * distance, this->currentObjectToAdd);
       this->cursor->setCursorMode(CursorMode::NAVIGATION);
       this->sceneManager.get()->setSelectedSceneObject(this->sceneManager.get()->getObjects().front().get());
+    } else if (this->cursor->getCursorMode() == CursorMode::NAVIGATION) {
+      this->cursor->setCursorMode(CursorMode::SELECTION);
     }
   }
 

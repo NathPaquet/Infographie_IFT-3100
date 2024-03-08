@@ -1,38 +1,22 @@
 #include "Cursor.h"
 
+#include "constants.h"
 #include "ofxGui.h"
 
-Cursor::Cursor(CursorMode cursorType):
-    mode(cursorType) {
+Cursor::Cursor(CursorMode cursorType) {
+  this->setCursorMode(cursorType);
 }
 
 void Cursor::drawCursor(float x, float y) {
-  // cout << (mode == CursorMode::NAVIGATION ? "CursorMode::NAVIGATION" : "other") << endl;
-
-  ImGui::SetMouseCursor(ImGuiMouseCursor_None);
-  switch (mode) {
-    case CursorMode::SELECTION:
-      // ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
-      drawSelectionCursor(x, y);
-      break;
-    case CursorMode::ADDING:
-      // ImGui::SetMouseCursor(ImGuiMouseCursor_TextInput);
-      drawNavigationCursor(x, y);
-      break;
-    case CursorMode::NAVIGATION:
-      drawNavigationCursor(x, y);
-      break;
-    case CursorMode::DRAWING:
-      // ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeNWSE); // GLFW_CROSSHAIR_CURSOR
-      drawDrawingCursor(x, y);
-      break;
-    case CursorMode::REMOVING:
-      // ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeAll);
-      drawDrawingCursor(x, y);
-      break;
-    default:
-      // ImGui::SetMouseCursor(ImGuiMouseCursor_None); // GLFW_ARROW_CURSOR
-      break;
+  if (!isCursorInScene()) {
+    if (ImGui::IsAnyItemHovered()) {
+      ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
+    } else {
+      ImGui::SetMouseCursor(ImGuiMouseCursor_Arrow);
+    }
+  } else {
+    ImGui::SetMouseCursor(ImGuiMouseCursor_None);
+    this->drawSceneCursor(x, y);
   }
 }
 
@@ -69,10 +53,7 @@ std::optional<const SceneObject *> Cursor::setRayWithCollidingObject(const std::
   return foundSceneObject ? std::optional(foundSceneObject) : std::nullopt;
 }
 
-void Cursor::drawNavigationCursor(float x, float y) {
-}
-
-void Cursor::drawSelectionCursor(float x, float y) {
+void Cursor::drawSceneCursor(float x, float y) {
   ofPushMatrix();
 
   ofPushStyle();
@@ -84,23 +65,8 @@ void Cursor::drawSelectionCursor(float x, float y) {
   ofPopStyle();
 }
 
-void Cursor::drawDrawingCursor(float x, float y) {
-  ofPushStyle();
-  // paramètres de dessin
-  float length = 10.0f;
-  float offset = 5.0f;
-
-  // épaisseur du trait
-  ofSetLineWidth(2);
-
-  ofSetColor(0, 0, 0);
-
-  // dessiner la forme vectorielle
-  ofDrawLine(x + offset, y, x + offset + length, y);
-  ofDrawLine(x - offset, y, x - offset - length, y);
-  ofDrawLine(x, y + offset, x, y + offset + length);
-  ofDrawLine(x, y - offset, x, y - offset - length);
-  ofPopStyle();
+bool Cursor::isCursorInScene() const {
+  return !ImGui::GetIO().WantCaptureMouse;
 }
 
 void Cursor::setCursorMode(CursorMode type) {
@@ -108,15 +74,18 @@ void Cursor::setCursorMode(CursorMode type) {
 
   switch (mode) {
     case CursorMode::SELECTION:
+      cursorSVG.load(Constants::HAND_GRAB_CURSOR_PATH);
       break;
     case CursorMode::ADDING:
+      cursorSVG.load(Constants::HAND_GRAB_CURSOR_PATH);
       break;
     case CursorMode::NAVIGATION:
-      cursorSVG.load("cursors/hand-grab.svg");
+      cursorSVG.load(Constants::HAND_OPEN_CURSOR_PATH);
       break;
     case CursorMode::DRAWING:
       break;
     case CursorMode::REMOVING:
+      cursorSVG.load(Constants::ERASE_CURSOR_PATH);
       break;
     default:
       break;
