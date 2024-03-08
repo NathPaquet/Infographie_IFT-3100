@@ -7,6 +7,8 @@ enum class ElementType {
   SPHERE,
   CUBIC,
   CYLINDER,
+  MODEL3D,
+  CAMERA,
   // 2D primitives
   TRIANGLE,
   CIRCLE,

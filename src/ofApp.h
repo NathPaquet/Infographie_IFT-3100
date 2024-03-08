@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Cursor.h"
+#include "layouts/CameraPanel.h"
 #include "layouts/Tools.h"
 #include "ofMain.h"
 #include "ofxGui.h"
@@ -25,13 +26,17 @@ public:
   ofTexture backgroundTexture;
 
 private:
-  Tools tools;
   void drawPropertiesPanel();
   void drawSceneObjectGraph();
   void drawSceneObjectGraphCreationMenu();
   void drawSceneTopMenu();
   void createViewMenu();
   void generateRandomGalaxy(int nbElements);
+
+  Tools tools;
+  std::unique_ptr<CameraPanel> cameraPanel;
+  WindowCamera *windowCamera;
+  bool isWindowCameraShown = false;
 
   std::unique_ptr<SceneGraph> sceneGraph;
   std::unique_ptr<PropertiesPanel> propertiesPanel;

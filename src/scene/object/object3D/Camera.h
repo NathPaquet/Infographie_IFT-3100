@@ -1,16 +1,16 @@
 #pragma once
 
-#include "object/sceneObject.h"
+#include "object3D.h"
 
-class Camera : public SceneObject {
+class Camera : public Object3D {
 public:
-  Camera(ofVec3f position);
-  ofEasyCam *getCamera();
+  Camera(const glm::vec3 &position);
+  ofCamera *getCamera();
 
 private:
   const float CAMERA_RADIUS = 2.f;
-  const float CAMERA_LINE_LENGTH = 5.f;
-  std::unique_ptr<ofEasyCam> camera;
+  const float CAMERA_LINE_LENGTH = CAMERA_RADIUS * 2.5f;
+  std::unique_ptr<ofCamera> camera;
 
-  void updateProperties();
+  void updateProperties() override;
 };
