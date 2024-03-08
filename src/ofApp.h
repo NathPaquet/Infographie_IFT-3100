@@ -31,6 +31,7 @@ private:
   void drawSceneObjectGraphCreationMenu();
   void drawSceneTopMenu();
   void createViewMenu();
+  void updateKeyboardShortcuts();
   void generateRandomGalaxy(int nbElements);
 
   Tools tools;

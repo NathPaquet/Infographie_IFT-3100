@@ -23,6 +23,7 @@ enum class ElementType {
   PLANET_EARTH,
   FREDDY_PLUSH,
   SPACE_SHIP,
+  NONE,
 };
 
 class SceneObjectFactory {

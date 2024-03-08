@@ -26,9 +26,4 @@ void CameraPanel::create() {
 
     ImGui::EndMenu();
   }
-
-  if (ImGui::IsKeyPressed(ImGuiKey_C)) {
-    isWindowCameraShown = !isWindowCameraShown;
-    windowCamera->setIsShown(isWindowCameraShown);
-  }
 }

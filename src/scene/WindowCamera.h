@@ -9,6 +9,7 @@ public:
   WindowCamera(SceneManager *sceneManager);
   void setSelectedCamera(Camera *camera);
   void drawScene();
+  void switchIsShown();
   void setIsShown(bool isShown);
 
 private:

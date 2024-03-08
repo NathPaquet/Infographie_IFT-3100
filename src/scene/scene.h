@@ -14,6 +14,7 @@ public:
   SceneManager *getSceneManager();
   void removeAllSelectedObjects();
   vector<SceneObject *> getSelectedObjectsReference();
+  bool hasCurrentObjectToAdd();
   void setCurrentObjectToAdd(ElementType elementType);
 
 protected:
@@ -22,5 +23,5 @@ protected:
   std::unique_ptr<SceneManager> sceneManager;
   Cursor *cursor;
   bool shouldDragObject = false;
-  ElementType currentObjectToAdd;
+  ElementType currentObjectToAdd = ElementType::NONE;
 };

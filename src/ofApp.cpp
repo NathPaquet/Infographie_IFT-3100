@@ -54,6 +54,8 @@ void ofApp::draw() {
 
   windowCamera->drawScene();
 
+  updateKeyboardShortcuts();
+
   gui.begin();
 
   // Draw properties panel menu
@@ -242,6 +244,52 @@ void ofApp::createViewMenu() {
     }
 
     ImGui::EndMenu();
+  }
+}
+
+void ofApp::updateKeyboardShortcuts() {
+  if (ImGui::IsKeyDown(ImGuiKey_LeftShift)) {
+    if (this->isScene2D) {
+      if (ImGui::IsKeyPressed(ImGuiKey_T)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::TRIANGLE);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_S)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::SQUARE);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_S)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::CIRCLE);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_C)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::LINE);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_L)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::STAR);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_R)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::SPACE_ROCKET);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_M)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::MAGIC_SWORD);
+      }
+    } else {
+      if (ImGui::IsKeyPressed(ImGuiKey_S)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::SPHERE);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_C)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::CUBIC);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_Y)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::CYLINDER);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_P)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::PLANET_EARTH);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_F)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::FREDDY_PLUSH);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_R)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::SPACE_SHIP);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_A)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::CAMERA);
+      }
+    }
+  } else {
+    if (ImGui::IsKeyPressed(ImGuiKey_C)) {
+      windowCamera->switchIsShown();
+    }
+  }
+
+  if (this->currentScene->hasCurrentObjectToAdd() && ImGui::IsKeyPressed(ImGuiKey_KeypadAdd)) {
+    this->cursor.get()->setCursorMode(CursorMode::ADDING);
   }
 }
 
