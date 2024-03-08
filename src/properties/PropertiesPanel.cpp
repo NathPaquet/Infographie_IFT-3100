@@ -75,7 +75,7 @@ void PropertiesPanel::drawImageImport(std::vector<PropertyBase *> &objectsProper
 void PropertiesPanel::drawZAngles(std::vector<PropertyBase *> &objectsProperty) {
   auto firstObjectProperty = dynamic_cast<Property<float> *>(objectsProperty[0]);
   auto propertyValue = firstObjectProperty->getValue();
-
+  ImGui::SeparatorText(toString(firstObjectProperty->getId()));
   bool angleZUsed = ImGui::SliderFloat(toString(firstObjectProperty->getId()), &propertyValue, MIN_ANGLE_VALUE, MAX_ANGLE_VALUE, NULL, ImGuiSliderFlags_AlwaysClamp);
   if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
     ImGui::SetItemTooltip("CTRL+Click to input value.");
