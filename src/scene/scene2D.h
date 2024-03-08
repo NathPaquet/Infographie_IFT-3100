@@ -17,4 +17,5 @@ private:
   const float object_distance = 200.f;
   glm::vec3 drawingFirstPosition;
   bool wasDrawingFirstPositionClicked = false;
+  SceneObject *draggedObject = nullptr;
 };

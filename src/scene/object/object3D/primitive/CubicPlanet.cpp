@@ -21,7 +21,7 @@ CubicPlanet::CubicPlanet(const float x, const float y, const float z) {
 }
 
 void CubicPlanet::updateProperties() {
-  SceneObject::updateProperties();
+  Object3D::updateProperties();
   if (this->properties.at(PROPERTY_ID::SIZE)->isValueChanged()) {
     this->set_size(this->getPropertyValue<float>(PROPERTY_ID::SIZE));
     this->properties.at(PROPERTY_ID::SIZE)->setChanged(false);

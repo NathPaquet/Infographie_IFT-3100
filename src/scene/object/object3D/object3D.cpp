@@ -2,6 +2,11 @@
 
 #include "constants.h"
 
+Object3D::Object3D() {
+  this->addProperty<ofImage>(PROPERTY_ID::IMAGE_IMPORT, ofImage());
+  this->addProperty<ofVec3f>(PROPERTY_ID::ANGLES, ofVec3f(0.f, 0.f, 0.f));
+}
+
 void Object3D::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) {
   this->updateProperties();
   ofPushStyle();
@@ -78,7 +83,7 @@ void Object3D::drawBoundingBox() {
 }
 
 void Object3D::drawAABB() const {
-  vector<glm::vec3> vertices = this->primitive.get()->getMesh().getVertices();
+  vector<glm::vec3> vertices = this->primitive->getMesh().getVertices();
   if (vertices.empty()) {
     return;
   }
@@ -107,9 +112,28 @@ void Object3D::drawAABB() const {
       (maxBound.y + minBound.y) / 2,
       (maxBound.z + minBound.z) / 2);
 
-  center += this->primitive.get()->getGlobalPosition();
+  center += this->primitive->getGlobalPosition();
 
   ofVec3f boundingBoxDimensions = maxBound - minBound;
 
   ofDrawBox(center.x, center.y, center.z, boundingBoxDimensions.x, boundingBoxDimensions.y, boundingBoxDimensions.z);
+}
+
+void Object3D::updateProperties() {
+  SceneObject::updateProperties();
+  if (this->properties.at(PROPERTY_ID::IMAGE_IMPORT)->isValueChanged() && this->getPropertyValue<ofImage>(PROPERTY_ID::IMAGE_IMPORT).isAllocated()) {
+    this->mTex = this->getPropertyValue<ofImage>(PROPERTY_ID::IMAGE_IMPORT).getTexture();
+    this->mTex.enableMipmap();
+    this->mTex.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+    this->mTex.generateMipmap();
+    this->properties.at(PROPERTY_ID::IMAGE_IMPORT)->setChanged(false);
+  }
+  if (this->properties.at(PROPERTY_ID::IMAGE_IMPORT)->isValueChanged()) {
+    this->mTex.clear();
+    this->properties.at(PROPERTY_ID::IMAGE_IMPORT)->setChanged(false);
+  }
+  if (this->properties.at(PROPERTY_ID::ANGLES)->isValueChanged()) {
+    this->primitive->setOrientation(this->getPropertyValue<ofVec3f>(PROPERTY_ID::ANGLES));
+    this->properties.at(PROPERTY_ID::ANGLES)->setChanged(false);
+  }
 }
