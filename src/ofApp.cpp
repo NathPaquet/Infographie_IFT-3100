@@ -250,35 +250,35 @@ void ofApp::createViewMenu() {
 void ofApp::updateKeyboardShortcuts() {
   if (ImGui::IsKeyDown(ImGuiKey_LeftShift)) {
     if (this->isScene2D) {
-      if (ImGui::IsKeyPressed(ImGuiKey_T)) {
+      if (ImGui::IsKeyPressed(ImGuiKey_1)) {
         this->currentScene->setCurrentObjectToAdd(ElementType::TRIANGLE);
-      } else if (ImGui::IsKeyPressed(ImGuiKey_S)) {
+      } else if (ImGui::IsKeyPressed(ImGuiKey_2)) {
         this->currentScene->setCurrentObjectToAdd(ElementType::SQUARE);
-      } else if (ImGui::IsKeyPressed(ImGuiKey_S)) {
+      } else if (ImGui::IsKeyPressed(ImGuiKey_3)) {
         this->currentScene->setCurrentObjectToAdd(ElementType::CIRCLE);
-      } else if (ImGui::IsKeyPressed(ImGuiKey_C)) {
+      } else if (ImGui::IsKeyPressed(ImGuiKey_4)) {
         this->currentScene->setCurrentObjectToAdd(ElementType::LINE);
-      } else if (ImGui::IsKeyPressed(ImGuiKey_L)) {
+      } else if (ImGui::IsKeyPressed(ImGuiKey_5)) {
         this->currentScene->setCurrentObjectToAdd(ElementType::STAR);
-      } else if (ImGui::IsKeyPressed(ImGuiKey_R)) {
+      } else if (ImGui::IsKeyPressed(ImGuiKey_6)) {
         this->currentScene->setCurrentObjectToAdd(ElementType::SPACE_ROCKET);
-      } else if (ImGui::IsKeyPressed(ImGuiKey_M)) {
+      } else if (ImGui::IsKeyPressed(ImGuiKey_7)) {
         this->currentScene->setCurrentObjectToAdd(ElementType::MAGIC_SWORD);
       }
     } else {
-      if (ImGui::IsKeyPressed(ImGuiKey_S)) {
+      if (ImGui::IsKeyPressed(ImGuiKey_1)) {
         this->currentScene->setCurrentObjectToAdd(ElementType::SPHERE);
-      } else if (ImGui::IsKeyPressed(ImGuiKey_C)) {
+      } else if (ImGui::IsKeyPressed(ImGuiKey_2)) {
         this->currentScene->setCurrentObjectToAdd(ElementType::CUBIC);
-      } else if (ImGui::IsKeyPressed(ImGuiKey_Y)) {
+      } else if (ImGui::IsKeyPressed(ImGuiKey_3)) {
         this->currentScene->setCurrentObjectToAdd(ElementType::CYLINDER);
-      } else if (ImGui::IsKeyPressed(ImGuiKey_P)) {
+      } else if (ImGui::IsKeyPressed(ImGuiKey_4)) {
         this->currentScene->setCurrentObjectToAdd(ElementType::PLANET_EARTH);
-      } else if (ImGui::IsKeyPressed(ImGuiKey_F)) {
+      } else if (ImGui::IsKeyPressed(ImGuiKey_5)) {
         this->currentScene->setCurrentObjectToAdd(ElementType::FREDDY_PLUSH);
-      } else if (ImGui::IsKeyPressed(ImGuiKey_R)) {
+      } else if (ImGui::IsKeyPressed(ImGuiKey_6)) {
         this->currentScene->setCurrentObjectToAdd(ElementType::SPACE_SHIP);
-      } else if (ImGui::IsKeyPressed(ImGuiKey_A)) {
+      } else if (ImGui::IsKeyPressed(ImGuiKey_7)) {
         this->currentScene->setCurrentObjectToAdd(ElementType::CAMERA);
       }
     }
