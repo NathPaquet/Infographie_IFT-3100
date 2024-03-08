@@ -1,8 +1,8 @@
 #pragma once
-#include "Square.h"
-#include "sceneObject.h"
 
-class MagicSword : public SceneObject {
+#include "Object2D.h"
+
+class MagicSword : public Object2D {
 public:
   MagicSword(const glm::vec3 &centerPosition, const glm::vec3 &outerPosition);
   MagicSword(const glm::vec3 &centerPosition, const float width = 20.f, const float height = 40.f);

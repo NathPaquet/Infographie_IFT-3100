@@ -1,13 +1,13 @@
 #include "Ray.h"
 
-#include "MagicSword.h"
 #include "constants.h"
+#include "object/object2D/model/MagicSword.h"
+#include "object/object2D/model/SpaceRocket.h"
 #include "object/object2D/primitive/Circle.h"
 #include "object/object2D/primitive/Line.h"
 #include "object/object2D/primitive/Square.h"
 #include "object/object2D/primitive/Star.h"
 #include "object/object2D/primitive/Triangle.h"
-#include "object/object2D/primitive/SpaceRocket.h"
 #include "object/sceneObjectFactory.h"
 
 Ray::Ray(glm::vec3 origin, glm::vec3 direction) {

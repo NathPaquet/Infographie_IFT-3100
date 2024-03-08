@@ -1,7 +1,8 @@
 #include "MagicSword.h"
 
-#include "Triangle.h"
-#include "object2D/Star.h"
+#include "primitive/Square.h"
+#include "primitive/Star.h"
+#include "primitive/Triangle.h"
 
 MagicSword::MagicSword(const glm::vec3 &centerPosition, const glm::vec3 &outerPosition) {
   const auto width = abs((outerPosition - centerPosition).x);

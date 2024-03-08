@@ -1,5 +1,8 @@
 #include "SpaceRocket.h"
 
+#include "primitive/Square.h"
+#include "primitive/Triangle.h"
+
 SpaceRocket::SpaceRocket(const glm::vec3 &centerPosition, const glm::vec3 &outerPosition) {
   const auto width = abs((outerPosition - centerPosition).x);
   const auto height = abs((outerPosition - centerPosition).y);
