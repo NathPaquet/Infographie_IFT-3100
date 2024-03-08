@@ -3,6 +3,13 @@
 CameraPanel::CameraPanel(SceneManager *sceneManager, WindowCamera *windowCamera):
     sceneManager(sceneManager), windowCamera(windowCamera){};
 
+void CameraPanel::setSceneManager(SceneManager *sceneManager) {
+  this->sceneManager = sceneManager;
+  windowCamera->setSelectedCamera(nullptr);
+  this->isWindowCameraShown = false;
+  windowCamera->setIsShown(isWindowCameraShown);
+}
+
 void CameraPanel::create() {
   if (ImGui::BeginMenu("Cameras")) {
     auto &cameras = sceneManager->getCameras();
