@@ -1,8 +1,8 @@
 #include "sceneManager.h"
 
 #include "ImHelpers.h"
-#include "object/object3D/CubicPlanet.h"
-#include "object/object3D/Planet.h"
+#include "object/object3D/primitive/CubicPlanet.h"
+#include "object/object3D/primitive/Planet.h"
 #include "ofxImGui.h"
 
 SceneManager::SceneManager() {

@@ -1,9 +1,9 @@
 #pragma once
-#include "object/sceneObject.h"
+#include "object/object2D/Object2D.h"
 #include "ofMain.h"
 #include "raycasting/ray.h"
 
-class Circle : public SceneObject {
+class Circle : public Object2D {
 public:
   Circle(const glm::vec3 &centerPosition, const float radius = 20.f);
   Circle(const glm::vec3 &centerPosition, const glm::vec3 &outerPosition);
