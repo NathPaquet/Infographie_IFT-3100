@@ -12,4 +12,5 @@ public:
 private:
   SceneManager *sceneManager;
   WindowCamera *windowCamera;
+  bool isWindowCameraShown = false;
 };

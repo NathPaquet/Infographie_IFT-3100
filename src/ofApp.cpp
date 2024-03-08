@@ -52,10 +52,6 @@ void ofApp::exit() {
 void ofApp::draw() {
   this->currentScene->drawScene();
 
-  if (ImGui::IsKeyPressed(ImGuiKey_C)) {
-    isWindowCameraShown = !isWindowCameraShown;
-  }
-  windowCamera->setIsShown(isWindowCameraShown);
   windowCamera->drawScene();
 
   gui.begin();

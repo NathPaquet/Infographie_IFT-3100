@@ -36,7 +36,6 @@ private:
   Tools tools;
   std::unique_ptr<CameraPanel> cameraPanel;
   WindowCamera *windowCamera;
-  bool isWindowCameraShown = false;
 
   std::unique_ptr<SceneGraph> sceneGraph;
   std::unique_ptr<PropertiesPanel> propertiesPanel;
