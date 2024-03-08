@@ -23,5 +23,5 @@ void Scene::setCurrentObjectToAdd(ElementType elementType) {
 }
 
 bool Scene::isMouseClickInScene() {
-  return ofGetMouseX() > Constants::SCENE_GRAPH_WIDTH && ofGetMouseX() < ofGetWidth() - Constants::PROPERTIES_PANEL_WIDTH;
+  return !ImGui::GetIO().WantCaptureMouse;
 }
