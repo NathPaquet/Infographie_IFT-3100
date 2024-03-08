@@ -34,6 +34,24 @@ void Object2D::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxis
 }
 
 void Object2D::drawAxis() {
+  ofVec3f xAxis = this->primitive->getXAxis();
+  ofVec3f yAxis = this->primitive->getYAxis();
+
+  auto vecScale = this->primitive->getScale();
+  auto vecRescale = vecScale * (1.25f * Constants::DEFAULT_SIZE);
+  float scaleHeadArrow = vecRescale.x / 8;
+  ofPushStyle();
+  ofPushMatrix();
+
+  ofTranslate(this->position);
+  ofSetColor(ofColor::red);
+  ofDrawArrow(ofPoint(0), ofPoint(xAxis * vecRescale.x), scaleHeadArrow);
+
+  ofSetColor(ofColor::green);
+  ofDrawArrow(ofPoint(0), ofPoint(yAxis * vecRescale.y), scaleHeadArrow);
+
+  ofPopMatrix();
+  ofPopStyle();
 }
 
 void Object2D::drawBoundingBox() {

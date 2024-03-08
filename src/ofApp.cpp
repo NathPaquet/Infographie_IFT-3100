@@ -233,11 +233,13 @@ void ofApp::createViewMenu() {
         assert(this->currentScene != nullptr && this->currentScene == this->scene3D.get());
         this->scene3D.get()->toggleProjectionMode();
       }
-      if (ImGui::MenuItem((this->isObjectAxisEnabled ? "Disable object axis" : "Enable object axis"))) {
-        this->isObjectAxisEnabled = !this->isObjectAxisEnabled;
-        this->currentScene->getSceneManager()->toggleActivationObjectAxis();
-      }
     }
+
+    if (ImGui::MenuItem((this->isObjectAxisEnabled ? "Disable object axis" : "Enable object axis"))) {
+      this->isObjectAxisEnabled = !this->isObjectAxisEnabled;
+      this->currentScene->getSceneManager()->toggleActivationObjectAxis();
+    }
+
     ImGui::EndMenu();
   }
 }
