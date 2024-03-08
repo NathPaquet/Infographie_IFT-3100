@@ -26,7 +26,7 @@ void Scene3D::drawScene() {
   this->currentCamera->begin();
 
   ofDrawGrid(10, 100, false, false, true, false);
-  ofDrawSphere(0, 0, 0, 1); // Draw (0,0,0)
+  ofDrawSphere(0, 0, 0, 10);
   this->sceneManager.get()->drawScene();
 
   this->processMouseActions();
@@ -69,6 +69,7 @@ void Scene3D::processMouseActions() {
 
   if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
     shouldDragObject = false;
+    this->draggedObject = nullptr;
     this->currentCamera->enableMouseInput();
   }
 
@@ -99,7 +100,7 @@ void Scene3D::processMouseActions() {
     } else if (this->cursor->getCursorMode() == CursorMode::ADDING) {
       this->sceneManager.get()->addElement(this->ray.getOrigin() + this->ray.getDirection() * distance, this->currentObjectToAdd);
       this->cursor->setCursorMode(CursorMode::NAVIGATION);
-      this->sceneManager.get()->setSelectedSceneObject(this->sceneManager.get()->getObjects().back().get());
+      this->sceneManager.get()->setSelectedSceneObject(this->sceneManager.get()->getObjects().front().get());
     }
   }
 
