@@ -7,20 +7,31 @@ Cursor::Cursor(CursorMode cursorType):
 }
 
 void Cursor::drawCursor(float x, float y) {
+  // cout << (mode == CursorMode::NAVIGATION ? "CursorMode::NAVIGATION" : "other") << endl;
+
   switch (mode) {
     case CursorMode::SELECTION:
+      ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
       drawSelectionCursor(x, y);
       break;
     case CursorMode::ADDING:
+      ImGui::SetMouseCursor(ImGuiMouseSource_Pen);
       drawNavigationCursor(x, y);
       break;
     case CursorMode::NAVIGATION:
+
       drawNavigationCursor(x, y);
       break;
     case CursorMode::DRAWING:
+      ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeNWSE); // GLFW_CROSSHAIR_CURSOR
       drawDrawingCursor(x, y);
       break;
+    case CursorMode::REMOVING:
+      // ImGui::SetMouseCursor(ImGuiMouseCursor_NotAllowed);
+      //  ImGui::SetMouseCursor(); // GLFW_CROSSHAIR_CURSOR
+      break;
     default:
+      ImGui::SetMouseCursor(ImGuiMouseCursor_None); // GLFW_ARROW_CURSOR
       break;
   }
 }
@@ -82,6 +93,26 @@ void Cursor::drawDrawingCursor(float x, float y) {
   ofDrawLine(x, y - offset, x, y - offset - length);
   ofPopStyle();
 }
+
+bool Cursor::hasModeChange(CursorMode mode) {
+  return mode != this->mode;
+}
+
+// GLFWCursor *Cursor::mapCursorTypeToGLFWCursor(CursorMode cursorType) {
+//   switch (mode) {
+//     case CursorMode::SELECTION:
+//       return glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+//       break;
+//     case CursorMode::ADDING:
+//       return glfwCreateStandardCursor(GLFW_ARROW_CURSOR)
+//     case CursorMode::NAVIGATION:
+//       return
+//     case CursorMode::DRAWING:
+//       return
+//     default:
+//       return nullptr;
+//   }
+// }
 
 void Cursor::setCursorMode(CursorMode type) {
   this->mode = type;
