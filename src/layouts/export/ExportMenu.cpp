@@ -1,7 +1,7 @@
 #include "ExportMenu.h"
 
 void ExportMenu::createExportMenu(bool *show) {
-  ImGui::Begin("Export menu", show);
+  ImGui::Begin("Export menu", show, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
 
   if (ImGui::BeginTabBar("ExportTab")) {
     createExportImageTabItem();
