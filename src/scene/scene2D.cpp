@@ -22,7 +22,7 @@ void Scene2D::drawScene() {
   this->camera.begin();
   this->processMouseActions();
   this->sceneManager->drawScene();
-  this->camera.begin();
+  this->camera.end();
   ofPopStyle();
 }
 

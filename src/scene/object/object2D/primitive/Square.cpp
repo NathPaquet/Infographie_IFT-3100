@@ -73,7 +73,7 @@ void Square::setSize(const float width, const float height) {
 }
 
 void Square::updateProperties() {
-  SceneObject::updateProperties();
+  Object2D::updateProperties();
   if (this->properties.at(PROPERTY_ID::WIDTH)->isValueChanged() || this->properties.at(PROPERTY_ID::HEIGHT)->isValueChanged() || this->properties.at(PROPERTY_ID::SHOW_WIREFRAME)->isValueChanged()) {
     const float width = this->getPropertyValue<float>(PROPERTY_ID::WIDTH);
     const float height = this->getPropertyValue<float>(PROPERTY_ID::HEIGHT);

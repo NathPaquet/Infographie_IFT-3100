@@ -10,7 +10,7 @@ Camera::Camera(const glm::vec3 &position) {
 }
 
 void Camera::updateProperties() {
-  SceneObject::updateProperties();
+  Object3D::updateProperties();
 
   auto cameraViewAxis = -this->primitive.get()->getZAxis();
 

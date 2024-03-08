@@ -22,7 +22,7 @@ Planet::Planet(const float x, const float y, const float z) {
 }
 
 void Planet::updateProperties() {
-  SceneObject::updateProperties();
+  Object3D::updateProperties();
   if (this->properties.at(PROPERTY_ID::RADIUS)->isValueChanged()) {
     const float radius = this->getPropertyValue<float>(PROPERTY_ID::RADIUS);
 

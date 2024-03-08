@@ -121,7 +121,7 @@ void Star::setSize(const float radius) {
 }
 
 void Star::updateProperties() {
-  SceneObject::updateProperties();
+  Object2D::updateProperties();
   if (this->properties.at(PROPERTY_ID::RADIUS)->isValueChanged()
       || this->properties.at(PROPERTY_ID::RATIO)->isValueChanged()
       || this->properties.at(PROPERTY_ID::SHOW_WIREFRAME)->isValueChanged()) {

@@ -45,7 +45,6 @@ void Triangle::drawPreview(const glm::vec3 &centerPosition, const glm::vec3 &out
 }
 
 void Triangle::initMesh(const glm::vec3 &centerPosition, const glm::vec2 &direction, const float radius) {
-  ofPrimitiveMode mode = OF_PRIMITIVE_TRIANGLES;
   std::vector<glm::vec3> vertices;
   // APROXIMATION VALID ONLY IF CAMERA IS LOOKING AT (0,0,1)
   auto vec1 = glm::vec3(1, 0, 0);
@@ -80,7 +79,7 @@ void Triangle::setSize(const float radius) {
 }
 
 void Triangle::updateProperties() {
-  SceneObject::updateProperties();
+  Object2D::updateProperties();
   if (this->properties.at(PROPERTY_ID::SIZE)->isValueChanged()) {
     const float radius = this->getPropertyValue<float>(PROPERTY_ID::SIZE);
 
