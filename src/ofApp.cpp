@@ -253,14 +253,10 @@ void ofApp::generateRandomGalaxy(int nbElements) {
   std::uniform_int_distribution intDistribution(0, 2);
 
   for (int i = 0; i < nbElements; i++) {
-    Ray ray;
     glm::vec3 randomPosition;
     randomPosition.x = dis(gen);
     randomPosition.y = dis(gen);
     randomPosition.z = dis(gen);
-    auto distance = glm::length(randomPosition);
-    ray.set({0, 0, 0}, randomPosition);
-    // TODO : Add a new method in scene object ?
-    this->currentScene->getSceneManager()->addElement(ray.getOrigin() + ray.getDirection() * distance, static_cast<ElementType>(intDistribution(gen)));
+    this->currentScene->getSceneManager()->addElement(randomPosition, static_cast<ElementType>(intDistribution(gen)));
   }
 }
