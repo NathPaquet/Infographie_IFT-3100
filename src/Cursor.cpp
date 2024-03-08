@@ -9,28 +9,29 @@ Cursor::Cursor(CursorMode cursorType):
 void Cursor::drawCursor(float x, float y) {
   // cout << (mode == CursorMode::NAVIGATION ? "CursorMode::NAVIGATION" : "other") << endl;
 
+  ImGui::SetMouseCursor(ImGuiMouseCursor_None);
   switch (mode) {
     case CursorMode::SELECTION:
-      ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
+      // ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
       drawSelectionCursor(x, y);
       break;
     case CursorMode::ADDING:
-      ImGui::SetMouseCursor(ImGuiMouseCursor_TextInput);
+      // ImGui::SetMouseCursor(ImGuiMouseCursor_TextInput);
       drawNavigationCursor(x, y);
       break;
     case CursorMode::NAVIGATION:
       drawNavigationCursor(x, y);
       break;
     case CursorMode::DRAWING:
-      ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeNWSE); // GLFW_CROSSHAIR_CURSOR
+      // ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeNWSE); // GLFW_CROSSHAIR_CURSOR
       drawDrawingCursor(x, y);
       break;
     case CursorMode::REMOVING:
-      ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeAll);
+      // ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeAll);
       drawDrawingCursor(x, y);
       break;
     default:
-      ImGui::SetMouseCursor(ImGuiMouseCursor_None); // GLFW_ARROW_CURSOR
+      // ImGui::SetMouseCursor(ImGuiMouseCursor_None); // GLFW_ARROW_CURSOR
       break;
   }
 }
@@ -74,10 +75,13 @@ void Cursor::drawNavigationCursor(float x, float y) {
 void Cursor::drawSelectionCursor(float x, float y) {
   ofPushMatrix();
 
-  ofTranslate(x, y);
+  ofPushStyle();
+
+  ofTranslate(x - cursorSVG.getWidth() / 2, y - cursorSVG.getHeight() / 2);
   cursorSVG.draw();
 
   ofPopMatrix();
+  ofPopStyle();
 }
 
 void Cursor::drawDrawingCursor(float x, float y) {
