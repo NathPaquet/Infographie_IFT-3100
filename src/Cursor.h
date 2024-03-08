@@ -1,8 +1,8 @@
 #pragma once
 #include "object/sceneObject.h"
+#include "ofxSVG.h"
 #include "ray.h"
 
-#include <GLFW/glfw3.h>
 #include <optional>
 
 enum class CursorMode {
@@ -29,9 +29,9 @@ private:
   void drawNavigationCursor(float x, float y);
   void drawSelectionCursor(float x, float y);
   void drawDrawingCursor(float x, float y);
-  bool hasModeChange(CursorMode mode);
   // GLFWCursor *mapCursorTypeToGLFWCursor(CursorMode cursorType);
   CursorMode mode;
+  ofxSVG cursorSVG;
 
   GLFWwindow *window = static_cast<ofAppGLFWWindow *>(ofGetWindowPtr())->getGLFWWindow();
 };

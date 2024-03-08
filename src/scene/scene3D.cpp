@@ -73,6 +73,8 @@ void Scene3D::processMouseActions() {
     this->currentCamera->enableMouseInput();
   }
 
+  bool NAVIGATION_OR_SELECTION = this->cursor->getCursorMode() == CursorMode::NAVIGATION || this->cursor->getCursorMode() == CursorMode::SELECTION;
+
   if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
     auto &&maybeObject = this->cursor->setRayWithCollidingObject(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
     auto &&found = maybeObject.has_value();
@@ -84,9 +86,11 @@ void Scene3D::processMouseActions() {
         draggedObject = *it;
         shouldDragObject = true;
       }
+
+      this->cursor->setCursorMode(CursorMode::SELECTION);
     }
 
-    if (found && this->cursor->getCursorMode() == CursorMode::NAVIGATION) {
+    if (found && NAVIGATION_OR_SELECTION) {
       if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftCtrl))) {
         this->sceneManager.get()->clickSelectionSceneObject(maybeObject.value());
       } else {
@@ -106,7 +110,7 @@ void Scene3D::processMouseActions() {
 
   if (ImGui::IsMouseDown(ImGuiMouseButton_Left)
       && shouldDragObject
-      && this->cursor->getCursorMode() == CursorMode::NAVIGATION) {
+      && NAVIGATION_OR_SELECTION) {
     this->cursor->computeRay(*this->currentCamera, this->ray);
     this->sceneManager.get()->setObjectPosition(this->draggedObject, ray.getOrigin() + ray.getDirection() * distance);
     this->currentCamera->disableMouseInput();

@@ -15,11 +15,10 @@ void Cursor::drawCursor(float x, float y) {
       drawSelectionCursor(x, y);
       break;
     case CursorMode::ADDING:
-      ImGui::SetMouseCursor(ImGuiMouseSource_Pen);
+      ImGui::SetMouseCursor(ImGuiMouseCursor_TextInput);
       drawNavigationCursor(x, y);
       break;
     case CursorMode::NAVIGATION:
-
       drawNavigationCursor(x, y);
       break;
     case CursorMode::DRAWING:
@@ -27,8 +26,8 @@ void Cursor::drawCursor(float x, float y) {
       drawDrawingCursor(x, y);
       break;
     case CursorMode::REMOVING:
-      // ImGui::SetMouseCursor(ImGuiMouseCursor_NotAllowed);
-      //  ImGui::SetMouseCursor(); // GLFW_CROSSHAIR_CURSOR
+      ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeAll);
+      drawDrawingCursor(x, y);
       break;
     default:
       ImGui::SetMouseCursor(ImGuiMouseCursor_None); // GLFW_ARROW_CURSOR
@@ -73,6 +72,12 @@ void Cursor::drawNavigationCursor(float x, float y) {
 }
 
 void Cursor::drawSelectionCursor(float x, float y) {
+  ofPushMatrix();
+
+  ofTranslate(x, y);
+  cursorSVG.draw();
+
+  ofPopMatrix();
 }
 
 void Cursor::drawDrawingCursor(float x, float y) {
@@ -94,28 +99,24 @@ void Cursor::drawDrawingCursor(float x, float y) {
   ofPopStyle();
 }
 
-bool Cursor::hasModeChange(CursorMode mode) {
-  return mode != this->mode;
-}
-
-// GLFWCursor *Cursor::mapCursorTypeToGLFWCursor(CursorMode cursorType) {
-//   switch (mode) {
-//     case CursorMode::SELECTION:
-//       return glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
-//       break;
-//     case CursorMode::ADDING:
-//       return glfwCreateStandardCursor(GLFW_ARROW_CURSOR)
-//     case CursorMode::NAVIGATION:
-//       return
-//     case CursorMode::DRAWING:
-//       return
-//     default:
-//       return nullptr;
-//   }
-// }
-
 void Cursor::setCursorMode(CursorMode type) {
   this->mode = type;
+
+  switch (mode) {
+    case CursorMode::SELECTION:
+      break;
+    case CursorMode::ADDING:
+      break;
+    case CursorMode::NAVIGATION:
+      cursorSVG.load("cursors/hand-grab.svg");
+      break;
+    case CursorMode::DRAWING:
+      break;
+    case CursorMode::REMOVING:
+      break;
+    default:
+      break;
+  }
 }
 
 CursorMode Cursor::getCursorMode() const {
