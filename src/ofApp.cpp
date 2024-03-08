@@ -332,10 +332,12 @@ void ofApp::switchBetweenScenes() {
     this->currentScene = this->scene3D.get();
     this->isScene2D = false;
     this->sceneGraph->setSceneManager(this->currentScene->getSceneManager());
+    this->cameraPanel->setSceneManager(this->currentScene->getSceneManager());
   } else if (!this->isScene2D) {
     this->currentScene = this->scene2D.get();
     this->isScene2D = true;
     this->sceneGraph->setSceneManager(this->currentScene->getSceneManager());
+    this->cameraPanel->setSceneManager(this->currentScene->getSceneManager());
   }
 }
 

@@ -7,6 +7,7 @@
 class CameraPanel {
 public:
   CameraPanel(SceneManager *sceneManager, WindowCamera *windowCamera);
+  void setSceneManager(SceneManager *sceneManager);
   void create();
 
 private:
