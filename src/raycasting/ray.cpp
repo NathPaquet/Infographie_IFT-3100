@@ -1,11 +1,11 @@
 #include "Ray.h"
 
 #include "constants.h"
-#include "object/object2D/Circle.h"
-#include "object/object2D/Line.h"
-#include "object/object2D/Square.h"
-#include "object/object2D/Star.h"
-#include "object/object2D/Triangle.h"
+#include "object/object2D/primitive/Circle.h"
+#include "object/object2D/primitive/Line.h"
+#include "object/object2D/primitive/Square.h"
+#include "object/object2D/primitive/Star.h"
+#include "object/object2D/primitive/Triangle.h"
 #include "object/sceneObjectFactory.h"
 
 Ray::Ray(glm::vec3 origin, glm::vec3 direction) {

@@ -5,7 +5,6 @@
 #include "properties/Property.h"
 
 CubicPlanet::CubicPlanet(const float x, const float y, const float z) {
-  SceneObject();
   this->addProperty<float>(PROPERTY_ID::SIZE, Constants::DEFAULT_SIZE);
 
   float size = this->getPropertyValue<float>(PROPERTY_ID::SIZE);

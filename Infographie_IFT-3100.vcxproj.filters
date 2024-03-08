@@ -40,34 +40,7 @@
     <ClCompile Include="src\scene\WindowCamera.cpp">
       <Filter>src\scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\scene\object\object2D\Circle.cpp">
-      <Filter>src\scene\object\object2D</Filter>
-    </ClCompile>
-    <ClCompile Include="src\scene\object\object2D\Line.cpp">
-      <Filter>src\scene\object\object2D</Filter>
-    </ClCompile>
-    <ClCompile Include="src\scene\object\object2D\Square.cpp">
-      <Filter>src\scene\object\object2D</Filter>
-    </ClCompile>
-    <ClCompile Include="src\scene\object\object2D\Star.cpp">
-      <Filter>src\scene\object\object2D</Filter>
-    </ClCompile>
-    <ClCompile Include="src\scene\object\object2D\Triangle.cpp">
-      <Filter>src\scene\object\object2D</Filter>
-    </ClCompile>
     <ClCompile Include="src\scene\object\object3D\Camera.cpp">
-      <Filter>src\scene\object\object3D</Filter>
-    </ClCompile>
-    <ClCompile Include="src\scene\object\object3D\CubicPlanet.cpp">
-      <Filter>src\scene\object\object3D</Filter>
-    </ClCompile>
-    <ClCompile Include="src\scene\object\object3D\CylinderPlanet.cpp">
-      <Filter>src\scene\object\object3D</Filter>
-    </ClCompile>
-    <ClCompile Include="src\scene\object\object3D\Model3D.cpp">
-      <Filter>src\scene\object\object3D</Filter>
-    </ClCompile>
-    <ClCompile Include="src\scene\object\object3D\Planet.cpp">
       <Filter>src\scene\object\object3D</Filter>
     </ClCompile>
     <ClCompile Include="src\scene\object\sceneObject.cpp">
@@ -193,6 +166,39 @@
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_widgets.cpp">
       <Filter>addons\ofxImGui\libs\imgui\src</Filter>
     </ClCompile>
+    <ClCompile Include="src\scene\object\object2D\object2D.cpp">
+      <Filter>src\scene\object\object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object2D\primitive\Circle.cpp">
+      <Filter>src\scene\object\object2D\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object2D\primitive\Line.cpp">
+      <Filter>src\scene\object\object2D\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object2D\primitive\Square.cpp">
+      <Filter>src\scene\object\object2D\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object2D\primitive\Star.cpp">
+      <Filter>src\scene\object\object2D\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object2D\primitive\Triangle.cpp">
+      <Filter>src\scene\object\object2D\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object3D\object3D.cpp">
+      <Filter>src\scene\object\object3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object3D\primitive\CubicPlanet.cpp">
+      <Filter>src\scene\object\object3D\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object3D\primitive\CylinderPlanet.cpp">
+      <Filter>src\scene\object\object3D\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object3D\primitive\Planet.cpp">
+      <Filter>src\scene\object\object3D\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object3D\model\Model3D.cpp">
+      <Filter>src\scene\object\object3D\model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -212,9 +218,6 @@
     </Filter>
     <Filter Include="src\scene">
       <UniqueIdentifier>{717855A5--314-2-47-76-A-C8E-61F261A1AA3F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\scene\eventListener">
-      <UniqueIdentifier>{874ABE04--1CF-9-49-29-A-17F-65E5A4D8725F}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\scene\object">
       <UniqueIdentifier>{9F714059--FCD-6-4C-24-B-E45-6A31A97B9B57}</UniqueIdentifier>
@@ -285,6 +288,15 @@
     <Filter Include="addons\ofxImGui\libs\imgui\src">
       <UniqueIdentifier>{ABA6542C--1BB-7-4E-0D-A-B4F-1D93D44A15BA}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\scene\object\object2D\primitive">
+      <UniqueIdentifier>{027e6f2f-77af-42ea-8324-901ca6a468b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\scene\object\object3D\primitive">
+      <UniqueIdentifier>{b3b5702f-c0f2-4ea4-a478-73000e183cc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\scene\object\object3D\model">
+      <UniqueIdentifier>{27ceeb7d-bfbb-440c-93e7-4f18a09502af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h">
@@ -323,34 +335,7 @@
     <ClInclude Include="src\scene\WindowCamera.h">
       <Filter>src\scene</Filter>
     </ClInclude>
-    <ClInclude Include="src\scene\object\object2D\Circle.h">
-      <Filter>src\scene\object\object2D</Filter>
-    </ClInclude>
-    <ClInclude Include="src\scene\object\object2D\Line.h">
-      <Filter>src\scene\object\object2D</Filter>
-    </ClInclude>
-    <ClInclude Include="src\scene\object\object2D\Square.h">
-      <Filter>src\scene\object\object2D</Filter>
-    </ClInclude>
-    <ClInclude Include="src\scene\object\object2D\Star.h">
-      <Filter>src\scene\object\object2D</Filter>
-    </ClInclude>
-    <ClInclude Include="src\scene\object\object2D\Triangle.h">
-      <Filter>src\scene\object\object2D</Filter>
-    </ClInclude>
     <ClInclude Include="src\scene\object\object3D\Camera.h">
-      <Filter>src\scene\object\object3D</Filter>
-    </ClInclude>
-    <ClInclude Include="src\scene\object\object3D\CubicPlanet.h">
-      <Filter>src\scene\object\object3D</Filter>
-    </ClInclude>
-    <ClInclude Include="src\scene\object\object3D\CylinderPlanet.h">
-      <Filter>src\scene\object\object3D</Filter>
-    </ClInclude>
-    <ClInclude Include="src\scene\object\object3D\Model3D.h">
-      <Filter>src\scene\object\object3D</Filter>
-    </ClInclude>
-    <ClInclude Include="src\scene\object\object3D\Planet.h">
       <Filter>src\scene\object\object3D</Filter>
     </ClInclude>
     <ClInclude Include="src\scene\object\sceneObject.h">
@@ -757,6 +742,39 @@
     </ClInclude>
     <ClInclude Include="..\..\addons\ofxImGui\libs\imgui\src\imstb_truetype.h">
       <Filter>addons\ofxImGui\libs\imgui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\object\object2D\object2D.h">
+      <Filter>src\scene\object\object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\object\object2D\primitive\Circle.h">
+      <Filter>src\scene\object\object2D\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\object\object2D\primitive\Line.h">
+      <Filter>src\scene\object\object2D\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\object\object2D\primitive\Square.h">
+      <Filter>src\scene\object\object2D\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\object\object2D\primitive\Star.h">
+      <Filter>src\scene\object\object2D\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\object\object2D\primitive\Triangle.h">
+      <Filter>src\scene\object\object2D\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\object\object3D\object3D.h">
+      <Filter>src\scene\object\object3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\object\object3D\primitive\CubicPlanet.h">
+      <Filter>src\scene\object\object3D\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\object\object3D\primitive\CylinderPlanet.h">
+      <Filter>src\scene\object\object3D\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\object\object3D\primitive\Planet.h">
+      <Filter>src\scene\object\object3D\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\object\object3D\model\Model3D.h">
+      <Filter>src\scene\object\object3D\model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

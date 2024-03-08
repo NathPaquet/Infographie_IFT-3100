@@ -1,9 +1,9 @@
 #pragma once
-#include "object/sceneObject.h"
+#include "object/object3D/object3D.h"
 
 #include <ray.h>
 
-class Model3D : public SceneObject {
+class Model3D : public Object3D {
 public:
   Model3D(const glm::vec3 &position, const string &modelPath);
 

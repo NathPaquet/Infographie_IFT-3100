@@ -4,7 +4,6 @@
 #include "constants.h"
 
 CylinderPlanet::CylinderPlanet(const float x, const float y, const float z) {
-  SceneObject();
   this->addProperty<float>(PROPERTY_ID::HEIGHT, Constants::DEFAULT_SIZE);
   this->addProperty<float>(PROPERTY_ID::RADIUS, Constants::DEFAULT_SIZE);
   const float height = this->getPropertyValue<float>(PROPERTY_ID::HEIGHT);

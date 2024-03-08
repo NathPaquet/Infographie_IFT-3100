@@ -6,7 +6,6 @@
 #include "ofxImGui.h"
 
 Planet::Planet(const float x, const float y, const float z) {
-  SceneObject();
   this->addProperty<float>(PROPERTY_ID::RADIUS, Constants::DEFAULT_SIZE);
 
   auto sphere = ofSpherePrimitive(this->getPropertyValue<float>(PROPERTY_ID::RADIUS), 20, OF_PRIMITIVE_TRIANGLES);
