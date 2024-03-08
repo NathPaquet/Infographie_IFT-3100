@@ -33,7 +33,8 @@ private:
   void createViewMenu();
   void updateKeyboardShortcuts();
   void generateRandomGalaxy(int nbElements);
-
+  void switchBetweenScenes();
+  void switchBetweenProjections();
   Tools tools;
   std::unique_ptr<CameraPanel> cameraPanel;
   WindowCamera *windowCamera;
