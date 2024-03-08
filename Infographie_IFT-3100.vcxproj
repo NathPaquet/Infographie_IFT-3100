@@ -114,6 +114,7 @@
     <ClCompile Include="src\properties\PropertiesPanel.cpp" />
     <ClCompile Include="src\properties\Property.cpp" />
     <ClCompile Include="src\raycasting\ray.cpp" />
+    <ClCompile Include="src\scene\object\object2D\MagicSword.cpp" />
     <ClCompile Include="src\scene\object\object2D\object2D.cpp" />
     <ClCompile Include="src\scene\object\object3D\object3D.cpp" />
     <ClCompile Include="src\scene\object\object2D\SpaceRocket.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="src\raycasting\ray.h" />
     <ClInclude Include="src\scene\object\object2D\object2D.h" />
     <ClInclude Include="src\scene\object\object3D\object3D.h" />
+    <ClInclude Include="src\scene\object\object2D\MagicSword.h" />
     <ClInclude Include="src\scene\object\object2D\SpaceRocket.h" />
     <ClInclude Include="src\scene\WindowCamera.h" />
     <ClInclude Include="src\scene\object\object2D\primitive\Circle.h" />

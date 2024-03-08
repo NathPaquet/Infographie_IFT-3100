@@ -40,6 +40,31 @@
     <ClCompile Include="src\scene\WindowCamera.cpp">
       <Filter>src\scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\scene\object\object2D\Circle.cpp">
+      <Filter>src\scene\object\object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object2D\Line.cpp">
+      <Filter>src\scene\object\object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object2D\Square.cpp">
+      <Filter>src\scene\object\object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object2D\Star.cpp">
+      <Filter>src\scene\object\object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object2D\Triangle.cpp">
+      <Filter>src\scene\object\object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object3D\CubicPlanet.cpp">
+      <Filter>src\scene\object\object3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object3D\CylinderPlanet.cpp">
+      <Filter>src\scene\object\object3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object3D\Model3D.cpp">
+      <Filter>src\scene\object\object3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object3D\Planet.cpp">
     <ClCompile Include="src\scene\object\object3D\Camera.cpp">
       <Filter>src\scene\object\object3D</Filter>
     </ClCompile>
@@ -169,6 +194,10 @@
     <ClCompile Include="src\scene\object\object2D\SpaceRocket.cpp">
       <Filter>src\scene\object\object2D</Filter>
     </ClCompile>
+    <ClCompile Include="src\scene\object\object3D\Camera.cpp">
+      <Filter>src\scene\object\object3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object2D\MagicSword.cpp" />
     <ClCompile Include="src\scene\object\object2D\object2D.cpp">
       <Filter>src\scene\object\object2D</Filter>
     </ClCompile>
@@ -747,6 +776,9 @@
       <Filter>addons\ofxImGui\libs\imgui\src</Filter>
     </ClInclude>
     <ClInclude Include="src\scene\object\object2D\SpaceRocket.h">
+      <Filter>src\scene\object\object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\object\object2D\MagicSword.h">
       <Filter>src\scene\object\object2D</Filter>
     </ClInclude>
     <ClInclude Include="src\scene\object\object2D\object2D.h">
