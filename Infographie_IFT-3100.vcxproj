@@ -61,7 +61,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;src\layouts;src\layouts\export;src\properties;src\raycasting;src\scene;src\scene\object\object2D\model;src\scene\object\object2D;src\scene\object\object2D\primitive;src\scene\object\object3D;src\scene\object\object3D\model;src\scene\object\object3D\primitive;src\scene\object;src\utils;..\..\addons\ofxAssimpModelLoader\libs;..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port\AndroidJNI;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\emscripten;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Debug;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Release;..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\addons\ofxAssimpModelLoader\src;..\..\addons\ofxGui\src;..\..\addons\ofxImGui\libs;..\..\addons\ofxImGui\libs\imgui;..\..\addons\ofxImGui\libs\imgui\backends;..\..\addons\ofxImGui\libs\imgui\docs;..\..\addons\ofxImGui\libs\imgui\extras;..\..\addons\ofxImGui\libs\imgui\src;..\..\addons\ofxImGui\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;src\layouts;src\layouts\export;src\properties;src\raycasting;src\scene;src\scene\object\object2D\model;src\scene\object\object2D;src\scene\object\object2D\primitive;src\scene\object\object3D;src\scene\object\object3D\model;src\scene\object\object3D\primitive;src\scene\object;src\utils;..\..\addons\ofxAssimpModelLoader\libs;..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port\AndroidJNI;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\emscripten;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Debug;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Release;..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\addons\ofxAssimpModelLoader\src;..\..\addons\ofxGui\src;..\..\addons\ofxImGui\libs;..\..\addons\ofxImGui\libs\imgui;..\..\addons\ofxImGui\libs\imgui\backends;..\..\addons\ofxImGui\libs\imgui\docs;..\..\addons\ofxImGui\libs\imgui\extras;..\..\addons\ofxImGui\libs\imgui\src;..\..\addons\ofxImGui\src;..\..\addons\ofxSvg\libs;..\..\addons\ofxSvg\libs\libxml2;..\..\addons\ofxSvg\libs\libxml2\include;..\..\addons\ofxSvg\libs\libxml2\include\libxml;..\..\addons\ofxSvg\libs\libxml2\lib;..\..\addons\ofxSvg\libs\libxml2\lib\emscripten;..\..\addons\ofxSvg\libs\libxml2\lib\vs;..\..\addons\ofxSvg\libs\libxml2\lib\vs\x64;..\..\addons\ofxSvg\libs\libxml2\license;..\..\addons\ofxSvg\libs\svgtiny;..\..\addons\ofxSvg\libs\svgtiny\include;..\..\addons\ofxSvg\libs\svgtiny\lib;..\..\addons\ofxSvg\libs\svgtiny\lib\emscripten;..\..\addons\ofxSvg\libs\svgtiny\lib\vs;..\..\addons\ofxSvg\libs\svgtiny\lib\vs\x64;..\..\addons\ofxSvg\libs\svgtiny\license;..\..\addons\ofxSvg\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>$(IntDir)\Build\%(RelativeDir)\$(Configuration)\</ObjectFileName>
@@ -72,8 +72,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <AdditionalDependencies>%(AdditionalDependencies);assimp64d.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);assimp64d.lib;libxml2.lib;svgtiny.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Debug;..\..\addons\ofxSvg\libs\libxml2\lib\vs\x64;..\..\addons\ofxSvg\libs\svgtiny\lib\vs\x64</AdditionalLibraryDirectories>
       <ForceFileOutput>MultiplyDefinedSymbolOnly</ForceFileOutput>
     </Link>
     <PostBuildEvent />
@@ -84,7 +84,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;src\layouts;src\layouts\export;src\properties;src\raycasting;src\scene;src\scene\object\object2D\model;src\scene\object\object2D;src\scene\object\object2D\primitive;src\scene\object\object3D;src\scene\object\object3D\model;src\scene\object\object3D\primitive;src\scene\object;src\utils;..\..\addons\ofxAssimpModelLoader\libs;..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port\AndroidJNI;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\emscripten;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Debug;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Release;..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\addons\ofxAssimpModelLoader\src;..\..\addons\ofxGui\src;..\..\addons\ofxImGui\libs;..\..\addons\ofxImGui\libs\imgui;..\..\addons\ofxImGui\libs\imgui\backends;..\..\addons\ofxImGui\libs\imgui\docs;..\..\addons\ofxImGui\libs\imgui\extras;..\..\addons\ofxImGui\libs\imgui\src;..\..\addons\ofxImGui\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;src\layouts;src\layouts\export;src\properties;src\raycasting;src\scene;src\scene\object\object2D\model;src\scene\object\object2D;src\scene\object\object2D\primitive;src\scene\object\object3D;src\scene\object\object3D\model;src\scene\object\object3D\primitive;src\scene\object;src\utils;..\..\addons\ofxAssimpModelLoader\libs;..\..\addons\ofxAssimpModelLoader\libs\assimp;..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port;..\..\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port\AndroidJNI;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\emscripten;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Debug;..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Release;..\..\addons\ofxAssimpModelLoader\libs\assimp\license;..\..\addons\ofxAssimpModelLoader\src;..\..\addons\ofxGui\src;..\..\addons\ofxImGui\libs;..\..\addons\ofxImGui\libs\imgui;..\..\addons\ofxImGui\libs\imgui\backends;..\..\addons\ofxImGui\libs\imgui\docs;..\..\addons\ofxImGui\libs\imgui\extras;..\..\addons\ofxImGui\libs\imgui\src;..\..\addons\ofxImGui\src;..\..\addons\ofxSvg\libs;..\..\addons\ofxSvg\libs\libxml2;..\..\addons\ofxSvg\libs\libxml2\include;..\..\addons\ofxSvg\libs\libxml2\include\libxml;..\..\addons\ofxSvg\libs\libxml2\lib;..\..\addons\ofxSvg\libs\libxml2\lib\emscripten;..\..\addons\ofxSvg\libs\libxml2\lib\vs;..\..\addons\ofxSvg\libs\libxml2\lib\vs\x64;..\..\addons\ofxSvg\libs\libxml2\license;..\..\addons\ofxSvg\libs\svgtiny;..\..\addons\ofxSvg\libs\svgtiny\include;..\..\addons\ofxSvg\libs\svgtiny\lib;..\..\addons\ofxSvg\libs\svgtiny\lib\emscripten;..\..\addons\ofxSvg\libs\svgtiny\lib\vs;..\..\addons\ofxSvg\libs\svgtiny\lib\vs\x64;..\..\addons\ofxSvg\libs\svgtiny\license;..\..\addons\ofxSvg\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <ObjectFileName>$(IntDir)\Build\%(RelativeDir)\$(Configuration)\</ObjectFileName>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -97,8 +97,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <AdditionalDependencies>%(AdditionalDependencies);assimp64.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);assimp64.lib;libxml2.lib;svgtiny.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\x64\Release;..\..\addons\ofxSvg\libs\libxml2\lib\vs\x64;..\..\addons\ofxSvg\libs\svgtiny\lib\vs\x64</AdditionalLibraryDirectories>
       <ForceFileOutput>MultiplyDefinedSymbolOnly</ForceFileOutput>
     </Link>
     <PostBuildEvent />
@@ -171,6 +171,7 @@
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_draw.cpp" />
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_tables.cpp" />
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_widgets.cpp" />
+    <ClCompile Include="..\..\addons\ofxSvg\src\ofxSvg.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h" />
@@ -334,6 +335,55 @@
     <ClInclude Include="..\..\addons\ofxImGui\libs\imgui\src\imstb_rectpack.h" />
     <ClInclude Include="..\..\addons\ofxImGui\libs\imgui\src\imstb_textedit.h" />
     <ClInclude Include="..\..\addons\ofxImGui\libs\imgui\src\imstb_truetype.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\src\ofxSvg.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\c14n.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\catalog.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\chvalid.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\debugXML.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\dict.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\DOCBparser.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\encoding.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\entities.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\globals.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\hash.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\HTMLparser.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\HTMLtree.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\list.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\nanoftp.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\nanohttp.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\parser.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\parserInternals.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\pattern.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\relaxng.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\SAX.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\SAX2.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\schemasInternals.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\schematron.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\threads.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\tree.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\uri.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\valid.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xinclude.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xlink.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlautomata.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlerror.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlexports.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlIO.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlmemory.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlmodule.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlreader.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlregexp.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlsave.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlschemas.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlschemastypes.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlstring.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlunicode.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlversion.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlwriter.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xpath.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xpathInternals.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xpointer.h" />
+    <ClInclude Include="..\..\addons\ofxSvg\libs\svgtiny\include\svgtiny.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">

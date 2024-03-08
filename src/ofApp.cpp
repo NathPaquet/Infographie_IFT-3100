@@ -68,6 +68,7 @@ void ofApp::draw() {
 
   // Draw scene top menu
   drawSceneTopMenu();
+
   gui.end();
 }
 
@@ -192,7 +193,7 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
 
 void ofApp::drawSceneTopMenu() {
   ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + Constants::SCENE_GRAPH_WIDTH, ofGetWindowPositionY()), ImGuiCond_Always);
-  ImGui::SetNextWindowSize(ImVec2(ofGetWidth() - (Constants::SCENE_GRAPH_WIDTH + Constants::PROPERTIES_PANEL_WIDTH), ofGetHeight()), ImGuiCond_Always);
+  ImGui::SetNextWindowSize(ImVec2(ofGetWidth() - (Constants::SCENE_GRAPH_WIDTH + Constants::PROPERTIES_PANEL_WIDTH), 0), ImGuiCond_Always);
 
   ImGui::PushStyleColor(ImGuiCol_MenuBarBg, (ImVec4)Constants::MENU_BAR_BACKGROUND_COLOR);
 

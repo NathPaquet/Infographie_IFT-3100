@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<ItemGroup>
 		<ClCompile Include="src\ofApp.cpp">
@@ -9,6 +9,9 @@
 		</ClCompile>
 		<ClCompile Include="src\Cursor.cpp">
 			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\layouts\CameraPanel.cpp">
+			<Filter>src\layouts</Filter>
 		</ClCompile>
 		<ClCompile Include="src\layouts\ColorPicker.cpp">
 			<Filter>src\layouts</Filter>
@@ -205,106 +208,133 @@
 		<ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_widgets.cpp">
 			<Filter>addons\ofxImGui\libs\imgui\src</Filter>
 		</ClCompile>
+		<ClCompile Include="..\..\addons\ofxSvg\src\ofxSvg.cpp">
+			<Filter>addons\ofxSvg\src</Filter>
+		</ClCompile>
 	</ItemGroup>
 	<ItemGroup>
 		<Filter Include="src">
 			<UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="src\layouts">
-			<UniqueIdentifier>{5CFDF563--1FA-2-44-30-B-4DF-41890E3AD02D}</UniqueIdentifier>
+			<UniqueIdentifier>{17767252--304-4-44-38-9-8D9-0FA9D1DA8EA3}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="src\layouts\export">
-			<UniqueIdentifier>{D38640A6--BEB-5-46-2B-A-14F-63B8DAC539AC}</UniqueIdentifier>
+			<UniqueIdentifier>{C811C4AA--7FA-A-45-86-9-A8C-233FA871A28F}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="src\properties">
-			<UniqueIdentifier>{7CFD94E5--6D6-B-4C-73-B-58D-94EB808E8E65}</UniqueIdentifier>
+			<UniqueIdentifier>{F156CB20--BF6-D-41-1D-A-4EB-3359DA05CBA7}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="src\raycasting">
-			<UniqueIdentifier>{3B6B9CB7--EA3-6-49-01-9-ABB-9C439533CCFB}</UniqueIdentifier>
+			<UniqueIdentifier>{DA2F0FF9--431-2-48-50-9-53A-554F99D7871B}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="src\scene">
-			<UniqueIdentifier>{7EEEE307--DBC-0-4B-A6-A-9E8-0271243D19CD}</UniqueIdentifier>
+			<UniqueIdentifier>{A13C3EC1--475-2-4A-62-8-50A-9F15C4E78734}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="src\scene\object">
-			<UniqueIdentifier>{66133E74--E1D-F-45-12-B-F5F-3E68D55E5A5B}</UniqueIdentifier>
+			<UniqueIdentifier>{D0863706--C75-A-43-35-8-DED-B54A3D76AF17}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="src\scene\object\object2D">
-			<UniqueIdentifier>{58AC791D--866-9-48-88-B-48E-6CB173CBD750}</UniqueIdentifier>
+			<UniqueIdentifier>{43197CA6--0FA-6-44-67-8-ECE-805E04447D39}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="src\scene\object\object2D\model">
-			<UniqueIdentifier>{2E43336D--5E7-5-4B-7F-B-E08-F425C7A2B5B2}</UniqueIdentifier>
+			<UniqueIdentifier>{419F0D53--98C-B-43-88-9-08A-1D5664699843}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="src\scene\object\object2D\primitive">
-			<UniqueIdentifier>{1BAFB738--44A-2-42-89-8-BD5-1F8764CF36CA}</UniqueIdentifier>
+			<UniqueIdentifier>{08583304--48E-B-4E-93-B-6E1-7663BF874AC1}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="src\scene\object\object3D">
-			<UniqueIdentifier>{6B056421--C2E-C-49-6E-A-E6C-F038A25DDB0C}</UniqueIdentifier>
+			<UniqueIdentifier>{109904AC--A19-1-42-3E-9-13D-1377F401C317}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="src\scene\object\object3D\model">
-			<UniqueIdentifier>{D4096D17--F86-6-4C-C0-9-16F-C364D0ACE042}</UniqueIdentifier>
+			<UniqueIdentifier>{70082B65--3F5-2-4F-59-B-3DA-99120D72F529}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="src\scene\object\object3D\primitive">
-			<UniqueIdentifier>{012C1F80--25F-D-47-E1-9-3E0-0DB257122134}</UniqueIdentifier>
+			<UniqueIdentifier>{7E6363F8--080-F-40-8C-8-A42-0F375383043D}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="src\utils">
-			<UniqueIdentifier>{FE59032A--638-4-4C-8D-9-F86-17DCE87F1E7C}</UniqueIdentifier>
+			<UniqueIdentifier>{5EC399B7--330-0-44-74-B-709-90A8A7C5B056}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons">
-			<UniqueIdentifier>{AD629692--54B-0-4D-93-9-E31-0321F820232A}</UniqueIdentifier>
+			<UniqueIdentifier>{A25C4C0B--F0A-7-4A-0C-B-408-91A6F4F5B6FC}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxAssimpModelLoader">
-			<UniqueIdentifier>{196092AA--A24-A-48-18-8-6BF-C48B1F73947D}</UniqueIdentifier>
+			<UniqueIdentifier>{4B5D2DD0--7EC-9-4A-F5-A-8EA-0F756DBC971E}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxAssimpModelLoader\src">
-			<UniqueIdentifier>{DCB0AF0E--77C-6-45-A6-8-026-A509015388D4}</UniqueIdentifier>
+			<UniqueIdentifier>{BD12CBF6--682-F-4C-36-9-C12-B8284E3E24AA}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxAssimpModelLoader\libs">
-			<UniqueIdentifier>{DF0AD76C--CCF-D-4A-E1-8-23A-C24BC22E7907}</UniqueIdentifier>
+			<UniqueIdentifier>{15F1E651--161-C-4B-A6-B-1BC-02B10E5711E3}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxAssimpModelLoader\libs\assimp">
-			<UniqueIdentifier>{701E131B--545-C-42-19-B-B57-EDF588AC325E}</UniqueIdentifier>
+			<UniqueIdentifier>{559BB8EF--F5C-9-4C-BC-B-2DA-2CD4D2B6BFD0}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxAssimpModelLoader\libs\assimp\include">
-			<UniqueIdentifier>{017C1DDC--75F-C-43-25-8-BBA-AD4BD8DE5310}</UniqueIdentifier>
+			<UniqueIdentifier>{65AA3B26--F64-7-42-48-9-05A-99BB43B63576}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxAssimpModelLoader\libs\assimp\include\assimp">
-			<UniqueIdentifier>{F8DF7CEE--C7D-3-49-30-A-BD0-E4B0CC4E38E6}</UniqueIdentifier>
+			<UniqueIdentifier>{552CA8FE--2BD-C-4C-3A-9-375-EC5FFE99CFD4}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxAssimpModelLoader\libs\assimp\include\assimp\Compiler">
-			<UniqueIdentifier>{C63732C1--0B2-0-45-7A-A-969-EB0A37D6030B}</UniqueIdentifier>
+			<UniqueIdentifier>{8C4A508D--B14-1-4C-ED-B-B11-388D0BAF6141}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port">
-			<UniqueIdentifier>{F268B701--51A-D-4B-F7-9-5E9-C060D8040B19}</UniqueIdentifier>
+			<UniqueIdentifier>{AE6F3EE0--A63-8-44-98-9-725-F7B2AD139AA1}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxAssimpModelLoader\libs\assimp\include\assimp\port\AndroidJNI">
-			<UniqueIdentifier>{2A0F002B--2A0-A-46-40-9-7F3-C3C4CA0281CA}</UniqueIdentifier>
+			<UniqueIdentifier>{8617EF40--47B-1-4F-ED-B-0D6-605068F76FB9}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxGui">
-			<UniqueIdentifier>{A68D076D--BA4-7-4B-EB-A-767-F2CFCF108939}</UniqueIdentifier>
+			<UniqueIdentifier>{53BFC075--4C9-2-4F-43-A-CB1-C86ECA672E23}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxGui\src">
-			<UniqueIdentifier>{371DDDA0--A25-7-4E-32-A-309-243E3892E824}</UniqueIdentifier>
+			<UniqueIdentifier>{8846A0CB--EC5-E-48-A1-8-B3B-DA6EC5DFA514}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxImGui">
-			<UniqueIdentifier>{4DE52C9D--912-B-4D-2D-A-F77-FBAC5190182E}</UniqueIdentifier>
+			<UniqueIdentifier>{EF4D16B7--D05-2-46-DB-8-9E9-33CB8A5F0B26}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxImGui\src">
-			<UniqueIdentifier>{5746B76C--F4F-D-4C-DC-A-5B1-17C4629FF45C}</UniqueIdentifier>
+			<UniqueIdentifier>{58EFDE2B--2A2-C-45-4B-9-BB8-5C5351034C15}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxImGui\libs">
-			<UniqueIdentifier>{0AB6612B--41B-B-44-97-A-707-B506912879BB}</UniqueIdentifier>
+			<UniqueIdentifier>{9FAFE869--530-F-45-6B-A-861-BC983341256F}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxImGui\libs\imgui">
-			<UniqueIdentifier>{6D7C7206--5A8-6-4D-29-9-F31-292EB97DB9D2}</UniqueIdentifier>
+			<UniqueIdentifier>{2A0EC69B--927-4-47-8C-B-0DE-FEBCB8BA4891}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxImGui\libs\imgui\backends">
-			<UniqueIdentifier>{1BAD0D57--641-A-4D-58-B-20F-15D847E29AC1}</UniqueIdentifier>
+			<UniqueIdentifier>{BD8303A7--259-8-40-E5-B-C98-7A4445C865CA}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxImGui\libs\imgui\extras">
-			<UniqueIdentifier>{581F5064--268-7-49-03-9-286-CEBB2C50E6D5}</UniqueIdentifier>
+			<UniqueIdentifier>{CBEBC295--4FF-D-4C-FF-9-CDE-01897C59D848}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxImGui\libs\imgui\src">
-			<UniqueIdentifier>{7A6129A1--9E8-8-42-9E-9-0EE-7D713D40BC0C}</UniqueIdentifier>
+			<UniqueIdentifier>{D502558F--4B4-0-4D-DA-8-75B-602555AC7E5C}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxSvg">
+			<UniqueIdentifier>{015F4C80--1D0-6-45-53-B-551-37A58AF96ED5}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxSvg\src">
+			<UniqueIdentifier>{16094203--A8C-A-45-16-9-233-4532E4666382}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxSvg\libs">
+			<UniqueIdentifier>{738BB27B--39F-5-48-57-9-26F-077FD7F9E4C1}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxSvg\libs\libxml2">
+			<UniqueIdentifier>{3668FD5E--87A-3-46-6D-B-870-C0F768528E14}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxSvg\libs\libxml2\include">
+			<UniqueIdentifier>{6798E92C--ECA-5-4F-5B-B-B10-21824FC0B314}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxSvg\libs\libxml2\include\libxml">
+			<UniqueIdentifier>{A46FB348--815-5-4D-EB-A-FDC-21726B47F989}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxSvg\libs\svgtiny">
+			<UniqueIdentifier>{8337ABFD--F7B-8-4A-B0-9-A38-9A05F356AE67}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxSvg\libs\svgtiny\include">
+			<UniqueIdentifier>{A89851AE--A70-5-41-09-8-E3B-E4B5D27AD295}</UniqueIdentifier>
 		</Filter>
 	</ItemGroup>
 	<ItemGroup>
@@ -316,6 +346,9 @@
 		</ClInclude>
 		<ClInclude Include="src\constants.h">
 			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\layouts\CameraPanel.h">
+			<Filter>src\layouts</Filter>
 		</ClInclude>
 		<ClInclude Include="src\layouts\ColorPicker.h">
 			<Filter>src\layouts</Filter>
@@ -790,6 +823,153 @@
 		</ClInclude>
 		<ClInclude Include="..\..\addons\ofxImGui\libs\imgui\src\imstb_truetype.h">
 			<Filter>addons\ofxImGui\libs\imgui\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\src\ofxSvg.h">
+			<Filter>addons\ofxSvg\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\c14n.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\catalog.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\chvalid.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\debugXML.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\dict.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\DOCBparser.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\encoding.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\entities.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\globals.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\hash.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\HTMLparser.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\HTMLtree.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\list.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\nanoftp.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\nanohttp.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\parser.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\parserInternals.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\pattern.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\relaxng.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\SAX.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\SAX2.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\schemasInternals.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\schematron.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\threads.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\tree.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\uri.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\valid.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xinclude.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xlink.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlautomata.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlerror.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlexports.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlIO.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlmemory.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlmodule.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlreader.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlregexp.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlsave.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlschemas.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlschemastypes.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlstring.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlunicode.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlversion.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xmlwriter.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xpath.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xpathInternals.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xpointer.h">
+			<Filter>addons\ofxSvg\libs\libxml2\include\libxml</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\addons\ofxSvg\libs\svgtiny\include\svgtiny.h">
+			<Filter>addons\ofxSvg\libs\svgtiny\include</Filter>
 		</ClInclude>
 	</ItemGroup>
 	<ItemGroup>

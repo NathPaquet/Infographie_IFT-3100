@@ -1,27 +1,22 @@
 #include "Cursor.h"
 
+#include "constants.h"
 #include "ofxGui.h"
 
-Cursor::Cursor(CursorMode cursorType):
-    mode(cursorType) {
+Cursor::Cursor(CursorMode cursorType) {
+  this->setCursorMode(cursorType);
 }
 
 void Cursor::drawCursor(float x, float y) {
-  switch (mode) {
-    case CursorMode::SELECTION:
-      drawSelectionCursor(x, y);
-      break;
-    case CursorMode::ADDING:
-      drawNavigationCursor(x, y);
-      break;
-    case CursorMode::NAVIGATION:
-      drawNavigationCursor(x, y);
-      break;
-    case CursorMode::DRAWING:
-      drawDrawingCursor(x, y);
-      break;
-    default:
-      break;
+  if (!isCursorInScene()) {
+    if (ImGui::IsAnyItemHovered()) {
+      ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
+    } else {
+      ImGui::SetMouseCursor(ImGuiMouseCursor_Arrow);
+    }
+  } else {
+    ImGui::SetMouseCursor(ImGuiMouseCursor_None);
+    this->drawSceneCursor(x, y);
   }
 }
 
@@ -58,33 +53,43 @@ std::optional<const SceneObject *> Cursor::setRayWithCollidingObject(const std::
   return foundSceneObject ? std::optional(foundSceneObject) : std::nullopt;
 }
 
-void Cursor::drawNavigationCursor(float x, float y) {
-}
+void Cursor::drawSceneCursor(float x, float y) {
+  ofPushMatrix();
 
-void Cursor::drawSelectionCursor(float x, float y) {
-}
-
-void Cursor::drawDrawingCursor(float x, float y) {
   ofPushStyle();
-  // paramètres de dessin
-  float length = 10.0f;
-  float offset = 5.0f;
 
-  // épaisseur du trait
-  ofSetLineWidth(2);
+  ofTranslate(x - cursorSVG.getWidth() / 2, y - cursorSVG.getHeight() / 2);
+  cursorSVG.draw();
 
-  ofSetColor(0, 0, 0);
-
-  // dessiner la forme vectorielle
-  ofDrawLine(x + offset, y, x + offset + length, y);
-  ofDrawLine(x - offset, y, x - offset - length, y);
-  ofDrawLine(x, y + offset, x, y + offset + length);
-  ofDrawLine(x, y - offset, x, y - offset - length);
+  ofPopMatrix();
   ofPopStyle();
+}
+
+bool Cursor::isCursorInScene() const {
+  return !ImGui::GetIO().WantCaptureMouse;
 }
 
 void Cursor::setCursorMode(CursorMode type) {
   this->mode = type;
+
+  switch (mode) {
+    case CursorMode::SELECTION:
+      cursorSVG.load(Constants::HAND_GRAB_CURSOR_PATH);
+      break;
+    case CursorMode::ADDING:
+      cursorSVG.load(Constants::ADD_CURSOR_PATH);
+      break;
+    case CursorMode::NAVIGATION:
+      cursorSVG.load(Constants::HAND_OPEN_CURSOR_PATH);
+      break;
+    case CursorMode::DRAWING:
+      break;
+    case CursorMode::REMOVING:
+      cursorSVG.load(Constants::ERASE_CURSOR_PATH);
+      break;
+    default:
+      break;
+  }
 }
 
 CursorMode Cursor::getCursorMode() const {

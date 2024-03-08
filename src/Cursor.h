@@ -1,10 +1,12 @@
 #pragma once
 #include "object/sceneObject.h"
+#include "ofxSVG.h"
 #include "ray.h"
 
 #include <optional>
 
 enum class CursorMode {
+  GRABBING,
   NAVIGATION,
   SELECTION,
   DRAWING,
@@ -25,8 +27,11 @@ public:
   CursorMode getCursorMode() const;
 
 private:
-  void drawNavigationCursor(float x, float y);
-  void drawSelectionCursor(float x, float y);
-  void drawDrawingCursor(float x, float y);
+  void drawSceneCursor(float x, float y);
+  bool isCursorInScene() const;
+  // GLFWCursor *mapCursorTypeToGLFWCursor(CursorMode cursorType);
   CursorMode mode;
+  ofxSVG cursorSVG;
+
+  GLFWwindow *window = static_cast<ofAppGLFWWindow *>(ofGetWindowPtr())->getGLFWWindow();
 };

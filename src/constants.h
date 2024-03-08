@@ -33,4 +33,10 @@ namespace Constants {
   constexpr auto PLANET_EARTH_MODEL_PATH = "models/planet-earth/scene.gltf";
   constexpr auto FREDDY_PLUSH_MODEL_PATH = "models/fnaf-freddy-plush/scene.gltf";
   constexpr auto SPACE_SHIP_MODEL_PATH = "models/space-ship/scene.gltf";
+
+  // CURSOR PATH
+  constexpr auto HAND_GRAB_CURSOR_PATH = "cursors/hand-grab.svg";
+  constexpr auto HAND_OPEN_CURSOR_PATH = "cursors/cursor-hand-open-svgrepo-com.svg";
+  constexpr auto ERASE_CURSOR_PATH = "cursors/erase-svgrepo-com.svg";
+  constexpr auto ADD_CURSOR_PATH = "cursors/add-circle-svgrepo-com.svg";
 }
