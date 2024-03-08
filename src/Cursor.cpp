@@ -77,7 +77,7 @@ void Cursor::setCursorMode(CursorMode type) {
       cursorSVG.load(Constants::HAND_GRAB_CURSOR_PATH);
       break;
     case CursorMode::ADDING:
-      cursorSVG.load(Constants::HAND_GRAB_CURSOR_PATH);
+      cursorSVG.load(Constants::ADD_CURSOR_PATH);
       break;
     case CursorMode::NAVIGATION:
       cursorSVG.load(Constants::HAND_OPEN_CURSOR_PATH);
