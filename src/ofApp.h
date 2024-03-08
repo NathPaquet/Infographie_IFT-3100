@@ -31,12 +31,13 @@ private:
   void drawSceneObjectGraphCreationMenu();
   void drawSceneTopMenu();
   void createViewMenu();
+  void updateKeyboardShortcuts();
   void generateRandomGalaxy(int nbElements);
-
+  void switchBetweenScenes();
+  void switchBetweenProjections();
   Tools tools;
   std::unique_ptr<CameraPanel> cameraPanel;
   WindowCamera *windowCamera;
-  bool isWindowCameraShown = false;
 
   std::unique_ptr<SceneGraph> sceneGraph;
   std::unique_ptr<PropertiesPanel> propertiesPanel;

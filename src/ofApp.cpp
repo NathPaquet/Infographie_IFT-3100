@@ -52,11 +52,9 @@ void ofApp::exit() {
 void ofApp::draw() {
   this->currentScene->drawScene();
 
-  if (ImGui::IsKeyPressed(ImGuiKey_C)) {
-    isWindowCameraShown = !isWindowCameraShown;
-  }
-  windowCamera->setIsShown(isWindowCameraShown);
   windowCamera->drawScene();
+
+  updateKeyboardShortcuts();
 
   gui.begin();
 
@@ -117,72 +115,72 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
   if (ImGui::BeginMenu("Add object")) {
     if (this->isScene2D) {
       ImGui::SeparatorText("2D object");
-      if (ImGui::MenuItem("Add Triangle")) {
+      if (ImGui::MenuItem("Add Triangle", "Shift+1")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::TRIANGLE);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
-      if (ImGui::MenuItem("Add Square")) {
+      if (ImGui::MenuItem("Add Square", "Shift+2")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::SQUARE);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
-      if (ImGui::MenuItem("Add Circle")) {
+      if (ImGui::MenuItem("Add Circle", "Shift+3")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::CIRCLE);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
-      if (ImGui::MenuItem("Add Star")) {
+      if (ImGui::MenuItem("Add Star", "Shift+5")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::STAR);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
-      if (ImGui::MenuItem("Add Line")) {
+      if (ImGui::MenuItem("Add Line", "Shift+4")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::LINE);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
-      if (ImGui::MenuItem("Add Space Rocket")) {
+      if (ImGui::MenuItem("Add Space Rocket", "Shift+6")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::SPACE_ROCKET);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
-      if (ImGui::MenuItem("Add Magic Sword")) {
+      if (ImGui::MenuItem("Add Magic Sword", "Shift+7")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::MAGIC_SWORD);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
     } else {
       ImGui::SeparatorText("Automatic generation");
-      if (ImGui::MenuItem("Generate Random Galaxy")) {
+      if (ImGui::MenuItem("Generate Random Galaxy", "Shift+=")) {
         generateRandomGalaxy(20);
       }
       ImGui::SeparatorText("3D object");
-      if (ImGui::MenuItem("Add Sphere")) {
+      if (ImGui::MenuItem("Add Sphere", "Shift+1")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::SPHERE);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
 
-      if (ImGui::MenuItem("Add Cube")) {
+      if (ImGui::MenuItem("Add Cube", "Shift+2")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::CUBIC);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
 
-      if (ImGui::MenuItem("Add Cylinder")) {
+      if (ImGui::MenuItem("Add Cylinder", "Shift+3")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::CYLINDER);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
 
       ImGui::SeparatorText("3D model");
 
-      if (ImGui::MenuItem("Planet earth")) {
+      if (ImGui::MenuItem("Planet earth", "Shift+4")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::PLANET_EARTH);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
-      if (ImGui::MenuItem("Freddy plush")) {
+      if (ImGui::MenuItem("Freddy plush", "Shift+5")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::FREDDY_PLUSH);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
-      if (ImGui::MenuItem("Space ship")) {
+      if (ImGui::MenuItem("Space ship", "Shift+6")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::SPACE_SHIP);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
 
       ImGui::SeparatorText("Camera");
-      if (ImGui::MenuItem("Add Camera")) {
+      if (ImGui::MenuItem("Add Camera", "Shift+7")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::CAMERA);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
@@ -214,36 +212,103 @@ void ofApp::drawSceneTopMenu() {
 
 void ofApp::createViewMenu() {
   if (ImGui::BeginMenu("View")) {
-    if (this->isScene2D && ImGui::MenuItem("Display 3D Scene")) {
-      this->currentScene = this->scene3D.get();
-      this->isScene2D = false;
-      this->sceneGraph->setSceneManager(this->currentScene->getSceneManager());
-    }
-    if (!this->isScene2D && ImGui::MenuItem("Display 2D Scene")) {
-      this->currentScene = this->scene2D.get();
-      this->isScene2D = true;
-      this->sceneGraph->setSceneManager(this->currentScene->getSceneManager());
-      ofLogNotice() << "2D Scene button pressed";
+    if (ImGui::MenuItem(this->isScene2D ? "Display 3D Scene" : "Display 2D Scene", "Tab")) {
+      switchBetweenScenes();
     }
     if (this->isScene2D) {
       ImGui::SeparatorText("2D scene options");
     } else {
       ImGui::SeparatorText("3D scene options");
-      if (ImGui::MenuItem((this->isBoundingBoxEnabled ? "Disable bounding box" : "Enable bounding box"))) {
-        this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
-        this->currentScene->getSceneManager()->toggleActivationBoundingBox();
-      }
-      if (ImGui::MenuItem((this->isViewOrtho ? "Enable perspective projection" : "Enable orthographic projection"))) {
-        this->isViewOrtho = !this->isViewOrtho;
-        assert(this->currentScene != nullptr && this->currentScene == this->scene3D.get());
-        this->scene3D.get()->toggleProjectionMode();
-      }
-      if (ImGui::MenuItem((this->isObjectAxisEnabled ? "Disable object axis" : "Enable object axis"))) {
-        this->isObjectAxisEnabled = !this->isObjectAxisEnabled;
-        this->currentScene->getSceneManager()->toggleActivationObjectAxis();
+      if (ImGui::MenuItem((this->isViewOrtho ? "Enable perspective projection" : "Enable orthographic projection"), "Alt+p")) {
+        switchBetweenProjections();
       }
     }
+
+    if (ImGui::MenuItem((this->isBoundingBoxEnabled ? "Disable bounding box" : "Enable bounding box"), "Alt+b")) {
+      this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
+      this->currentScene->getSceneManager()->toggleActivationBoundingBox();
+    }
+
+    if (ImGui::MenuItem((this->isObjectAxisEnabled ? "Disable object axis" : "Enable object axis"), "Alt+a")) {
+      this->isObjectAxisEnabled = !this->isObjectAxisEnabled;
+      this->currentScene->getSceneManager()->toggleActivationObjectAxis();
+    }
+
     ImGui::EndMenu();
+  }
+}
+
+void ofApp::updateKeyboardShortcuts() {
+  if (ImGui::IsKeyPressed(ImGuiKey_Tab)) {
+    switchBetweenScenes();
+  }
+  if (ImGui::IsKeyDown(ImGuiKey_LeftAlt)) {
+    if (ImGui::IsKeyPressed(ImGuiKey_A)) {
+      this->isObjectAxisEnabled = !this->isObjectAxisEnabled;
+      this->currentScene->getSceneManager()->toggleActivationObjectAxis();
+    }
+    if (ImGui::IsKeyPressed(ImGuiKey_B)) {
+      this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
+      this->currentScene->getSceneManager()->toggleActivationBoundingBox();
+    }
+    if (ImGui::IsKeyPressed(ImGuiKey_P)) {
+      switchBetweenProjections();
+    }
+  }
+  if (ImGui::IsKeyDown(ImGuiKey_LeftShift)) {
+    if (this->isScene2D) {
+      if (ImGui::IsKeyPressed(ImGuiKey_1)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::TRIANGLE);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_2)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::SQUARE);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_3)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::CIRCLE);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_4)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::LINE);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_5)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::STAR);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_6)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::SPACE_ROCKET);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_7)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::MAGIC_SWORD);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
+    } else {
+      if (ImGui::IsKeyPressed(ImGuiKey_1)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::SPHERE);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_2)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::CUBIC);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_3)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::CYLINDER);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_4)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::PLANET_EARTH);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_5)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::FREDDY_PLUSH);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_6)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::SPACE_SHIP);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_7)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::CAMERA);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_Equal)) {
+        generateRandomGalaxy(20);
+      }
+    }
+  } else {
+    if (ImGui::IsKeyPressed(ImGuiKey_C)) {
+      windowCamera->switchIsShown();
+    }
   }
 }
 
@@ -260,4 +325,22 @@ void ofApp::generateRandomGalaxy(int nbElements) {
     randomPosition.z = dis(gen);
     this->currentScene->getSceneManager()->addElement(randomPosition, static_cast<ElementType>(intDistribution(gen)));
   }
+}
+
+void ofApp::switchBetweenScenes() {
+  if (this->isScene2D) {
+    this->currentScene = this->scene3D.get();
+    this->isScene2D = false;
+    this->sceneGraph->setSceneManager(this->currentScene->getSceneManager());
+  } else if (!this->isScene2D) {
+    this->currentScene = this->scene2D.get();
+    this->isScene2D = true;
+    this->sceneGraph->setSceneManager(this->currentScene->getSceneManager());
+  }
+}
+
+void ofApp::switchBetweenProjections() {
+  this->isViewOrtho = !this->isViewOrtho;
+  assert(this->currentScene != nullptr && this->currentScene == this->scene3D.get());
+  this->scene3D.get()->toggleProjectionMode();
 }

@@ -14,6 +14,10 @@ vector<SceneObject *> Scene::getSelectedObjectsReference() {
   return this->sceneManager->getSelectedObjectsReference();
 }
 
+bool Scene::hasCurrentObjectToAdd() {
+  return this->currentObjectToAdd != ElementType::NONE;
+}
+
 void Scene::setCurrentObjectToAdd(ElementType elementType) {
   this->currentObjectToAdd = elementType;
 }

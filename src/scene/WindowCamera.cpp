@@ -39,6 +39,10 @@ void WindowCamera::drawScene() {
   selectedCamera->getCamera()->end();
 }
 
+void WindowCamera::switchIsShown() {
+  isShown = !isShown;
+}
+
 void WindowCamera::setIsShown(bool isShown) {
   this->isShown = isShown;
 }

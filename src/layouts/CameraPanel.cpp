@@ -20,6 +20,10 @@ void CameraPanel::create() {
       }
     }
 
+    if (ImGui::Checkbox("Show camera view", &isWindowCameraShown)) {
+      windowCamera->setIsShown(isWindowCameraShown);
+    }
+
     ImGui::EndMenu();
   }
 }
