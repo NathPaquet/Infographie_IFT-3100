@@ -6,6 +6,7 @@
 #include "object/object2D/primitive/Square.h"
 #include "object/object2D/primitive/Star.h"
 #include "object/object2D/primitive/Triangle.h"
+#include "object/object2D/primitive/SpaceRocket.h"
 #include "object/sceneObjectFactory.h"
 
 Ray::Ray(glm::vec3 origin, glm::vec3 direction) {
@@ -110,6 +111,9 @@ void Ray::drawPrimitivePreview(ElementType elementType, const glm::vec3 &centerP
       break;
     case ElementType::LINE:
       Line::drawPreview(centerPosition, outerPosition);
+      break;
+    case ElementType::SPACE_ROCKET:
+      SpaceRocket::drawPreview(centerPosition, outerPosition);
       break;
     default:
       ofDrawSphere(centerPosition, 20.f);

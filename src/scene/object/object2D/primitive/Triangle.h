@@ -7,6 +7,7 @@ class Triangle : public Object2D {
 public:
   Triangle(const glm::vec3 &centerPosition, const glm::vec2 &firstPoint = {20, 20});
   Triangle(const glm::vec3 &centerPosition, const glm::vec3 &outerPosition);
+  // Triangle(const glm::vec3 &p1, const glm::vec3 &p2, const glm::vec3 &p3);
 
   static void drawPreview(const glm::vec3 &centerPosition, const glm::vec2 &firstPoint = {20, 20});
   static void drawPreview(const glm::vec3 &centerPosition, const glm::vec3 &outerPosition);

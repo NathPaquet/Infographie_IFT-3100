@@ -17,6 +17,7 @@ PropertiesPanel::PropertiesPanel() {
   propertyDrawFunctions.emplace(PROPERTY_ID::SIZE, floatDraw);
   propertyDrawFunctions.emplace(PROPERTY_ID::RADIUS, floatDraw);
   propertyDrawFunctions.emplace(PROPERTY_ID::HEIGHT, floatDraw);
+  propertyDrawFunctions.emplace(PROPERTY_ID::WIDTH, floatDraw);
   propertyDrawFunctions.emplace(PROPERTY_ID::SHOW_WIREFRAME, toggleDraw);
   propertyDrawFunctions.emplace(PROPERTY_ID::RATIO, floatDraw);
   propertyDrawFunctions.emplace(PROPERTY_ID::COLOR, colorDraw);
