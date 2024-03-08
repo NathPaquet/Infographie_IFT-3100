@@ -40,6 +40,12 @@
 		<ClCompile Include="src\scene\WindowCamera.cpp">
 			<Filter>src\scene</Filter>
 		</ClCompile>
+		<ClCompile Include="src\scene\object\object2D\model\MagicSword.cpp">
+			<Filter>src\scene\object\object2D\model</Filter>
+		</ClCompile>
+		<ClCompile Include="src\scene\object\object2D\model\SpaceRocket.cpp">
+			<Filter>src\scene\object\object2D\model</Filter>
+		</ClCompile>
 		<ClCompile Include="src\scene\object\object2D\object2D.cpp">
 			<Filter>src\scene\object\object2D</Filter>
 		</ClCompile>
@@ -361,6 +367,12 @@
 		</ClInclude>
 		<ClInclude Include="src\scene\WindowCamera.h">
 			<Filter>src\scene</Filter>
+		</ClInclude>
+		<ClInclude Include="src\scene\object\object2D\model\MagicSword.h">
+			<Filter>src\scene\object\object2D\model</Filter>
+		</ClInclude>
+		<ClInclude Include="src\scene\object\object2D\model\SpaceRocket.h">
+			<Filter>src\scene\object\object2D\model</Filter>
 		</ClInclude>
 		<ClInclude Include="src\scene\object\object2D\object2D.h">
 			<Filter>src\scene\object\object2D</Filter>

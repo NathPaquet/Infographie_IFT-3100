@@ -23,7 +23,7 @@ Model3D::Model3D(const glm::vec3 &position, const string &modelPath) {
 }
 
 void Model3D::updateProperties() {
-  SceneObject::updateProperties();
+  Object3D::updateProperties();
   if (this->properties.at(PROPERTY_ID::SIZE)->isValueChanged()) {
     this->set_size(this->getPropertyValue<float>(PROPERTY_ID::SIZE));
     this->properties.at(PROPERTY_ID::SIZE)->setChanged(false);

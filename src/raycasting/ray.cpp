@@ -1,6 +1,8 @@
 #include "Ray.h"
 
 #include "constants.h"
+#include "object/object2D/model/MagicSword.h"
+#include "object/object2D/model/SpaceRocket.h"
 #include "object/object2D/primitive/Circle.h"
 #include "object/object2D/primitive/Line.h"
 #include "object/object2D/primitive/Square.h"
@@ -110,6 +112,12 @@ void Ray::drawPrimitivePreview(ElementType elementType, const glm::vec3 &centerP
       break;
     case ElementType::LINE:
       Line::drawPreview(centerPosition, outerPosition);
+      break;
+    case ElementType::SPACE_ROCKET:
+      SpaceRocket::drawPreview(centerPosition, outerPosition);
+      break;
+    case ElementType::MAGIC_SWORD:
+      MagicSword::drawPreview(centerPosition, outerPosition);
       break;
     default:
       ofDrawSphere(centerPosition, 20.f);

@@ -22,7 +22,7 @@ void Scene2D::drawScene() {
   this->camera.begin();
   this->processMouseActions();
   this->sceneManager->drawScene();
-  this->camera.begin();
+  this->camera.end();
   ofPopStyle();
 }
 
@@ -30,44 +30,36 @@ void Scene2D::processMouseActions() {
   if (!isMouseClickInScene()) {
     return;
   }
-
-  if (!isMouseClickInScene()) {
-    return;
-  }
-  auto &&maybeObject = this->cursor->setRayWithCollidingObject(this->sceneManager->getObjects(), this->camera, this->ray);
-  auto &&found = maybeObject.has_value();
   const float distance = Constants::DEFAULT_DISTANCE_TO_DRAW_PRIMITIVE;
-  auto position = (this->ray.getOrigin() + this->ray.getDirection() * (distance / abs(ray.getDirection().z)));
-  // this->ray.set(this->camera.getPosition(), this->camera.getZAxis());
-  if (this->wasDrawingFirstPositionClicked && this->cursor->getCursorMode() == CursorMode::ADDING) {
-    this->ray.drawPrimitivePreview(this->currentObjectToAdd, this->drawingFirstPosition, position);
-  }
-  /*
-  if (found && std::find(this->sceneManager.get()->getSelectedObjects().begin(), this->sceneManager.get()->getSelectedObjects().end(), maybeObject.value()) != this->sceneManager.get()->getSelectedObjects().end()) {
-    if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
-      shouldDragObject = true;
-    }
 
-    if (ImGui::IsMouseDown(ImGuiMouseButton_Left)
-        && shouldDragObject
-        && this->cursor->getCursorMode() == CursorMode::NAVIGATION) {
-      this->sceneManager.get()->setObjectPosition(maybeObject.value(), ray.getOrigin() + ray.getDirection() * distance);
-      this->camera.disableMouseInput();
+  if (this->cursor->getCursorMode() == CursorMode::ADDING) {
+    auto &&maybeObject = this->cursor->setRayWithCollidingObject(this->sceneManager->getObjects(), this->camera, this->ray);
+    auto &&found = maybeObject.has_value();
+    auto position = (this->ray.getOrigin() + this->ray.getDirection() * (distance / abs(ray.getDirection().z)));
+
+    if (this->wasDrawingFirstPositionClicked && !found) {
+      this->ray.drawPrimitivePreview(this->currentObjectToAdd, this->drawingFirstPosition, position);
     }
   }
 
-  */
+  if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
+    shouldDragObject = false;
+    this->draggedObject = nullptr;
+  }
+
   if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
-    if (this->cursor->getCursorMode() == CursorMode::ADDING) {
-      if (this->wasDrawingFirstPositionClicked) {
-        this->sceneManager->addElement(this->drawingFirstPosition, position, this->currentObjectToAdd);
-        this->cursor->setCursorMode(CursorMode::NAVIGATION);
-        this->sceneManager->setSelectedSceneObject(this->sceneManager->getObjects().back().get());
-      } else {
-        this->drawingFirstPosition = position;
+    auto &&maybeObject = this->cursor->setRayWithCollidingObject(this->sceneManager->getObjects(), this->camera, this->ray);
+    auto &&found = maybeObject.has_value();
+
+    if (found) {
+      auto it = std::find(this->sceneManager->getSelectedObjects().begin(), this->sceneManager->getSelectedObjects().end(), maybeObject.value());
+
+      if (it != this->sceneManager->getSelectedObjects().end()) {
+        draggedObject = *it;
+        shouldDragObject = true;
       }
-      this->wasDrawingFirstPositionClicked = !this->wasDrawingFirstPositionClicked;
     }
+
     if (found && this->cursor->getCursorMode() == CursorMode::NAVIGATION) {
       if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftCtrl))) {
         this->sceneManager->clickSelectionSceneObject(maybeObject.value());
@@ -76,8 +68,28 @@ void Scene2D::processMouseActions() {
       }
 
     } else if (found && this->cursor->getCursorMode() == CursorMode::REMOVING) {
-      this->sceneManager->removeObject(maybeObject.value()); // TODO : Ajouter une nouvelle m�thode pour supprimer un objet
+      this->sceneManager->removeObject(maybeObject.value());
       this->cursor->setCursorMode(CursorMode::NAVIGATION);
+
+    } else if (this->cursor->getCursorMode() == CursorMode::ADDING) {
+      const auto position = (this->ray.getOrigin() + this->ray.getDirection() * (distance / abs(ray.getDirection().z)));
+      if (this->wasDrawingFirstPositionClicked) {
+        this->sceneManager->addElement(this->drawingFirstPosition, position, this->currentObjectToAdd);
+        this->cursor->setCursorMode(CursorMode::NAVIGATION);
+        this->sceneManager->setSelectedSceneObject(this->sceneManager->getObjects().front().get());
+      } else {
+        this->drawingFirstPosition = position;
+      }
+      this->wasDrawingFirstPositionClicked = !this->wasDrawingFirstPositionClicked;
     }
+  }
+
+  if (ImGui::IsMouseDown(ImGuiMouseButton_Left)
+      && shouldDragObject
+      && this->cursor->getCursorMode() == CursorMode::NAVIGATION) {
+    this->cursor->computeRay(this->camera, this->ray);
+    const auto position = (this->ray.getOrigin() + this->ray.getDirection() * (distance / abs(ray.getDirection().z)));
+
+    this->sceneManager->setObjectPosition(this->draggedObject, position);
   }
 }

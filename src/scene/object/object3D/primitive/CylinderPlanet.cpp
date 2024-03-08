@@ -28,7 +28,7 @@ void CylinderPlanet::setSize(const float radius, const float height) {
 }
 
 void CylinderPlanet::updateProperties() {
-  SceneObject::updateProperties();
+  Object3D::updateProperties();
   if (this->properties.at(PROPERTY_ID::HEIGHT)->isValueChanged() || this->properties.at(PROPERTY_ID::RADIUS)->isValueChanged()) {
     const float radius = this->getPropertyValue<float>(PROPERTY_ID::RADIUS);
     const float height = this->getPropertyValue<float>(PROPERTY_ID::HEIGHT);

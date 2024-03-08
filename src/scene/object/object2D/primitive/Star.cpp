@@ -1,11 +1,6 @@
 #include "Star.h"
 
 const float radiusDefaultRatio = 0.6f;
-const int numberOfSection = 10;
-const float rotationPerVertex = 2 * glm::pi<float>() / numberOfSection;
-const glm::mat2x2 rotationMatrix = glm::mat2x2(
-    std::cos(rotationPerVertex), -std::sin(rotationPerVertex),
-    std::sin(rotationPerVertex), std::cos(rotationPerVertex));
 
 Star::Star(const glm::vec3 &centerPosition, const float radius) {
   initProperties(radius, radiusDefaultRatio);
@@ -126,7 +121,7 @@ void Star::setSize(const float radius) {
 }
 
 void Star::updateProperties() {
-  SceneObject::updateProperties();
+  Object2D::updateProperties();
   if (this->properties.at(PROPERTY_ID::RADIUS)->isValueChanged()
       || this->properties.at(PROPERTY_ID::RATIO)->isValueChanged()
       || this->properties.at(PROPERTY_ID::SHOW_WIREFRAME)->isValueChanged()) {

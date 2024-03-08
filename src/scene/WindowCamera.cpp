@@ -1,40 +1,48 @@
 #include "WindowCamera.h"
 
-#include "SceneManager.h"
+#include "Constants.h"
 
 WindowCamera::WindowCamera(SceneManager *sceneManager):
     sceneManager(sceneManager) {}
 
-void WindowCamera::draw() {
-  // selectedCamera = std::make_unique<Camera>(sceneManager->getSelectedObjects().at(0));
+void WindowCamera::setSelectedCamera(Camera *camera) {
+  this->selectedCamera = camera;
+}
 
-  if (!isShown) {
+void WindowCamera::drawScene() {
+  if (!isShown || !hasASelectedCamera()) {
     return;
   }
+
+  const float SCENE_WIDTH = ofGetWidth() - Constants::SCENE_GRAPH_WIDTH - Constants::PROPERTIES_PANEL_WIDTH;
+  const float WINDOW_WIDTH = SCENE_WIDTH * 0.375f;
+  const float WINDOW_HEIGHT = ofGetHeight() * 0.375f;
+
+  ofRectangle viewport = ofRectangle(
+      Constants::SCENE_GRAPH_WIDTH, ofGetHeight() - WINDOW_HEIGHT,
+      WINDOW_WIDTH, WINDOW_HEIGHT);
 
   ofPushMatrix();
   ofPushStyle();
 
-  ofTranslate(0, ofGetHeight());
-  ofScale(1, -1);
-
   ofSetColor(0);
+  ofSetLineWidth(3);
   ofNoFill();
-  // Constants::SCENE_GRAPH_WIDTH / 2
-  ofDrawRectangle(0, 0, ofGetWidth() / 2, ofGetHeight() / 2);
 
-  ofViewport(0, 0, ofGetWidth() / 2, ofGetHeight() / 2);
+  ofDrawRectangle(viewport);
 
   ofPopStyle();
   ofPopMatrix();
 
-  selectedCamera.get()->getCamera()->disableMouseInput();
-
-  selectedCamera.get()->getCamera()->begin();
+  selectedCamera->getCamera()->begin(viewport);
   sceneManager->drawScene();
-  selectedCamera.get()->getCamera()->end();
+  selectedCamera->getCamera()->end();
 }
 
 void WindowCamera::setIsShown(bool isShown) {
-  this->isShown = isShown && selectedCamera != nullptr;
+  this->isShown = isShown;
+}
+
+bool WindowCamera::hasASelectedCamera() const {
+  return selectedCamera != nullptr;
 }

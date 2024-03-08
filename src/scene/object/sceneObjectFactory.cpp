@@ -1,11 +1,14 @@
 #include "SceneObjectFactory.h"
 
 #include "constants.h"
+#include "object2D/model/MagicSword.h"
+#include "object2D/model/SpaceRocket.h"
 #include "object2D/primitive/Circle.h"
 #include "object2D/primitive/Line.h"
 #include "object2D/primitive/Square.h"
 #include "object2D/primitive/Star.h"
 #include "object2D/primitive/Triangle.h"
+#include "object3D/Camera.h"
 #include "object3D/model/Model3D.h"
 #include "object3D/primitive/CubicPlanet.h"
 #include "object3D/primitive/CylinderPlanet.h"
@@ -25,6 +28,8 @@ std::unique_ptr<SceneObject> SceneObjectFactory::createDefaultSceneObject(const 
       return std::make_unique<Model3D>(Model3D(position, Constants::FREDDY_PLUSH_MODEL_PATH));
     case ElementType::SPACE_SHIP:
       return std::make_unique<Model3D>(Model3D(position, Constants::SPACE_SHIP_MODEL_PATH));
+    case ElementType::CAMERA:
+      return std::make_unique<Camera>(Camera(position));
     case ElementType::TRIANGLE:
       return std::make_unique<Triangle>(Triangle(position));
     case ElementType::SQUARE:
@@ -33,6 +38,10 @@ std::unique_ptr<SceneObject> SceneObjectFactory::createDefaultSceneObject(const 
       return std::make_unique<Circle>(Circle(position));
     case ElementType::STAR:
       return std::make_unique<Star>(Star(position));
+    case ElementType::SPACE_ROCKET:
+      return std::make_unique<SpaceRocket>(SpaceRocket(position));
+    case ElementType::MAGIC_SWORD:
+      return std::make_unique<MagicSword>(MagicSword(position));
     default:
       return nullptr;
   }
@@ -63,6 +72,10 @@ std::unique_ptr<SceneObject> SceneObjectFactory::createSceneObject(const glm::ve
       return std::make_unique<Star>(Star(centerPosition, outerPosition));
     case ElementType::LINE:
       return std::make_unique<Line>(Line(centerPosition, outerPosition));
+    case ElementType::SPACE_ROCKET:
+      return std::make_unique<SpaceRocket>(SpaceRocket(centerPosition, outerPosition));
+    case ElementType::MAGIC_SWORD:
+      return std::make_unique<MagicSword>(MagicSword(centerPosition, outerPosition));
     default:
       return nullptr;
   }

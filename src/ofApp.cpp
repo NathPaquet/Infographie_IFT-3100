@@ -32,6 +32,8 @@ void ofApp::setup() {
 
   this->gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable);
   this->sceneGraph = std::make_unique<SceneGraph>(this->currentScene->getSceneManager());
+  this->windowCamera = new WindowCamera(this->currentScene->getSceneManager());
+  this->cameraPanel = std::make_unique<CameraPanel>(this->currentScene->getSceneManager(), windowCamera);
   this->propertiesPanel = std::make_unique<PropertiesPanel>();
 
   ofDisableArbTex();
@@ -49,6 +51,12 @@ void ofApp::exit() {
 //--------------------------------------------------------------
 void ofApp::draw() {
   this->currentScene->drawScene();
+
+  if (ImGui::IsKeyPressed(ImGuiKey_C)) {
+    isWindowCameraShown = !isWindowCameraShown;
+  }
+  windowCamera->setIsShown(isWindowCameraShown);
+  windowCamera->drawScene();
 
   gui.begin();
 
@@ -129,6 +137,14 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
         this->currentScene->setCurrentObjectToAdd(ElementType::LINE);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
+      if (ImGui::MenuItem("Add Space Rocket")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::SPACE_ROCKET);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
+      if (ImGui::MenuItem("Add Magic Sword")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::MAGIC_SWORD);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
     } else {
       ImGui::SeparatorText("Automatic generation");
       if (ImGui::MenuItem("Generate Random Galaxy")) {
@@ -164,6 +180,12 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
         this->currentScene->setCurrentObjectToAdd(ElementType::SPACE_SHIP);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
+
+      ImGui::SeparatorText("Camera");
+      if (ImGui::MenuItem("Add Camera")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::CAMERA);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
     }
     ImGui::EndMenu();
   }
@@ -180,6 +202,7 @@ void ofApp::drawSceneTopMenu() {
       this->drawSceneObjectGraphCreationMenu();
       this->createViewMenu();
       tools.createToolsMenu();
+      cameraPanel.get()->create();
 
       ImGui::EndMenuBar();
     }
@@ -231,14 +254,10 @@ void ofApp::generateRandomGalaxy(int nbElements) {
   std::uniform_int_distribution intDistribution(0, 2);
 
   for (int i = 0; i < nbElements; i++) {
-    Ray ray;
     glm::vec3 randomPosition;
     randomPosition.x = dis(gen);
     randomPosition.y = dis(gen);
     randomPosition.z = dis(gen);
-    auto distance = glm::length(randomPosition);
-    ray.set({0, 0, 0}, randomPosition);
-    // TODO : Add a new method in scene object ?
-    this->currentScene->getSceneManager()->addElement(ray.getOrigin() + ray.getDirection() * distance, static_cast<ElementType>(intDistribution(gen)));
+    this->currentScene->getSceneManager()->addElement(randomPosition, static_cast<ElementType>(intDistribution(gen)));
   }
 }

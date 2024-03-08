@@ -14,14 +14,16 @@ PropertiesPanel::PropertiesPanel() {
   auto colorDraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawColorProperty(objectsProperty); };
   auto anglesDraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawAngles(objectsProperty); };
   auto toggleDraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawToggle(objectsProperty); };
+  auto angleZdraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawZAngles(objectsProperty); };
   propertyDrawFunctions.emplace(PROPERTY_ID::SIZE, floatDraw);
   propertyDrawFunctions.emplace(PROPERTY_ID::RADIUS, floatDraw);
   propertyDrawFunctions.emplace(PROPERTY_ID::HEIGHT, floatDraw);
+  propertyDrawFunctions.emplace(PROPERTY_ID::WIDTH, floatDraw);
   propertyDrawFunctions.emplace(PROPERTY_ID::SHOW_WIREFRAME, toggleDraw);
   propertyDrawFunctions.emplace(PROPERTY_ID::RATIO, floatDraw);
   propertyDrawFunctions.emplace(PROPERTY_ID::COLOR, colorDraw);
   propertyDrawFunctions.emplace(PROPERTY_ID::IMAGE_IMPORT, imageImportDraw);
-
+  propertyDrawFunctions.emplace(PROPERTY_ID::ANGLE_Z, angleZdraw);
   propertyDrawFunctions.emplace(PROPERTY_ID::ANGLES, anglesDraw);
 }
 
@@ -70,7 +72,21 @@ void PropertiesPanel::drawImageImport(std::vector<PropertyBase *> &objectsProper
     }
   }
 }
+void PropertiesPanel::drawZAngles(std::vector<PropertyBase *> &objectsProperty) {
+  auto firstObjectProperty = dynamic_cast<Property<float> *>(objectsProperty[0]);
+  auto propertyValue = firstObjectProperty->getValue();
+  ImGui::SeparatorText(toString(firstObjectProperty->getId()));
+  bool angleZUsed = ImGui::SliderFloat(toString(firstObjectProperty->getId()), &propertyValue, MIN_ANGLE_VALUE, MAX_ANGLE_VALUE, NULL, ImGuiSliderFlags_AlwaysClamp);
+  if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
+    ImGui::SetItemTooltip("CTRL+Click to input value.");
 
+  if (angleZUsed) {
+    for (auto &&objectProperty : objectsProperty) {
+      auto property = dynamic_cast<Property<float> *>(objectProperty);
+      property->setValue(propertyValue);
+    }
+  }
+}
 void PropertiesPanel::drawAngles(std::vector<PropertyBase *> &objectsProperty) {
   auto firstObjectProperty = dynamic_cast<Property<ofVec3f> *>(objectsProperty[0]);
   auto propertyValue = firstObjectProperty->getValue();

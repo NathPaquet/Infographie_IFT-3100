@@ -2,6 +2,10 @@
 
 #include "Constants.h"
 
+Object2D::Object2D() {
+  this->addProperty<float>(PROPERTY_ID::ANGLE_Z, 0.f);
+}
+
 void Object2D::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) {
   this->updateProperties();
   ofPushStyle();
@@ -20,14 +24,7 @@ void Object2D::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxis
   ofSetColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
 
   if (!this->getPropertyValue<bool>(PROPERTY_ID::SHOW_WIREFRAME)) {
-    if (mTex.isAllocated()) {
-      this->mTex.bind();
-      primitive->draw();
-      this->mTex.unbind();
-    } else {
-      primitive->draw();
-    }
-
+    primitive->draw();
   } else {
     ofNoFill();
     // primitive->draw();
@@ -40,4 +37,12 @@ void Object2D::drawAxis() {
 }
 
 void Object2D::drawBoundingBox() {
+}
+
+void Object2D::updateProperties() {
+  SceneObject::updateProperties();
+  if (this->properties.at(PROPERTY_ID::ANGLE_Z)->isValueChanged()) {
+    this->primitive->setOrientation({0, 0, this->getPropertyValue<float>(PROPERTY_ID::ANGLE_Z)});
+    this->properties.at(PROPERTY_ID::ANGLE_Z)->setChanged(false);
+  }
 }

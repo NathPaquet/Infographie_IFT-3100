@@ -1,6 +1,7 @@
 #pragma once
 
 #include "object/SceneObjectFactory.h"
+#include "object/object3D/Camera.h"
 #include "object/sceneObject.h"
 #include "ofMain.h"
 #include "ray.h"
@@ -17,6 +18,7 @@ public:
   void removeAllSelectedObjects();
   void drawScene();
   const std::list<std::unique_ptr<SceneObject>> &getObjects() const;
+  const std::vector<Camera *> &getCameras() const;
   void setSelectedSceneObject(const SceneObject *sceneObject);
   void clickSelectionSceneObject(const SceneObject *sceneObject);
   const std::vector<SceneObject *> &getSelectedObjects() const;
@@ -27,9 +29,12 @@ public:
 
 private:
   void clearScene();
+  void addCamera(const SceneObject *sceneObject, const ElementType primitiveType);
+  void removeCamera(const SceneObject *sceneObject);
 
   bool isBoundingBoxEnabled = false;
   bool isObjectAxisEnabled = false;
   std::vector<SceneObject *> selectedSceneObjects;
+  std::vector<Camera *> cameras;
   std::list<std::unique_ptr<SceneObject>> sceneObjects;
 };

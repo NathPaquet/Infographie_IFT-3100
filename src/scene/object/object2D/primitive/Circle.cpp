@@ -80,7 +80,7 @@ void Circle::setSize(const float radius) {
 }
 
 void Circle::updateProperties() {
-  SceneObject::updateProperties();
+  Object2D::updateProperties();
   if (this->properties.at(PROPERTY_ID::RADIUS)->isValueChanged() || this->properties.at(PROPERTY_ID::SHOW_WIREFRAME)->isValueChanged()) {
     const float radius = this->getPropertyValue<float>(PROPERTY_ID::RADIUS);
     const bool showWireFrame = this->getPropertyValue<bool>(PROPERTY_ID::SHOW_WIREFRAME);

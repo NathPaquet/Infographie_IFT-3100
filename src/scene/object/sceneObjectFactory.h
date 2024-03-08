@@ -7,6 +7,8 @@ enum class ElementType {
   SPHERE,
   CUBIC,
   CYLINDER,
+  MODEL3D,
+  CAMERA,
   // 2D primitives
   TRIANGLE,
   CIRCLE,
@@ -14,6 +16,9 @@ enum class ElementType {
   LINE,
   STAR,
   POINT,
+  // 2D Complex shapes
+  SPACE_ROCKET,
+  MAGIC_SWORD,
   // 3D models
   PLANET_EARTH,
   FREDDY_PLUSH,

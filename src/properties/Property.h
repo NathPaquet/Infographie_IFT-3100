@@ -17,8 +17,10 @@ enum class PROPERTY_ID {
   // Place object specific properties here
   SIZE,
   RADIUS,
+  WIDTH,
   HEIGHT,
   ANGLES,
+  ANGLE_Z,
   SHOW_WIREFRAME,
   RATIO,
 };
@@ -27,6 +29,8 @@ static inline const char *toString(PROPERTY_ID propertyId) {
   switch (propertyId) {
     case PROPERTY_ID::SIZE:
       return "Size";
+    case PROPERTY_ID::WIDTH:
+      return "Width";
     case PROPERTY_ID::RADIUS:
       return "Radius";
     case PROPERTY_ID::HEIGHT:
@@ -37,6 +41,8 @@ static inline const char *toString(PROPERTY_ID propertyId) {
       return "Image Import";
     case PROPERTY_ID::ANGLES:
       return "Angles";
+    case PROPERTY_ID::ANGLE_Z:
+      return "Angle Z";
     case PROPERTY_ID::SHOW_WIREFRAME:
       return "Line thickness";
     case PROPERTY_ID::RATIO:
