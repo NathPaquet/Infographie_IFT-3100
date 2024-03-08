@@ -55,6 +55,48 @@ void Object2D::drawAxis() {
 }
 
 void Object2D::drawBoundingBox() {
+  ofPushStyle();
+  ofNoFill();
+  ofSetColor(ofColor::yellow);
+
+  this->drawAABB();
+
+  ofPopStyle();
+}
+
+void Object2D::drawAABB() const {
+  vector<glm::vec3> vertices = this->primitive->getMesh().getVertices();
+  if (vertices.empty()) {
+    return;
+  }
+
+  ofQuaternion rotation = primitive->getOrientationQuat();
+  ofVec3f scale = primitive->getScale();
+
+  for (auto &vertex : vertices) {
+    vertex *= scale;
+    vertex = rotation * vertex;
+  }
+
+  ofVec3f minBound(vertices[0]), maxBound(vertices[0]);
+  for (const auto &vertex : vertices) {
+    minBound.x = min(minBound.x, vertex.x);
+    minBound.y = min(minBound.y, vertex.y);
+
+    maxBound.x = max(maxBound.x, vertex.x);
+    maxBound.y = max(maxBound.y, vertex.y);
+  }
+
+  ofVec3f center = ofVec3f(
+      (maxBound.x + minBound.x) / 2,
+      (maxBound.y + minBound.y) / 2,
+      0);
+
+  center += this->primitive->getGlobalPosition();
+
+  ofVec3f boundingBoxDimensions = maxBound - minBound;
+
+  ofDrawBox(center.x, center.y, center.z, boundingBoxDimensions.x, boundingBoxDimensions.y, boundingBoxDimensions.z);
 }
 
 void Object2D::updateProperties() {

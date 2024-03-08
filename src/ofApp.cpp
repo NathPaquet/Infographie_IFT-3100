@@ -224,15 +224,16 @@ void ofApp::createViewMenu() {
       ImGui::SeparatorText("2D scene options");
     } else {
       ImGui::SeparatorText("3D scene options");
-      if (ImGui::MenuItem((this->isBoundingBoxEnabled ? "Disable bounding box" : "Enable bounding box"))) {
-        this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
-        this->currentScene->getSceneManager()->toggleActivationBoundingBox();
-      }
       if (ImGui::MenuItem((this->isViewOrtho ? "Enable perspective projection" : "Enable orthographic projection"))) {
         this->isViewOrtho = !this->isViewOrtho;
         assert(this->currentScene != nullptr && this->currentScene == this->scene3D.get());
         this->scene3D.get()->toggleProjectionMode();
       }
+    }
+
+    if (ImGui::MenuItem((this->isBoundingBoxEnabled ? "Disable bounding box" : "Enable bounding box"))) {
+      this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
+      this->currentScene->getSceneManager()->toggleActivationBoundingBox();
     }
 
     if (ImGui::MenuItem((this->isObjectAxisEnabled ? "Disable object axis" : "Enable object axis"))) {

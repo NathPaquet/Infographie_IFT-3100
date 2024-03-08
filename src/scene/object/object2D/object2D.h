@@ -9,6 +9,7 @@ public:
 private:
   void drawAxis() override;
   void drawBoundingBox() override;
+  void drawAABB() const;
 
 protected:
   void updateProperties() override;
