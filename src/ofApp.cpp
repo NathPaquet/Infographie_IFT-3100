@@ -37,6 +37,7 @@ void ofApp::setup() {
   this->propertiesPanel = std::make_unique<PropertiesPanel>();
 
   ofDisableArbTex();
+  ofBackground(0);
   this->backgroundTexture = this->backgroundImage.getTexture();
   this->backgroundTexture.enableMipmap();
   this->backgroundTexture.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);

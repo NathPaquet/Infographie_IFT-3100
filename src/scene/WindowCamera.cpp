@@ -22,20 +22,16 @@ void WindowCamera::drawScene() {
       Constants::SCENE_GRAPH_WIDTH, ofGetHeight() - WINDOW_HEIGHT,
       WINDOW_WIDTH, WINDOW_HEIGHT);
 
-  ofPushMatrix();
+  ofDisableDepthTest();
   ofPushStyle();
-
   ofSetColor(0);
-  ofSetLineWidth(3);
-  ofNoFill();
-
   ofDrawRectangle(viewport);
-
   ofPopStyle();
-  ofPopMatrix();
+  ofEnableDepthTest();
 
   selectedCamera->getCamera()->begin(viewport);
   sceneManager->drawScene();
+  ofDrawGrid(10, 100, false, false, true, false);
   selectedCamera->getCamera()->end();
 }
 

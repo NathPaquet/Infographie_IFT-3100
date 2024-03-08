@@ -120,6 +120,7 @@ void Scene3D::processMouseActions() {
 void Scene3D::setupPerspectiveCamera() {
   this->perspectiveCamera = std::make_unique<ofEasyCam>();
 
+  this->perspectiveCamera.get()->setNearClip(Constants::DEFAULT_CAMERA_NEAR_CLIP);
   this->perspectiveCamera.get()->setPosition(200, 50, 200);
   this->perspectiveCamera.get()->lookAt(glm::vec3(0, 0, 0));
 }
