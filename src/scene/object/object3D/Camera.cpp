@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-Camera::Camera(ofVec3f position) {
+Camera::Camera(const glm::vec3 &position) {
   auto sphere = ofSpherePrimitive(CAMERA_RADIUS, 20, OF_PRIMITIVE_TRIANGLES);
 
   this->primitive = std::make_unique<ofSpherePrimitive>(sphere);
