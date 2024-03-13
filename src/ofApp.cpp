@@ -20,12 +20,13 @@ void ofApp::setup() {
   this->cursor = std::make_unique<Cursor>(CursorMode::NAVIGATION);
 
   // Setup 3D scene
-  this->scene3D = std::make_unique<Scene3D>(std::make_unique<SceneManager>(), cursor.get());
-  this->scene3DEventHandler = std::make_unique<Scene3DEventHandler>(this->scene3D.get());
+  this->scene3D = std::make_unique<Scene3D>(std::make_unique<SceneManager>());
+  this->scene3DEventHandler = std::make_unique<Scene3DEventHandler>(this->scene3D.get(), this->cursor.get());
   this->scene3D->setup();
 
   // Setup 2D scene
-  this->scene2D = std::make_unique<Scene2D>(std::make_unique<SceneManager>(), cursor.get());
+  this->scene2D = std::make_unique<Scene2D>(std::make_unique<SceneManager>());
+  // TODO : Setup 2D scene event handler
   this->scene2D->setup();
 
   // Setup initial scene
@@ -53,6 +54,7 @@ void ofApp::exit() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
+  this->cursor->drawCursor(ofGetMouseX(), ofGetMouseY());
   this->currentScene->drawScene();
 
   windowCamera->drawScene();
@@ -71,6 +73,10 @@ void ofApp::draw() {
   drawSceneTopMenu();
 
   gui.end();
+}
+
+void ofApp::update() {
+  this->currentScene->update();
 }
 
 void ofApp::drawPropertiesPanel() {
@@ -346,6 +352,7 @@ void ofApp::switchBetweenScenes() {
     this->sceneGraph->setSceneManager(this->currentScene->getSceneManager());
     this->cameraPanel->setSceneManager(this->currentScene->getSceneManager());
   }
+  this->cursor.get()->setCursorMode(CursorMode::NAVIGATION);
 }
 
 void ofApp::switchBetweenProjections() {

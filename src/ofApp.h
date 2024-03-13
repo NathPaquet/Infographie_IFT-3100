@@ -19,6 +19,7 @@ class ofApp : public ofBaseApp {
 public:
   void setup();
   void draw();
+  void update();
   void exit();
 
   ofxImGui::Gui gui;

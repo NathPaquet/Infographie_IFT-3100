@@ -112,14 +112,6 @@ void SceneManager::clearScene() {
   this->sceneObjects.clear();
 }
 
-void SceneManager::setObjectPosition(const SceneObject *object, const ofVec3f &position) {
-  auto it = std::find_if(this->sceneObjects.begin(), this->sceneObjects.end(), [&](auto &&obj) { return obj.get() == object; });
-  if (it != this->sceneObjects.end()) {
-    it->get()->setPosition(position);
-    ofLogNotice("object dragged to") << position.x << "," << position.y << "," << position.z;
-  }
-}
-
 void SceneManager::toggleActivationBoundingBox() {
   this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
 }

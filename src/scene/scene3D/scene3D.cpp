@@ -20,16 +20,21 @@ void Scene3D::setup() {
   this->currentCamera = this->perspectiveCamera.get();
 }
 
-void Scene3D::drawScene() {
-  this->cursor->drawCursor(ofGetMouseX(), ofGetMouseY());
+void Scene3D::update() {
+  this->computeRay(*this->currentCamera, this->ray);
+}
 
+void Scene3D::drawScene() {
   this->currentCamera->begin();
 
   ofDrawGrid(10, 100, false, false, true, false);
+
   ofDrawSphere(0, 0, 0, 10);
   this->sceneManager.get()->drawScene();
 
-  this->processMouseActions();
+  if (this->currentObjectToAdd != ElementType::NONE) {
+    this->drawObjectPreview();
+  }
 
   this->currentCamera->end();
 }
@@ -46,76 +51,73 @@ void Scene3D::toggleProjectionMode() {
   }
 }
 
-void Scene3D::processMouseActions() {
-  if (this->shouldDragObject) {
-    this->currentCamera->disableMouseInput();
-  }
+bool Scene3D::attemptToClickOnObjectWithMouse() {
+  auto &&maybeObject = this->setRayWithCollidingObject(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
+  auto &&found = maybeObject.has_value();
 
-  if (!isMouseClickInScene()) {
-    this->currentCamera->disableMouseInput();
-    return;
+  if (found) {
+    if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftCtrl))) {
+      this->sceneManager.get()->clickSelectionSceneObject(maybeObject.value());
+    } else {
+      this->sceneManager.get()->setSelectedSceneObject(maybeObject.value());
+    }
+
+    auto it = std::find(this->sceneManager.get()->getSelectedObjects().begin(), this->sceneManager.get()->getSelectedObjects().end(), maybeObject.value());
+
+    if (it != this->sceneManager.get()->getSelectedObjects().end()) {
+      draggedObject = *it;
+    }
+
+    return true;
   } else {
-    this->currentCamera->enableMouseInput();
+    return false;
   }
-  const float distance = Constants::DEFAULT_DISTANCE_TO_DRAW_PRIMITIVE;
+}
 
-  if (this->cursor->getCursorMode() == CursorMode::ADDING) {
-    auto &&maybeObject = this->cursor->setRayWithCollidingObject(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
-    auto &&found = maybeObject.has_value();
-    auto position = this->ray.getOrigin() + this->ray.getDirection() * distance;
+bool Scene3D::attemptToAddObjectWithMouse() {
+  auto &&maybeObject = this->setRayWithCollidingObject(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
+  auto &&found = maybeObject.has_value();
 
-    if (!found) {
-      this->ray.drawPrimitiveDefaultPreview(this->currentObjectToAdd, position);
-    }
+  if (found) {
+    return false;
+  } else {
+    this->sceneManager.get()->addElement(this->ray.getOrigin() + this->ray.getDirection() * Constants::DEFAULT_DISTANCE_TO_DRAW, this->currentObjectToAdd);
+    this->sceneManager.get()->setSelectedSceneObject(this->sceneManager.get()->getObjects().front().get());
+    this->currentObjectToAdd = ElementType::NONE;
+    return true;
   }
+}
 
-  bool NAVIGATION_OR_SELECTION = this->cursor->getCursorMode() == CursorMode::NAVIGATION || this->cursor->getCursorMode() == CursorMode::SELECTION;
+bool Scene3D::attemptToRemoveObjectWihMouse() {
+  auto &&maybeObject = this->setRayWithCollidingObject(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
+  auto &&found = maybeObject.has_value();
 
-  if (NAVIGATION_OR_SELECTION && ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
-    shouldDragObject = false;
-    this->draggedObject = nullptr;
-    this->currentCamera->enableMouseInput();
-    this->cursor->setCursorMode(CursorMode::NAVIGATION);
+  if (found) {
+    this->sceneManager.get()->removeObject(maybeObject.value());
+    return true;
+  } else {
+    return false;
   }
+}
 
-  if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
-    auto &&maybeObject = this->cursor->setRayWithCollidingObject(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
-    auto &&found = maybeObject.has_value();
-
-    if (found && NAVIGATION_OR_SELECTION) {
-      if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftCtrl))) {
-        this->sceneManager.get()->clickSelectionSceneObject(maybeObject.value());
-      } else {
-        this->sceneManager.get()->setSelectedSceneObject(maybeObject.value());
-      }
-
-      auto it = std::find(this->sceneManager.get()->getSelectedObjects().begin(), this->sceneManager.get()->getSelectedObjects().end(), maybeObject.value());
-
-      if (it != this->sceneManager.get()->getSelectedObjects().end()) {
-        draggedObject = *it;
-        shouldDragObject = true;
-      }
-      this->cursor->setCursorMode(CursorMode::SELECTION);
-
-    } else if (found && this->cursor->getCursorMode() == CursorMode::REMOVING) {
-      this->sceneManager.get()->removeObject(maybeObject.value());
-      this->cursor->setCursorMode(CursorMode::NAVIGATION);
-
-    } else if (this->cursor->getCursorMode() == CursorMode::ADDING) {
-      this->sceneManager.get()->addElement(this->ray.getOrigin() + this->ray.getDirection() * distance, this->currentObjectToAdd);
-      this->cursor->setCursorMode(CursorMode::NAVIGATION);
-      this->sceneManager.get()->setSelectedSceneObject(this->sceneManager.get()->getObjects().front().get());
-    } else if (this->cursor->getCursorMode() == CursorMode::NAVIGATION) {
-      this->cursor->setCursorMode(CursorMode::SELECTION);
-    }
+void Scene3D::dragObjectWithMouse() {
+  if (draggedObject != nullptr) {
+    this->draggedObject->setPosition(ray.getOrigin() + ray.getDirection() * Constants::DEFAULT_DISTANCE_TO_DRAW);
   }
+}
 
-  if (ImGui::IsMouseDown(ImGuiMouseButton_Left)
-      && shouldDragObject
-      && NAVIGATION_OR_SELECTION) {
-    this->cursor->computeRay(*this->currentCamera, this->ray);
-    this->sceneManager.get()->setObjectPosition(this->draggedObject, ray.getOrigin() + ray.getDirection() * distance);
-    this->currentCamera->disableMouseInput();
+void Scene3D::releaseDraggedObject() {
+  shouldDragObject = false;
+  this->draggedObject = nullptr;
+}
+
+void Scene3D::drawObjectPreview() {
+  auto &&maybeObject = this->setRayWithCollidingObject(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
+  auto &&found = maybeObject.has_value();
+  auto position = this->ray.getOrigin() + this->ray.getDirection() * Constants::DEFAULT_DISTANCE_TO_DRAW;
+
+  if (!found) {
+    this->ray.drawPrimitiveDefaultPreview(this->currentObjectToAdd, position);
   }
 }
 
