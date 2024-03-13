@@ -13,6 +13,10 @@ Camera *WindowCamera::getSelectedCamera() const {
   return this->selectedCamera;
 }
 
+bool WindowCamera::getIsShow() const {
+  return this->isShown;
+}
+
 void WindowCamera::drawScene() {
   if (!isShown || hasNoSelectedCamera()) {
     return;
@@ -43,10 +47,6 @@ void WindowCamera::drawScene() {
 
 void WindowCamera::switchIsShown() {
   isShown = !isShown;
-}
-
-void WindowCamera::setIsShown(bool isShown) {
-  this->isShown = isShown;
 }
 
 bool WindowCamera::hasNoSelectedCamera() const {

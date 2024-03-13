@@ -9,9 +9,9 @@ public:
   WindowCamera(SceneManager *sceneManager);
   void setSelectedCamera(Camera *camera);
   Camera *getSelectedCamera() const;
+  bool getIsShow() const;
   void drawScene();
   void switchIsShown();
-  void setIsShown(bool isShown);
 
 private:
   bool hasNoSelectedCamera() const;

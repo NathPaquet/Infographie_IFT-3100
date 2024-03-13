@@ -6,8 +6,6 @@ CameraPanel::CameraPanel(SceneManager *sceneManager, WindowCamera *windowCamera)
 void CameraPanel::setSceneManager(SceneManager *sceneManager) {
   this->sceneManager = sceneManager;
   windowCamera->setSelectedCamera(nullptr);
-  this->isWindowCameraShown = false;
-  windowCamera->setIsShown(isWindowCameraShown);
 }
 
 void CameraPanel::create() {
@@ -33,8 +31,9 @@ void CameraPanel::create() {
       }
     }
 
+    bool isWindowCameraShown = windowCamera->getIsShow();
     if (ImGui::Checkbox("Show camera view", &isWindowCameraShown)) {
-      windowCamera->setIsShown(isWindowCameraShown);
+      windowCamera->switchIsShown();
     }
 
     ImGui::EndMenu();
