@@ -37,7 +37,7 @@ private:
   void switchBetweenProjections();
   Tools tools;
   std::unique_ptr<CameraPanel> cameraPanel;
-  WindowCamera *windowCamera;
+  std::unique_ptr<WindowCamera> windowCamera;
 
   std::unique_ptr<SceneGraph> sceneGraph;
   std::unique_ptr<PropertiesPanel> propertiesPanel;

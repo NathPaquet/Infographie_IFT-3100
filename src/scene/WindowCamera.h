@@ -13,8 +13,9 @@ public:
   void setIsShown(bool isShown);
 
 private:
-  bool hasASelectedCamera() const;
+  bool hasNoSelectedCamera() const;
 
+  const float RATIO_SCENE = 0.375f;
   SceneManager *sceneManager;
   Camera *selectedCamera = nullptr;
   bool isShown = false;

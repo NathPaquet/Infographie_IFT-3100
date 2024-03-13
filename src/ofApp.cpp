@@ -32,8 +32,8 @@ void ofApp::setup() {
 
   this->gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable);
   this->sceneGraph = std::make_unique<SceneGraph>(this->currentScene->getSceneManager());
-  this->windowCamera = new WindowCamera(this->currentScene->getSceneManager());
-  this->cameraPanel = std::make_unique<CameraPanel>(this->currentScene->getSceneManager(), windowCamera);
+  this->windowCamera = std::make_unique<WindowCamera>(this->currentScene->getSceneManager());
+  this->cameraPanel = std::make_unique<CameraPanel>(this->currentScene->getSceneManager(), windowCamera.get());
   this->propertiesPanel = std::make_unique<PropertiesPanel>();
 
   ofDisableArbTex();
