@@ -8,6 +8,7 @@ class WindowCamera {
 public:
   WindowCamera(SceneManager *sceneManager);
   void setSelectedCamera(Camera *camera);
+  Camera *getSelectedCamera() const;
   void drawScene();
   void switchIsShown();
   void setIsShown(bool isShown);

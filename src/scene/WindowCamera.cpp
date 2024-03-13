@@ -9,6 +9,10 @@ void WindowCamera::setSelectedCamera(Camera *camera) {
   this->selectedCamera = camera;
 }
 
+Camera *WindowCamera::getSelectedCamera() const {
+  return this->selectedCamera;
+}
+
 void WindowCamera::drawScene() {
   if (!isShown || hasNoSelectedCamera()) {
     return;

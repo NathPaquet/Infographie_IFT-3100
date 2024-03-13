@@ -17,12 +17,18 @@ void CameraPanel::create() {
     if (cameras.empty()) {
       ImGui::Text("No cameras");
     } else {
-      for (int i = 0; i < cameras.size(); i++) {
-        int index = i + 1;
+      for (const auto &camera : cameras) {
+        std::stringstream ss;
 
-        std::string cameraName = "Camera " + std::to_string(index);
+        if (windowCamera->getSelectedCamera() == camera) {
+          ss << "-> ";
+        }
+
+        ss << "Camera (ID : " << camera << ")";
+        std::string cameraName = ss.str();
+
         if (ImGui::MenuItem(cameraName.c_str())) {
-          windowCamera->setSelectedCamera(cameras.at(i));
+          windowCamera->setSelectedCamera(camera);
         }
       }
     }
