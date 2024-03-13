@@ -118,6 +118,7 @@
     <ClCompile Include="src\properties\propertiesDraw\ImagePropertyDrawer.cpp" />
     <ClCompile Include="src\properties\PropertiesPanel.cpp" />
     <ClCompile Include="src\raycasting\ray.cpp" />
+    <ClCompile Include="src\scene\scene3D\scene3DEventHandler.cpp" />
     <ClCompile Include="src\scene\WindowCamera.cpp" />
     <ClCompile Include="src\scene\object\object2D\model\MagicSword.cpp" />
     <ClCompile Include="src\scene\object\object2D\model\SpaceRocket.cpp" />
@@ -137,7 +138,7 @@
     <ClCompile Include="src\scene\object\sceneObjectFactory.cpp" />
     <ClCompile Include="src\scene\scene.cpp" />
     <ClCompile Include="src\scene\scene2D.cpp" />
-    <ClCompile Include="src\scene\scene3D.cpp" />
+    <ClCompile Include="src\scene\scene3D\scene3D.cpp" />
     <ClCompile Include="src\scene\sceneGraph.cpp" />
     <ClCompile Include="src\scene\sceneManager.cpp" />
     <ClCompile Include="src\utils\ImageCapture.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="src\properties\PropertiesPanel.h" />
     <ClInclude Include="src\properties\Property.h" />
     <ClInclude Include="src\raycasting\ray.h" />
+    <ClInclude Include="src\scene\scene3D\scene3DEventHandler.h" />
     <ClInclude Include="src\scene\WindowCamera.h" />
     <ClInclude Include="src\scene\object\object2D\model\MagicSword.h" />
     <ClInclude Include="src\scene\object\object2D\model\SpaceRocket.h" />
@@ -212,7 +214,7 @@
     <ClInclude Include="src\scene\object\sceneObjectFactory.h" />
     <ClInclude Include="src\scene\scene.h" />
     <ClInclude Include="src\scene\scene2D.h" />
-    <ClInclude Include="src\scene\scene3D.h" />
+    <ClInclude Include="src\scene\scene3D\scene3D.h" />
     <ClInclude Include="src\scene\sceneGraph.h" />
     <ClInclude Include="src\scene\sceneManager.h" />
     <ClInclude Include="src\utils\ImageCapture.h" />

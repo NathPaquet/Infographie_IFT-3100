@@ -21,6 +21,7 @@ void ofApp::setup() {
 
   // Setup 3D scene
   this->scene3D = std::make_unique<Scene3D>(std::make_unique<SceneManager>(), cursor.get());
+  this->scene3DEventHandler = std::make_unique<Scene3DEventHandler>(this->scene3D.get());
   this->scene3D->setup();
 
   // Setup 2D scene

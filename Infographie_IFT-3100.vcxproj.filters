@@ -34,6 +34,9 @@
     <ClCompile Include="src\properties\PropertiesPanel.cpp">
       <Filter>src\properties</Filter>
     </ClCompile>
+    <ClCompile Include="src\properties\Property.cpp">
+      <Filter>src\properties</Filter>
+    </ClCompile>
     <ClCompile Include="src\raycasting\ray.cpp">
       <Filter>src\raycasting</Filter>
     </ClCompile>
@@ -219,6 +222,11 @@
     </ClCompile>
     <ClCompile Include="src\properties\propertiesDraw\ImagePropertyDrawer.cpp">
       <Filter>src\properties\propertiesDrawer</Filter>
+    <ClCompile Include="src\scene\scene3D\scene3D.cpp">
+      <Filter>src\scene\scene3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\scene3D\scene3DEventHandler.cpp">
+      <Filter>src\scene\scene3D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -344,6 +352,9 @@
     </Filter>
     <Filter Include="addons\ofxSvg\libs\svgtiny\include">
       <UniqueIdentifier>{F949A38E--797-3-4B-4D-A-268-4900612BF907}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\scene\scene3D">
+      <UniqueIdentifier>{2caf8e8f-86ec-449e-9103-832c12e34206}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\properties\propertiesDrawer">
       <UniqueIdentifier>{e90f0836-f8fe-4e21-b55d-c95e31eb22d2}</UniqueIdentifier>
@@ -997,6 +1008,11 @@
     </ClInclude>
     <ClInclude Include="src\properties\propertiesDraw\ImagePropertyDrawer.h">
       <Filter>src\properties\propertiesDrawer</Filter>
+    <ClInclude Include="src\scene\scene3D\scene3D.h">
+      <Filter>src\scene\scene3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\scene3D\scene3DEventHandler.h">
+      <Filter>src\scene\scene3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
