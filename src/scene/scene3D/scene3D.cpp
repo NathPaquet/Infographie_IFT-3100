@@ -54,6 +54,8 @@ void Scene3D::processMouseActions() {
   if (!isMouseClickInScene()) {
     this->currentCamera->disableMouseInput();
     return;
+  } else {
+    this->currentCamera->enableMouseInput();
   }
   const float distance = Constants::DEFAULT_DISTANCE_TO_DRAW_PRIMITIVE;
 
