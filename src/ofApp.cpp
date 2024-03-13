@@ -30,6 +30,7 @@ void ofApp::setup() {
 
   // Setup initial scene
   this->currentScene = this->scene3D.get();
+  this->scene3DEventHandler.get()->activateHandler();
 
   this->gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable);
   this->sceneGraph = std::make_unique<SceneGraph>(this->currentScene->getSceneManager());
@@ -331,11 +332,15 @@ void ofApp::generateRandomGalaxy(int nbElements) {
 
 void ofApp::switchBetweenScenes() {
   if (this->isScene2D) {
+    // TODO : Deactivate 2D scene event handler
+    this->scene3DEventHandler.get()->activateHandler();
     this->currentScene = this->scene3D.get();
     this->isScene2D = false;
     this->sceneGraph->setSceneManager(this->currentScene->getSceneManager());
     this->cameraPanel->setSceneManager(this->currentScene->getSceneManager());
   } else if (!this->isScene2D) {
+    this->scene3DEventHandler.get()->deactivateHandler();
+    // TODO : Activate 2D scene event handler
     this->currentScene = this->scene2D.get();
     this->isScene2D = true;
     this->sceneGraph->setSceneManager(this->currentScene->getSceneManager());
