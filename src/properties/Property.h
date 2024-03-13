@@ -47,7 +47,7 @@ static inline const char *toString(PROPERTY_ID propertyId) {
     case PROPERTY_ID::ANGLE_Z:
       return "Angle Z";
     case PROPERTY_ID::SHOW_WIREFRAME:
-      return "Line thickness";
+      return "Show only wireframe";
     case PROPERTY_ID::RATIO:
       return "Ratio";
     default:

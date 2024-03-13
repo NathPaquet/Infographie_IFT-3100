@@ -117,7 +117,6 @@
     <ClCompile Include="src\properties\propertiesDraw\FloatPropertyDrawer.cpp" />
     <ClCompile Include="src\properties\propertiesDraw\ImagePropertyDrawer.cpp" />
     <ClCompile Include="src\properties\PropertiesPanel.cpp" />
-    <ClCompile Include="src\properties\Property.cpp" />
     <ClCompile Include="src\raycasting\ray.cpp" />
     <ClCompile Include="src\scene\WindowCamera.cpp" />
     <ClCompile Include="src\scene\object\object2D\model\MagicSword.cpp" />

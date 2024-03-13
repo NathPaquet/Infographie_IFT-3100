@@ -34,9 +34,6 @@
     <ClCompile Include="src\properties\PropertiesPanel.cpp">
       <Filter>src\properties</Filter>
     </ClCompile>
-    <ClCompile Include="src\properties\Property.cpp">
-      <Filter>src\properties</Filter>
-    </ClCompile>
     <ClCompile Include="src\raycasting\ray.cpp">
       <Filter>src\raycasting</Filter>
     </ClCompile>
