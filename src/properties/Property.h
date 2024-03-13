@@ -19,7 +19,8 @@ enum class PROPERTY_ID {
   RADIUS,
   WIDTH,
   HEIGHT,
-  ANGLES,
+  ANGLE_X,
+  ANGLE_Y,
   ANGLE_Z,
   SHOW_WIREFRAME,
   RATIO,
@@ -39,8 +40,10 @@ static inline const char *toString(PROPERTY_ID propertyId) {
       return "Color";
     case PROPERTY_ID::IMAGE_IMPORT:
       return "Image Import";
-    case PROPERTY_ID::ANGLES:
-      return "Angles";
+    case PROPERTY_ID::ANGLE_X:
+      return "Angle X";
+    case PROPERTY_ID::ANGLE_Y:
+      return "Angle Y";
     case PROPERTY_ID::ANGLE_Z:
       return "Angle Z";
     case PROPERTY_ID::SHOW_WIREFRAME:

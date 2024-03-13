@@ -3,125 +3,29 @@
 #include "ImageImporter.h"
 #include "imgui.h"
 
+#include <propertiesDraw/BoolPropertyDrawer.h>
+#include <propertiesDraw/ColorPropertyDrawer.h>
+#include <propertiesDraw/FloatPropertyDrawer.h>
+#include <propertiesDraw/ImagePropertyDrawer.h>
+
 constexpr float MIN_FLOAT_VALUE = 0.0f;
 constexpr float MAX_FLOAT_VALUE = 50.0f;
 constexpr float MIN_ANGLE_VALUE = 0.0f;
 constexpr float MAX_ANGLE_VALUE = 360.0f;
 
 PropertiesPanel::PropertiesPanel() {
-  auto floatDraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawFloatProperty(objectsProperty); };
-  auto imageImportDraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawImageImport(objectsProperty); };
-  auto colorDraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawColorProperty(objectsProperty); };
-  auto anglesDraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawAngles(objectsProperty); };
-  auto toggleDraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawToggle(objectsProperty); };
-  auto angleZdraw = [this](std::vector<PropertyBase *> &objectsProperty) { drawZAngles(objectsProperty); };
-  propertyDrawFunctions.emplace(PROPERTY_ID::SIZE, floatDraw);
-  propertyDrawFunctions.emplace(PROPERTY_ID::RADIUS, floatDraw);
-  propertyDrawFunctions.emplace(PROPERTY_ID::HEIGHT, floatDraw);
-  propertyDrawFunctions.emplace(PROPERTY_ID::WIDTH, floatDraw);
-  propertyDrawFunctions.emplace(PROPERTY_ID::SHOW_WIREFRAME, toggleDraw);
-  propertyDrawFunctions.emplace(PROPERTY_ID::RATIO, floatDraw);
-  propertyDrawFunctions.emplace(PROPERTY_ID::COLOR, colorDraw);
-  propertyDrawFunctions.emplace(PROPERTY_ID::IMAGE_IMPORT, imageImportDraw);
-  propertyDrawFunctions.emplace(PROPERTY_ID::ANGLE_Z, angleZdraw);
-  propertyDrawFunctions.emplace(PROPERTY_ID::ANGLES, anglesDraw);
-}
+  propertyDrawFunctions.emplace(PROPERTY_ID::SIZE, std::make_unique<FloatPropertyDrawer>(MIN_FLOAT_VALUE, MAX_FLOAT_VALUE));
+  propertyDrawFunctions.emplace(PROPERTY_ID::RADIUS, std::make_unique<FloatPropertyDrawer>(MIN_FLOAT_VALUE, MAX_FLOAT_VALUE));
+  propertyDrawFunctions.emplace(PROPERTY_ID::HEIGHT, std::make_unique<FloatPropertyDrawer>(MIN_FLOAT_VALUE, MAX_FLOAT_VALUE));
+  propertyDrawFunctions.emplace(PROPERTY_ID::WIDTH, std::make_unique<FloatPropertyDrawer>(MIN_FLOAT_VALUE, MAX_FLOAT_VALUE));
+  propertyDrawFunctions.emplace(PROPERTY_ID::RATIO, std::make_unique<FloatPropertyDrawer>(MIN_FLOAT_VALUE, MAX_FLOAT_VALUE));
 
-void PropertiesPanel::drawFloatProperty(std::vector<PropertyBase *> &objectsProperty) {
-  auto firstObjectProperty = dynamic_cast<Property<float> *>(objectsProperty[0]);
-  auto propertyValue = firstObjectProperty->getValue();
-
-  ImGui::SeparatorText(toString(firstObjectProperty->getId()));
-
-  if (ImGui::SliderFloat(toString(firstObjectProperty->getId()), &propertyValue, MIN_FLOAT_VALUE, MAX_FLOAT_VALUE, NULL, ImGuiSliderFlags_AlwaysClamp)) { // Returns true if the value was changed
-    for (auto &&objectProperty : objectsProperty) {
-      auto property = dynamic_cast<Property<float> *>(objectProperty);
-      property->setValue(propertyValue);
-    }
-  }
-  if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
-    ImGui::SetItemTooltip("CTRL+Click to input value.");
-}
-
-void PropertiesPanel::drawColorProperty(std::vector<PropertyBase *> &objectsProperty) {
-  auto firstObjectProperty = dynamic_cast<Property<ofColor> *>(objectsProperty[0]);
-  auto propertyValue = firstObjectProperty->getValue();
-
-  ImGui::SeparatorText(toString(firstObjectProperty->getId()));
-
-  if (this->colorPicker.createColorPicker(propertyValue)) { // Returns true if the value was changed
-    for (auto &&objectProperty : objectsProperty) {
-      auto property = dynamic_cast<Property<ofColor> *>(objectProperty);
-      property->setValue(propertyValue);
-    }
-  }
-}
-
-void PropertiesPanel::drawImageImport(std::vector<PropertyBase *> &objectsProperty) {
-  auto firstObjectProperty = dynamic_cast<Property<ofImage> *>(objectsProperty[0]);
-  ImGui::SeparatorText(toString(firstObjectProperty->getId()));
-
-  if (ImGui::Button("Import image", ImVec2(100.f, 30.f))) { // Returns true if the button was pressed
-    ImageImporter::importImage(objectsProperty);
-  }
-  if (ImGui::Button("Remove image", ImVec2(100.f, 30.f))) { // Returns true if the button was pressed
-    for (auto &&objectProperty : objectsProperty) {
-      auto property = dynamic_cast<Property<ofImage> *>(objectProperty);
-      property->getValue().clear();
-      property->setChanged(true);
-    }
-  }
-}
-void PropertiesPanel::drawZAngles(std::vector<PropertyBase *> &objectsProperty) {
-  auto firstObjectProperty = dynamic_cast<Property<float> *>(objectsProperty[0]);
-  auto propertyValue = firstObjectProperty->getValue();
-  ImGui::SeparatorText(toString(firstObjectProperty->getId()));
-  bool angleZUsed = ImGui::SliderFloat(toString(firstObjectProperty->getId()), &propertyValue, MIN_ANGLE_VALUE, MAX_ANGLE_VALUE, NULL, ImGuiSliderFlags_AlwaysClamp);
-  if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
-    ImGui::SetItemTooltip("CTRL+Click to input value.");
-
-  if (angleZUsed) {
-    for (auto &&objectProperty : objectsProperty) {
-      auto property = dynamic_cast<Property<float> *>(objectProperty);
-      property->setValue(propertyValue);
-    }
-  }
-}
-void PropertiesPanel::drawAngles(std::vector<PropertyBase *> &objectsProperty) {
-  auto firstObjectProperty = dynamic_cast<Property<ofVec3f> *>(objectsProperty[0]);
-  auto propertyValue = firstObjectProperty->getValue();
-
-  ImGui::SeparatorText(toString(firstObjectProperty->getId()));
-  bool angleXUsed = ImGui::SliderFloat("Angle X", &propertyValue.x, MIN_ANGLE_VALUE, MAX_ANGLE_VALUE, NULL, ImGuiSliderFlags_AlwaysClamp);
-  if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
-    ImGui::SetItemTooltip("CTRL+Click to input value.");
-  bool angleYUsed = ImGui::SliderFloat("Angle Y", &propertyValue.y, MIN_ANGLE_VALUE, MAX_ANGLE_VALUE, NULL, ImGuiSliderFlags_AlwaysClamp);
-  if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
-    ImGui::SetItemTooltip("CTRL+Click to input value.");
-  bool angleZUsed = ImGui::SliderFloat("Angle Z", &propertyValue.z, MIN_ANGLE_VALUE, MAX_ANGLE_VALUE, NULL, ImGuiSliderFlags_AlwaysClamp);
-  if (ImGui::IsItemHovered(ImGuiHoveredFlags_Stationary))
-    ImGui::SetItemTooltip("CTRL+Click to input value.");
-
-  if (angleXUsed || angleYUsed || angleZUsed) {
-    for (auto &&objectProperty : objectsProperty) {
-      auto property = dynamic_cast<Property<ofVec3f> *>(objectProperty);
-      property->setValue(propertyValue);
-    }
-  }
-}
-
-void PropertiesPanel::drawToggle(std::vector<PropertyBase *> &objectsProperty) {
-  auto &&firstObjectProperty = dynamic_cast<Property<bool> *>(objectsProperty[0]);
-  auto &&propertyValue = firstObjectProperty->getValue();
-
-  ImGui::SeparatorText(toString(firstObjectProperty->getId()));
-  bool temp = propertyValue;
-  if (ImGui::Checkbox("Draw Wireframe Only", &temp)) {
-    for (auto &&objectProperty : objectsProperty) {
-      auto property = dynamic_cast<Property<bool> *>(objectProperty);
-      property->setValue(temp);
-    }
-  }
+  propertyDrawFunctions.emplace(PROPERTY_ID::SHOW_WIREFRAME, std::make_unique<BoolPropertyDrawer>());
+  propertyDrawFunctions.emplace(PROPERTY_ID::COLOR, std::make_unique<ColorPropertyDrawer>());
+  propertyDrawFunctions.emplace(PROPERTY_ID::IMAGE_IMPORT, std::make_unique<ImagePropertyDrawer>());
+  propertyDrawFunctions.emplace(PROPERTY_ID::ANGLE_X, std::make_unique<FloatPropertyDrawer>(MIN_ANGLE_VALUE, MAX_ANGLE_VALUE));
+  propertyDrawFunctions.emplace(PROPERTY_ID::ANGLE_Y, std::make_unique<FloatPropertyDrawer>(MIN_ANGLE_VALUE, MAX_ANGLE_VALUE));
+  propertyDrawFunctions.emplace(PROPERTY_ID::ANGLE_Z, std::make_unique<FloatPropertyDrawer>(MIN_ANGLE_VALUE, MAX_ANGLE_VALUE));
 }
 
 void PropertiesPanel::drawPropertiesPanel(std::vector<SceneObject *> &objects) {
@@ -132,7 +36,7 @@ void PropertiesPanel::drawPropertiesPanel(std::vector<SceneObject *> &objects) {
   auto commonProperties = findCommonProperties(objects);
 
   for (auto &&property : commonProperties) {
-    this->propertyDrawFunctions.at(property.first)(property.second);
+    this->propertyDrawFunctions.at(property.first)->draw(property.second);
   }
 }
 

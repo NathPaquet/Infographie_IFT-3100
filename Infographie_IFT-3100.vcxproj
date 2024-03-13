@@ -112,6 +112,10 @@
     <ClCompile Include="src\layouts\Tools.cpp" />
     <ClCompile Include="src\layouts\export\ExportMenu.cpp" />
     <ClCompile Include="src\layouts\export\ImageFormatDropdown.cpp" />
+    <ClCompile Include="src\properties\propertiesDraw\BoolPropertyDrawer.cpp" />
+    <ClCompile Include="src\properties\propertiesDraw\ColorPropertyDrawer.cpp" />
+    <ClCompile Include="src\properties\propertiesDraw\FloatPropertyDrawer.cpp" />
+    <ClCompile Include="src\properties\propertiesDraw\ImagePropertyDrawer.cpp" />
     <ClCompile Include="src\properties\PropertiesPanel.cpp" />
     <ClCompile Include="src\properties\Property.cpp" />
     <ClCompile Include="src\raycasting\ray.cpp" />
@@ -182,6 +186,11 @@
     <ClInclude Include="src\layouts\Tools.h" />
     <ClInclude Include="src\layouts\export\ExportMenu.h" />
     <ClInclude Include="src\layouts\export\ImageFormatDropdown.h" />
+    <ClInclude Include="src\properties\propertiesDraw\AbstractPropertyDrawer.h" />
+    <ClInclude Include="src\properties\propertiesDraw\BoolPropertyDrawer.h" />
+    <ClInclude Include="src\properties\propertiesDraw\ColorPropertyDrawer.h" />
+    <ClInclude Include="src\properties\propertiesDraw\FloatPropertyDrawer.h" />
+    <ClInclude Include="src\properties\propertiesDraw\ImagePropertyDrawer.h" />
     <ClInclude Include="src\properties\PropertiesPanel.h" />
     <ClInclude Include="src\properties\Property.h" />
     <ClInclude Include="src\raycasting\ray.h" />
