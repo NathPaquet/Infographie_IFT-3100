@@ -228,6 +228,12 @@
     <ClCompile Include="src\scene\scene3D\scene3DEventHandler.cpp">
       <Filter>src\scene\scene3D</Filter>
     </ClCompile>
+    <ClCompile Include="src\scene\scene2D\scene2D.cpp">
+      <Filter>src\scene\scene2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\scene2D\scene2DEventHandler.cpp">
+      <Filter>src\scene\scene2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -1013,6 +1019,12 @@
     </ClInclude>
     <ClInclude Include="src\scene\scene3D\scene3DEventHandler.h">
       <Filter>src\scene\scene3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\scene2D\scene2D.h">
+      <Filter>src\scene\scene2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\scene2D\scene2DEventHandler.h">
+      <Filter>src\scene\scene2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

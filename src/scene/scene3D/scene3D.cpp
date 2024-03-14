@@ -52,7 +52,7 @@ void Scene3D::toggleProjectionMode() {
 }
 
 bool Scene3D::attemptToClickOnObjectWithMouse() {
-  auto &&maybeObject = this->setRayWithCollidingObject(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
+  auto &&maybeObject = this->getObjectCollidingWithRay(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
   auto &&found = maybeObject.has_value();
 
   if (found) {
@@ -72,7 +72,7 @@ bool Scene3D::attemptToClickOnObjectWithMouse() {
 }
 
 bool Scene3D::attemptToAddObjectWithMouse() {
-  auto &&maybeObject = this->setRayWithCollidingObject(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
+  auto &&maybeObject = this->getObjectCollidingWithRay(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
   auto &&found = maybeObject.has_value();
 
   if (!found) {
@@ -84,7 +84,7 @@ bool Scene3D::attemptToAddObjectWithMouse() {
 }
 
 bool Scene3D::attemptToRemoveObjectWihMouse() {
-  auto &&maybeObject = this->setRayWithCollidingObject(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
+  auto &&maybeObject = this->getObjectCollidingWithRay(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
   auto &&found = maybeObject.has_value();
 
   if (found) {
@@ -105,7 +105,7 @@ void Scene3D::releaseDraggedObject() {
 }
 
 void Scene3D::drawObjectPreview() {
-  auto &&maybeObject = this->setRayWithCollidingObject(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
+  auto &&maybeObject = this->getObjectCollidingWithRay(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
   auto &&found = maybeObject.has_value();
   auto position = this->ray.getOrigin() + this->ray.getDirection() * Constants::DEFAULT_DISTANCE_TO_DRAW;
 

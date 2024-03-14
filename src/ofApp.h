@@ -9,10 +9,11 @@
 #include "properties/PropertiesPanel.h"
 #include "raycasting/ray.h"
 #include "scene/scene.h"
-#include "scene/scene2D.h"
+#include "scene/scene2D/scene2D.h"
 #include "scene/scene3D/scene3D.h"
 #include "scene/sceneGraph.h"
 #include "scene/sceneManager.h"
+#include "scene2D/scene2DEventHandler.h"
 #include "scene3D/scene3DEventHandler.h"
 
 class ofApp : public ofBaseApp {
@@ -46,6 +47,7 @@ private:
   std::unique_ptr<Scene3D> scene3D;
   std::unique_ptr<Scene3DEventHandler> scene3DEventHandler;
   std::unique_ptr<Scene2D> scene2D;
+  std::unique_ptr<Scene2DEventHandler> scene2DEventHandler;
   std::unique_ptr<Cursor> cursor;
   bool isScene2D = false;
   bool isViewOrtho = false;

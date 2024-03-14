@@ -8,9 +8,14 @@ public:
   void setup() override;
   void update() override;
   void drawScene() override;
+  void dragObjectWithMouse();
+  bool attemptToClickOnObjectWithMouse();
+  bool attemptToAddObjectWithMouse();
+  bool attemptToRemoveObjectWihMouse();
+  void releaseDraggedObject();
+  void drawObjectPreview();
 
 private:
-  void processMouseActions();
   ofEasyCam camera;
   Ray ray;
   ofColor backgroundColor = ofColor(255, 255, 255, 255);

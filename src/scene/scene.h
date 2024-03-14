@@ -23,7 +23,7 @@ protected:
 
   void computeRay(const ofEasyCam &camera, Ray &ray) const;
   glm::highp_vec3 findMouseDirectionInWorld(const ofEasyCam &camera) const;
-  std::optional<const SceneObject *> setRayWithCollidingObject(const std::list<std::unique_ptr<SceneObject>> &objects, const ofEasyCam &camera, Ray &ray);
+  std::optional<const SceneObject *> getObjectCollidingWithRay(const std::list<std::unique_ptr<SceneObject>> &objects, const ofEasyCam &camera, Ray &ray);
 
   std::unique_ptr<SceneManager> sceneManager;
   bool shouldDragObject = false;

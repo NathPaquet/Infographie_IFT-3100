@@ -42,9 +42,7 @@ glm::highp_vec3 Scene::findMouseDirectionInWorld(const ofEasyCam &camera) const 
   return worldMouseDirection;
 }
 
-std::optional<const SceneObject *> Scene::setRayWithCollidingObject(const std::list<std::unique_ptr<SceneObject>> &objects, const ofEasyCam &camera, Ray &ray) {
-  this->computeRay(camera, ray);
-
+std::optional<const SceneObject *> Scene::getObjectCollidingWithRay(const std::list<std::unique_ptr<SceneObject>> &objects, const ofEasyCam &camera, Ray &ray) {
   glm::vec2 baricentricCoordinates;
   float distance;
   float distanceToClosestIntersection = numeric_limits<float>::max();
