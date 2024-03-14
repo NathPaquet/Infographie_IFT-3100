@@ -67,25 +67,20 @@ bool Scene3D::attemptToClickOnObjectWithMouse() {
     if (it != this->sceneManager.get()->getSelectedObjects().end()) {
       draggedObject = *it;
     }
-
-    return true;
-  } else {
-    return false;
   }
+  return found;
 }
 
 bool Scene3D::attemptToAddObjectWithMouse() {
   auto &&maybeObject = this->setRayWithCollidingObject(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
   auto &&found = maybeObject.has_value();
 
-  if (found) {
-    return false;
-  } else {
+  if (!found) {
     this->sceneManager.get()->addElement(this->ray.getOrigin() + this->ray.getDirection() * Constants::DEFAULT_DISTANCE_TO_DRAW, this->currentObjectToAdd);
     this->sceneManager.get()->setSelectedSceneObject(this->sceneManager.get()->getObjects().front().get());
     this->currentObjectToAdd = ElementType::NONE;
-    return true;
   }
+  return !found;
 }
 
 bool Scene3D::attemptToRemoveObjectWihMouse() {
@@ -94,10 +89,8 @@ bool Scene3D::attemptToRemoveObjectWihMouse() {
 
   if (found) {
     this->sceneManager.get()->removeObject(maybeObject.value());
-    return true;
-  } else {
-    return false;
   }
+  return found;
 }
 
 void Scene3D::dragObjectWithMouse() {
