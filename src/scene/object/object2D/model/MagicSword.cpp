@@ -122,5 +122,6 @@ void MagicSword::initMesh(const glm::vec3 &centerPosition, const float width, co
   }
 
   this->primitive = std::make_unique<of3dPrimitive>(of3dPrimitive(mesh));
+  this->primitive->setPosition(centerPosition);
   this->position = centerPosition;
 }

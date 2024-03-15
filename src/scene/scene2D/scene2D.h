@@ -14,6 +14,7 @@ public:
   bool attemptToRemoveObjectWihMouse();
   void releaseDraggedObject();
   void drawObjectPreview();
+  void moveCameraWithMouse();
 
 private:
   ofEasyCam camera;

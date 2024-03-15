@@ -5,6 +5,7 @@
 enum class CursorMode {
   GRABBING,
   NAVIGATION,
+  CAMERA_MOVING,
   SELECTION,
   DRAWING,
   ADDING,

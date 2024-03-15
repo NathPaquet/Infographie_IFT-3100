@@ -25,5 +25,5 @@ const ofVec3f &SceneObject::getPosition() const {
 
 void SceneObject::setPosition(ofVec3f vec) {
   this->position = vec;
-  this->primitive->setGlobalPosition(vec);
+  this->primitive->setGlobalPosition(vec.x, vec.y, vec.z);
 }

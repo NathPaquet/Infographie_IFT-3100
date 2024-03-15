@@ -15,7 +15,6 @@ private:
   bool isActivated = false;
 
   bool isMouseInScene() const;
-  void mouseMoved(ofMouseEventArgs &mouseArgs);
   void mouseDragged(ofMouseEventArgs &mouseArgs);
   void mousePressed(ofMouseEventArgs &mouseArgs);
   void mouseReleased(ofMouseEventArgs &mouseArgs);

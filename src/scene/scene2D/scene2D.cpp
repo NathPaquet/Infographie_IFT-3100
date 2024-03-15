@@ -92,3 +92,7 @@ void Scene2D::drawObjectPreview() {
     this->ray.drawPrimitivePreview(this->currentObjectToAdd, this->drawingFirstPosition, position);
   }
 }
+
+void Scene2D::moveCameraWithMouse() {
+  this->camera.setPosition(this->camera.getPosition() + glm::vec3(ofGetPreviousMouseX() - ofGetMouseX(), ofGetMouseY() - ofGetPreviousMouseY(), 0) * 0.2);
+}

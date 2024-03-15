@@ -47,6 +47,10 @@ void Cursor::setCursorMode(CursorMode type) {
     case CursorMode::GRABBING:
       cursorSVG.load(Constants::HAND_GRAB_CURSOR_PATH);
       break;
+    case CursorMode::CAMERA_MOVING:
+      // TODO : Change cursor
+      cursorSVG.load(Constants::HAND_GRAB_CURSOR_PATH);
+      break;
     case CursorMode::ADDING:
       cursorSVG.load(Constants::ADD_CURSOR_PATH);
       break;

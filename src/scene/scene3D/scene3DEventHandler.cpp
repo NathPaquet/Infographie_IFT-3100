@@ -71,7 +71,7 @@ void Scene3DEventHandler::leftMouseButtonPressed() {
       if (this->scene3D->attemptToClickOnObjectWithMouse()) {
         this->cursor->setCursorMode(CursorMode::GRABBING);
       } else {
-        this->cursor->setCursorMode(CursorMode::SELECTION);
+        this->cursor->setCursorMode(CursorMode::CAMERA_MOVING);
       }
       break;
     case CursorMode::ADDING:
@@ -96,7 +96,7 @@ void Scene3DEventHandler::leftMouseButtonReleased() {
       this->scene3D->activateCameraMouseInput();
       this->cursor->setCursorMode(CursorMode::NAVIGATION);
       break;
-    case CursorMode::SELECTION:
+    case CursorMode::CAMERA_MOVING:
       this->cursor->setCursorMode(CursorMode::NAVIGATION);
       break;
     default:
