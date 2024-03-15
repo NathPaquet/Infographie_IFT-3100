@@ -26,6 +26,10 @@ bool Scene::isMouseClickInScene() {
   return !ImGui::GetIO().WantCaptureMouse;
 }
 
+bool Scene::hasADraggedObject() const {
+  return this->draggedObject != nullptr;
+}
+
 void Scene::computeRay(const ofEasyCam &camera, Ray &ray) const {
   auto mouseWorldDirection = findMouseDirectionInWorld(camera);
   const glm::vec3 cameraPositionInScreen(ofGetMouseX(), ofGetMouseY(), 0);

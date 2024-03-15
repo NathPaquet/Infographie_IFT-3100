@@ -143,7 +143,3 @@ void Scene3D::setupOrthographicCamera() {
   this->orthographicCamera.get()->setNearClip(-1000000);
   this->orthographicCamera.get()->setFarClip(1000000);
 }
-
-bool Scene3D::hasADraggedObject() const {
-  return this->draggedObject != nullptr;
-}

@@ -96,3 +96,28 @@ void Scene2D::drawObjectPreview() {
 void Scene2D::moveCameraWithMouse() {
   this->camera.setPosition(this->camera.getPosition() + glm::vec3(ofGetPreviousMouseX() - ofGetMouseX(), ofGetMouseY() - ofGetPreviousMouseY(), 0) * 0.2);
 }
+
+void Scene2D::moveObjectWithKey(int key) {
+  if (hasADraggedObject()) {
+    return;
+  }
+
+  for (const auto &sceneObject : sceneManager.get()->getSelectedObjects()) {
+    switch (key) {
+      case OF_KEY_UP:
+        sceneObject->setPosition(sceneObject->getPosition() + glm::vec3(0, 1, 0));
+        break;
+      case OF_KEY_DOWN:
+        sceneObject->setPosition(sceneObject->getPosition() + glm::vec3(0, -1, 0));
+        break;
+      case OF_KEY_LEFT:
+        sceneObject->setPosition(sceneObject->getPosition() + glm::vec3(-1, 0, 0));
+        break;
+      case OF_KEY_RIGHT:
+        sceneObject->setPosition(sceneObject->getPosition() + glm::vec3(1, 0, 0));
+        break;
+      default:
+        break;
+    }
+  }
+}
