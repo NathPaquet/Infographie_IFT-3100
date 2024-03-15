@@ -4,7 +4,9 @@
 
 Object3D::Object3D() {
   this->addProperty<ofImage>(PROPERTY_ID::IMAGE_IMPORT, ofImage());
-  this->addProperty<ofVec3f>(PROPERTY_ID::ANGLES, ofVec3f(0.f, 0.f, 0.f));
+  this->addProperty<float>(PROPERTY_ID::ANGLE_X, 0.f);
+  this->addProperty<float>(PROPERTY_ID::ANGLE_Y, 0.f);
+  this->addProperty<float>(PROPERTY_ID::ANGLE_Z, 0.f);
 }
 
 void Object3D::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) {
@@ -132,8 +134,10 @@ void Object3D::updateProperties() {
     this->mTex.clear();
     this->properties.at(PROPERTY_ID::IMAGE_IMPORT)->setChanged(false);
   }
-  if (this->properties.at(PROPERTY_ID::ANGLES)->isValueChanged()) {
-    this->primitive->setOrientation(this->getPropertyValue<ofVec3f>(PROPERTY_ID::ANGLES));
-    this->properties.at(PROPERTY_ID::ANGLES)->setChanged(false);
+  if (this->properties.at(PROPERTY_ID::ANGLE_X)->isValueChanged() || this->properties.at(PROPERTY_ID::ANGLE_Y)->isValueChanged() || this->properties.at(PROPERTY_ID::ANGLE_Z)->isValueChanged()) {
+    this->primitive->setOrientation({this->getPropertyValue<float>(PROPERTY_ID::ANGLE_X), this->getPropertyValue<float>(PROPERTY_ID::ANGLE_Y), this->getPropertyValue<float>(PROPERTY_ID::ANGLE_Z)});
+    this->properties.at(PROPERTY_ID::ANGLE_X)->setChanged(false);
+    this->properties.at(PROPERTY_ID::ANGLE_Y)->setChanged(false);
+    this->properties.at(PROPERTY_ID::ANGLE_Z)->setChanged(false);
   }
 }
