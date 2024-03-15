@@ -18,10 +18,13 @@ public:
   bool attemptToAddObjectWithMouse();
   bool attemptToRemoveObjectWihMouse();
   void dragObjectWithMouse();
+  void moveObjectWithScroll(float scrollAmount);
   void releaseDraggedObject();
   void drawObjectPreview();
 
 private:
+  const float SCROLL_POWER = 2.f;
+
   ofLight light;
   std::unique_ptr<ofEasyCam> perspectiveCamera;
   std::unique_ptr<ofEasyCam> orthographicCamera;
@@ -32,4 +35,5 @@ private:
 
   void setupPerspectiveCamera();
   void setupOrthographicCamera();
+  bool hasADraggedObject() const;
 };

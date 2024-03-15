@@ -94,8 +94,15 @@ bool Scene3D::attemptToRemoveObjectWihMouse() {
 }
 
 void Scene3D::dragObjectWithMouse() {
-  if (draggedObject != nullptr) {
+  if (hasADraggedObject()) {
     this->draggedObject->setPosition(ray.getOrigin() + ray.getDirection() * Constants::DEFAULT_DISTANCE_TO_DRAW);
+  }
+}
+
+void Scene3D::moveObjectWithScroll(float scrollAmount) {
+  if (hasADraggedObject()) {
+    auto direction = ray.getDirection() * scrollAmount * SCROLL_POWER;
+    this->draggedObject->setPosition(this->draggedObject->getPosition() + direction);
   }
 }
 
@@ -135,4 +142,8 @@ void Scene3D::setupOrthographicCamera() {
 
   this->orthographicCamera.get()->setNearClip(-1000000);
   this->orthographicCamera.get()->setFarClip(1000000);
+}
+
+bool Scene3D::hasADraggedObject() const {
+  return this->draggedObject != nullptr;
 }
