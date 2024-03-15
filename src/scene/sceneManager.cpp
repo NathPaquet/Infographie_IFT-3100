@@ -22,6 +22,9 @@ void SceneManager::addElement(const glm::vec3 position, const ElementType primit
 
 void SceneManager::addElement(const glm::vec3 position, const glm::vec3 outerPosition, const ElementType primitiveType) {
   this->sceneObjects.emplace_front(SceneObjectFactory::createSceneObject(position, outerPosition, primitiveType));
+
+  auto cameraPtr = this->sceneObjects.front().get();
+  addCamera(cameraPtr, primitiveType);
 }
 
 void SceneManager::addCamera(const SceneObject *sceneObject, const ElementType primitiveType) {
@@ -64,6 +67,7 @@ void SceneManager::removeObject(const SceneObject *sceneObject) {
 void SceneManager::removeAllSelectedObjects() {
   for (auto &&selectedObject : this->selectedSceneObjects) {
     removeElement(selectedObject);
+    removeCamera(selectedObject);
   }
 
   this->selectedSceneObjects.clear();
