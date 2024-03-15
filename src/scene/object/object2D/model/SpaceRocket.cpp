@@ -23,23 +23,23 @@ void SpaceRocket::drawPreview(const glm::vec3 &centerPosition, const float width
   const float bodyHeight = height - headHeight;
 
   ofPushMatrix();
-  ofTranslate(centerPosition.x, centerPosition.y);
+  ofTranslate(centerPosition);
 
   // body
-  Square::drawPreview({0, 0, centerPosition.z}, bodyWidth / 2, bodyHeight / 2);
+  Square::drawPreview({0, 0, 0}, bodyWidth / 2, bodyHeight / 2);
   // sides
   Triangle::drawPreview(
-      glm::vec3(-bodyWidth / 2 - rocketWidth / 2, -bodyHeight / 2 + rocketHeight, centerPosition.z),
-      glm::vec3(-bodyWidth / 2, -bodyHeight / 2, centerPosition.z));
+      glm::vec3(-bodyWidth / 2 - rocketWidth / 2, -bodyHeight / 2 + rocketHeight, 0),
+      glm::vec3(-bodyWidth / 2, -bodyHeight / 2, 0));
 
   Triangle::drawPreview(
-      glm::vec3(bodyWidth / 2 + rocketWidth / 2, -bodyHeight / 2 + rocketHeight, centerPosition.z),
-      glm::vec3(bodyWidth / 2, -bodyHeight / 2, centerPosition.z));
+      glm::vec3(bodyWidth / 2 + rocketWidth / 2, -bodyHeight / 2 + rocketHeight, 0),
+      glm::vec3(bodyWidth / 2, -bodyHeight / 2, 0));
 
   // head
   Triangle::drawPreview(
-      glm::vec3(0, bodyHeight / 2 + sqrt(3) * bodyWidth / 6, centerPosition.z),
-      glm::vec3(bodyWidth / 2, bodyHeight / 2, centerPosition.z));
+      glm::vec3(0, bodyHeight / 2 + sqrt(3) * bodyWidth / 6, 0),
+      glm::vec3(bodyWidth / 2, bodyHeight / 2, 0));
 
   ofPopMatrix();
 }
@@ -60,21 +60,21 @@ void SpaceRocket::initMesh(const glm::vec3 &centerPosition, const float width, c
   const float bodyHeight = height - headHeight;
 
   ofPushMatrix();
-  ofTranslate(centerPosition.x, centerPosition.y);
+  ofTranslate(centerPosition);
 
-  auto rocketBody = Square({0, 0, centerPosition.z}, bodyWidth / 2, bodyHeight / 2);
+  auto rocketBody = Square({0, 0, 0}, bodyWidth / 2, bodyHeight / 2);
 
   auto rocketLeft = Triangle(
-      glm::vec3(-bodyWidth / 2 - rocketWidth / 2, -bodyHeight / 2 + rocketHeight, centerPosition.z),
-      glm::vec3(-bodyWidth / 2, -bodyHeight / 2, centerPosition.z));
+      glm::vec3(-bodyWidth / 2 - rocketWidth / 2, -bodyHeight / 2 + rocketHeight, 0),
+      glm::vec3(-bodyWidth / 2, -bodyHeight / 2, 0));
 
   auto rocketRight = Triangle(
-      glm::vec3(bodyWidth / 2 + rocketWidth / 2, -bodyHeight / 2 + rocketHeight, centerPosition.z),
-      glm::vec3(bodyWidth / 2, -bodyHeight / 2, centerPosition.z));
+      glm::vec3(bodyWidth / 2 + rocketWidth / 2, -bodyHeight / 2 + rocketHeight, 0),
+      glm::vec3(bodyWidth / 2, -bodyHeight / 2, 0));
 
   auto rocketHead = Triangle(
-      glm::vec3(0, bodyHeight / 2 + sqrt(3) * bodyWidth / 6, centerPosition.z),
-      glm::vec3(bodyWidth / 2, bodyHeight / 2, centerPosition.z));
+      glm::vec3(0, bodyHeight / 2 + sqrt(3) * bodyWidth / 6, 0),
+      glm::vec3(bodyWidth / 2, bodyHeight / 2, 0));
 
   ofPopMatrix();
 
