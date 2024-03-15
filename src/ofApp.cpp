@@ -20,15 +20,18 @@ void ofApp::setup() {
   this->cursor = std::make_unique<Cursor>(CursorMode::NAVIGATION);
 
   // Setup 3D scene
-  this->scene3D = std::make_unique<Scene3D>(std::make_unique<SceneManager>(), cursor.get());
+  this->scene3D = std::make_unique<Scene3D>(std::make_unique<SceneManager>());
+  this->scene3DEventHandler = std::make_unique<Scene3DEventHandler>(this->scene3D.get(), this->cursor.get());
   this->scene3D->setup();
 
   // Setup 2D scene
-  this->scene2D = std::make_unique<Scene2D>(std::make_unique<SceneManager>(), cursor.get());
+  this->scene2D = std::make_unique<Scene2D>(std::make_unique<SceneManager>());
+  this->scene2DEventHandler = std::make_unique<Scene2DEventHandler>(this->scene2D.get(), this->cursor.get());
   this->scene2D->setup();
 
   // Setup initial scene
   this->currentScene = this->scene3D.get();
+  this->scene3DEventHandler.get()->activateHandler();
 
   this->gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable);
   this->sceneGraph = std::make_unique<SceneGraph>(this->currentScene->getSceneManager());
@@ -51,6 +54,7 @@ void ofApp::exit() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
+  this->cursor->drawCursor(ofGetMouseX(), ofGetMouseY());
   this->currentScene->drawScene();
 
   windowCamera->drawScene();
@@ -69,6 +73,10 @@ void ofApp::draw() {
   drawSceneTopMenu();
 
   gui.end();
+}
+
+void ofApp::update() {
+  this->currentScene->update();
 }
 
 void ofApp::drawPropertiesPanel() {
@@ -330,16 +338,21 @@ void ofApp::generateRandomGalaxy(int nbElements) {
 
 void ofApp::switchBetweenScenes() {
   if (this->isScene2D) {
+    this->scene2DEventHandler.get()->deactivateHandler();
+    this->scene3DEventHandler.get()->activateHandler();
     this->currentScene = this->scene3D.get();
     this->isScene2D = false;
     this->sceneGraph->setSceneManager(this->currentScene->getSceneManager());
     this->cameraPanel->setSceneManager(this->currentScene->getSceneManager());
   } else if (!this->isScene2D) {
+    this->scene3DEventHandler.get()->deactivateHandler();
+    this->scene2DEventHandler.get()->activateHandler();
     this->currentScene = this->scene2D.get();
     this->isScene2D = true;
     this->sceneGraph->setSceneManager(this->currentScene->getSceneManager());
     this->cameraPanel->setSceneManager(this->currentScene->getSceneManager());
   }
+  this->cursor.get()->setCursorMode(CursorMode::NAVIGATION);
 }
 
 void ofApp::switchBetweenProjections() {

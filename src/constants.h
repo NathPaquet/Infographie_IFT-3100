@@ -23,7 +23,7 @@ namespace Constants {
   constexpr float DEFAULT_CAMERA_FOV = 60.0f;
 
   // DISTANCES
-  constexpr float DEFAULT_DISTANCE_TO_DRAW_PRIMITIVE = 200.0f;
+  constexpr float DEFAULT_DISTANCE_TO_DRAW = 200.0f;
   constexpr float DEFAULT_CAMERA_DISTANCE = 200.0f;
 
   // POSITION

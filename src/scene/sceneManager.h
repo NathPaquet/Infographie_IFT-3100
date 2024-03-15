@@ -23,7 +23,6 @@ public:
   void clickSelectionSceneObject(const SceneObject *sceneObject);
   const std::vector<SceneObject *> &getSelectedObjects() const;
   std::vector<SceneObject *> &getSelectedObjectsReference();
-  void setObjectPosition(const SceneObject *object, const ofVec3f &position);
   void toggleActivationBoundingBox();
   void toggleActivationObjectAxis();
 

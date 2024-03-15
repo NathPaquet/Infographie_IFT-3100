@@ -3,14 +3,20 @@
 
 class Scene2D : public Scene {
 public:
-  Scene2D(std::unique_ptr<SceneManager> sceneManager,
-      Cursor *cursor):
-      Scene(std::move(sceneManager), cursor) {}
+  Scene2D(std::unique_ptr<SceneManager> sceneManager):
+      Scene(std::move(sceneManager)) {}
   void setup() override;
+  void update() override;
   void drawScene() override;
+  void dragObjectWithMouse();
+  bool attemptToClickOnObjectWithMouse();
+  bool attemptToAddObjectWithMouse();
+  bool attemptToRemoveObjectWihMouse();
+  void releaseDraggedObject();
+  void drawObjectPreview();
+  void moveCameraWithMouse();
 
 private:
-  void processMouseActions();
   ofEasyCam camera;
   Ray ray;
   ofColor backgroundColor = ofColor(255, 255, 255, 255);

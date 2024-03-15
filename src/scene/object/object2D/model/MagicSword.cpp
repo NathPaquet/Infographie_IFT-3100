@@ -20,6 +20,7 @@ void MagicSword::drawPreview(const glm::vec3 &centerPosition, const float width,
   const float bladeHeight = height * 2 / 3;
   const float handleHeight = (height - bladeHeight) * 1 / 4;
   const float longHandleHeight = (height - bladeHeight) * 3 / 4;
+
   ofPushMatrix();
   ofTranslate(centerPosition);
   // blade
@@ -29,20 +30,11 @@ void MagicSword::drawPreview(const glm::vec3 &centerPosition, const float width,
       glm::vec3(0, bladeHeight / 2 + sqrt(3) * bladeWidth / 6, 0),
       glm::vec3(bladeWidth / 2, bladeHeight / 2, 0));
   // handle
-  ofTranslate({0, -bladeHeight / 2 - handleHeight / 2, 0});
+  Square::drawPreview({0, -bladeHeight / 2 - handleHeight / 2, 0}, width / 2, handleHeight / 2);
 
-  Square::drawPreview({0, 0, 0}, width / 2, handleHeight / 2);
+  Square::drawPreview({0, -handleHeight - longHandleHeight / 2 - bladeHeight / 2, 0}, bladeWidth / 2, longHandleHeight / 2);
 
-  ofTranslate({0, -handleHeight / 2 - longHandleHeight / 2, 0});
-
-  Square::drawPreview({0, 0, 0}, bladeWidth / 2, longHandleHeight / 2);
-
-  ofTranslate({0, -longHandleHeight / 2, 0});
-
-  ofRotateDeg(360 / 10);
-  Star::drawPreview(
-      {0, 0, 0},
-      bladeWidth);
+  Star::drawPreview({0, -handleHeight - longHandleHeight - bladeHeight / 2, 0}, bladeWidth);
 
   ofPopMatrix();
 }
@@ -60,39 +52,37 @@ void MagicSword::initMesh(const glm::vec3 &centerPosition, const float width, co
   const float handleHeight = (height - bladeHeight) * 1 / 4;
   const float longHandleHeight = (height - bladeHeight) * 3 / 4;
 
-  glm::vec3 temp_translation = centerPosition;
-  auto blade = Square(temp_translation, bladeWidth / 2, bladeHeight / 2);
+  ofPushMatrix();
+  ofTranslate(centerPosition);
+
+  auto blade = Square({0, 0, 0}, bladeWidth / 2, bladeHeight / 2);
   auto head = Triangle(
-      temp_translation + glm::vec3(0, bladeHeight / 2 + sqrt(3) * bladeWidth / 6, 0),
-      temp_translation + glm::vec3(bladeWidth / 2, bladeHeight / 2, 0));
+      glm::vec3(0, bladeHeight / 2 + sqrt(3) * bladeWidth / 6, 0),
+      glm::vec3(bladeWidth / 2, bladeHeight / 2, 0));
 
-  temp_translation = temp_translation + glm::vec3(0, -bladeHeight / 2 - handleHeight / 2, 0);
+  auto handle = Square({0, -bladeHeight / 2 - handleHeight / 2, 0}, width / 2, handleHeight / 2);
 
-  auto handle = Square(temp_translation, width / 2, handleHeight / 2);
+  auto longHandle = Square({0, -handleHeight - longHandleHeight / 2 - bladeHeight / 2, 0}, bladeWidth / 2, longHandleHeight / 2);
 
-  temp_translation = temp_translation + glm::vec3(0, -handleHeight / 2 - longHandleHeight / 2, 0);
+  auto star = Star({0, -handleHeight - longHandleHeight - bladeHeight / 2, 0}, bladeWidth);
 
-  auto longHandle = Square(temp_translation, bladeWidth / 2, longHandleHeight / 2);
-
-  temp_translation = temp_translation + glm::vec3(0, -longHandleHeight / 2, 0);
-
-  auto star = Star(temp_translation, bladeWidth);
+  ofPopMatrix();
 
   std::vector<glm::vec3> vertices;
   for (auto &&vertex : blade.getPrimitive().getMesh().getVertices()) {
-    vertices.push_back(blade.getPrimitive().getPosition() + vertex);
+    vertices.push_back(glm::vec3(blade.getPrimitive().getPosition().x + vertex.x, blade.getPrimitive().getPosition().y + vertex.y, vertex.z));
   }
   for (auto &&vertex : head.getPrimitive().getMesh().getVertices()) {
-    vertices.push_back(head.getPrimitive().getPosition() + vertex);
+    vertices.push_back(glm::vec3(head.getPrimitive().getPosition().x + vertex.x, head.getPrimitive().getPosition().y + vertex.y, vertex.z));
   }
   for (auto &&vertex : handle.getPrimitive().getMesh().getVertices()) {
-    vertices.push_back(handle.getPrimitive().getPosition() + vertex);
+    vertices.push_back(glm::vec3(handle.getPrimitive().getPosition().x + vertex.x, handle.getPrimitive().getPosition().y + vertex.y, vertex.z));
   }
   for (auto &&vertex : longHandle.getPrimitive().getMesh().getVertices()) {
-    vertices.push_back(longHandle.getPrimitive().getPosition() + vertex);
+    vertices.push_back(glm::vec3(longHandle.getPrimitive().getPosition().x + vertex.x, longHandle.getPrimitive().getPosition().y + vertex.y, vertex.z));
   }
   for (auto &&vertex : star.getPrimitive().getMesh().getVertices()) {
-    vertices.push_back(star.getPrimitive().getPosition() + vertex);
+    vertices.push_back(glm::vec3(star.getPrimitive().getPosition().x + vertex.x, star.getPrimitive().getPosition().y + vertex.y, vertex.z));
   }
 
   ofMesh mesh = ofMesh(OF_PRIMITIVE_TRIANGLES, vertices);
@@ -122,5 +112,6 @@ void MagicSword::initMesh(const glm::vec3 &centerPosition, const float width, co
   }
 
   this->primitive = std::make_unique<of3dPrimitive>(of3dPrimitive(mesh));
+  this->primitive->setPosition(centerPosition);
   this->position = centerPosition;
 }
