@@ -29,7 +29,7 @@ public:
 
 private:
   void clearScene();
-  void addCamera(const SceneObject *sceneObject, const ElementType primitiveType);
+  void addIfCamera(const SceneObject *sceneObject, const ElementType primitiveType);
   void removeElement(const SceneObject *sceneObject);
   void removeSelectedElement(const SceneObject *sceneObject);
   void removeCamera(const SceneObject *sceneObject);

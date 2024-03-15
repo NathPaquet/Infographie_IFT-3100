@@ -17,17 +17,17 @@ void SceneManager::addElement(const glm::vec3 position, const ElementType primit
   this->sceneObjects.emplace_front(SceneObjectFactory::createDefaultSceneObject(position, primitiveType));
 
   auto cameraPtr = this->sceneObjects.front().get();
-  addCamera(cameraPtr, primitiveType);
+  addIfCamera(cameraPtr, primitiveType);
 }
 
 void SceneManager::addElement(const glm::vec3 position, const glm::vec3 outerPosition, const ElementType primitiveType) {
   this->sceneObjects.emplace_front(SceneObjectFactory::createSceneObject(position, outerPosition, primitiveType));
 
   auto cameraPtr = this->sceneObjects.front().get();
-  addCamera(cameraPtr, primitiveType);
+  addIfCamera(cameraPtr, primitiveType);
 }
 
-void SceneManager::addCamera(const SceneObject *sceneObject, const ElementType primitiveType) {
+void SceneManager::addIfCamera(const SceneObject *sceneObject, const ElementType primitiveType) {
   if (primitiveType == ElementType::CAMERA) {
     auto camera = (Camera *)sceneObject;
     this->cameras.push_back(camera);
