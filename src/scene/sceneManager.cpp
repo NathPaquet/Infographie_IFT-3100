@@ -16,15 +16,15 @@ SceneManager::~SceneManager() {
 void SceneManager::addElement(const glm::vec3 position, const ElementType primitiveType) {
   this->sceneObjects.emplace_front(SceneObjectFactory::createDefaultSceneObject(position, primitiveType));
 
-  auto cameraPtr = this->sceneObjects.front().get();
-  addIfCamera(cameraPtr, primitiveType);
+  auto sceneObjectPtr = this->sceneObjects.front().get();
+  addIfCamera(sceneObjectPtr, primitiveType);
 }
 
 void SceneManager::addElement(const glm::vec3 position, const glm::vec3 outerPosition, const ElementType primitiveType) {
   this->sceneObjects.emplace_front(SceneObjectFactory::createSceneObject(position, outerPosition, primitiveType));
 
-  auto cameraPtr = this->sceneObjects.front().get();
-  addIfCamera(cameraPtr, primitiveType);
+  auto sceneObjectPtr = this->sceneObjects.front().get();
+  addIfCamera(sceneObjectPtr, primitiveType);
 }
 
 void SceneManager::addIfCamera(const SceneObject *sceneObject, const ElementType primitiveType) {
@@ -50,7 +50,7 @@ void SceneManager::removeSelectedElement(const SceneObject *sceneObject) {
   }
 }
 
-void SceneManager::removeCamera(const SceneObject *sceneObject) {
+void SceneManager::attemptToRemoveObjectFromCameras(const SceneObject *sceneObject) {
   auto camIt = std::find(this->cameras.begin(), this->cameras.end(), sceneObject);
 
   if (camIt != this->cameras.end()) {
@@ -61,13 +61,13 @@ void SceneManager::removeCamera(const SceneObject *sceneObject) {
 void SceneManager::removeObject(const SceneObject *sceneObject) {
   removeElement(sceneObject);
   removeSelectedElement(sceneObject);
-  removeCamera(sceneObject);
+  attemptToRemoveObjectFromCameras(sceneObject);
 }
 
 void SceneManager::removeAllSelectedObjects() {
   for (auto &&selectedObject : this->selectedSceneObjects) {
     removeElement(selectedObject);
-    removeCamera(selectedObject);
+    attemptToRemoveObjectFromCameras(selectedObject);
   }
 
   this->selectedSceneObjects.clear();
