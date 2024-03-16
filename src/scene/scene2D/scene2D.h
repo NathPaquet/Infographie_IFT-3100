@@ -15,7 +15,7 @@ public:
   void releaseDraggedObject();
   void drawObjectPreview();
   void moveCameraWithMouse();
-  void moveObjectWithKey(int key);
+  void moveSelectedObjectsWithKey(int key);
 
 private:
   ofEasyCam camera;

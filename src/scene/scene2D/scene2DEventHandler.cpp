@@ -62,7 +62,7 @@ void Scene2DEventHandler::mouseReleased(ofMouseEventArgs &mouseArgs) {
 }
 
 void Scene2DEventHandler::keyPressed(ofKeyEventArgs &keyArgs) {
-  this->scene2D->moveObjectWithKey(keyArgs.key);
+  this->scene2D->moveSelectedObjectsWithKey(keyArgs.key);
 }
 
 void Scene2DEventHandler::leftMouseButtonPressed() {

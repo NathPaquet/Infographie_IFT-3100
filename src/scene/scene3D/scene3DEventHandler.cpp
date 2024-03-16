@@ -69,7 +69,7 @@ void Scene3DEventHandler::mouseReleased(ofMouseEventArgs &mouseArgs) {
 
 void Scene3DEventHandler::mousePressedAndScrolled(ofMouseEventArgs &mouseArgs) {
   if (this->isMouseInScene() && mouseArgs.button == OF_MOUSE_BUTTON_LEFT) {
-    this->scene3D->moveObjectWithScroll(mouseArgs.scrollY);
+    this->scene3D->moveObjectWithScrollOnly(mouseArgs.scrollY);
   }
 }
 

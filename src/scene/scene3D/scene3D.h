@@ -18,7 +18,7 @@ public:
   bool attemptToAddObjectWithMouse();
   bool attemptToRemoveObjectWihMouse();
   void dragObjectWithMouse();
-  void moveObjectWithScroll(float scrollAmount);
+  void moveObjectWithScrollOnly(float scrollAmount);
   void releaseDraggedObject();
   void drawObjectPreview();
 

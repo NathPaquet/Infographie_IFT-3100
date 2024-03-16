@@ -39,4 +39,7 @@ namespace Constants {
   constexpr auto HAND_OPEN_CURSOR_PATH = "cursors/cursor-hand-open-svgrepo-com.svg";
   constexpr auto ERASE_CURSOR_PATH = "cursors/erase-svgrepo-com.svg";
   constexpr auto ADD_CURSOR_PATH = "cursors/add-circle-svgrepo-com.svg";
+
+  // OTHER
+  constexpr float SCROLL_POWER = 2.f;
 }

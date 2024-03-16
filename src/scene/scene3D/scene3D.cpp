@@ -99,9 +99,9 @@ void Scene3D::dragObjectWithMouse() {
   }
 }
 
-void Scene3D::moveObjectWithScroll(float scrollAmount) {
+void Scene3D::moveObjectWithScrollOnly(float scrollAmount) {
   if (hasADraggedObject()) {
-    auto direction = ray.getDirection() * scrollAmount * SCROLL_POWER;
+    auto direction = ray.getDirection() * scrollAmount * Constants::SCROLL_POWER;
     this->draggedObject->setPosition(this->draggedObject->getPosition() + direction);
   }
 }
