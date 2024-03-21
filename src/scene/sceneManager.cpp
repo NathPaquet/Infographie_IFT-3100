@@ -16,50 +16,58 @@ SceneManager::~SceneManager() {
 void SceneManager::addElement(const glm::vec3 position, const ElementType primitiveType) {
   this->sceneObjects.emplace_front(SceneObjectFactory::createDefaultSceneObject(position, primitiveType));
 
-  auto cameraPtr = this->sceneObjects.front().get();
-  addCamera(cameraPtr, primitiveType);
+  auto sceneObjectPtr = this->sceneObjects.front().get();
+  addIfCamera(sceneObjectPtr, primitiveType);
 }
 
 void SceneManager::addElement(const glm::vec3 position, const glm::vec3 outerPosition, const ElementType primitiveType) {
   this->sceneObjects.emplace_front(SceneObjectFactory::createSceneObject(position, outerPosition, primitiveType));
+
+  auto sceneObjectPtr = this->sceneObjects.front().get();
+  addIfCamera(sceneObjectPtr, primitiveType);
 }
 
-void SceneManager::addCamera(const SceneObject *sceneObject, const ElementType primitiveType) {
+void SceneManager::addIfCamera(const SceneObject *sceneObject, const ElementType primitiveType) {
   if (primitiveType == ElementType::CAMERA) {
     auto camera = (Camera *)sceneObject;
     this->cameras.push_back(camera);
   }
 }
 
-void SceneManager::removeCamera(const SceneObject *sceneObject) {
-  for (int i = 0; i < cameras.size(); i++) {
-    if (cameras.at(i) == sceneObject) {
-      this->cameras.erase(cameras.begin() + i);
-      return;
-    }
-  }
-}
-
-void SceneManager::removeObject(const SceneObject *sceneObject) {
+void SceneManager::removeElement(const SceneObject *sceneObject) {
   auto it = std::find_if(this->sceneObjects.begin(), this->sceneObjects.end(), [&](auto &&obj) { return obj.get() == sceneObject; });
-  auto selectedIt = std::find(this->selectedSceneObjects.begin(), this->selectedSceneObjects.end(), sceneObject);
 
   if (it != this->sceneObjects.end()) {
     this->sceneObjects.erase(it);
-    removeCamera(sceneObject);
   }
+}
+
+void SceneManager::removeSelectedElement(const SceneObject *sceneObject) {
+  auto selectedIt = std::find(this->selectedSceneObjects.begin(), this->selectedSceneObjects.end(), sceneObject);
+
   if (selectedIt != this->selectedSceneObjects.end()) {
     this->selectedSceneObjects.erase(selectedIt);
   }
 }
 
+void SceneManager::attemptToRemoveObjectFromCameras(const SceneObject *sceneObject) {
+  auto camIt = std::find(this->cameras.begin(), this->cameras.end(), sceneObject);
+
+  if (camIt != this->cameras.end()) {
+    this->cameras.erase(camIt);
+  }
+}
+
+void SceneManager::removeObject(const SceneObject *sceneObject) {
+  removeElement(sceneObject);
+  removeSelectedElement(sceneObject);
+  attemptToRemoveObjectFromCameras(sceneObject);
+}
+
 void SceneManager::removeAllSelectedObjects() {
   for (auto &&selectedObject : this->selectedSceneObjects) {
-    auto it = std::find_if(this->sceneObjects.begin(), this->sceneObjects.end(), [&](auto &&obj) { return obj.get() == selectedObject; });
-    if (it != this->sceneObjects.end()) {
-      this->sceneObjects.erase(it);
-      removeCamera(selectedObject);
-    }
+    removeElement(selectedObject);
+    attemptToRemoveObjectFromCameras(selectedObject);
   }
 
   this->selectedSceneObjects.clear();
@@ -110,6 +118,7 @@ std::vector<SceneObject *> &SceneManager::getSelectedObjectsReference() {
 void SceneManager::clearScene() {
   this->selectedSceneObjects.clear();
   this->sceneObjects.clear();
+  this->cameras.clear();
 }
 
 void SceneManager::toggleActivationBoundingBox() {
