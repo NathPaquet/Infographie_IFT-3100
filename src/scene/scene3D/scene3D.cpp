@@ -94,8 +94,15 @@ bool Scene3D::attemptToRemoveObjectWihMouse() {
 }
 
 void Scene3D::dragObjectWithMouse() {
-  if (draggedObject != nullptr) {
+  if (hasADraggedObject()) {
     this->draggedObject->setPosition(ray.getOrigin() + ray.getDirection() * Constants::DEFAULT_DISTANCE_TO_DRAW);
+  }
+}
+
+void Scene3D::moveObjectWithScrollOnly(float scrollAmount) {
+  if (hasADraggedObject()) {
+    auto direction = ray.getDirection() * scrollAmount * Constants::SCROLL_POWER;
+    this->draggedObject->setPosition(this->draggedObject->getPosition() + direction);
   }
 }
 

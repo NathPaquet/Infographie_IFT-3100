@@ -19,6 +19,7 @@ private:
   void mouseDragged(ofMouseEventArgs &mouseArgs);
   void mousePressed(ofMouseEventArgs &mouseArgs);
   void mouseReleased(ofMouseEventArgs &mouseArgs);
+  void mousePressedAndScrolled(ofMouseEventArgs &mouseArgs);
   void leftMouseButtonPressed();
   void leftMouseButtonReleased();
 };

@@ -20,6 +20,7 @@ public:
 
 protected:
   bool isMouseClickInScene();
+  bool hasADraggedObject() const;
 
   void computeRay(const ofEasyCam &camera, Ray &ray) const;
   glm::highp_vec3 findMouseDirectionInWorld(const ofEasyCam &camera) const;
@@ -27,5 +28,6 @@ protected:
 
   std::unique_ptr<SceneManager> sceneManager;
   bool shouldDragObject = false;
+  SceneObject *draggedObject = nullptr;
   ElementType currentObjectToAdd = ElementType::NONE;
 };
