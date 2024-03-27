@@ -1,5 +1,7 @@
 #pragma once
+#include "cubemap/skybox.h"
 #include "scene.h"
+
 class Scene3D : public Scene {
 public:
   Scene3D(std::unique_ptr<SceneManager> sceneManager):
@@ -29,6 +31,7 @@ private:
   std::unique_ptr<ofEasyCam> perspectiveCamera;
   std::unique_ptr<ofEasyCam> orthographicCamera;
   ofEasyCam *currentCamera;
+  Skybox skybox;
   Ray ray;
   ofSpherePrimitive sphere = ofSpherePrimitive(20, 60, OF_PRIMITIVE_TRIANGLES);
 

@@ -49,6 +49,7 @@ private:
   std::unique_ptr<Scene2D> scene2D;
   std::unique_ptr<Scene2DEventHandler> scene2DEventHandler;
   std::unique_ptr<Cursor> cursor;
+
   bool isScene2D = false;
   bool isViewOrtho = false;
   bool isBoundingBoxEnabled = false;

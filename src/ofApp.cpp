@@ -54,10 +54,11 @@ void ofApp::exit() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-  this->cursor->drawCursor(ofGetMouseX(), ofGetMouseY());
   this->currentScene->drawScene();
 
   windowCamera->drawScene();
+
+  this->cursor->drawCursor(ofGetMouseX(), ofGetMouseY());
 
   updateKeyboardShortcuts();
 
