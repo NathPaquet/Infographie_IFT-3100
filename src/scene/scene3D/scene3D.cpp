@@ -30,13 +30,14 @@ void Scene3D::update() {
 void Scene3D::drawScene() {
   this->currentCamera->begin();
 
-  if (true) {
-    this->skybox.draw(2000, this->currentCamera->getGlobalPosition());
+  if (this->isSkyboxEnabled) {
+    // TODO nathan: Find right size for skybox
+    this->skybox.draw(100, this->currentCamera->getGlobalPosition());
   }
 
-  // ofDrawGrid(10, 100, false, false, true, false);
+  ofDrawGrid(10, 100, false, false, true, false);
 
-  // ofDrawSphere(0, 0, 0, 10);
+  ofDrawSphere(0, 0, 0, 10);
   this->sceneManager.get()->drawScene();
 
   if (this->currentObjectToAdd != ElementType::NONE) {
@@ -56,6 +57,10 @@ void Scene3D::toggleProjectionMode() {
     this->orthographicCamera.get()->enableMouseInput();
     this->currentCamera = this->orthographicCamera.get();
   }
+}
+
+void Scene3D::toggleSkyboxActivation() {
+  this->isSkyboxEnabled = !this->isSkyboxEnabled;
 }
 
 bool Scene3D::attemptToClickOnObjectWithMouse() {

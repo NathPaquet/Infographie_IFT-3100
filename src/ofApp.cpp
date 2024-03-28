@@ -232,6 +232,10 @@ void ofApp::createViewMenu() {
       if (ImGui::MenuItem((this->isViewOrtho ? "Enable perspective projection" : "Enable orthographic projection"), "Alt+p")) {
         switchBetweenProjections();
       }
+      if (ImGui::MenuItem((this->isSkyboxEnabled ? "Disable skybox" : "Enable skybox"), "Alt+s")) {
+        this->isSkyboxEnabled = !this->isSkyboxEnabled;
+        this->scene3D.get()->toggleSkyboxActivation();
+      }
     }
 
     if (ImGui::MenuItem((this->isBoundingBoxEnabled ? "Disable bounding box" : "Enable bounding box"), "Alt+b")) {
@@ -260,6 +264,10 @@ void ofApp::updateKeyboardShortcuts() {
     if (ImGui::IsKeyPressed(ImGuiKey_B)) {
       this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
       this->currentScene->getSceneManager()->toggleActivationBoundingBox();
+    }
+    if (ImGui::IsKeyPressed(ImGuiKey_S) && this->currentScene == this->scene3D.get()) {
+      this->isSkyboxEnabled = !this->isSkyboxEnabled;
+      this->scene3D.get()->toggleSkyboxActivation();
     }
     if (ImGui::IsKeyPressed(ImGuiKey_P)) {
       switchBetweenProjections();

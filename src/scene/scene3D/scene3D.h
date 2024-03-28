@@ -16,6 +16,7 @@ public:
     this->currentCamera->disableMouseInput();
   }
   void toggleProjectionMode();
+  void toggleSkyboxActivation();
   bool attemptToClickOnObjectWithMouse();
   bool attemptToAddObjectWithMouse();
   bool attemptToRemoveObjectWihMouse();
@@ -32,6 +33,7 @@ private:
   std::unique_ptr<ofEasyCam> orthographicCamera;
   ofEasyCam *currentCamera;
   Skybox skybox;
+  bool isSkyboxEnabled = false;
   Ray ray;
   ofSpherePrimitive sphere = ofSpherePrimitive(20, 60, OF_PRIMITIVE_TRIANGLES);
 
