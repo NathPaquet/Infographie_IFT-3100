@@ -209,6 +209,9 @@ void ofApp::drawSceneTopMenu() {
     if (ImGui::BeginMenuBar()) {
       this->drawSceneObjectGraphCreationMenu();
       this->createViewMenu();
+      if (this->isSkyboxEnabled) {
+        this->createSkyboxTopMenu();
+      }
       tools.createToolsMenu();
       cameraPanel.get()->create();
 
@@ -248,6 +251,22 @@ void ofApp::createViewMenu() {
       this->currentScene->getSceneManager()->toggleActivationObjectAxis();
     }
 
+    ImGui::EndMenu();
+  }
+}
+
+void ofApp::createSkyboxTopMenu() {
+  if (ImGui::BeginMenu("Skybox")) {
+    ImGui::SeparatorText("Skybox options");
+    if (ImGui::MenuItem("Red")) {
+      this->scene3D.get()->loadSkybox(Constants::CUBEMAP_TEXTURE_SKYBOX_RED);
+    }
+    if (ImGui::MenuItem("Blue")) {
+      this->scene3D.get()->loadSkybox(Constants::CUBEMAP_TEXTURE_SKYBOX_BLUE);
+    }
+    if (ImGui::MenuItem("Light Blue")) {
+      this->scene3D.get()->loadSkybox(Constants::CUBEMAP_TEXTURE_SKYBOX_LIGHTBLUE);
+    }
     ImGui::EndMenu();
   }
 }

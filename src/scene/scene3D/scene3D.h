@@ -17,6 +17,7 @@ public:
   }
   void toggleProjectionMode();
   void toggleSkyboxActivation();
+  void loadSkybox(const string &texturePath);
   bool attemptToClickOnObjectWithMouse();
   bool attemptToAddObjectWithMouse();
   bool attemptToRemoveObjectWihMouse();

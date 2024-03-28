@@ -42,4 +42,10 @@ namespace Constants {
 
   // OTHER
   constexpr float SCROLL_POWER = 2.f;
+
+  // SKYBOX
+  constexpr auto CUBEMAP_TEXTURE_SKYBOX_BLUE = "cubemaps/blue/";
+  constexpr auto CUBEMAP_TEXTURE_SKYBOX_RED = "cubemaps/red/";
+  constexpr auto CUBEMAP_TEXTURE_SKYBOX_LIGHTBLUE = "cubemaps/lightblue/";
+
 }

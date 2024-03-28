@@ -63,6 +63,10 @@ void Scene3D::toggleSkyboxActivation() {
   this->isSkyboxEnabled = !this->isSkyboxEnabled;
 }
 
+void Scene3D::loadSkybox(const string &skyboxTexturePath) {
+  this->skybox.loadTexture(skyboxTexturePath);
+}
+
 bool Scene3D::attemptToClickOnObjectWithMouse() {
   auto &&maybeObject = this->getObjectCollidingWithRay(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
   auto &&found = maybeObject.has_value();

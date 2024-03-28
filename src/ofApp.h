@@ -34,6 +34,7 @@ private:
   void drawSceneObjectGraphCreationMenu();
   void drawSceneTopMenu();
   void createViewMenu();
+  void createSkyboxTopMenu();
   void updateKeyboardShortcuts();
   void generateRandomGalaxy(int nbElements);
   void switchBetweenScenes();
