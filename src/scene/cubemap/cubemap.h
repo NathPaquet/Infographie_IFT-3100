@@ -4,8 +4,13 @@
 class Cubemap {
 public:
   void loadCubemapTextures(const string &cubemapTexturePath);
-  const ofTexture &getCubemapTexture(int index) const;
+  unsigned int getTextureObjectID();
+  void bind();
+  void unbind();
 
 private:
-  ofTexture cubemapTextures[6];
+  void uploadToCubemap(GLenum face, ofImage &image);
+
+  ofImage right, left, top, bottom, front, back;
+  unsigned int cubemapTextureObjectID;
 };

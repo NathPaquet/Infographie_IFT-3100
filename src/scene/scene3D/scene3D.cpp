@@ -31,7 +31,7 @@ void Scene3D::drawScene() {
   this->currentCamera->begin();
 
   if (true) {
-    this->skybox.draw();
+    this->skybox.draw(2000);
   }
 
   // ofDrawGrid(10, 100, false, false, true, false);
