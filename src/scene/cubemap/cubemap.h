@@ -4,9 +4,9 @@
 class Cubemap {
 public:
   void loadCubemapTextures(const string &cubemapTexturePath);
-  unsigned int getTextureObjectID();
-  void bind();
-  void unbind();
+  const unsigned int getTextureObjectID() const;
+  void bind() const;
+  void unbind() const;
 
 private:
   void uploadToCubemap(GLenum face, ofImage &image);

@@ -3,7 +3,7 @@
 void Cubemap::loadCubemapTextures(const string &cubemapTexturePath) {
   // Load cubemap textures
   // Order: right, left, top, bottom, front, back
-  // x+ x- y+ y- z+ z-
+  //         x+     x-    y+    y-      z+    z-
   bool image1 = this->right.loadImage(cubemapTexturePath + "right.png");
   bool image2 = this->left.loadImage(cubemapTexturePath + "left.png");
   bool image3 = this->top.loadImage(cubemapTexturePath + "top.png");
@@ -32,22 +32,20 @@ void Cubemap::loadCubemapTextures(const string &cubemapTexturePath) {
   glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-
-  // glGenerateMipmap(GL_TEXTURE_CUBE_MAP_ARB);
 }
 
 void Cubemap::uploadToCubemap(GLenum face, ofImage &image) {
   glTexImage2D(face, 0, GL_RGB, image.getWidth(), image.getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, image.getPixels().getData());
 }
 
-unsigned int Cubemap::getTextureObjectID() {
+const unsigned int Cubemap::getTextureObjectID() const {
   return this->cubemapTextureObjectID;
 }
 
-void Cubemap::bind() {
+void Cubemap::bind() const {
   glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, this->cubemapTextureObjectID);
 }
 
-void Cubemap::unbind() {
+void Cubemap::unbind() const {
   glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, 0);
 }

@@ -25,7 +25,7 @@ void Skybox::draw(float size) {
   // glMatrixMode(GL_MODELVIEW);
   // glPushMatrix();
   // ofMesh box = ofMesh::box(size, size, size, 1, 1, 1);
-  ofDrawBox(0, 0, 0, size);
+  ofDrawBox(0, 0, 0, size); // TODO : Position de la caméra
   //  drawSkybox(0, 0, 0, 100, 100, 100);
 
   // cubemapTexture.unbind();
