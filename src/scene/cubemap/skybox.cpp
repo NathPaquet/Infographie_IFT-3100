@@ -8,13 +8,13 @@ void Skybox::loadTexture(const string &texturePath) {
   this->cubemapTexture.loadCubemapTextures(texturePath);
 }
 
-void Skybox::draw(float size) {
+void Skybox::draw(const float &size, const glm::vec3 &cameraPosition) const {
   skyboxShader.begin();
   skyboxShader.setUniform1i("skybox", 0);
 
   ofDisableDepthTest();
 
-  ofDrawBox(0, 0, 0, size); // TODO : Position de la caméra
+  ofDrawBox(cameraPosition.x, cameraPosition.y, cameraPosition.z, size);
 
   ofEnableDepthTest();
 
