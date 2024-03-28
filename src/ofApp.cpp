@@ -257,14 +257,18 @@ void ofApp::createViewMenu() {
 
 void ofApp::createSkyboxTopMenu() {
   if (ImGui::BeginMenu("Skybox")) {
+    static int selected = 0;
     ImGui::SeparatorText("Skybox options");
-    if (ImGui::MenuItem("Red")) {
+    if (ImGui::Selectable("Red galaxy", selected == 0)) {
+      selected = 0;
       this->scene3D.get()->loadSkybox(Constants::CUBEMAP_TEXTURE_SKYBOX_RED);
     }
-    if (ImGui::MenuItem("Blue")) {
+    if (ImGui::Selectable("Blue galaxy", selected == 1)) {
+      selected = 1;
       this->scene3D.get()->loadSkybox(Constants::CUBEMAP_TEXTURE_SKYBOX_BLUE);
     }
-    if (ImGui::MenuItem("Light Blue")) {
+    if (ImGui::Selectable("Light blue galaxy", selected == 2)) {
+      selected = 2;
       this->scene3D.get()->loadSkybox(Constants::CUBEMAP_TEXTURE_SKYBOX_LIGHTBLUE);
     }
     ImGui::EndMenu();
