@@ -27,6 +27,7 @@ void Skybox::draw(const float &size, const glm::vec3 &cameraPosition) {
 
     skyboxShader.end();
   } else {
-    LoadingScreen::drawLoadingScreen();
+    string message = "Skybox texture not loaded yet";
+    LoadingScreen::drawLoadingScreen(message);
   }
 }

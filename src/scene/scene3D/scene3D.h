@@ -34,7 +34,7 @@ private:
   std::unique_ptr<ofEasyCam> orthographicCamera;
   ofEasyCam *currentCamera;
   Skybox skybox;
-  bool isSkyboxEnabled = true;
+  bool isSkyboxEnabled = false;
   Ray ray;
   ofSpherePrimitive sphere = ofSpherePrimitive(20, 60, OF_PRIMITIVE_TRIANGLES);
 
