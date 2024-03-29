@@ -17,9 +17,6 @@ void Scene3D::setup() {
   this->setupPerspectiveCamera();
   this->setupOrthographicCamera();
 
-  // Initialize cubemap
-  this->skybox.loadTexture("cubemaps/red/");
-
   this->currentCamera = this->perspectiveCamera.get();
 }
 

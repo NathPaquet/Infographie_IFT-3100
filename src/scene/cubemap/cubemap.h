@@ -1,9 +1,11 @@
 #pragma once
 #include "ofMain.h"
 
-class Cubemap {
+class Cubemap : public ofThread {
 public:
-  void loadCubemapTextures(const string &cubemapTexturePath);
+  void threadedFunction() override;
+  void setCubemapTexturePath(const string &cubemapTexturePath);
+  bool enableCubemapTextures();
   const unsigned int getTextureObjectID() const;
   void bind() const;
   void unbind() const;
@@ -11,6 +13,9 @@ public:
 private:
   void uploadToCubemap(GLenum face, ofImage &image);
 
+  bool isCubemapTextureLoaded = false;
+  bool isCubemapTextureBinded = false;
+  string cubemapTexturePath;
   ofImage right, left, top, bottom, front, back;
   unsigned int cubemapTextureObjectID;
 };

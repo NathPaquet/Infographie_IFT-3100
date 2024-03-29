@@ -179,6 +179,7 @@
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_tables.cpp" />
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_widgets.cpp" />
     <ClCompile Include="..\..\addons\ofxSvg\src\ofxSvg.cpp" />
+    <ClCompile Include="src\utils\loadingScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h" />
@@ -400,6 +401,7 @@
     <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xpathInternals.h" />
     <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xpointer.h" />
     <ClInclude Include="..\..\addons\ofxSvg\libs\svgtiny\include\svgtiny.h" />
+    <ClInclude Include="src\utils\loadingScreen.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">

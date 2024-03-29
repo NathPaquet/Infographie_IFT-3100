@@ -5,6 +5,7 @@
 #include "of3dUtils.h"
 #include "scene/object/object3D/primitive/Planet.h"
 #include "scene/object/sceneObjectFactory.h"
+#include "utils/loadingScreen.h"
 
 #include <iostream>
 
@@ -54,6 +55,8 @@ void ofApp::exit() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
+  gui.begin();
+
   this->currentScene->drawScene();
 
   windowCamera->drawScene();
@@ -61,8 +64,6 @@ void ofApp::draw() {
   this->cursor->drawCursor(ofGetMouseX(), ofGetMouseY());
 
   updateKeyboardShortcuts();
-
-  gui.begin();
 
   // Draw properties panel menu
   drawPropertiesPanel();
@@ -257,7 +258,7 @@ void ofApp::createViewMenu() {
 
 void ofApp::createSkyboxTopMenu() {
   if (ImGui::BeginMenu("Skybox")) {
-    static int selected = 0;
+    static int selected = 2;
     ImGui::SeparatorText("Skybox options");
     if (ImGui::Selectable("Red galaxy", selected == 0)) {
       selected = 0;

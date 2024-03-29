@@ -232,6 +232,9 @@
     <ClCompile Include="src\scene\cubemap\skybox.cpp">
       <Filter>src\scene\cubemap</Filter>
     </ClCompile>
+    <ClCompile Include="src\utils\loadingScreen.cpp">
+      <Filter>src\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -1030,6 +1033,9 @@
     </ClInclude>
     <ClInclude Include="src\scene\cubemap\skybox.h">
       <Filter>src\scene\cubemap</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\loadingScreen.h">
+      <Filter>src\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
