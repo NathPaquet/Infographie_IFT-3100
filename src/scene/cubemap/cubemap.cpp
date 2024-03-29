@@ -62,11 +62,3 @@ void Cubemap::uploadToCubemap(GLenum face, ofImage &image) {
 const unsigned int Cubemap::getTextureObjectID() const {
   return this->cubemapTextureObjectID;
 }
-
-void Cubemap::bind() const {
-  glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, this->cubemapTextureObjectID);
-}
-
-void Cubemap::unbind() const {
-  glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, 0);
-}
