@@ -9,6 +9,7 @@ public:
   void setup() override;
   void update() override;
   void drawScene() override;
+  void drawSceneFromCamera(const glm::vec3 &cameraPosition);
   inline void activateCameraMouseInput() {
     this->currentCamera->enableMouseInput();
   }

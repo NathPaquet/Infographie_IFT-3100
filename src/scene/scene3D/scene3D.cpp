@@ -27,9 +27,14 @@ void Scene3D::update() {
 void Scene3D::drawScene() {
   this->currentCamera->begin();
 
+  this->drawSceneFromCamera(this->currentCamera->getGlobalPosition());
+
+  this->currentCamera->end();
+}
+
+void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
   if (this->isSkyboxEnabled) {
-    // TODO nathan: Find right size for skybox
-    this->skybox.draw(100, this->currentCamera->getGlobalPosition());
+    this->skybox.draw(100, cameraPosition);
   }
 
   ofDrawGrid(10, 100, false, false, true, false);
@@ -40,8 +45,6 @@ void Scene3D::drawScene() {
   if (this->currentObjectToAdd != ElementType::NONE) {
     this->drawObjectPreview();
   }
-
-  this->currentCamera->end();
 }
 
 void Scene3D::toggleProjectionMode() {
