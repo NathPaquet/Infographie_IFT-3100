@@ -1,12 +1,12 @@
 #include "cubemap.h"
 
 void Cubemap::threadedFunction() {
-  bool image1 = this->right.loadImage(cubemapTexturePath + "right.png");
-  bool image2 = this->left.loadImage(cubemapTexturePath + "left.png");
-  bool image3 = this->top.loadImage(cubemapTexturePath + "top.png");
-  bool image4 = this->bottom.loadImage(cubemapTexturePath + "bot.png");
-  bool image5 = this->front.loadImage(cubemapTexturePath + "front.png");
-  bool image6 = this->back.loadImage(cubemapTexturePath + "back.png");
+  bool image1 = this->right.load(cubemapTexturePath + "right.png");
+  bool image2 = this->left.load(cubemapTexturePath + "left.png");
+  bool image3 = this->top.load(cubemapTexturePath + "top.png");
+  bool image4 = this->bottom.load(cubemapTexturePath + "bot.png");
+  bool image5 = this->front.load(cubemapTexturePath + "front.png");
+  bool image6 = this->back.load(cubemapTexturePath + "back.png");
 
   if (!image1 || !image2 || !image3 || !image4 || !image5 || !image6) {
     ofLogError("Cubemap") << "Failed to load cubemap textures";
@@ -18,6 +18,7 @@ void Cubemap::threadedFunction() {
 
 void Cubemap::setCubemapTexturePath(const string &cubemapTexturePath) {
   if (this->cubemapTexturePath != cubemapTexturePath) {
+    glDeleteTextures(1, &this->cubemapTextureObjectID);
     this->cubemapTexturePath = cubemapTexturePath;
     this->isCubemapTextureLoaded = false;
     this->isCubemapTextureBinded = false;
