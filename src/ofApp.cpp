@@ -210,7 +210,7 @@ void ofApp::drawSceneTopMenu() {
     if (ImGui::BeginMenuBar()) {
       this->drawSceneObjectGraphCreationMenu();
       this->createViewMenu();
-      if (this->isSkyboxEnabled) {
+      if (!this->isScene2D && this->isSkyboxEnabled) {
         this->createSkyboxTopMenu();
       }
       tools.createToolsMenu();
