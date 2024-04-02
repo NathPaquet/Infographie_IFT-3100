@@ -21,7 +21,11 @@ void Skybox::draw(const float &size, const glm::vec3 &cameraPosition) {
 
     ofDisableDepthTest();
 
+    glBindTexture(GL_TEXTURE_CUBE_MAP, this->cubemapTexture.getTextureObjectID());
+
     ofDrawBox(cameraPosition.x, cameraPosition.y, cameraPosition.z, size);
+
+    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
     ofEnableDepthTest();
 

@@ -31,21 +31,23 @@ bool Cubemap::enableCubemapTextures() {
     // Order: right, left, top, bottom, front, back
     //         x+     x-    y+    y-      z+    z-
     glGenTextures(1, &this->cubemapTextureObjectID);
-    glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, this->cubemapTextureObjectID);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, this->cubemapTextureObjectID);
 
-    uploadToCubemap(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB, right);
-    uploadToCubemap(GL_TEXTURE_CUBE_MAP_NEGATIVE_X_ARB, left);
-    uploadToCubemap(GL_TEXTURE_CUBE_MAP_POSITIVE_Y_ARB, top);
-    uploadToCubemap(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y_ARB, bottom);
-    uploadToCubemap(GL_TEXTURE_CUBE_MAP_POSITIVE_Z_ARB, front);
-    uploadToCubemap(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB, back);
+    uploadToCubemap(GL_TEXTURE_CUBE_MAP_POSITIVE_X, right);
+    uploadToCubemap(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, left);
+    uploadToCubemap(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, top);
+    uploadToCubemap(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, bottom);
+    uploadToCubemap(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, front);
+    uploadToCubemap(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, back);
 
-    glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-    glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
     this->isCubemapTextureBinded = true;
     return true;

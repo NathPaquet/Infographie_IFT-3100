@@ -16,6 +16,7 @@ void ofApp::setup() {
   ofDisableAlphaBlending();
   ofEnableDepthTest();
   ofSetVerticalSync(true);
+  ofDisableArbTex();
   // required call
 
   this->cursor = std::make_unique<Cursor>(CursorMode::NAVIGATION);
@@ -40,7 +41,6 @@ void ofApp::setup() {
   this->cameraPanel = std::make_unique<CameraPanel>(this->currentScene->getSceneManager(), windowCamera.get());
   this->propertiesPanel = std::make_unique<PropertiesPanel>();
 
-  ofDisableArbTex();
   ofBackground(0);
   this->backgroundTexture = this->backgroundImage.getTexture();
   this->backgroundTexture.enableMipmap();
