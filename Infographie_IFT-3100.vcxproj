@@ -118,6 +118,7 @@
     <ClCompile Include="src\properties\propertiesDraw\FloatPropertyDrawer.cpp" />
     <ClCompile Include="src\properties\propertiesDraw\ImagePropertyDrawer.cpp" />
     <ClCompile Include="src\raycasting\ray.cpp" />
+    <ClCompile Include="src\scene\object\object2D\spline\catmullRomSpline.cpp" />
     <ClCompile Include="src\scene\WindowCamera.cpp" />
     <ClCompile Include="src\scene\object\object2D\model\MagicSword.cpp" />
     <ClCompile Include="src\scene\object\object2D\model\SpaceRocket.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="src\properties\propertiesDraw\FloatPropertyDrawer.h" />
     <ClInclude Include="src\properties\propertiesDraw\ImagePropertyDrawer.h" />
     <ClInclude Include="src\raycasting\ray.h" />
+    <ClInclude Include="src\scene\object\object2D\spline\catmullRomSpline.h" />
     <ClInclude Include="src\scene\WindowCamera.h" />
     <ClInclude Include="src\scene\object\object2D\model\MagicSword.h" />
     <ClInclude Include="src\scene\object\object2D\model\SpaceRocket.h" />
