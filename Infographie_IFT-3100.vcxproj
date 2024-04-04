@@ -142,6 +142,7 @@
     <ClCompile Include="src\scene\scene3D\scene3DEventHandler.cpp" />
     <ClCompile Include="src\scene\sceneGraph.cpp" />
     <ClCompile Include="src\scene\sceneManager.cpp" />
+    <ClCompile Include="src\utils\Filtering.cpp" />
     <ClCompile Include="src\utils\ImageCapture.cpp" />
     <ClCompile Include="src\utils\ImageImporter.cpp" />
     <ClCompile Include="..\..\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.cpp" />
@@ -219,6 +220,7 @@
     <ClInclude Include="src\scene\scene3D\scene3DEventHandler.h" />
     <ClInclude Include="src\scene\sceneGraph.h" />
     <ClInclude Include="src\scene\sceneManager.h" />
+    <ClInclude Include="src\utils\Filtering.h" />
     <ClInclude Include="src\utils\ImageCapture.h" />
     <ClInclude Include="src\utils\ImageImporter.h" />
     <ClInclude Include="..\..\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.h" />
