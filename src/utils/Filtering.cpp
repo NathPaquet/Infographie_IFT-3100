@@ -1,21 +1,19 @@
 #include "Filtering.h"
 
 void Filtering::applyBlur(const std::vector<PropertyBase *> &objectsProperty) {
-  applyToAll(objectsProperty, [&](ofImage &inputImage) {
-    applyConvolution(inputImage, convolution_blur);
+  applyToAll(objectsProperty, [&](ofImage &inputImage, ofImage &outputImage) {
+    return applyConvolution(inputImage, outputImage, convolution_blur);
   });
 }
 
 void Filtering::applySharpen(const std::vector<PropertyBase *> &objectsProperty) {
-  applyToAll(objectsProperty, [&](ofImage &inputImage) {
-    applyConvolution(inputImage, convolution_sharpen);
+  applyToAll(objectsProperty, [&](ofImage &inputImage, ofImage &outputImage) {
+    return applyConvolution(inputImage, outputImage, convolution_sharpen);
   });
 }
 
 void Filtering::applyGrey(const std::vector<PropertyBase *> &objectsProperty) {
-  applyToAll(objectsProperty, [&](ofImage &inputImage) {
-    auto outputImage = inputImage;
-
+  applyToAll(objectsProperty, [&](ofImage &inputImage, ofImage &outputImage) {
     for (int y = 0; y < inputImage.getHeight(); y++) {
       for (int x = 0; x < inputImage.getWidth(); x++) {
         const auto &color = inputImage.getColor(x, y);
@@ -26,16 +24,15 @@ void Filtering::applyGrey(const std::vector<PropertyBase *> &objectsProperty) {
       }
     }
 
-    updateInputImage(inputImage, outputImage);
+    return outputImage;
   });
 }
 
-void Filtering::applyConvolution(ofImage &inputImage, const std::array<float, 9> &convolution) {
-  auto outputImage = inputImage;
-
+const ofImage &Filtering::applyConvolution(const ofImage &inputImage, ofImage &outputImage, const std::array<float, 9> &convolution) {
   for (int y = 1; y < inputImage.getHeight() - 1; y++) {
     for (int x = 1; x < inputImage.getWidth() - 1; x++) {
       float sumR = 0, sumG = 0, sumB = 0;
+
       for (int i = -1; i <= 1; i++) {
         for (int j = -1; j <= 1; j++) {
           ofColor color = inputImage.getColor(x + i, y + j);
@@ -46,6 +43,7 @@ void Filtering::applyConvolution(ofImage &inputImage, const std::array<float, 9>
           sumB += color.b * convolution.at(index);
         }
       }
+
       sumR = ofClamp(sumR, 0, 255);
       sumG = ofClamp(sumG, 0, 255);
       sumB = ofClamp(sumB, 0, 255);
@@ -53,7 +51,7 @@ void Filtering::applyConvolution(ofImage &inputImage, const std::array<float, 9>
     }
   }
 
-  updateInputImage(inputImage, outputImage);
+  return outputImage;
 }
 
 void Filtering::updateInputImage(ofImage &inputImage, const ofImage &outputImage) {
@@ -61,13 +59,15 @@ void Filtering::updateInputImage(ofImage &inputImage, const ofImage &outputImage
   inputImage.update();
 }
 
-void Filtering::applyToAll(const std::vector<PropertyBase *> &objectsProperty, std::function<void(ofImage &)> callback) {
+void Filtering::applyToAll(const std::vector<PropertyBase *> &objectsProperty, std::function<ofImage &(ofImage &, ofImage &)> callback) {
   for (auto &&objectProperty : objectsProperty) {
     auto property = dynamic_cast<Property<ofImage> *>(objectProperty);
     ofImage &inputImage = property->getValue();
+    auto outputImage = inputImage;
 
-    callback(inputImage);
+    callback(inputImage, outputImage);
 
+    updateInputImage(inputImage, outputImage);
     property->setChanged(true);
   }
 }
