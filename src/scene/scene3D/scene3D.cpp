@@ -6,12 +6,13 @@ void Scene3D::setup() {
   this->sphere.enableTextures();
   this->ray = Ray();
 
-  // Initialize light
-  this->light.setAmbientColor(Constants::AMBIANT_COLOR);
+  // Initialize light (TODO REMOVE)
+  /*ofEnableSmoothing();
+  ofEnableLighting();*/
+
+  /*this->light.setAmbientColor(Constants::AMBIANT_COLOR);
   this->light.setPosition(Constants::LIGHT_POSITION);
-  ofEnableSmoothing();
-  ofEnableLighting();
-  this->light.enable();
+  this->light.enable();*/
 
   // Initialize camera
   this->setupPerspectiveCamera();

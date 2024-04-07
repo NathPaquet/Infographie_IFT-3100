@@ -173,6 +173,21 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
 
+      ImGui::SeparatorText("Lights");
+
+      if (ImGui::MenuItem("Add Point Light", "TODO")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::POINT_LIGHT);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
+      if (ImGui::MenuItem("Add Directional Light", "TODO")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::DIRECTIONAL_LIGHT);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
+      if (ImGui::MenuItem("Add Spot Light", "TODO")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::SPOT_LIGHT);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
+
       ImGui::SeparatorText("3D model");
 
       if (ImGui::MenuItem("Planet earth", "Shift+4")) {

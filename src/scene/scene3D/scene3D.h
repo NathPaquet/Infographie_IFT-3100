@@ -25,7 +25,7 @@ public:
 private:
   const float SCROLL_POWER = 2.f;
 
-  ofLight light;
+  // ofLight light; // TODO REMOVE
   std::unique_ptr<ofEasyCam> perspectiveCamera;
   std::unique_ptr<ofEasyCam> orthographicCamera;
   ofEasyCam *currentCamera;
