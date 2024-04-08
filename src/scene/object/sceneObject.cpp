@@ -27,3 +27,7 @@ void SceneObject::setPosition(ofVec3f vec) {
   this->position = vec;
   this->primitive->setGlobalPosition(vec);
 }
+
+void SceneObject::setDraggingPosition(ofVec3f vec) {
+  this->draggingPosition = vec;
+}
