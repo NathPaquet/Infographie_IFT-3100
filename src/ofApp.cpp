@@ -237,8 +237,7 @@ void ofApp::createViewMenu() {
         switchBetweenProjections();
       }
       if (ImGui::MenuItem((this->isSkyboxEnabled ? "Disable skybox" : "Enable skybox"), "Alt+s")) {
-        this->isSkyboxEnabled = !this->isSkyboxEnabled;
-        this->scene3D.get()->toggleSkyboxActivation();
+        toggleSkyboxFor3DScene();
       }
     }
 
@@ -256,21 +255,26 @@ void ofApp::createViewMenu() {
   }
 }
 
+void ofApp::toggleSkyboxFor3DScene() {
+  this->isSkyboxEnabled = !this->isSkyboxEnabled;
+  this->scene3D.get()->toggleSkyboxActivation();
+}
+
 void ofApp::createSkyboxTopMenu() {
   if (ImGui::BeginMenu("Skybox")) {
-    static int selected = 2;
+    static int selected = 0;
     ImGui::SeparatorText("Skybox options");
-    if (ImGui::Selectable("Red galaxy", selected == 0)) {
+    if (ImGui::Selectable("Light blue galaxy", selected == 0)) {
       selected = 0;
-      this->scene3D.get()->loadSkybox(Constants::CUBEMAP_TEXTURE_SKYBOX_RED);
+      this->scene3D.get()->loadSkybox(Constants::CUBEMAP_TEXTURE_SKYBOX_LIGHTBLUE);
     }
     if (ImGui::Selectable("Blue galaxy", selected == 1)) {
       selected = 1;
       this->scene3D.get()->loadSkybox(Constants::CUBEMAP_TEXTURE_SKYBOX_BLUE);
     }
-    if (ImGui::Selectable("Light blue galaxy", selected == 2)) {
+    if (ImGui::Selectable("Red galaxy", selected == 2)) {
       selected = 2;
-      this->scene3D.get()->loadSkybox(Constants::CUBEMAP_TEXTURE_SKYBOX_LIGHTBLUE);
+      this->scene3D.get()->loadSkybox(Constants::CUBEMAP_TEXTURE_SKYBOX_RED);
     }
     ImGui::EndMenu();
   }
