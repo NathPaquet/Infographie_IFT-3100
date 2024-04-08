@@ -26,6 +26,10 @@ void Cubemap::setCubemapTexturePath(const string &cubemapTexturePath) {
 }
 
 bool Cubemap::enableCubemapTextures() {
+  if (this->isCubemapTextureBinded && this->isCubemapTextureLoaded) {
+    return true;
+  }
+
   if (!this->isCubemapTextureBinded && this->isCubemapTextureLoaded) {
     // Load cubemap textures
     // Order: right, left, top, bottom, front, back
@@ -51,11 +55,9 @@ bool Cubemap::enableCubemapTextures() {
 
     this->isCubemapTextureBinded = true;
     return true;
-  } else if (this->isCubemapTextureBinded && this->isCubemapTextureLoaded) {
-    return true;
-  } else {
-    return false;
   }
+
+  return false;
 }
 
 void Cubemap::uploadToCubemap(GLenum face, ofImage &image) {
