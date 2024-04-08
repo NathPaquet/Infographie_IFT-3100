@@ -15,8 +15,6 @@ Light::Light(const glm::vec3 &position) {
 void Light::updateProperties() {
   Object3D::updateProperties();
   updateLight();
-
-  // ofLogNotice("LUMIERE") << "Position: " << light.getPosition();
 }
 
 void Light::updateLight() {
@@ -25,4 +23,7 @@ void Light::updateLight() {
 
   auto &position = this->primitive.get()->getPosition();
   light.setPosition(position);
+
+  auto &orientation = this->primitive.get()->getOrientationQuat();
+  light.setOrientation(orientation);
 }

@@ -5,6 +5,7 @@
 void Scene3D::setup() {
   this->sphere.enableTextures();
   this->ray = Ray();
+  this->ambientLight = AmbientLight();
 
   // Initialize light (TODO REMOVE)
   /*ofEnableSmoothing();
@@ -120,6 +121,10 @@ void Scene3D::drawObjectPreview() {
   if (!found) {
     this->ray.drawPrimitiveDefaultPreview(this->currentObjectToAdd, position);
   }
+}
+
+AmbientLight &Scene3D::getAmbientLight() {
+  return this->ambientLight;
 }
 
 void Scene3D::setupPerspectiveCamera() {

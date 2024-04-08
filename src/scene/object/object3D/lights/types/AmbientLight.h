@@ -3,12 +3,13 @@
 
 class AmbientLight {
 public:
-  AmbientLight(const ofColor &color);
+  AmbientLight();
   void toggle();
+  bool isEnable() const;
 
 private:
   ofColor color;
-  bool isOn = true;
+  bool isEnableStatus = true;
 
   void update();
 };

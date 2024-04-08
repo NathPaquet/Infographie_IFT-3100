@@ -45,6 +45,9 @@ void ofApp::setup() {
   this->backgroundTexture.enableMipmap();
   this->backgroundTexture.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
   this->backgroundTexture.generateMipmap();
+
+  // Layouts
+  this->tools = std::make_unique<Tools>(this->scene3D.get());
 }
 
 //--------------------------------------------------------------
@@ -223,7 +226,7 @@ void ofApp::drawSceneTopMenu() {
     if (ImGui::BeginMenuBar()) {
       this->drawSceneObjectGraphCreationMenu();
       this->createViewMenu();
-      tools.createToolsMenu();
+      tools->createToolsMenu();
       cameraPanel.get()->create();
 
       ImGui::EndMenuBar();

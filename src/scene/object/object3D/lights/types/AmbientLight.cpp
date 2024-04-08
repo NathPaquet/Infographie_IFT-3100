@@ -2,18 +2,21 @@
 
 #include "ofLight.h"
 
-AmbientLight::AmbientLight(const ofColor &color) {
-  this->color = color;
-  update();
+AmbientLight::AmbientLight() {
+  color.set(127, 127, 127);
 }
 
 void AmbientLight::toggle() {
-  isOn = !isOn;
+  isEnableStatus = !isEnableStatus;
   update();
 }
 
+bool AmbientLight::isEnable() const {
+  return this->isEnableStatus;
+}
+
 void AmbientLight::update() {
-  if (isOn) {
+  if (isEnableStatus) {
     ofSetGlobalAmbientColor(color);
   } else {
     ofSetGlobalAmbientColor(ofColor::black);

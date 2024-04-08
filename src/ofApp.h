@@ -38,9 +38,6 @@ private:
   void generateRandomGalaxy(int nbElements);
   void switchBetweenScenes();
   void switchBetweenProjections();
-  Tools tools;
-  std::unique_ptr<CameraPanel> cameraPanel;
-  std::unique_ptr<WindowCamera> windowCamera;
 
   std::unique_ptr<SceneGraph> sceneGraph;
   std::unique_ptr<PropertiesPanel> propertiesPanel;
@@ -49,6 +46,11 @@ private:
   std::unique_ptr<Scene2D> scene2D;
   std::unique_ptr<Scene2DEventHandler> scene2DEventHandler;
   std::unique_ptr<Cursor> cursor;
+
+  std::unique_ptr<Tools> tools;
+  std::unique_ptr<CameraPanel> cameraPanel;
+  std::unique_ptr<WindowCamera> windowCamera;
+
   bool isScene2D = false;
   bool isViewOrtho = false;
   bool isBoundingBoxEnabled = false;
