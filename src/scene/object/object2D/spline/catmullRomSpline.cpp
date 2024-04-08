@@ -2,7 +2,14 @@
 
 #include "constants.h"
 
-int CatmullRomSpline::getNumSegments(const vector<glm::vec2> &points) {
+void CatmullRomSpline::drawPreview(const glm::vec3 &startPoint, const glm::vec3 &endPoint) {
+  glm::vec3 P0 = startPoint;
+  glm::vec3 P1 = glm::vec3(startPoint.x + 100, startPoint.y + 100, startPoint.z);
+  glm::vec3 P2 = glm::vec3(endPoint.x - 100, endPoint.y - 100, endPoint.z);
+  glm::vec3 P3 = endPoint;
+}
+
+int CatmullRomSpline::getNumSegments(const vector<glm::vec3> &points) {
   return points.size() - (Constants::CATMULL_ROM_QUADRUPLE_SIZE - 1);
 }
 

@@ -144,6 +144,10 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
         this->currentScene->setCurrentObjectToAdd(ElementType::LINE);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
+      if (ImGui::MenuItem("Add Catmull Rom Spline")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::CATMULL_ROM_SPLINE);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
       if (ImGui::MenuItem("Add Space Rocket", "Shift+6")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::SPACE_ROCKET);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
