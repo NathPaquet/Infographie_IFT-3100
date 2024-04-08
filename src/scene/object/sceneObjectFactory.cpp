@@ -8,6 +8,7 @@
 #include "object2D/primitive/Square.h"
 #include "object2D/primitive/Star.h"
 #include "object2D/primitive/Triangle.h"
+#include "object2D/spline/catmullRomSpline.h"
 #include "object3D/Camera.h"
 #include "object3D/model/Model3D.h"
 #include "object3D/primitive/CubicPlanet.h"
@@ -72,6 +73,8 @@ std::unique_ptr<SceneObject> SceneObjectFactory::createSceneObject(const glm::ve
       return std::make_unique<Star>(Star(centerPosition, outerPosition));
     case ElementType::LINE:
       return std::make_unique<Line>(Line(centerPosition, outerPosition));
+    case ElementType::CATMULL_ROM_SPLINE:
+      return std::make_unique<CatmullRomSpline>(CatmullRomSpline(centerPosition, outerPosition));
     case ElementType::SPACE_ROCKET:
       return std::make_unique<SpaceRocket>(SpaceRocket(centerPosition, outerPosition));
     case ElementType::MAGIC_SWORD:

@@ -47,4 +47,5 @@ namespace Constants {
   constexpr int CATMULL_ROM_QUADRUPLE_SIZE = 4;
   constexpr float CATMULL_ROM_ALPHA = 0.5f;
   constexpr int CATMULL_ROM_NUM_POINTS = 100;
+  constexpr float POINT_RADIUS = 4.0f;
 }
