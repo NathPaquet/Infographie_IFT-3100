@@ -11,7 +11,8 @@ public:
   const of3dPrimitive &getPrimitive() const;
   const ofVec3f &getPosition() const;
   virtual void setPosition(ofVec3f vec);
-  virtual void setDraggingPosition(ofVec3f vec);
+  virtual void setDraggingPositionOnObject(ofVec3f vec);
+  virtual void releaseObjectFromDragging();
   std::map<PROPERTY_ID, std::unique_ptr<PropertyBase>> &getProperties();
 
   template<typename T>

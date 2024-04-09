@@ -54,7 +54,7 @@ bool Scene2D::attemptToClickOnObjectWithMouse() {
     if (it != this->sceneManager.get()->getSelectedObjects().end()) {
       draggedObject = *it;
       const auto position = (this->ray.getOrigin() + this->ray.getDirection() * (Constants::DEFAULT_DISTANCE_TO_DRAW / abs(ray.getDirection().z)));
-      draggedObject->setDraggingPosition(position);
+      draggedObject->setDraggingPositionOnObject(position);
     }
   }
   return found;
@@ -85,6 +85,7 @@ bool Scene2D::attemptToRemoveObjectWihMouse() {
 
 void Scene2D::releaseDraggedObject() {
   shouldDragObject = false;
+  this->draggedObject->releaseObjectFromDragging();
   this->draggedObject = nullptr;
 }
 

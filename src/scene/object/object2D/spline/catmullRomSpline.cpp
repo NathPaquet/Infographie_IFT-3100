@@ -11,7 +11,7 @@ CatmullRomSpline::CatmullRomSpline(const glm::vec3 &startPoint, const glm::vec3 
 
   this->controlPoints = {P0, P1, P2, P3};
   calculateCatmullRomCurvePoints();
-  initMeshFromControlPoints();
+  createMeshFromControlPoints();
 }
 
 void CatmullRomSpline::drawPreview(const glm::vec3 &startPoint, const glm::vec3 &endPoint) {
@@ -51,11 +51,10 @@ void CatmullRomSpline::draw(bool isSelected, bool isBoundingBoxEnable, bool isOb
 void CatmullRomSpline::setPosition(ofVec3f vec) {
   controlPoints[this->currentSelectedPointIndex] = vec;
   calculateCatmullRomCurvePoints();
-  initMeshFromControlPoints();
 }
 
-void CatmullRomSpline::setDraggingPosition(ofVec3f vec) {
-  SceneObject::setDraggingPosition(vec);
+void CatmullRomSpline::setDraggingPositionOnObject(ofVec3f vec) {
+  SceneObject::setDraggingPositionOnObject(vec);
 
   // Get index of closest point to dragging position
   int closestPointIndex = -1;
@@ -68,6 +67,10 @@ void CatmullRomSpline::setDraggingPosition(ofVec3f vec) {
     }
   }
   this->currentSelectedPointIndex = closestPointIndex;
+}
+
+void CatmullRomSpline::releaseObjectFromDragging() {
+  createMeshFromControlPoints();
 }
 
 int CatmullRomSpline::getNumSegments(const vector<glm::vec3> &points) {
@@ -128,7 +131,7 @@ vector<glm::vec3> CatmullRomSpline::calculateCatmullRomSplineBetweenFourPoints(c
   return points;
 }
 
-void CatmullRomSpline::initMeshFromControlPoints() {
+void CatmullRomSpline::createMeshFromControlPoints() {
   ofMesh mesh = ofMesh();
   size_t totalIndexNumber = 0;
   glm::vec3 firstControlPoints = this->controlPoints.at(0);
