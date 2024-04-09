@@ -23,24 +23,32 @@ void SceneGraph::drawSceneGraphElements() {
       ImGui::PushStyleColor(ImGuiCol_ChildBg, (ImVec4)ImColor(209, 45, 73, 100));
     }
 
-    ImGui::BeginChild(std::to_string(reinterpret_cast<uintptr_t>(sceneObjectPtr.get())).c_str(), ImVec2(ImGui::GetContentRegionAvail().x, elementBoxHeight), true);
+    ImGui::BeginChild(std::to_string(reinterpret_cast<uintptr_t>(sceneObjectPtr.get())).c_str(), ImVec2(ImGui::GetContentRegionAvail().x, 0), ImGuiChildFlags_AutoResizeY | ImGuiChildFlags_Border);
 
     ImGui::Text("%s", typeid(*sceneObjectPtr).name());
     ImGui::Text("ID : %p", sceneObjectPtr.get());
+
+    if (isSelected && this->sceneManager->isSelectedObjectOptionsDisplay()) {
+      ImGui::SeparatorText("Object options");
+      // Add object options here
+    }
+
+    ImGui::EndChild();
 
     ImGui::PopStyleVar(2);
     if (isSelected) {
       ImGui::PopStyleColor(2);
     }
 
-    ImGui::EndChild();
-
-    if (ImGui::IsItemClicked()) {
+    if (ImGui::IsItemClicked(ImGuiMouseButton(0))) {
       if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftCtrl))) {
         sceneManager->clickSelectionSceneObject(sceneObjectPtr.get());
       } else {
         sceneManager->setSelectedSceneObject(sceneObjectPtr.get());
       }
+    } else if (ImGui::IsItemClicked(ImGuiMouseButton(1))) {
+      sceneManager->setSelectedSceneObject(sceneObjectPtr.get());
+      sceneManager->enableSelectedObjectOptions();
     }
   }
 }

@@ -21,4 +21,5 @@ private:
   void keyPressed(ofKeyEventArgs &keyArgs);
   void leftMouseButtonPressed();
   void leftMouseButtonReleased();
+  void rightMouseButtonPressed();
 };

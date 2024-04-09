@@ -85,8 +85,21 @@ bool Scene2D::attemptToRemoveObjectWihMouse() {
 
 void Scene2D::releaseDraggedObject() {
   shouldDragObject = false;
-  this->draggedObject->releaseObjectFromDragging();
-  this->draggedObject = nullptr;
+  if (this->draggedObject != nullptr) {
+    this->draggedObject->releaseObjectFromDragging();
+    this->draggedObject = nullptr;
+  }
+}
+
+bool Scene2D::attemptToOpenObjectOptions() {
+  auto &&maybeObject = this->getObjectCollidingWithRay(this->sceneManager.get()->getObjects(), this->camera, this->ray);
+  auto &&found = maybeObject.has_value();
+
+  if (found) {
+    this->sceneManager.get()->setSelectedSceneObject(maybeObject.value());
+    this->sceneManager.get()->enableSelectedObjectOptions();
+  }
+  return found;
 }
 
 void Scene2D::drawObjectPreview() {
