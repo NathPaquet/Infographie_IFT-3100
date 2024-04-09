@@ -5,7 +5,6 @@
 
 SceneObject::SceneObject() {
   this->addProperty<ofColor>(PROPERTY_ID::COLOR, ofColor::fromHsb(ofRandom(255), 255, 255));
-  this->addProperty<bool>(PROPERTY_ID::SHOW_WIREFRAME, false);
 }
 
 std::map<PROPERTY_ID, std::unique_ptr<PropertyBase>> &SceneObject::getProperties() {

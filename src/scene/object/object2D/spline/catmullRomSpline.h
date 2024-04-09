@@ -1,6 +1,8 @@
 #pragma once
-#include "object2D.h"
-class CatmullRomSpline : public Object2D {
+
+#include "SceneObject.h"
+
+class CatmullRomSpline : public SceneObject {
 public:
   CatmullRomSpline(const glm::vec3 &startPoint, const glm::vec3 &endPoint);
   static void drawPreview(const glm::vec3 &startPoint, const glm::vec3 &endPoint);
@@ -15,8 +17,13 @@ private:
   void calculateCatmullRomCurvePoints();
   static vector<glm::vec3> calculateCatmullRomSplineBetweenFourPoints(const glm::vec3 &P0, const glm::vec3 &P1, const glm::vec3 &P2, const glm::vec3 &P3);
   void createMeshFromControlPoints();
+  void drawAABB() const;
 
   int currentSelectedPointIndex = -1;
   vector<glm::vec3> controlPoints;
   vector<glm::vec3> curvePoints;
+
+  // Inherited via SceneObject
+  void drawAxis() override;
+  void drawBoundingBox() override;
 };

@@ -24,9 +24,7 @@ void CatmullRomSpline::drawPreview(const glm::vec3 &startPoint, const glm::vec3 
   vector<glm::vec3> chainPoints = calculateCatmullRomSplineBetweenFourPoints(P0, P1, P2, P3);
 
   for (int i = 0; i < controlPoints.size(); ++i) {
-    ofSetColor(ofColor::red);
     ofDrawCircle(controlPoints[i], Constants::POINT_RADIUS);
-    ofPopStyle();
   }
 
   for (int i = 0; i < chainPoints.size() - 1; ++i) {
@@ -35,17 +33,23 @@ void CatmullRomSpline::drawPreview(const glm::vec3 &startPoint, const glm::vec3 
 }
 
 void CatmullRomSpline::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) {
+  this->updateProperties();
+  ofPushStyle();
+  ofSetColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
   for (int i = 0; i < curvePoints.size() - 1; ++i) {
     ofDrawLine(curvePoints[i], curvePoints[i + 1]);
   }
 
   if (isSelected) {
     for (int i = 0; i < controlPoints.size(); ++i) {
-      ofSetColor(ofColor::red);
       ofDrawCircle(controlPoints[i], Constants::POINT_RADIUS);
-      ofPopStyle();
+    }
+
+    if (isBoundingBoxEnable) {
+      this->drawBoundingBox();
     }
   }
+  ofPopStyle();
 }
 
 void CatmullRomSpline::setPosition(ofVec3f vec) {
@@ -156,4 +160,46 @@ void CatmullRomSpline::createMeshFromControlPoints() {
   this->primitive->setPosition(this->controlPoints[0]);
 
   this->position = this->controlPoints[0];
+}
+
+void CatmullRomSpline::drawAxis() {
+  // Not used for this kind of object
+  // Smell that the axis should be a property of the object and not a method parameter
+  // Same thing for the bounding box
+}
+
+void CatmullRomSpline::drawBoundingBox() {
+  ofPushStyle();
+  ofNoFill();
+  ofSetColor(ofColor::yellow);
+
+  this->drawAABB();
+
+  ofPopStyle();
+}
+
+void CatmullRomSpline::drawAABB() const {
+  if (this->curvePoints.empty()) {
+    return;
+  }
+
+  ofVec3f minBound(curvePoints[0]), maxBound(curvePoints[0]);
+  for (const auto &point : curvePoints) {
+    minBound.x = min(minBound.x, point.x);
+    minBound.y = min(minBound.y, point.y);
+    minBound.z = min(minBound.z, point.z);
+
+    maxBound.x = max(maxBound.x, point.x);
+    maxBound.y = max(maxBound.y, point.y);
+    maxBound.z = max(maxBound.z, point.z);
+  }
+
+  ofVec3f center = ofVec3f(
+      (maxBound.x + minBound.x) / 2,
+      (maxBound.y + minBound.y) / 2,
+      maxBound.z);
+
+  ofVec3f boundingBoxDimensions = maxBound - minBound;
+
+  ofDrawBox(center.x, center.y, center.z, boundingBoxDimensions.x, boundingBoxDimensions.y, boundingBoxDimensions.z);
 }
