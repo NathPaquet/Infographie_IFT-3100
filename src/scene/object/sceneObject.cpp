@@ -11,6 +11,10 @@ std::map<PROPERTY_ID, std::unique_ptr<PropertyBase>> &SceneObject::getProperties
   return this->properties;
 }
 
+void SceneObject::displayObjectOptions() {
+  ImGui::Text("No options");
+}
+
 void SceneObject::updateProperties() {
 }
 

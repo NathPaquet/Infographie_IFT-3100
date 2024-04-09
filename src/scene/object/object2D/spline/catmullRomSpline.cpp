@@ -77,6 +77,25 @@ void CatmullRomSpline::releaseObjectFromDragging() {
   createMeshFromControlPoints();
 }
 
+void CatmullRomSpline::displayObjectOptions() {
+  // Create button to add new control point
+  if (ImGui::Button("Add control point")) {
+    glm::vec3 newControlPoint = controlPoints[controlPoints.size() - 1] + glm::vec3(10, 10, 0);
+    controlPoints.push_back(newControlPoint);
+    calculateCatmullRomCurvePoints();
+    createMeshFromControlPoints();
+  }
+
+  // Create button to remove last control point
+  if (ImGui::Button("Remove last \ncontrol point")) {
+    if (controlPoints.size() > Constants::CATMULL_ROM_QUADRUPLE_SIZE) {
+      controlPoints.pop_back();
+      calculateCatmullRomCurvePoints();
+      createMeshFromControlPoints();
+    }
+  }
+}
+
 int CatmullRomSpline::getNumSegments(const vector<glm::vec3> &points) {
   return points.size() - (Constants::CATMULL_ROM_QUADRUPLE_SIZE - 1);
 }

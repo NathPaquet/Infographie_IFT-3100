@@ -14,6 +14,7 @@ public:
   virtual void setDraggingPositionOnObject(ofVec3f vec);
   virtual void releaseObjectFromDragging();
   std::map<PROPERTY_ID, std::unique_ptr<PropertyBase>> &getProperties();
+  virtual void displayObjectOptions();
 
   template<typename T>
   T getPropertyValue(const PROPERTY_ID &propertyName) {

@@ -30,7 +30,7 @@ void SceneGraph::drawSceneGraphElements() {
 
     if (isSelected && this->sceneManager->isSelectedObjectOptionsDisplay()) {
       ImGui::SeparatorText("Object options");
-      // Add object options here
+      sceneObjectPtr->displayObjectOptions();
     }
 
     ImGui::EndChild();

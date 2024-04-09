@@ -10,6 +10,7 @@ public:
   void setPosition(ofVec3f vec) override;
   void setDraggingPositionOnObject(ofVec3f vec) override;
   void releaseObjectFromDragging() override;
+  void displayObjectOptions() override;
 
 private:
   int getNumSegments(const vector<glm::vec3> &points);
