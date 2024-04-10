@@ -118,6 +118,8 @@
     <ClCompile Include="src\properties\propertiesDraw\FloatPropertyDrawer.cpp" />
     <ClCompile Include="src\properties\propertiesDraw\ImagePropertyDrawer.cpp" />
     <ClCompile Include="src\raycasting\ray.cpp" />
+    <ClCompile Include="src\scene\cubemap\cubemap.cpp" />
+    <ClCompile Include="src\scene\cubemap\skybox.cpp" />
     <ClCompile Include="src\scene\WindowCamera.cpp" />
     <ClCompile Include="src\scene\object\object2D\model\MagicSword.cpp" />
     <ClCompile Include="src\scene\object\object2D\model\SpaceRocket.cpp" />
@@ -178,6 +180,7 @@
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_tables.cpp" />
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_widgets.cpp" />
     <ClCompile Include="..\..\addons\ofxSvg\src\ofxSvg.cpp" />
+    <ClCompile Include="src\utils\loadingScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h" />
@@ -196,6 +199,8 @@
     <ClInclude Include="src\properties\propertiesDraw\FloatPropertyDrawer.h" />
     <ClInclude Include="src\properties\propertiesDraw\ImagePropertyDrawer.h" />
     <ClInclude Include="src\raycasting\ray.h" />
+    <ClInclude Include="src\scene\cubemap\cubemap.h" />
+    <ClInclude Include="src\scene\cubemap\skybox.h" />
     <ClInclude Include="src\scene\WindowCamera.h" />
     <ClInclude Include="src\scene\object\object2D\model\MagicSword.h" />
     <ClInclude Include="src\scene\object\object2D\model\SpaceRocket.h" />
@@ -398,6 +403,7 @@
     <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xpathInternals.h" />
     <ClInclude Include="..\..\addons\ofxSvg\libs\libxml2\include\libxml\xpointer.h" />
     <ClInclude Include="..\..\addons\ofxSvg\libs\svgtiny\include\svgtiny.h" />
+    <ClInclude Include="src\utils\loadingScreen.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">

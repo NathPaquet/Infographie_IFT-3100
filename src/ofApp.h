@@ -34,6 +34,8 @@ private:
   void drawSceneObjectGraphCreationMenu();
   void drawSceneTopMenu();
   void createViewMenu();
+  void toggleSkyboxFor3DScene();
+  void createSkyboxTopMenu();
   void updateKeyboardShortcuts();
   void generateRandomGalaxy(int nbElements);
   void switchBetweenScenes();
@@ -49,8 +51,10 @@ private:
   std::unique_ptr<Scene2D> scene2D;
   std::unique_ptr<Scene2DEventHandler> scene2DEventHandler;
   std::unique_ptr<Cursor> cursor;
+
   bool isScene2D = false;
   bool isViewOrtho = false;
+  bool isSkyboxEnabled = false;
   bool isBoundingBoxEnabled = false;
   bool isObjectAxisEnabled = false;
   Scene *currentScene;

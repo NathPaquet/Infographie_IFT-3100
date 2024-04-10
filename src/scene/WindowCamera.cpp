@@ -2,8 +2,8 @@
 
 #include "Constants.h"
 
-WindowCamera::WindowCamera(SceneManager *sceneManager):
-    sceneManager(sceneManager) {}
+WindowCamera::WindowCamera(Scene3D *scene):
+    scene(scene) {}
 
 void WindowCamera::setSelectedCamera(Camera *camera) {
   this->selectedCamera = camera;
@@ -40,8 +40,7 @@ void WindowCamera::drawScene() {
   ofEnableDepthTest();
 
   selectedCamera->getCamera()->begin(viewport);
-  sceneManager->drawScene();
-  ofDrawGrid(10, 100, false, false, true, false);
+  scene->drawSceneFromCamera(selectedCamera->getCamera()->getGlobalPosition());
   selectedCamera->getCamera()->end();
 }
 

@@ -227,6 +227,13 @@
       <Filter>addons\ofxSvg\src</Filter>
     </ClCompile>
     <ClCompile Include="src\utils\Filtering.cpp">
+    <ClCompile Include="src\scene\cubemap\cubemap.cpp">
+      <Filter>src\scene\cubemap</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\cubemap\skybox.cpp">
+      <Filter>src\scene\cubemap</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\loadingScreen.cpp">
       <Filter>src\utils</Filter>
     </ClCompile>
   </ItemGroup>
@@ -362,6 +369,9 @@
     </Filter>
     <Filter Include="addons\ofxSvg\libs\svgtiny\include">
       <UniqueIdentifier>{3846CB72--F66-F-4D-99-A-2EC-B83ABA603371}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\scene\cubemap">
+      <UniqueIdentifier>{e0047eb7-82c4-45dc-9094-b2fa8b0e791d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1020,6 +1030,13 @@
       <Filter>addons\ofxSvg\libs\svgtiny\include</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\Filtering.h">
+    <ClInclude Include="src\scene\cubemap\cubemap.h">
+      <Filter>src\scene\cubemap</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\cubemap\skybox.h">
+      <Filter>src\scene\cubemap</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\loadingScreen.h">
       <Filter>src\utils</Filter>
     </ClInclude>
   </ItemGroup>
