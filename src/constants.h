@@ -48,4 +48,6 @@ namespace Constants {
   constexpr float CATMULL_ROM_ALPHA = 0.5f;
   constexpr int CATMULL_ROM_NUM_POINTS = 100;
   constexpr float CATMULL_ROM_POINT_RADIUS = 4.0f;
+  constexpr float MIN_CATMULL_ROM_ALPHA_VALUE = 0.0f;
+  constexpr float MAX_CATMULL_ROM_ALPHA_VALUE = 1.0f;
 }
