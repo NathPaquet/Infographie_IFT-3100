@@ -89,8 +89,6 @@ const std::vector<Camera *> &SceneManager::getCameras() const {
 }
 
 void SceneManager::setSelectedSceneObject(const SceneObject *sceneObject) {
-  this->isSelectedObjectOptionsEnabled = false;
-
   auto it = std::find_if(this->sceneObjects.begin(), this->sceneObjects.end(), [&](auto &&obj) { return obj.get() == sceneObject; });
   if (it != this->sceneObjects.end()) {
     this->selectedSceneObjects.clear();
@@ -99,8 +97,6 @@ void SceneManager::setSelectedSceneObject(const SceneObject *sceneObject) {
 }
 
 void SceneManager::clickSelectionSceneObject(const SceneObject *sceneObject) {
-  this->isSelectedObjectOptionsEnabled = false;
-
   auto it = std::find_if(this->sceneObjects.begin(), this->sceneObjects.end(), [&](auto &&obj) { return obj.get() == sceneObject; });
   if (it != this->sceneObjects.end()) {
     if (std::find(this->selectedSceneObjects.begin(), this->selectedSceneObjects.end(), it->get()) != this->selectedSceneObjects.end()) {
@@ -131,12 +127,4 @@ void SceneManager::toggleActivationBoundingBox() {
 
 void SceneManager::toggleActivationObjectAxis() {
   this->isObjectAxisEnabled = !this->isObjectAxisEnabled;
-}
-
-void SceneManager::enableSelectedObjectOptions() {
-  this->isSelectedObjectOptionsEnabled = true;
-}
-
-bool SceneManager::isSelectedObjectOptionsDisplay() const {
-  return this->isSelectedObjectOptionsEnabled;
 }

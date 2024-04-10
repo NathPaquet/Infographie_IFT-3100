@@ -25,8 +25,6 @@ public:
   std::vector<SceneObject *> &getSelectedObjectsReference();
   void toggleActivationBoundingBox();
   void toggleActivationObjectAxis();
-  void enableSelectedObjectOptions();
-  bool isSelectedObjectOptionsDisplay() const;
 
 private:
   void clearScene();
@@ -37,7 +35,6 @@ private:
 
   bool isBoundingBoxEnabled = false;
   bool isObjectAxisEnabled = false;
-  bool isSelectedObjectOptionsEnabled = false;
   std::vector<SceneObject *> selectedSceneObjects;
   std::vector<Camera *> cameras;
   std::list<std::unique_ptr<SceneObject>> sceneObjects;

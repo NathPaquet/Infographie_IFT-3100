@@ -13,7 +13,6 @@ public:
   bool attemptToAddObjectWithMouse();
   bool attemptToRemoveObjectWihMouse();
   void releaseDraggedObject();
-  bool attemptToOpenObjectOptions();
   void drawObjectPreview();
   void moveCameraWithMouse();
   void moveSelectedObjectsWithKey(int key);

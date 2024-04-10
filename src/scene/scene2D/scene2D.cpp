@@ -91,17 +91,6 @@ void Scene2D::releaseDraggedObject() {
   }
 }
 
-bool Scene2D::attemptToOpenObjectOptions() {
-  auto &&maybeObject = this->getObjectCollidingWithRay(this->sceneManager.get()->getObjects(), this->camera, this->ray);
-  auto &&found = maybeObject.has_value();
-
-  if (found) {
-    this->sceneManager.get()->setSelectedSceneObject(maybeObject.value());
-    this->sceneManager.get()->enableSelectedObjectOptions();
-  }
-  return found;
-}
-
 void Scene2D::drawObjectPreview() {
   if (this->wasDrawingFirstPositionClicked) {
     auto position = (this->ray.getOrigin() + this->ray.getDirection() * (Constants::DEFAULT_DISTANCE_TO_DRAW / abs(ray.getDirection().z)));

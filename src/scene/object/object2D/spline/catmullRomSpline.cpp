@@ -79,7 +79,7 @@ void CatmullRomSpline::releaseObjectFromDragging() {
 
 void CatmullRomSpline::displayObjectOptions() {
   // Create button to add new control point
-  if (ImGui::Button("Add control point")) {
+  if (ImGui::Button("Add control point", ImVec2(ImGui::GetContentRegionAvail().x, 0))) {
     glm::vec3 newControlPoint = controlPoints[controlPoints.size() - 1] + glm::vec3(10, 10, 0);
     controlPoints.push_back(newControlPoint);
     calculateCatmullRomCurvePoints();
@@ -87,7 +87,7 @@ void CatmullRomSpline::displayObjectOptions() {
   }
 
   // Create button to remove last control point
-  if (ImGui::Button("Remove last \ncontrol point")) {
+  if (ImGui::Button(" Remove last\ncontrol point", ImVec2(ImGui::GetContentRegionAvail().x, 0))) {
     if (controlPoints.size() > Constants::CATMULL_ROM_QUADRUPLE_SIZE) {
       controlPoints.pop_back();
       calculateCatmullRomCurvePoints();

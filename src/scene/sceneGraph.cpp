@@ -28,9 +28,10 @@ void SceneGraph::drawSceneGraphElements() {
     ImGui::Text("%s", typeid(*sceneObjectPtr).name());
     ImGui::Text("ID : %p", sceneObjectPtr.get());
 
-    if (isSelected && this->sceneManager->isSelectedObjectOptionsDisplay()) {
-      ImGui::SeparatorText("Object options");
-      sceneObjectPtr->displayObjectOptions();
+    if (isSelected) {
+      if (ImGui::CollapsingHeader("Object options", ImGuiTreeNodeFlags_SpanFullWidth)) {
+        sceneObjectPtr->displayObjectOptions();
+      }
     }
 
     ImGui::EndChild();
@@ -46,9 +47,6 @@ void SceneGraph::drawSceneGraphElements() {
       } else {
         sceneManager->setSelectedSceneObject(sceneObjectPtr.get());
       }
-    } else if (ImGui::IsItemClicked(ImGuiMouseButton(1))) {
-      sceneManager->setSelectedSceneObject(sceneObjectPtr.get());
-      sceneManager->enableSelectedObjectOptions();
     }
   }
 }
