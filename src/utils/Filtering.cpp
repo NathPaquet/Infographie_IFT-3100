@@ -4,13 +4,13 @@
 
 void Filtering::applyBlur(const std::vector<PropertyBase *> &objectsProperty) {
   applyToAll(objectsProperty, [&](ofImage &inputImage, ofImage &outputImage) {
-    return applyConvolution(inputImage, outputImage, Constants::CONVOLUTION_BLUR);
+    applyConvolution(inputImage, outputImage, Constants::CONVOLUTION_BLUR);
   });
 }
 
 void Filtering::applySharpen(const std::vector<PropertyBase *> &objectsProperty) {
   applyToAll(objectsProperty, [&](ofImage &inputImage, ofImage &outputImage) {
-    return applyConvolution(inputImage, outputImage, Constants::CONVOLUTION_SHARPEN);
+    applyConvolution(inputImage, outputImage, Constants::CONVOLUTION_SHARPEN);
   });
 }
 
@@ -25,12 +25,10 @@ void Filtering::applyGrey(const std::vector<PropertyBase *> &objectsProperty) {
         outputImage.setColor(x, y, newColor);
       }
     }
-
-    return outputImage;
   });
 }
 
-const ofImage &Filtering::applyConvolution(const ofImage &inputImage, ofImage &outputImage, const std::array<float, 9> &convolution) {
+void Filtering::applyConvolution(const ofImage &inputImage, ofImage &outputImage, const std::array<float, 9> &convolution) {
   for (int y = 1; y < inputImage.getHeight() - 1; y++) {
     for (int x = 1; x < inputImage.getWidth() - 1; x++) {
       float sumR = 0, sumG = 0, sumB = 0;
@@ -52,8 +50,6 @@ const ofImage &Filtering::applyConvolution(const ofImage &inputImage, ofImage &o
       outputImage.setColor(x, y, ofColor(sumR, sumG, sumB));
     }
   }
-
-  return outputImage;
 }
 
 void Filtering::updateInputImage(ofImage &inputImage, const ofImage &outputImage) {
@@ -61,7 +57,7 @@ void Filtering::updateInputImage(ofImage &inputImage, const ofImage &outputImage
   inputImage.update();
 }
 
-void Filtering::applyToAll(const std::vector<PropertyBase *> &objectsProperty, std::function<ofImage &(ofImage &, ofImage &)> callback) {
+void Filtering::applyToAll(const std::vector<PropertyBase *> &objectsProperty, std::function<void(ofImage &, ofImage &)> callback) {
   for (auto &&objectProperty : objectsProperty) {
     auto property = dynamic_cast<Property<ofImage> *>(objectProperty);
     ofImage &inputImage = property->getValue();
