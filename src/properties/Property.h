@@ -24,6 +24,7 @@ enum class PROPERTY_ID {
   ANGLE_Z,
   SHOW_WIREFRAME,
   RATIO,
+  CATMULL_ROM_ALPHA,
 };
 
 static inline const char *toString(PROPERTY_ID propertyId) {
@@ -50,6 +51,8 @@ static inline const char *toString(PROPERTY_ID propertyId) {
       return "Show only wireframe";
     case PROPERTY_ID::RATIO:
       return "Ratio";
+    case PROPERTY_ID::CATMULL_ROM_ALPHA:
+      return "Catmull Rom Alpha";
     default:
       return "Unknown";
   }

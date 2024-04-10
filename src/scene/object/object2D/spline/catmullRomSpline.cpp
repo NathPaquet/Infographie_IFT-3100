@@ -4,6 +4,8 @@
 #include "primitive/Circle.h"
 
 CatmullRomSpline::CatmullRomSpline(const glm::vec3 &startPoint, const glm::vec3 &endPoint) {
+  this->addProperty<float>(PROPERTY_ID::CATMULL_ROM_ALPHA, 0.5f);
+
   glm::vec3 P0 = startPoint;
   glm::vec3 P3 = endPoint;
   glm::vec3 P1 = glm::vec3(P0.x + (P3.x - P0.x) / 5, P0.y, startPoint.z);
@@ -21,7 +23,7 @@ void CatmullRomSpline::drawPreview(const glm::vec3 &startPoint, const glm::vec3 
   glm::vec3 P2 = glm::vec3(P3.x - (P3.x - P0.x) / 5, P3.y, endPoint.z);
 
   vector<glm::vec3> controlPoints = {P0, P1, P2, P3};
-  vector<glm::vec3> chainPoints = calculateCatmullRomSplineBetweenFourPoints(P0, P1, P2, P3);
+  vector<glm::vec3> chainPoints = calculateCatmullRomSplineBetweenFourPoints(P0, P1, P2, P3, 0.5f);
 
   for (int i = 0; i < controlPoints.size(); ++i) {
     ofDrawCircle(controlPoints[i], Constants::POINT_RADIUS);
@@ -96,6 +98,14 @@ void CatmullRomSpline::displayObjectOptions() {
   }
 }
 
+void CatmullRomSpline::updateProperties() {
+  SceneObject::updateProperties();
+  if (this->properties.at(PROPERTY_ID::CATMULL_ROM_ALPHA)->isValueChanged()) {
+    this->calculateCatmullRomCurvePoints();
+    this->properties.at(PROPERTY_ID::CATMULL_ROM_ALPHA)->setChanged(false);
+  }
+}
+
 int CatmullRomSpline::getNumSegments(const vector<glm::vec3> &points) {
   return points.size() - (Constants::CATMULL_ROM_QUADRUPLE_SIZE - 1);
 }
@@ -118,14 +128,14 @@ void CatmullRomSpline::calculateCatmullRomCurvePoints() {
         this->controlPoints[i],
         this->controlPoints[i + 1],
         this->controlPoints[i + 2],
-        this->controlPoints[i + 3]);
+        this->controlPoints[i + 3],
+        this->getPropertyValue<float>(PROPERTY_ID::CATMULL_ROM_ALPHA));
     curvePoints.insert(curvePoints.end(), splinePoints.begin(), splinePoints.end());
   }
 }
 
-vector<glm::vec3> CatmullRomSpline::calculateCatmullRomSplineBetweenFourPoints(const glm::vec3 &P0, const glm::vec3 &P1, const glm::vec3 &P2, const glm::vec3 &P3) {
+vector<glm::vec3> CatmullRomSpline::calculateCatmullRomSplineBetweenFourPoints(const glm::vec3 &P0, const glm::vec3 &P1, const glm::vec3 &P2, const glm::vec3 &P3, const float &alpha) {
   int numPoints = Constants::CATMULL_ROM_NUM_POINTS;
-  float alpha = Constants::CATMULL_ROM_ALPHA;
 
   vector<glm::vec3> points;
 

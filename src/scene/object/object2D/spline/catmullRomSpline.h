@@ -12,15 +12,19 @@ public:
   void releaseObjectFromDragging() override;
   void displayObjectOptions() override;
 
+protected:
+  void updateProperties() override;
+
 private:
   int getNumSegments(const vector<glm::vec3> &points);
   static float getT(float ti, const glm::vec2 &pi, const glm::vec2 &pj, float alpha);
   void calculateCatmullRomCurvePoints();
-  static vector<glm::vec3> calculateCatmullRomSplineBetweenFourPoints(const glm::vec3 &P0, const glm::vec3 &P1, const glm::vec3 &P2, const glm::vec3 &P3);
+  static vector<glm::vec3> calculateCatmullRomSplineBetweenFourPoints(const glm::vec3 &P0, const glm::vec3 &P1, const glm::vec3 &P2, const glm::vec3 &P3, const float &alpha);
   void createMeshFromControlPoints();
   void drawAABB() const;
 
   int currentSelectedPointIndex = -1;
+  float alpha = 0.5f;
   vector<glm::vec3> controlPoints;
   vector<glm::vec3> curvePoints;
 
