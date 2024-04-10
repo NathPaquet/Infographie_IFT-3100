@@ -22,7 +22,7 @@ void Light::updateLight() {
     const float radius = this->getPropertyValue<float>(PROPERTY_ID::RADIUS);
     const float scale = getScale(radius);
 
-    this->primitive.get()->setScale(scale); // this->setSize(radius);
+    this->primitive.get()->setScale(scale);
     this->properties.at(PROPERTY_ID::RADIUS)->setChanged(false);
 
     light.setScale(scale);

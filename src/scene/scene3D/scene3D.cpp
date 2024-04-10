@@ -7,9 +7,8 @@ void Scene3D::setup() {
   this->ray = Ray();
   this->ambientLight = AmbientLight();
 
-  // Initialize light (TODO REMOVE)
-  /*ofEnableSmoothing();
-  ofEnableLighting();*/
+  ofEnableSmoothing();
+  ofEnableLighting();
 
   /*this->light.setAmbientColor(Constants::AMBIANT_COLOR);
   this->light.setPosition(Constants::LIGHT_POSITION);
@@ -30,7 +29,7 @@ void Scene3D::drawScene() {
   this->currentCamera->begin();
 
   ofDrawGrid(10, 100, false, false, true, false);
-  
+
   this->sceneManager.get()->drawScene();
 
   if (this->currentObjectToAdd != ElementType::NONE) {

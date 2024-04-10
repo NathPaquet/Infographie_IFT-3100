@@ -6,7 +6,7 @@ public:
   Light(const glm::vec3 &position);
 
 private:
-  const float propotionToDraw = 1 / 4.f;
+  const float propotionToDraw = 3 / 16.f;
   const float initialPrimitiveRadius = 20 * propotionToDraw;
 
   void updateProperties() override;
