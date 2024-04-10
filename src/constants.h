@@ -40,6 +40,30 @@ namespace Constants {
   constexpr auto ERASE_CURSOR_PATH = "cursors/erase-svgrepo-com.svg";
   constexpr auto ADD_CURSOR_PATH = "cursors/add-circle-svgrepo-com.svg";
 
+  // CONVOLUTION
+  const std::array<float, 9> CONVOLUTION_BLUR = {
+      1 / 9.f,
+      1 / 9.f,
+      1 / 9.f,
+      1 / 9.f,
+      1 / 9.f,
+      1 / 9.f,
+      1 / 9.f,
+      1 / 9.f,
+      1 / 9.f,
+  };
+  const std::array<float, 9> CONVOLUTION_SHARPEN = {
+      0.f,
+      -1.f,
+      0.f,
+      -1.f,
+      5.f,
+      -1.f,
+      0.f,
+      -1.f,
+      0.f,
+  };
+
   // OTHER
   constexpr float SCROLL_POWER = 2.f;
 }

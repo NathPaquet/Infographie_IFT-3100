@@ -1,14 +1,16 @@
 #include "Filtering.h"
 
+#include <constants.h>
+
 void Filtering::applyBlur(const std::vector<PropertyBase *> &objectsProperty) {
   applyToAll(objectsProperty, [&](ofImage &inputImage, ofImage &outputImage) {
-    return applyConvolution(inputImage, outputImage, convolution_blur);
+    return applyConvolution(inputImage, outputImage, Constants::CONVOLUTION_BLUR);
   });
 }
 
 void Filtering::applySharpen(const std::vector<PropertyBase *> &objectsProperty) {
   applyToAll(objectsProperty, [&](ofImage &inputImage, ofImage &outputImage) {
-    return applyConvolution(inputImage, outputImage, convolution_sharpen);
+    return applyConvolution(inputImage, outputImage, Constants::CONVOLUTION_SHARPEN);
   });
 }
 
