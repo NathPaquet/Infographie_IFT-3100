@@ -56,6 +56,7 @@ void CatmullRomSpline::draw(bool isSelected, bool isBoundingBoxEnable, bool isOb
 
 void CatmullRomSpline::setPosition(ofVec3f vec) {
   controlPoints[this->currentSelectedPointIndex] = vec;
+  this->position = vec;
   calculateCatmullRomCurvePoints();
 }
 
@@ -63,7 +64,7 @@ void CatmullRomSpline::setDraggingPositionOnObject(ofVec3f vec) {
   SceneObject::setDraggingPositionOnObject(vec);
 
   // Get index of closest point to dragging position
-  int closestPointIndex = -1;
+  int closestPointIndex = 0;
   float minDistance = Constants::CATMULL_ROM_POINT_RADIUS;
   for (int i = 0; i < controlPoints.size(); ++i) {
     float distance = glm::distance(this->draggingPosition, controlPoints[i]);
@@ -73,9 +74,10 @@ void CatmullRomSpline::setDraggingPositionOnObject(ofVec3f vec) {
     }
   }
   this->currentSelectedPointIndex = closestPointIndex;
+  this->position = controlPoints[closestPointIndex];
 }
 
-void CatmullRomSpline::releaseObjectFromDragging() {
+void CatmullRomSpline::stopDraggingObject() {
   createMeshFromControlPoints();
 }
 
@@ -188,7 +190,7 @@ void CatmullRomSpline::createMeshFromControlPoints() {
   this->primitive = std::make_unique<of3dPrimitive>(of3dPrimitive(mesh));
   this->primitive->setPosition(this->controlPoints[0]);
 
-  this->position = this->controlPoints[0];
+  this->position = this->controlPoints[currentSelectedPointIndex];
 }
 
 void CatmullRomSpline::drawAxis() {

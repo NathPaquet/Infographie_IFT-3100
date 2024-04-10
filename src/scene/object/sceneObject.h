@@ -12,7 +12,7 @@ public:
   const ofVec3f &getPosition() const;
   virtual void setPosition(ofVec3f vec);
   virtual void setDraggingPositionOnObject(ofVec3f vec);
-  virtual void releaseObjectFromDragging();
+  virtual void stopDraggingObject();
   std::map<PROPERTY_ID, std::unique_ptr<PropertyBase>> &getProperties();
   virtual void displayObjectOptions();
 

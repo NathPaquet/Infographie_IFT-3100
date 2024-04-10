@@ -86,7 +86,7 @@ bool Scene2D::attemptToRemoveObjectWihMouse() {
 void Scene2D::releaseDraggedObject() {
   shouldDragObject = false;
   if (this->draggedObject != nullptr) {
-    this->draggedObject->releaseObjectFromDragging();
+    this->draggedObject->stopDraggingObject();
     this->draggedObject = nullptr;
   }
 }
@@ -126,5 +126,11 @@ void Scene2D::moveSelectedObjectsWithKey(int key) {
       default:
         break;
     }
+  }
+}
+
+void Scene2D::stopMovingObjectWithKey() {
+  for (const auto &selectedSceneObject : sceneManager.get()->getSelectedObjects()) {
+    selectedSceneObject->stopDraggingObject();
   }
 }

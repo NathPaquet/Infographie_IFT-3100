@@ -35,6 +35,5 @@ void SceneObject::setDraggingPositionOnObject(ofVec3f vec) {
   this->draggingPosition = vec;
 }
 
-void SceneObject::releaseObjectFromDragging() {
-  this->draggingPosition = glm::vec3(0);
+void SceneObject::stopDraggingObject() {
 }

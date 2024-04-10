@@ -9,7 +9,7 @@ public:
   void draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) override;
   void setPosition(ofVec3f vec) override;
   void setDraggingPositionOnObject(ofVec3f vec) override;
-  void releaseObjectFromDragging() override;
+  void stopDraggingObject() override;
   void displayObjectOptions() override;
 
 protected:
@@ -23,7 +23,7 @@ private:
   void createMeshFromControlPoints();
   void drawAABB() const;
 
-  int currentSelectedPointIndex = -1;
+  int currentSelectedPointIndex = 0;
   vector<glm::vec3> controlPoints;
   vector<glm::vec3> curvePoints;
 
