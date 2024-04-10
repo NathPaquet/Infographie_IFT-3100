@@ -50,9 +50,6 @@ void Scene2DEventHandler::mousePressed(ofMouseEventArgs &mouseArgs) {
     if (mouseArgs.button == OF_MOUSE_BUTTON_LEFT) {
       this->leftMouseButtonPressed();
     }
-    if (mouseArgs.button == OF_MOUSE_BUTTON_RIGHT) {
-      this->rightMouseButtonPressed();
-    }
   }
 }
 
@@ -100,18 +97,6 @@ void Scene2DEventHandler::leftMouseButtonReleased() {
       break;
     case CursorMode::CAMERA_MOVING:
       this->cursor->setCursorMode(CursorMode::NAVIGATION);
-      break;
-    default:
-      break;
-  }
-}
-
-void Scene2DEventHandler::rightMouseButtonPressed() {
-  switch (this->cursor->getCursorMode()) {
-    case CursorMode::NAVIGATION:
-      if (this->scene2D->attemptToOpenObjectOptions()) {
-        // TODO : Open object options
-      }
       break;
     default:
       break;
