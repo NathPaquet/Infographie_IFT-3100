@@ -30,8 +30,7 @@ void Scene3D::drawScene() {
   this->currentCamera->begin();
 
   ofDrawGrid(10, 100, false, false, true, false);
-
-  ofDrawSphere(0, 0, 0, 10);
+  
   this->sceneManager.get()->drawScene();
 
   if (this->currentObjectToAdd != ElementType::NONE) {
