@@ -4,7 +4,7 @@
 #include "primitive/Circle.h"
 
 CatmullRomSpline::CatmullRomSpline(const glm::vec3 &startPoint, const glm::vec3 &endPoint) {
-  this->addProperty<float>(PROPERTY_ID::CATMULL_ROM_ALPHA, 0.5f);
+  this->addProperty<float>(PROPERTY_ID::CATMULL_ROM_ALPHA, Constants::CATMULL_ROM_ALPHA);
 
   glm::vec3 P0 = startPoint;
   glm::vec3 P3 = endPoint;
@@ -26,7 +26,7 @@ void CatmullRomSpline::drawPreview(const glm::vec3 &startPoint, const glm::vec3 
   vector<glm::vec3> chainPoints = calculateCatmullRomSplineBetweenFourPoints(P0, P1, P2, P3, 0.5f);
 
   for (int i = 0; i < controlPoints.size(); ++i) {
-    ofDrawCircle(controlPoints[i], Constants::POINT_RADIUS);
+    ofDrawCircle(controlPoints[i], Constants::CATMULL_ROM_POINT_RADIUS);
   }
 
   for (int i = 0; i < chainPoints.size() - 1; ++i) {
@@ -44,7 +44,7 @@ void CatmullRomSpline::draw(bool isSelected, bool isBoundingBoxEnable, bool isOb
 
   if (isSelected) {
     for (int i = 0; i < controlPoints.size(); ++i) {
-      ofDrawCircle(controlPoints[i], Constants::POINT_RADIUS);
+      ofDrawCircle(controlPoints[i], Constants::CATMULL_ROM_POINT_RADIUS);
     }
 
     if (isBoundingBoxEnable) {
@@ -64,7 +64,7 @@ void CatmullRomSpline::setDraggingPositionOnObject(ofVec3f vec) {
 
   // Get index of closest point to dragging position
   int closestPointIndex = -1;
-  float minDistance = Constants::POINT_RADIUS;
+  float minDistance = Constants::CATMULL_ROM_POINT_RADIUS;
   for (int i = 0; i < controlPoints.size(); ++i) {
     float distance = glm::distance(this->draggingPosition, controlPoints[i]);
     if (distance < minDistance) {
@@ -172,7 +172,7 @@ void CatmullRomSpline::createMeshFromControlPoints() {
   for (const auto &controlPoint : controlPoints) {
     ofPushMatrix();
     ofTranslate(firstControlPoints);
-    auto controlPointPrimitive = Circle(controlPoint - firstControlPoints, Constants::POINT_RADIUS);
+    auto controlPointPrimitive = Circle(controlPoint - firstControlPoints, Constants::CATMULL_ROM_POINT_RADIUS);
     ofPopMatrix();
 
     for (auto &&vertex : controlPointPrimitive.getPrimitive().getMesh().getVertices()) {

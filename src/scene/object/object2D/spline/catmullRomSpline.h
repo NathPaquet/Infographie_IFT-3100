@@ -24,7 +24,6 @@ private:
   void drawAABB() const;
 
   int currentSelectedPointIndex = -1;
-  float alpha = 0.5f;
   vector<glm::vec3> controlPoints;
   vector<glm::vec3> curvePoints;
 

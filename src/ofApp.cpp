@@ -144,7 +144,7 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
         this->currentScene->setCurrentObjectToAdd(ElementType::LINE);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
-      if (ImGui::MenuItem("Add Catmull Rom Spline")) {
+      if (ImGui::MenuItem("Add Catmull Rom Spline", "Shift+8")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::CATMULL_ROM_SPLINE);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
@@ -290,6 +290,9 @@ void ofApp::updateKeyboardShortcuts() {
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       } else if (ImGui::IsKeyPressed(ImGuiKey_7)) {
         this->currentScene->setCurrentObjectToAdd(ElementType::MAGIC_SWORD);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_8)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::CATMULL_ROM_SPLINE);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
     } else {
