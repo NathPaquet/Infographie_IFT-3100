@@ -3,6 +3,7 @@
 #include "Constants.h"
 
 Object2D::Object2D() {
+  this->addProperty<bool>(PROPERTY_ID::SHOW_WIREFRAME, false);
   this->addProperty<float>(PROPERTY_ID::ANGLE_Z, 0.f);
 }
 

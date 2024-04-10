@@ -5,11 +5,14 @@
 
 SceneObject::SceneObject() {
   this->addProperty<ofColor>(PROPERTY_ID::COLOR, ofColor::fromHsb(ofRandom(255), 255, 255));
-  this->addProperty<bool>(PROPERTY_ID::SHOW_WIREFRAME, false);
 }
 
 std::map<PROPERTY_ID, std::unique_ptr<PropertyBase>> &SceneObject::getProperties() {
   return this->properties;
+}
+
+void SceneObject::displayObjectOptions() {
+  ImGui::Text("No options available");
 }
 
 void SceneObject::updateProperties() {
@@ -26,4 +29,11 @@ const ofVec3f &SceneObject::getPosition() const {
 void SceneObject::setPosition(ofVec3f vec) {
   this->position = vec;
   this->primitive->setGlobalPosition(vec);
+}
+
+void SceneObject::setDraggingPositionOnObject(ofVec3f vec) {
+  this->draggingPosition = vec;
+}
+
+void SceneObject::stopDraggingObject() {
 }

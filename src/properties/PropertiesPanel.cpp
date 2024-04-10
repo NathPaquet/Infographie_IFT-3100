@@ -1,6 +1,7 @@
 #include "PropertiesPanel.h"
 
 #include "ImageImporter.h"
+#include "constants.h"
 #include "imgui.h"
 
 #include <propertiesDraw/BoolPropertyDrawer.h>
@@ -26,6 +27,7 @@ PropertiesPanel::PropertiesPanel() {
   propertyDrawFunctions.emplace(PROPERTY_ID::ANGLE_X, std::make_unique<FloatPropertyDrawer>(MIN_ANGLE_VALUE, MAX_ANGLE_VALUE));
   propertyDrawFunctions.emplace(PROPERTY_ID::ANGLE_Y, std::make_unique<FloatPropertyDrawer>(MIN_ANGLE_VALUE, MAX_ANGLE_VALUE));
   propertyDrawFunctions.emplace(PROPERTY_ID::ANGLE_Z, std::make_unique<FloatPropertyDrawer>(MIN_ANGLE_VALUE, MAX_ANGLE_VALUE));
+  propertyDrawFunctions.emplace(PROPERTY_ID::CATMULL_ROM_ALPHA, std::make_unique<FloatPropertyDrawer>(Constants::MIN_CATMULL_ROM_ALPHA_VALUE, Constants::MAX_CATMULL_ROM_ALPHA_VALUE));
 }
 
 void PropertiesPanel::drawPropertiesPanel(std::vector<SceneObject *> &objects) {
