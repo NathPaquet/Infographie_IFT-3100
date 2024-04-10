@@ -5,6 +5,7 @@
 #include "of3dUtils.h"
 #include "scene/object/object3D/primitive/Planet.h"
 #include "scene/object/sceneObjectFactory.h"
+#include "utils/loadingScreen.h"
 
 #include <iostream>
 
@@ -15,6 +16,7 @@ void ofApp::setup() {
   ofDisableAlphaBlending();
   ofEnableDepthTest();
   ofSetVerticalSync(true);
+  ofDisableArbTex();
   // required call
 
   this->cursor = std::make_unique<Cursor>(CursorMode::NAVIGATION);
@@ -35,11 +37,10 @@ void ofApp::setup() {
 
   this->gui.setup(nullptr, true, ImGuiConfigFlags_ViewportsEnable);
   this->sceneGraph = std::make_unique<SceneGraph>(this->currentScene->getSceneManager());
-  this->windowCamera = std::make_unique<WindowCamera>(this->currentScene->getSceneManager());
+  this->windowCamera = std::make_unique<WindowCamera>(this->scene3D.get());
   this->cameraPanel = std::make_unique<CameraPanel>(this->currentScene->getSceneManager(), windowCamera.get());
   this->propertiesPanel = std::make_unique<PropertiesPanel>();
 
-  ofDisableArbTex();
   ofBackground(0);
   this->backgroundTexture = this->backgroundImage.getTexture();
   this->backgroundTexture.enableMipmap();
@@ -54,14 +55,15 @@ void ofApp::exit() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-  this->cursor->drawCursor(ofGetMouseX(), ofGetMouseY());
+  gui.begin();
+
   this->currentScene->drawScene();
 
   windowCamera->drawScene();
 
-  updateKeyboardShortcuts();
+  this->cursor->drawCursor(ofGetMouseX(), ofGetMouseY());
 
-  gui.begin();
+  updateKeyboardShortcuts();
 
   // Draw properties panel menu
   drawPropertiesPanel();
@@ -212,6 +214,9 @@ void ofApp::drawSceneTopMenu() {
     if (ImGui::BeginMenuBar()) {
       this->drawSceneObjectGraphCreationMenu();
       this->createViewMenu();
+      if (!this->isScene2D && this->isSkyboxEnabled) {
+        this->createSkyboxTopMenu();
+      }
       tools.createToolsMenu();
       cameraPanel.get()->create();
 
@@ -235,6 +240,9 @@ void ofApp::createViewMenu() {
       if (ImGui::MenuItem((this->isViewOrtho ? "Enable perspective projection" : "Enable orthographic projection"), "Alt+p")) {
         switchBetweenProjections();
       }
+      if (ImGui::MenuItem((this->isSkyboxEnabled ? "Disable skybox" : "Enable skybox"), "Alt+s")) {
+        toggleSkyboxFor3DScene();
+      }
     }
 
     if (ImGui::MenuItem((this->isBoundingBoxEnabled ? "Disable bounding box" : "Enable bounding box"), "Alt+b")) {
@@ -251,6 +259,31 @@ void ofApp::createViewMenu() {
   }
 }
 
+void ofApp::toggleSkyboxFor3DScene() {
+  this->isSkyboxEnabled = !this->isSkyboxEnabled;
+  this->scene3D.get()->toggleSkyboxActivation();
+}
+
+void ofApp::createSkyboxTopMenu() {
+  if (ImGui::BeginMenu("Skybox")) {
+    static int selected = 0;
+    ImGui::SeparatorText("Skybox options");
+    if (ImGui::Selectable("Light blue galaxy", selected == 0)) {
+      selected = 0;
+      this->scene3D.get()->loadSkybox(Constants::CUBEMAP_TEXTURE_SKYBOX_LIGHTBLUE);
+    }
+    if (ImGui::Selectable("Blue galaxy", selected == 1)) {
+      selected = 1;
+      this->scene3D.get()->loadSkybox(Constants::CUBEMAP_TEXTURE_SKYBOX_BLUE);
+    }
+    if (ImGui::Selectable("Red galaxy", selected == 2)) {
+      selected = 2;
+      this->scene3D.get()->loadSkybox(Constants::CUBEMAP_TEXTURE_SKYBOX_RED);
+    }
+    ImGui::EndMenu();
+  }
+}
+
 void ofApp::updateKeyboardShortcuts() {
   if (ImGui::IsKeyPressed(ImGuiKey_Tab)) {
     switchBetweenScenes();
@@ -263,6 +296,10 @@ void ofApp::updateKeyboardShortcuts() {
     if (ImGui::IsKeyPressed(ImGuiKey_B)) {
       this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
       this->currentScene->getSceneManager()->toggleActivationBoundingBox();
+    }
+    if (ImGui::IsKeyPressed(ImGuiKey_S) && this->currentScene == this->scene3D.get()) {
+      this->isSkyboxEnabled = !this->isSkyboxEnabled;
+      this->scene3D.get()->toggleSkyboxActivation();
     }
     if (ImGui::IsKeyPressed(ImGuiKey_P)) {
       switchBetweenProjections();

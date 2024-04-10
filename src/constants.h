@@ -8,6 +8,7 @@ namespace Constants {
   constexpr float SCENE_GRAPH_WIDTH = 200.0f;
   constexpr float GRAPH_SCENE_BUTTON_HEIGHT = 30.0f;
   constexpr float DEFAULT_SIZE = 20.0f;
+  constexpr float DEFAULT_SKYBOX_SIZE = 100.0f;
 
   // COLORS
   constexpr ImColor MENU_BAR_BACKGROUND_COLOR = ImColor(51, 56, 68, 255);
@@ -50,4 +51,10 @@ namespace Constants {
   constexpr float CATMULL_ROM_POINT_RADIUS = 4.0f;
   constexpr float MIN_CATMULL_ROM_ALPHA_VALUE = 0.0f;
   constexpr float MAX_CATMULL_ROM_ALPHA_VALUE = 1.0f;
+
+  // SKYBOX
+  constexpr auto CUBEMAP_TEXTURE_SKYBOX_BLUE = "cubemaps/blue/";
+  constexpr auto CUBEMAP_TEXTURE_SKYBOX_RED = "cubemaps/red/";
+  constexpr auto CUBEMAP_TEXTURE_SKYBOX_LIGHTBLUE = "cubemaps/lightblue/";
+
 }
