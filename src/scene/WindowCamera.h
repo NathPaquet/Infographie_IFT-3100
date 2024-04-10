@@ -2,11 +2,11 @@
 
 #include "object/object3D/Camera.h"
 #include "ofMain.h"
-#include "sceneManager.h"
+#include "scene3D/scene3D.h"
 
 class WindowCamera {
 public:
-  WindowCamera(SceneManager *sceneManager);
+  WindowCamera(Scene3D *scene);
   void setSelectedCamera(Camera *camera);
   Camera *getSelectedCamera() const;
   bool getIsShow() const;
@@ -17,7 +17,7 @@ private:
   bool hasNoSelectedCamera() const;
 
   const float RATIO_SCENE = 0.375f;
-  SceneManager *sceneManager;
+  Scene3D *scene;
   Camera *selectedCamera = nullptr;
   bool isShown = false;
 };
