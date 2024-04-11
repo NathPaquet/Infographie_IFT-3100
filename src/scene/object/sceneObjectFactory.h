@@ -20,6 +20,8 @@ enum class ElementType {
   LINE,
   STAR,
   POINT,
+  // 2D splines
+  CATMULL_ROM_SPLINE,
   // 2D Complex shapes
   SPACE_ROCKET,
   MAGIC_SWORD,

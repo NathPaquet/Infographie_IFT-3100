@@ -13,6 +13,7 @@ void Scene2DEventHandler::activateHandler() {
   ofAddListener(ofEvents().mousePressed, this, &Scene2DEventHandler::mousePressed);
   ofAddListener(ofEvents().mouseReleased, this, &Scene2DEventHandler::mouseReleased);
   ofAddListener(ofEvents().keyPressed, this, &Scene2DEventHandler::keyPressed);
+  ofAddListener(ofEvents().keyReleased, this, &Scene2DEventHandler::keyReleased);
   // TODO : Call scene2D to active only movement in 2D scene (movement in x and y)
 }
 
@@ -63,6 +64,12 @@ void Scene2DEventHandler::mouseReleased(ofMouseEventArgs &mouseArgs) {
 
 void Scene2DEventHandler::keyPressed(ofKeyEventArgs &keyArgs) {
   this->scene2D->moveSelectedObjectsWithKey(keyArgs.key);
+}
+
+void Scene2DEventHandler::keyReleased(ofKeyEventArgs &keyArgs) {
+  if (keyArgs.key == OF_KEY_UP || keyArgs.key == OF_KEY_DOWN || keyArgs.key == OF_KEY_LEFT || keyArgs.key == OF_KEY_RIGHT) {
+    this->scene2D->stopMovingObjectWithKey();
+  }
 }
 
 void Scene2DEventHandler::leftMouseButtonPressed() {

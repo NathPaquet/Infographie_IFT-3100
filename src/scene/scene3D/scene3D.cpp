@@ -28,6 +28,16 @@ void Scene3D::update() {
 void Scene3D::drawScene() {
   this->currentCamera->begin();
 
+  this->drawSceneFromCamera(this->currentCamera->getGlobalPosition());
+
+  this->currentCamera->end();
+}
+
+void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
+  if (this->isSkyboxEnabled && this->currentCamera == this->perspectiveCamera.get()) {
+    this->skybox.draw(Constants::DEFAULT_SKYBOX_SIZE, cameraPosition);
+  }
+
   ofDrawGrid(10, 100, false, false, true, false);
 
   this->sceneManager.get()->drawScene();
@@ -35,8 +45,6 @@ void Scene3D::drawScene() {
   if (this->currentObjectToAdd != ElementType::NONE) {
     this->drawObjectPreview();
   }
-
-  this->currentCamera->end();
 }
 
 void Scene3D::toggleProjectionMode() {
@@ -49,6 +57,14 @@ void Scene3D::toggleProjectionMode() {
     this->orthographicCamera.get()->enableMouseInput();
     this->currentCamera = this->orthographicCamera.get();
   }
+}
+
+void Scene3D::toggleSkyboxActivation() {
+  this->isSkyboxEnabled = !this->isSkyboxEnabled;
+}
+
+void Scene3D::loadSkybox(const string &skyboxTexturePath) {
+  this->skybox.loadTexture(skyboxTexturePath);
 }
 
 bool Scene3D::attemptToClickOnObjectWithMouse() {
