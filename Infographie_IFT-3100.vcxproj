@@ -200,8 +200,6 @@
     <ClInclude Include="src\properties\propertiesDraw\FloatPropertyDrawer.h" />
     <ClInclude Include="src\properties\propertiesDraw\ImagePropertyDrawer.h" />
     <ClInclude Include="src\raycasting\ray.h" />
-    <ClInclude Include="src\scene\object\object3D\DirectionalLight.h" />
-    <ClInclude Include="src\scene\object\object3D\Light.h" />
     <ClInclude Include="src\scene\object\object3D\lights\Light.h" />
     <ClInclude Include="src\scene\object\object3D\lights\types\AmbientLight.h" />
     <ClInclude Include="src\scene\object\object3D\lights\types\DirectionalLight.h" />

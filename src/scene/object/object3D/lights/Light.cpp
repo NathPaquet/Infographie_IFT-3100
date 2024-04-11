@@ -12,6 +12,10 @@ Light::Light(const glm::vec3 &position) {
   light.enable();
 }
 
+Light::~Light() {
+  light.disable();
+}
+
 void Light::updateProperties() {
   Object3D::updateProperties();
   updateLight();

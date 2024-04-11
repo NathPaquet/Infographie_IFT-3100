@@ -226,11 +226,21 @@
     <ClCompile Include="..\..\addons\ofxSvg\src\ofxSvg.cpp">
       <Filter>addons\ofxSvg\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\scene\object\object3D\lights\Light.cpp" />
-    <ClCompile Include="src\scene\object\object3D\lights\types\DirectionalLight.cpp" />
-    <ClCompile Include="src\scene\object\object3D\lights\types\SpotLight.cpp" />
-    <ClCompile Include="src\scene\object\object3D\lights\types\PointLight.cpp" />
-    <ClCompile Include="src\scene\object\object3D\lights\types\AmbientLight.cpp" />
+    <ClCompile Include="src\scene\object\object3D\lights\types\AmbientLight.cpp">
+      <Filter>src\scene\object\object3D\lights</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object3D\lights\types\DirectionalLight.cpp">
+      <Filter>src\scene\object\object3D\lights</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object3D\lights\Light.cpp">
+      <Filter>src\scene\object\object3D\lights</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object3D\lights\types\PointLight.cpp">
+      <Filter>src\scene\object\object3D\lights</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\object\object3D\lights\types\SpotLight.cpp">
+      <Filter>src\scene\object\object3D\lights</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -1024,17 +1034,21 @@
     <ClInclude Include="..\..\addons\ofxSvg\libs\svgtiny\include\svgtiny.h">
       <Filter>addons\ofxSvg\libs\svgtiny\include</Filter>
     </ClInclude>
-    <ClInclude Include="src\scene\object\object3D\Light.h">
+    <ClInclude Include="src\scene\object\object3D\lights\types\AmbientLight.h">
       <Filter>src\scene\object\object3D\lights</Filter>
     </ClInclude>
-    <ClInclude Include="src\scene\object\object3D\DirectionalLight.h">
+    <ClInclude Include="src\scene\object\object3D\lights\types\DirectionalLight.h">
       <Filter>src\scene\object\object3D\lights</Filter>
     </ClInclude>
-    <ClInclude Include="src\scene\object\object3D\lights\Light.h" />
-    <ClInclude Include="src\scene\object\object3D\lights\types\DirectionalLight.h" />
-    <ClInclude Include="src\scene\object\object3D\lights\types\SpotLight.h" />
-    <ClInclude Include="src\scene\object\object3D\lights\types\PointLight.h" />
-    <ClInclude Include="src\scene\object\object3D\lights\types\AmbientLight.h" />
+    <ClInclude Include="src\scene\object\object3D\lights\Light.h">
+      <Filter>src\scene\object\object3D\lights</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\object\object3D\lights\types\PointLight.h">
+      <Filter>src\scene\object\object3D\lights</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\object\object3D\lights\types\SpotLight.h">
+      <Filter>src\scene\object\object3D\lights</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
