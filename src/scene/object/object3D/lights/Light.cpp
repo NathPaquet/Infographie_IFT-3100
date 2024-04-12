@@ -16,6 +16,18 @@ Light::~Light() {
   light.disable();
 }
 
+void Light::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) {
+  auto &color = this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR);
+
+  ofPushStyle();
+  ofTranslate(getPosition());
+
+  ofSetColor(color);
+  light.draw();
+
+  ofPopStyle();
+}
+
 void Light::updateProperties() {
   Object3D::updateProperties();
   updateLight();
@@ -32,8 +44,8 @@ void Light::updateLight() {
     light.setScale(scale);
   }
 
-  auto &color = this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR);
   if (this->properties.at(PROPERTY_ID::COLOR)->isValueChanged()) {
+    auto &color = this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR);
     light.setDiffuseColor(color);
   }
 
@@ -42,11 +54,6 @@ void Light::updateLight() {
 
   auto &orientation = this->primitive.get()->getOrientationQuat();
   light.setOrientation(orientation);
-
-  ofPushStyle();
-  ofSetColor(color);
-  light.draw();
-  ofPopStyle();
 }
 
 float Light::getScale(float radius) const {
