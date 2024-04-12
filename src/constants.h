@@ -52,6 +52,10 @@ namespace Constants {
   constexpr float MIN_CATMULL_ROM_ALPHA_VALUE = 0.0f;
   constexpr float MAX_CATMULL_ROM_ALPHA_VALUE = 1.0f;
 
+  // LIGHTS
+  constexpr float MIN_ATTENUATION_VALUE = 0.0f;
+  constexpr float MAX_ATTENUATION_VALUE = 1.0f;
+
   // SKYBOX
   constexpr auto CUBEMAP_TEXTURE_SKYBOX_BLUE = "cubemaps/blue/";
   constexpr auto CUBEMAP_TEXTURE_SKYBOX_RED = "cubemaps/red/";
