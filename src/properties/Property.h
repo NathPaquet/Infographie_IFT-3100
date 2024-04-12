@@ -25,6 +25,7 @@ enum class PROPERTY_ID {
   SHOW_WIREFRAME,
   RATIO,
   CATMULL_ROM_ALPHA,
+  ATTENUATION,
 };
 
 static inline const char *toString(PROPERTY_ID propertyId) {
@@ -53,6 +54,8 @@ static inline const char *toString(PROPERTY_ID propertyId) {
       return "Ratio";
     case PROPERTY_ID::CATMULL_ROM_ALPHA:
       return "Catmull Rom Alpha";
+    case PROPERTY_ID::ATTENUATION:
+      return "Attenuation";
     default:
       return "Unknown";
   }
