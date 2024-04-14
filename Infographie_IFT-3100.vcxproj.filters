@@ -238,6 +238,15 @@
     <ClCompile Include="src\scene\object\object2D\spline\catmullRomSpline.cpp">
       <Filter>src\scene\object\object2D\spline</Filter>
     </ClCompile>
+    <ClCompile Include="src\textures\TextureRepository.cpp">
+      <Filter>src\textures</Filter>
+    </ClCompile>
+    <ClCompile Include="TexturePicker.cpp">
+      <Filter>src\textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\properties\propertiesDraw\TexturePropertyDrawer.cpp">
+      <Filter>src\properties\propertiesDraw</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -377,6 +386,9 @@
     </Filter>
     <Filter Include="src\scene\object\object2D\spline">
       <UniqueIdentifier>{319e5531-bf78-445d-bf6e-e37ba36ff792}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\textures">
+      <UniqueIdentifier>{fd09e19b-db4f-4987-9fd5-f74a671c48f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1045,6 +1057,18 @@
     </ClInclude>
     <ClInclude Include="src\scene\object\object2D\spline\catmullRomSpline.h">
       <Filter>src\scene\object\object2D\spline</Filter>
+    </ClInclude>
+    <ClInclude Include="src\textures\TextureRepository.h">
+      <Filter>src\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\textures\TexturePack.h">
+      <Filter>src\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\textures\TexturePicker.h">
+      <Filter>src\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\properties\propertiesDraw\TexturePropertyDrawer.h">
+      <Filter>src\properties\propertiesDraw</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -12,9 +12,6 @@ Planet::Planet(const float x, const float y, const float z) {
   this->mainMesh = sphere.getMesh();
 
   ofDisableArbTex();
-  this->mTex.enableMipmap();
-  this->mTex.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
-  this->mTex.generateMipmap();
 
   this->primitive = std::make_unique<ofSpherePrimitive>(std::move(sphere));
   this->primitive->setGlobalPosition(x, y, z);

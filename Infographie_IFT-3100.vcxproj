@@ -112,6 +112,7 @@
     <ClCompile Include="src\layouts\Tools.cpp" />
     <ClCompile Include="src\layouts\export\ExportMenu.cpp" />
     <ClCompile Include="src\layouts\export\ImageFormatDropdown.cpp" />
+    <ClCompile Include="src\properties\propertiesDraw\TexturePropertyDrawer.cpp" />
     <ClCompile Include="src\properties\PropertiesPanel.cpp" />
     <ClCompile Include="src\properties\propertiesDraw\BoolPropertyDrawer.cpp" />
     <ClCompile Include="src\properties\propertiesDraw\ColorPropertyDrawer.cpp" />
@@ -145,6 +146,7 @@
     <ClCompile Include="src\scene\scene3D\scene3DEventHandler.cpp" />
     <ClCompile Include="src\scene\sceneGraph.cpp" />
     <ClCompile Include="src\scene\sceneManager.cpp" />
+    <ClCompile Include="src\textures\TextureRepository.cpp" />
     <ClCompile Include="src\utils\ImageCapture.cpp" />
     <ClCompile Include="src\utils\ImageImporter.cpp" />
     <ClCompile Include="..\..\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.cpp" />
@@ -181,6 +183,7 @@
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_widgets.cpp" />
     <ClCompile Include="..\..\addons\ofxSvg\src\ofxSvg.cpp" />
     <ClCompile Include="src\utils\loadingScreen.cpp" />
+    <ClCompile Include="TexturePicker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h" />
@@ -191,6 +194,7 @@
     <ClInclude Include="src\layouts\Tools.h" />
     <ClInclude Include="src\layouts\export\ExportMenu.h" />
     <ClInclude Include="src\layouts\export\ImageFormatDropdown.h" />
+    <ClInclude Include="src\properties\propertiesDraw\TexturePropertyDrawer.h" />
     <ClInclude Include="src\properties\PropertiesPanel.h" />
     <ClInclude Include="src\properties\Property.h" />
     <ClInclude Include="src\properties\propertiesDraw\AbstractPropertyDrawer.h" />
@@ -226,6 +230,9 @@
     <ClInclude Include="src\scene\scene3D\scene3DEventHandler.h" />
     <ClInclude Include="src\scene\sceneGraph.h" />
     <ClInclude Include="src\scene\sceneManager.h" />
+    <ClInclude Include="src\textures\TexturePack.h" />
+    <ClInclude Include="src\textures\TexturePicker.h" />
+    <ClInclude Include="src\textures\TextureRepository.h" />
     <ClInclude Include="src\utils\ImageCapture.h" />
     <ClInclude Include="src\utils\ImageImporter.h" />
     <ClInclude Include="..\..\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.h" />
