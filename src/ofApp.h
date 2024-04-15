@@ -58,4 +58,6 @@ private:
   bool isBoundingBoxEnabled = false;
   bool isObjectAxisEnabled = false;
   Scene *currentScene;
+
+  std::shared_ptr<ofShader> shader;
 };

@@ -1,10 +1,12 @@
 #include "object3D.h"
 
 #include "constants.h"
+#include "textures/TextureRepository.h"
 
 Object3D::Object3D() {
   this->addProperty<bool>(PROPERTY_ID::SHOW_WIREFRAME, false);
   this->addProperty<ofImage>(PROPERTY_ID::IMAGE_IMPORT, ofImage());
+  this->addProperty<const TexturePack *>(PROPERTY_ID::TEXTURE, TextureRepository::getTexture("Snow_03"));
   this->addProperty<float>(PROPERTY_ID::ANGLE_X, 0.f);
   this->addProperty<float>(PROPERTY_ID::ANGLE_Y, 0.f);
   this->addProperty<float>(PROPERTY_ID::ANGLE_Z, 0.f);
@@ -28,13 +30,14 @@ void Object3D::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxis
   ofSetColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
 
   if (!this->getPropertyValue<bool>(PROPERTY_ID::SHOW_WIREFRAME)) {
-    if (mTex.isAllocated()) {
-      this->mTex.bind();
-      mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
-      mMaterial.begin();
+    if (this->getPropertyValue<const TexturePack *>(PROPERTY_ID::TEXTURE) && this->getPropertyValue<const TexturePack *>(PROPERTY_ID::TEXTURE)->textureDiffuseMap.isAllocated()) {
+      this->getPropertyValue<const TexturePack *>(PROPERTY_ID::TEXTURE)->textureDiffuseMap.bind();
+      this->getPropertyValue<const TexturePack *>(PROPERTY_ID::TEXTURE)->material.begin();
+      // mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
       primitive->draw();
-      mMaterial.end();
-      this->mTex.unbind();
+
+      this->getPropertyValue<const TexturePack *>(PROPERTY_ID::TEXTURE)->material.end();
+      this->getPropertyValue<const TexturePack *>(PROPERTY_ID::TEXTURE)->textureDiffuseMap.unbind();
     } else {
       mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
       mMaterial.begin();
@@ -125,14 +128,9 @@ void Object3D::drawAABB() const {
 void Object3D::updateProperties() {
   SceneObject::updateProperties();
   if (this->properties.at(PROPERTY_ID::IMAGE_IMPORT)->isValueChanged() && this->getPropertyValue<ofImage>(PROPERTY_ID::IMAGE_IMPORT).isAllocated()) {
-    this->mTex = this->getPropertyValue<ofImage>(PROPERTY_ID::IMAGE_IMPORT).getTexture();
-    this->mTex.enableMipmap();
-    this->mTex.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
-    this->mTex.generateMipmap();
     this->properties.at(PROPERTY_ID::IMAGE_IMPORT)->setChanged(false);
   }
   if (this->properties.at(PROPERTY_ID::IMAGE_IMPORT)->isValueChanged()) {
-    this->mTex.clear();
     this->properties.at(PROPERTY_ID::IMAGE_IMPORT)->setChanged(false);
   }
   if (this->properties.at(PROPERTY_ID::ANGLE_X)->isValueChanged() || this->properties.at(PROPERTY_ID::ANGLE_Y)->isValueChanged() || this->properties.at(PROPERTY_ID::ANGLE_Z)->isValueChanged()) {
