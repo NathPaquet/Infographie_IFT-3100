@@ -47,8 +47,7 @@ void ofApp::setup() {
   this->backgroundTexture.enableMipmap();
   this->backgroundTexture.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
   this->backgroundTexture.generateMipmap();
-  
-  this->tools = std::make_unique<Tools>(this->scene3D.get());
+
   loadDefaultTextures();
 }
 
