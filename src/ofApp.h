@@ -40,6 +40,7 @@ private:
   void generateRandomGalaxy(int nbElements);
   void switchBetweenScenes();
   void switchBetweenProjections();
+  void loadDefaultTextures();
 
   std::unique_ptr<SceneGraph> sceneGraph;
   std::unique_ptr<PropertiesPanel> propertiesPanel;
