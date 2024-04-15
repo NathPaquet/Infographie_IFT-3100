@@ -29,7 +29,8 @@ public:
   void releaseDraggedObject();
   void drawObjectPreview();
 
-  AmbientLight &getAmbientLight();
+  bool isAmbientLightEnable() const;
+  void toggleAmbientLight();
 
 private:
   const float SCROLL_POWER = 2.f;

@@ -46,9 +46,6 @@ void ofApp::setup() {
   this->backgroundTexture.enableMipmap();
   this->backgroundTexture.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
   this->backgroundTexture.generateMipmap();
-
-  // Layouts
-  this->tools = std::make_unique<Tools>(this->scene3D.get());
 }
 
 //--------------------------------------------------------------
@@ -235,7 +232,7 @@ void ofApp::drawSceneTopMenu() {
       if (!this->isScene2D && this->isSkyboxEnabled) {
         this->createSkyboxTopMenu();
       }
-      tools->createToolsMenu();
+      tools.createToolsMenu(this->scene3D.get());
       cameraPanel.get()->create();
 
       ImGui::EndMenuBar();

@@ -6,12 +6,9 @@
 
 class Tools {
 public:
-  Tools(Scene3D *scene3D);
-  void createToolsMenu();
+  void createToolsMenu(Scene3D *scene3D);
 
 private:
-  std::unique_ptr<Scene3D> scene3D;
-
   ExportMenu exportMenu;
   bool showExportMenu = false;
 };

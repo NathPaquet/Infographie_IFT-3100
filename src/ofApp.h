@@ -49,7 +49,7 @@ private:
   std::unique_ptr<Scene2DEventHandler> scene2DEventHandler;
   std::unique_ptr<Cursor> cursor;
 
-  std::unique_ptr<Tools> tools;
+  Tools tools;
   std::unique_ptr<CameraPanel> cameraPanel;
   std::unique_ptr<WindowCamera> windowCamera;
 

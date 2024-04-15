@@ -20,11 +20,14 @@ void Light::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEna
   auto &color = this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR);
 
   ofPushStyle();
+  ofPushMatrix();
+
   ofTranslate(getPosition());
 
   ofSetColor(color);
   light.draw();
 
+  ofPopMatrix();
   ofPopStyle();
 }
 

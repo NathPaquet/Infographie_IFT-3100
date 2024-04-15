@@ -137,8 +137,12 @@ void Scene3D::drawObjectPreview() {
   }
 }
 
-AmbientLight &Scene3D::getAmbientLight() {
-  return this->ambientLight;
+bool Scene3D::isAmbientLightEnable() const {
+  return this->ambientLight.isEnable();
+}
+
+void Scene3D::toggleAmbientLight() {
+  this->ambientLight.toggle();
 }
 
 void Scene3D::setupPerspectiveCamera() {
