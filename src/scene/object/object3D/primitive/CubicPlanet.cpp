@@ -11,9 +11,6 @@ CubicPlanet::CubicPlanet(const float x, const float y, const float z) {
   auto box = ofBoxPrimitive(size, size, size);
 
   ofDisableArbTex();
-  this->mTex.enableMipmap();
-  this->mTex.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
-  this->mTex.generateMipmap();
 
   this->primitive = std::make_unique<ofBoxPrimitive>(std::move(box));
   this->primitive->setGlobalPosition(x, y, z);
