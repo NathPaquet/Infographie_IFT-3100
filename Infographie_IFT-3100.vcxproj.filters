@@ -226,6 +226,7 @@
     <ClCompile Include="..\..\addons\ofxSvg\src\ofxSvg.cpp">
       <Filter>addons\ofxSvg\src</Filter>
     </ClCompile>
+    <ClCompile Include="src\utils\Filtering.cpp">
     <ClCompile Include="src\scene\cubemap\cubemap.cpp">
       <Filter>src\scene\cubemap</Filter>
     </ClCompile>
@@ -1046,6 +1047,7 @@
     <ClInclude Include="..\..\addons\ofxSvg\libs\svgtiny\include\svgtiny.h">
       <Filter>addons\ofxSvg\libs\svgtiny\include</Filter>
     </ClInclude>
+    <ClInclude Include="src\utils\Filtering.h">
     <ClInclude Include="src\scene\cubemap\cubemap.h">
       <Filter>src\scene\cubemap</Filter>
     </ClInclude>
