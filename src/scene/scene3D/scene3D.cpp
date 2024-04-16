@@ -53,7 +53,7 @@ void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
     this->shader.end();
   }
 
-  ofDrawGrid(10, 100, false, false, true, false);
+  // ofDrawGrid(10, 100, false, false, true, false);
 
   ofDrawSphere(0, 0, 0, 10);
 
