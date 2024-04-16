@@ -29,17 +29,17 @@ void Object3D::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxis
 
   if (!this->getPropertyValue<bool>(PROPERTY_ID::SHOW_WIREFRAME)) {
     if (mTex.isAllocated()) {
-      this->mTex.bind();
-      mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
-      mMaterial.begin();
+      // this->mTex.bind();
+      // mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
+      // mMaterial.begin();
       primitive->draw();
-      mMaterial.end();
-      this->mTex.unbind();
+      // mMaterial.end();
+      // this->mTex.unbind();
     } else {
-      mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
-      mMaterial.begin();
+      // mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
+      // mMaterial.begin();
       primitive->draw();
-      mMaterial.end();
+      // mMaterial.end();
     }
 
   } else {

@@ -67,3 +67,17 @@ void Cubemap::uploadToCubemap(GLenum face, ofImage &image) {
 const unsigned int Cubemap::getTextureObjectID() const {
   return this->cubemapTextureObjectID;
 }
+
+void Cubemap::setCubemapImage(const ofImage &right, const ofImage &left, const ofImage &top, const ofImage &bottom, const ofImage &front, const ofImage &back) {
+  glDeleteTextures(1, &this->cubemapTextureObjectID);
+
+  this->right = right;
+  this->left = left;
+  this->top = top;
+  this->bottom = bottom;
+  this->front = front;
+  this->back = back;
+
+  this->isCubemapTextureLoaded = true;
+  this->isCubemapTextureBinded = false;
+}
