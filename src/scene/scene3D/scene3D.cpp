@@ -48,12 +48,14 @@ void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
 
     ofDrawBox(-100, 100, -100, 50);
 
+    ofDrawSphere(0, 0, 0, 20);
+
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
     this->shader.end();
   }
 
-  // ofDrawGrid(10, 100, false, false, true, false);
+  ofDrawGrid(10, 100, false, false, true, false);
 
   ofDrawSphere(0, 0, 0, 10);
 
