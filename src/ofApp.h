@@ -40,6 +40,7 @@ private:
   void generateRandomGalaxy(int nbElements);
   void switchBetweenScenes();
   void switchBetweenProjections();
+  void loadDefaultTextures();
   Tools tools;
   std::unique_ptr<CameraPanel> cameraPanel;
   std::unique_ptr<WindowCamera> windowCamera;
@@ -58,4 +59,6 @@ private:
   bool isBoundingBoxEnabled = false;
   bool isObjectAxisEnabled = false;
   Scene *currentScene;
+
+  std::shared_ptr<ofShader> shader;
 };

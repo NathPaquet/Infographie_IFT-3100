@@ -8,6 +8,7 @@
 #include "utils/loadingScreen.h"
 
 #include <iostream>
+#include <textures/TextureRepository.h>
 
 //--------------------------------------------------------------
 void ofApp::setup() {
@@ -46,6 +47,8 @@ void ofApp::setup() {
   this->backgroundTexture.enableMipmap();
   this->backgroundTexture.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
   this->backgroundTexture.generateMipmap();
+
+  loadDefaultTextures();
 }
 
 //--------------------------------------------------------------
@@ -144,6 +147,10 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
       }
       if (ImGui::MenuItem("Add Line", "Shift+4")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::LINE);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
+      if (ImGui::MenuItem("Add Catmull Rom Spline", "Shift+8")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::CATMULL_ROM_SPLINE);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
       if (ImGui::MenuItem("Add Space Rocket", "Shift+6")) {
@@ -260,6 +267,18 @@ void ofApp::toggleSkyboxFor3DScene() {
   this->scene3D.get()->toggleSkyboxActivation();
 }
 
+void ofApp::loadDefaultTextures() {
+  shader = std::make_shared<ofShader>();
+  shader->load("shaders/texture");
+
+  TextureRepository::addTexture("Snow_03");
+  TextureRepository::configureTextureWithShader("Snow_03", shader);
+  TextureRepository::addTexture("Square_floor");
+  TextureRepository::configureTextureWithShader("Square_floor", shader);
+  TextureRepository::addTexture("Mud_cracked_dry_03");
+  TextureRepository::configureTextureWithShader("Mud_cracked_dry_03", shader);
+}
+
 void ofApp::createSkyboxTopMenu() {
   if (ImGui::BeginMenu("Skybox")) {
     static int selected = 0;
@@ -323,6 +342,9 @@ void ofApp::updateKeyboardShortcuts() {
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       } else if (ImGui::IsKeyPressed(ImGuiKey_7)) {
         this->currentScene->setCurrentObjectToAdd(ElementType::MAGIC_SWORD);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_8)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::CATMULL_ROM_SPLINE);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
     } else {

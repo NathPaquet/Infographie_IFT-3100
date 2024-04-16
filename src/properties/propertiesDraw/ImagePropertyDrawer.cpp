@@ -16,13 +16,13 @@ void ImagePropertyDrawer::drawImport(const std::vector<PropertyBase *> &objectsP
   if (ImGui::Button("Import image", ImVec2(100.f, 30.f))) {
     ImageImporter::importImage(objectsProperty);
   }
-  if (ImGui::Button("Remove image", ImVec2(100.f, 30.f))) {
+  /*if (ImGui::Button("Remove image", ImVec2(100.f, 30.f))) {
     for (auto &&objectProperty : objectsProperty) {
       auto property = dynamic_cast<Property<ofImage> *>(objectProperty);
       property->getValue().clear();
       property->setChanged(true);
     }
-  }
+  }*/
 }
 
 void ImagePropertyDrawer::drawFiltering(const std::vector<PropertyBase *> &objectsProperty) {
