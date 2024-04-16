@@ -41,4 +41,6 @@ private:
 
   void setupPerspectiveCamera();
   void setupOrthographicCamera();
+
+  ofShader shader;
 };

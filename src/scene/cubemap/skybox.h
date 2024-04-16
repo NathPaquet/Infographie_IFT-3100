@@ -7,6 +7,7 @@ public:
   Skybox();
   void loadTexture(const string &texturePath);
   void draw(const float &size, const glm::vec3 &cameraPosition);
+  const unsigned int getTextureObjectID() const;
 
 private:
   Cubemap cubemapTexture;

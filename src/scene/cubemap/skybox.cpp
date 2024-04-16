@@ -35,3 +35,7 @@ void Skybox::draw(const float &size, const glm::vec3 &cameraPosition) {
     LoadingScreen::drawLoadingScreen(message);
   }
 }
+
+const unsigned int Skybox::getTextureObjectID() const {
+  return this->cubemapTexture.getTextureObjectID();
+}

@@ -18,6 +18,9 @@ void Scene3D::setup() {
   this->setupOrthographicCamera();
 
   this->currentCamera = this->perspectiveCamera.get();
+
+  // Set up reflective shader
+  this->shader.load("shaders/reflectiveShader.vert", "shaders/reflectiveShader.frag");
 }
 
 void Scene3D::update() {
@@ -35,11 +38,25 @@ void Scene3D::drawScene() {
 void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
   if (this->isSkyboxEnabled && this->currentCamera == this->perspectiveCamera.get()) {
     this->skybox.draw(Constants::DEFAULT_SKYBOX_SIZE, cameraPosition);
+
+    this->shader.begin();
+
+    this->shader.setUniform3f("cameraPosition", cameraPosition);
+    this->shader.setUniform1i("skybox", 0);
+
+    glBindTexture(GL_TEXTURE_CUBE_MAP, this->skybox.getTextureObjectID());
+
+    ofDrawBox(-100, 100, -100, 50);
+
+    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+
+    this->shader.end();
   }
 
   ofDrawGrid(10, 100, false, false, true, false);
 
   ofDrawSphere(0, 0, 0, 10);
+
   this->sceneManager.get()->drawScene();
 
   if (this->currentObjectToAdd != ElementType::NONE) {
