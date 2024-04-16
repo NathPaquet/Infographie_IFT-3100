@@ -24,11 +24,11 @@ void Scene3D::setup() {
 
   // Set up dynamic environment map camera
   this->cameraDynamicEnvironmentMap.disableMouseInput();
-  this->cameraDynamicEnvironmentMap.setPosition(-100, 100, -100);
-  this->cameraDynamicEnvironmentMap.setNearClip(100);
-  this->cameraDynamicEnvironmentMap.setFarClip(1000);
+  this->cameraDynamicEnvironmentMap.setPosition(0, 0, 0);
+  this->cameraDynamicEnvironmentMap.setNearClip(50);
+  this->cameraDynamicEnvironmentMap.setFarClip(10000);
   this->cameraDynamicEnvironmentMap.setFov(90);
-  this->cameraDynamicEnvironmentMap.setAspectRatio(1);
+  // this->cameraDynamicEnvironmentMap.setAspectRatio(1);
 }
 
 void Scene3D::update() {
@@ -43,19 +43,51 @@ void Scene3D::update() {
   if (needToUpdateDynamicEnvironmentMap) {
     std::array<ofImage, 6> cubemapImages;
     for (int i = 0; i < 6; i++) {
+      ofClear(0, 0, 0, 0);
       configureCameraForFace(i);
       this->cameraDynamicEnvironmentMap.begin();
-      this->drawSceneFromCamera(this->cameraDynamicEnvironmentMap.getGlobalPosition());
+
+      if (this->isSkyboxEnabled && this->currentCamera == this->perspectiveCamera.get()) {
+        this->skybox.draw(Constants::DEFAULT_SKYBOX_SIZE, this->cameraDynamicEnvironmentMap.getGlobalPosition());
+      }
+
+      ofDrawSphere(0, -100, 0, 10);
+
+      this->sceneManager.get()->drawScene();
+
       // Save the image of the current face (i) of the cubemap in a 2048x2048 image
       // cubemapImages[i].allocate(2048, 2048, OF_IMAGE_COLOR);
-      int size = 500;
+      this->cameraDynamicEnvironmentMap.end();
+
+      int size = min(ofGetWidth(), ofGetHeight());
       cubemapImages[i].grabScreen((ofGetWidth() - size) / 2, (ofGetHeight() - size) / 2, size, size);
       cubemapImages[i].setImageType(OF_IMAGE_COLOR);
       cubemapImages[i].getPixels().swapRgb();
 
-      cubemapImages[i].saveImage("cubemap" + std::to_string(i) + ".png");
+      switch (i) {
+        case 0: // Droite
+          cubemapImages[i].mirror(false, true);
+          break;
+        case 1: // Gauche
+          cubemapImages[i].mirror(false, true);
+          break;
+        case 2: // Haut
+          cubemapImages[i].mirror(false, true);
+          break;
+        case 3: // Bas
+          cubemapImages[i].mirror(false, true);
+          break;
+        case 4: // Devant
+          cubemapImages[i].mirror(false, true);
+          break;
+        case 5: // Derrière
+          cubemapImages[i].mirror(false, true);
+          break;
+        default:
+          break;
+      }
 
-      this->cameraDynamicEnvironmentMap.end();
+      cubemapImages[i].saveImage("cubemap" + std::to_string(i) + ".png");
     }
     this->dynamicEnvironmentMap.setCubemapImage(cubemapImages[0], cubemapImages[1], cubemapImages[2], cubemapImages[3], cubemapImages[4], cubemapImages[5]);
     this->dynamicEnvironmentMap.enableCubemapTextures();
@@ -67,22 +99,22 @@ void Scene3D::update() {
 void Scene3D::configureCameraForFace(int faceIndex) {
   switch (faceIndex) {
     case 0: // Droite
-      this->cameraDynamicEnvironmentMap.lookAt(glm::vec3(1, 0, 0));
+      this->cameraDynamicEnvironmentMap.lookAt(this->cameraDynamicEnvironmentMap.getGlobalPosition() + glm::vec3(1, 0, 0));
       break;
     case 1: // Gauche
-      this->cameraDynamicEnvironmentMap.lookAt(glm::vec3(-1, 0, 0));
+      this->cameraDynamicEnvironmentMap.lookAt(this->cameraDynamicEnvironmentMap.getGlobalPosition() + glm::vec3(-1, 0, 0));
       break;
     case 2: // Haut
-      this->cameraDynamicEnvironmentMap.lookAt(glm::vec3(0, 1, 0));
+      this->cameraDynamicEnvironmentMap.lookAt(this->cameraDynamicEnvironmentMap.getGlobalPosition() + glm::vec3(0, 1, 0));
       break;
     case 3: // Bas
-      this->cameraDynamicEnvironmentMap.lookAt(glm::vec3(0, -1, 0));
+      this->cameraDynamicEnvironmentMap.lookAt(this->cameraDynamicEnvironmentMap.getGlobalPosition() + glm::vec3(0, -1, 0));
       break;
     case 4: // Devant
-      this->cameraDynamicEnvironmentMap.lookAt(glm::vec3(0, 0, 1));
+      this->cameraDynamicEnvironmentMap.lookAt(this->cameraDynamicEnvironmentMap.getGlobalPosition() + glm::vec3(0, 0, 1));
       break;
     case 5: // Derrière
-      this->cameraDynamicEnvironmentMap.lookAt(glm::vec3(0, 0, -1));
+      this->cameraDynamicEnvironmentMap.lookAt(this->cameraDynamicEnvironmentMap.getGlobalPosition() + glm::vec3(0, 0, -1));
       break;
     default:
       break;
@@ -120,7 +152,7 @@ void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
 
   glBindTexture(GL_TEXTURE_CUBE_MAP, this->dynamicEnvironmentMap.getTextureObjectID());
 
-  ofDrawBox(-100, 100, -100, 100);
+  ofDrawBox(0, 0, 0, 100);
 
   // ofDrawSphere(0, 0, 0, 20);
 
