@@ -4,10 +4,10 @@ out vec4 FragColor;
 
 in vec3 reflectedVector;
 
-uniform samplerCube skybox;
+uniform samplerCube environmentMap;
 
 void main(void)
 {
-    vec4 reflectedColour = texture(skybox, reflectedVector);
+    vec4 reflectedColour = texture(environmentMap, reflectedVector);
     FragColor = reflectedColour;
 }

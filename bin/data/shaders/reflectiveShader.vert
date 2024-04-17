@@ -17,7 +17,7 @@ void main(void)
     gl_Position = projectionMatrix * viewMatrix * worldPos;
 	
 	vec3 unitNormal = normalize(normal);
-	
 	vec3 viewVector = normalize(worldPosition - cameraPosition);
+
 	reflectedVector = reflect(viewVector, unitNormal);
 }

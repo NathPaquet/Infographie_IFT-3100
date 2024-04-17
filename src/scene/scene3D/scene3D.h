@@ -41,11 +41,12 @@ private:
 
   void setupPerspectiveCamera();
   void setupOrthographicCamera();
+  void updateEnvironmentMap();
+  void configureCameraForFace(int faceIndex);
+  void ajustEnvironmentMapPicture(int faceIndex, ofImage &environmentMapImage);
 
   bool needToUpdateDynamicEnvironmentMap{true};
   Cubemap dynamicEnvironmentMap;
   ofShader shader;
   ofEasyCam cameraDynamicEnvironmentMap;
-
-  void configureCameraForFace(int faceIndex);
 };
