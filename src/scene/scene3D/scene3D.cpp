@@ -52,9 +52,7 @@ void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
 
   ofDrawGrid(10, 100, false, false, true, false);
 
-  // ofDrawSphere(0, -100, 0, 10);
-
-  this->sceneManager.get()->drawScene();
+  this->sceneManager->drawScene();
 
   if (this->currentObjectToAdd != ElementType::NONE) {
     this->drawObjectPreview();

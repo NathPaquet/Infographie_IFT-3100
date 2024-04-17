@@ -8,14 +8,16 @@ CubicPlanet::CubicPlanet(const float x, const float y, const float z) {
   this->addProperty<float>(PROPERTY_ID::SIZE, Constants::DEFAULT_SIZE);
 
   float size = this->getPropertyValue<float>(PROPERTY_ID::SIZE);
-  auto box = ofBoxPrimitive(size, size, size);
 
-  ofDisableArbTex();
-  this->mTex.enableMipmap();
-  this->mTex.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
-  this->mTex.generateMipmap();
+  this->primitive = std::make_unique<ofBoxPrimitive>(size, size, size);
+  this->primitive->setGlobalPosition(x, y, z);
+  this->position = ofVec3f(x, y, z);
+}
 
-  this->primitive = std::make_unique<ofBoxPrimitive>(std::move(box));
+CubicPlanet::CubicPlanet(const float x, const float y, const float z, float size) {
+  this->addProperty<float>(PROPERTY_ID::SIZE, size);
+
+  this->primitive = std::make_unique<ofBoxPrimitive>(size, size, size);
   this->primitive->setGlobalPosition(x, y, z);
   this->position = ofVec3f(x, y, z);
 }

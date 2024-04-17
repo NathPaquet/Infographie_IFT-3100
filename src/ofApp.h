@@ -38,6 +38,7 @@ private:
   void createSkyboxTopMenu();
   void updateKeyboardShortcuts();
   void generateRandomGalaxy(int nbElements);
+  void generateCornellBox(float size);
   void switchBetweenScenes();
   void switchBetweenProjections();
   Tools tools;

@@ -49,11 +49,14 @@ std::unique_ptr<SceneObject> SceneObjectFactory::createDefaultSceneObject(const 
 }
 
 std::unique_ptr<SceneObject> SceneObjectFactory::createSceneObject(const glm::vec3 &centerPosition, const glm::vec3 &outerPosition, const ElementType primitiveType) {
+  float size;
   switch (primitiveType) {
     case (ElementType::SPHERE):
       return std::make_unique<Planet>(Planet(centerPosition.x, centerPosition.y, centerPosition.z));
     case (ElementType::CUBIC):
-      return std::make_unique<CubicPlanet>(CubicPlanet(centerPosition.x, centerPosition.y, centerPosition.z));
+      size = 2 * abs(outerPosition.x - centerPosition.x);
+
+      return std::make_unique<CubicPlanet>(CubicPlanet(centerPosition.x, centerPosition.y, centerPosition.z, size));
     case ElementType::CYLINDER:
       return std::make_unique<CylinderPlanet>(CylinderPlanet(centerPosition.x, centerPosition.y, centerPosition.z));
     case ElementType::PLANET_EARTH:

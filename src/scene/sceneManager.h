@@ -25,9 +25,9 @@ public:
   std::vector<SceneObject *> &getSelectedObjectsReference();
   void toggleActivationBoundingBox();
   void toggleActivationObjectAxis();
+  void clearScene();
 
 private:
-  void clearScene();
   void addIfCamera(const SceneObject *sceneObject, const ElementType primitiveType);
   void removeElement(const SceneObject *sceneObject);
   void removeSelectedElement(const SceneObject *sceneObject);
