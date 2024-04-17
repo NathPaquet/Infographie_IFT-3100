@@ -12,12 +12,11 @@ uniform vec3 cameraPosition;
 
 void main(void)
 {
-	vec4 worldPos = modelMatrix * vec4(position, 1.0);
-	vec3 worldPosition = worldPos.xyz;
-    gl_Position = projectionMatrix * viewMatrix * worldPos;
+	vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+    gl_Position = projectionMatrix * viewMatrix * worldPosition;
 	
 	vec3 unitNormal = normalize(normal);
-	vec3 viewVector = normalize(worldPosition - cameraPosition);
+	vec3 viewVector = normalize(worldPosition.xyz - cameraPosition);
 
 	reflectedVector = reflect(viewVector, unitNormal);
 }

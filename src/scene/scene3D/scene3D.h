@@ -44,9 +44,12 @@ private:
   void updateEnvironmentMap();
   void configureCameraForFace(int faceIndex);
   void ajustEnvironmentMapPicture(int faceIndex, ofImage &environmentMapImage);
+  void drawReflectiveCube(const glm::vec3 &cameraPosition);
+  void drawRefractionCube(const glm::vec3 &cameraPosition);
 
   bool needToUpdateDynamicEnvironmentMap{true};
   Cubemap dynamicEnvironmentMap;
-  ofShader shader;
+  ofShader reflectionShader;
+  ofShader refractionShader;
   ofEasyCam cameraDynamicEnvironmentMap;
 };

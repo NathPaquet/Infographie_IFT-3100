@@ -20,7 +20,10 @@ void Scene3D::setup() {
   this->currentCamera = this->perspectiveCamera.get();
 
   // Set up reflective shader
-  this->shader.load("shaders/reflectiveShader.vert", "shaders/reflectiveShader.frag");
+  this->reflectionShader.load("shaders/reflectionShader.vert", "shaders/reflectionShader.frag");
+
+  // Set up refraction shader
+  this->refractionShader.load("shaders/refractionShader.vert", "shaders/refractionShader.frag");
 
   // Set up dynamic environment map camera
   this->cameraDynamicEnvironmentMap.disableMouseInput();
@@ -58,24 +61,7 @@ void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
     this->drawObjectPreview();
   }
 
-  // Render reflective object with reflective shader and environment map
-  this->shader.begin();
-
-  this->shader.setUniform3f("cameraPosition", cameraPosition);
-  this->shader.setUniform1i("environmentMap", 0);
-
-  glBindTexture(GL_TEXTURE_CUBE_MAP, this->dynamicEnvironmentMap.getTextureObjectID());
-
-  // Set the box resolution to 100x100x100 for better reflection quality
-  ofSetBoxResolution(100, 100, 100);
-
-  ofDrawBox(0, 0, 0, 50);
-
-  // ofDrawSphere(0, 0, 0, 50);
-
-  glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-
-  this->shader.end();
+  this->drawReflectiveCube(cameraPosition);
 }
 
 void Scene3D::toggleProjectionMode() {
@@ -252,6 +238,48 @@ void Scene3D::ajustEnvironmentMapPicture(int faceIndex, ofImage &environmentMapI
     default:
       break;
   }
+}
+
+void Scene3D::drawReflectiveCube(const glm::vec3 &cameraPosition) {
+  // Render reflective object with reflective shader and environment map
+  this->reflectionShader.begin();
+
+  this->reflectionShader.setUniform3f("cameraPosition", cameraPosition);
+  this->reflectionShader.setUniform1i("environmentMap", 0);
+
+  glBindTexture(GL_TEXTURE_CUBE_MAP, this->dynamicEnvironmentMap.getTextureObjectID());
+
+  // Set the box resolution to 100x100x100 for better reflection quality
+  ofSetBoxResolution(100, 100, 100);
+
+  // ofDrawBox(0, 0, 0, 50);
+
+  ofDrawSphere(0, 0, 0, 50);
+
+  glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+
+  this->reflectionShader.end();
+}
+
+void Scene3D::drawRefractionCube(const glm::vec3 &cameraPosition) {
+  // Render reflective object with reflective shader and environment map
+  this->refractionShader.begin();
+
+  this->refractionShader.setUniform3f("cameraPosition", cameraPosition);
+  this->refractionShader.setUniform1i("environmentMap", 0);
+
+  glBindTexture(GL_TEXTURE_CUBE_MAP, this->dynamicEnvironmentMap.getTextureObjectID());
+
+  // Set the box resolution to 100x100x100 for better reflection quality
+  ofSetBoxResolution(100, 100, 100);
+
+  // ofDrawBox(0, 0, 0, 50);
+
+  ofDrawSphere(0, 0, 0, 50);
+
+  glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+
+  this->refractionShader.end();
 }
 
 void Scene3D::configureCameraForFace(int faceIndex) {
