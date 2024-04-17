@@ -116,37 +116,37 @@ void pointLight( in lightData light, in vec3 normal, in vec3 ecPosition3, inout 
 // Spot light
 void spotLight( in lightData light, in vec3 normal, in vec3 ecPosition3, inout vec3 ambient, inout vec3 diffuse, inout vec3 specular ){
 	float nDotVP; // = max(dot(normal,normalize(vec3(light.position))),0.0);
-        float nDotHV;       // normal . light half vector
-        float pf;
-        float d;            // distance from surface to light source
-        vec3  VP;           // direction from surface to light position
-        vec3 eye = -normalize(v_eyePosition);
-        float spotEffect;
-        float attenuation=1.0;
-        vec3  halfVector;   // direction of maximum highlights
-        // Compute vector from surface to light position
-        VP = light.position.xyz - ecPosition3;
-        spotEffect = dot(light.spotDirection, -normalize(VP));
+	float nDotHV;       // normal . light half vector
+	float pf;
+	float d;            // distance from surface to light source
+	vec3  VP;           // direction from surface to light position
+	vec3 eye = -normalize(v_eyePosition);
+	float spotEffect;
+	float attenuation=1.0;
+	vec3  halfVector;   // direction of maximum highlights
+	// Compute vector from surface to light position
+	VP = light.position.xyz - ecPosition3;
+	spotEffect = dot(light.spotDirection, -normalize(VP));
 
-        if (spotEffect > light.spotCosCutoff) {
-            // Compute distance between surface and light position
-            d = length(VP);
-            spotEffect = pow(spotEffect, light.spotExponent);
-            attenuation = spotEffect / (light.constantAttenuation + light.linearAttenuation * d + light.quadraticAttenuation * d * d);
+	if (spotEffect > light.spotCosCutoff) {
+		// Compute distance between surface and light position
+		d = length(VP);
+		spotEffect = pow(spotEffect, light.spotExponent);
+		attenuation = spotEffect / (light.constantAttenuation + light.linearAttenuation * d + light.quadraticAttenuation * d * d);
 
-            VP = normalize(VP);
-            halfVector = normalize(VP + eye);
-            nDotHV = max(0.0, dot(normal, halfVector));
-            nDotVP = max(0.0, dot(normal, VP));
+		VP = normalize(VP);
+		halfVector = normalize(VP + eye);
+		nDotHV = max(0.0, dot(normal, halfVector));
+		nDotVP = max(0.0, dot(normal, VP));
 
-            pf = mix(0.0, pow(nDotHV, mat_shininess), step(0.0000001, nDotVP));
+		pf = mix(0.0, pow(nDotHV, mat_shininess), step(0.0000001, nDotVP));
 
-            diffuse += light.diffuse.rgb * /* shadow * */ nDotVP * attenuation;
-            specular += light.specular.rgb * /* shadow * */ pf * nDotVP * attenuation;
+		diffuse += light.diffuse.rgb * /* shadow * */ nDotVP * attenuation;
+		specular += light.specular.rgb * /* shadow * */ pf * nDotVP * attenuation;
 
-        }
+	}
 
-        ambient += light.ambient.rgb * attenuation;
+	ambient += light.ambient.rgb * attenuation;
 }
 
 // Directional light
