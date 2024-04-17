@@ -36,6 +36,7 @@ private:
   void createViewMenu();
   void toggleSkyboxFor3DScene();
   void createSkyboxTopMenu();
+  void createSphereRayOptionsTopMenu();
   void updateKeyboardShortcuts();
   void generateRandomGalaxy(int nbElements);
   void generateCornellBox(float size);
@@ -58,5 +59,7 @@ private:
   bool isSkyboxEnabled{true};
   bool isBoundingBoxEnabled = false;
   bool isObjectAxisEnabled = false;
+  bool isReflectionSphereDisplayed{false};
+  bool isRefractionSphereDisplayed{false};
   Scene *currentScene;
 };

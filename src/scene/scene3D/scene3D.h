@@ -27,6 +27,9 @@ public:
   void releaseDraggedObject();
   void drawObjectPreview();
   void updateEnvironmentMap();
+  void deactivateCenterSphere();
+  void activateReflectionSphere();
+  void activateRefractionSphere();
 
 private:
   const float SCROLL_POWER = 2.f;
@@ -49,7 +52,9 @@ private:
   void drawRefractionSphere(const glm::vec3 &cameraPosition);
 
   Cubemap dynamicEnvironmentMap;
+  bool isReflectionSphereEnabled{false};
   ofShader reflectionShader;
+  bool isRefractionSphereEnabled{false};
   ofShader refractionShader;
   ofEasyCam cameraDynamicEnvironmentMap;
 };

@@ -251,6 +251,7 @@ void ofApp::createViewMenu() {
       if (ImGui::MenuItem((this->isSkyboxEnabled ? "Disable skybox" : "Enable skybox"), "Alt+s")) {
         toggleSkyboxFor3DScene();
       }
+      createSphereRayOptionsTopMenu();
     }
 
     if (ImGui::MenuItem((this->isBoundingBoxEnabled ? "Disable bounding box" : "Enable bounding box"), "Alt+b")) {
@@ -270,6 +271,32 @@ void ofApp::createViewMenu() {
 void ofApp::toggleSkyboxFor3DScene() {
   this->isSkyboxEnabled = !this->isSkyboxEnabled;
   this->scene3D.get()->toggleSkyboxActivation();
+}
+
+void ofApp::createSphereRayOptionsTopMenu() {
+  if (ImGui::BeginMenu("Center Sphere Options")) {
+    static int rayOptionSelected = -1;
+    ImGui::SeparatorText("Surface options");
+    if (ImGui::Selectable("Reflective", rayOptionSelected == 0)) {
+      if (rayOptionSelected == 0) {
+        rayOptionSelected = -1;
+        this->scene3D.get()->deactivateCenterSphere();
+      } else {
+        rayOptionSelected = 0;
+        this->scene3D.get()->activateReflectionSphere();
+      }
+    }
+    if (ImGui::Selectable("Refractive", rayOptionSelected == 1)) {
+      if (rayOptionSelected == 1) {
+        rayOptionSelected = -1;
+        this->scene3D.get()->deactivateCenterSphere();
+      } else {
+        rayOptionSelected = 1;
+        this->scene3D.get()->activateRefractionSphere();
+      }
+    }
+    ImGui::EndMenu();
+  }
 }
 
 void ofApp::createSkyboxTopMenu() {

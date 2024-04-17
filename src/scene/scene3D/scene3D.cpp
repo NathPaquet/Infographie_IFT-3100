@@ -63,7 +63,12 @@ void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
   }
 
   if (this->currentCamera == this->perspectiveCamera.get()) {
-    this->drawReflectiveSphere(cameraPosition);
+    if (this->isReflectionSphereEnabled) {
+      this->drawReflectiveSphere(cameraPosition);
+    }
+    if (this->isRefractionSphereEnabled) {
+      this->drawRefractionSphere(cameraPosition);
+    }
   }
 }
 
@@ -208,6 +213,21 @@ void Scene3D::updateEnvironmentMap() {
   }
   this->dynamicEnvironmentMap.setCubemapImage(cubemapImages[0], cubemapImages[1], cubemapImages[2], cubemapImages[3], cubemapImages[4], cubemapImages[5]);
   this->dynamicEnvironmentMap.enableCubemapTextures();
+}
+
+void Scene3D::deactivateCenterSphere() {
+  this->isReflectionSphereEnabled = false;
+  this->isRefractionSphereEnabled = false;
+}
+
+void Scene3D::activateReflectionSphere() {
+  this->isReflectionSphereEnabled = true;
+  this->isRefractionSphereEnabled = false;
+}
+
+void Scene3D::activateRefractionSphere() {
+  this->isRefractionSphereEnabled = true;
+  this->isReflectionSphereEnabled = false;
 }
 
 void Scene3D::ajustEnvironmentMapPicture(int faceIndex, ofImage &environmentMapImage) {
