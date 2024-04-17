@@ -36,9 +36,6 @@ void Scene3D::setup() {
 
 void Scene3D::update() {
   this->computeRay(*this->currentCamera, this->ray);
-
-  // Update dynamic environment map
-  this->updateEnvironmentMap();
 }
 
 void Scene3D::drawScene() {
@@ -65,7 +62,9 @@ void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
     this->drawObjectPreview();
   }
 
-  this->drawReflectiveCube(cameraPosition);
+  if (this->currentCamera == this->perspectiveCamera.get()) {
+    this->drawReflectiveSphere(cameraPosition);
+  }
 }
 
 void Scene3D::toggleProjectionMode() {
@@ -182,41 +181,33 @@ void Scene3D::setupOrthographicCamera() {
 }
 
 void Scene3D::updateEnvironmentMap() {
-  if (ImGui::IsMouseClicked(ImGuiMouseButton_Middle)) {
-    needToUpdateDynamicEnvironmentMap = true;
-  }
+  std::array<ofImage, 6> cubemapImages;
+  for (int i = 0; i < 6; i++) {
+    ofClear(0, 0, 0, 0);
 
-  if (needToUpdateDynamicEnvironmentMap) {
-    std::array<ofImage, 6> cubemapImages;
-    for (int i = 0; i < 6; i++) {
-      ofClear(0, 0, 0, 0);
+    configureCameraForFace(i);
 
-      configureCameraForFace(i);
+    this->cameraDynamicEnvironmentMap.begin();
 
-      this->cameraDynamicEnvironmentMap.begin();
-
-      // Display the skybox
-      if (this->isSkyboxEnabled) {
-        this->skybox.draw(10000, this->cameraDynamicEnvironmentMap.getGlobalPosition());
-      }
-
-      // Display the scene
-      this->sceneManager.get()->drawScene();
-
-      this->cameraDynamicEnvironmentMap.end();
-
-      // Save the image
-      int size = min(ofGetWidth(), ofGetHeight());
-      cubemapImages[i].grabScreen((ofGetWidth() - size) / 2, (ofGetHeight() - size) / 2, size, size);
-      cubemapImages[i].setImageType(OF_IMAGE_COLOR);
-      cubemapImages[i].getPixels().swapRgb();
-      ajustEnvironmentMapPicture(i, cubemapImages[i]);
+    // Display the skybox
+    if (this->isSkyboxEnabled) {
+      this->skybox.draw(10000, this->cameraDynamicEnvironmentMap.getGlobalPosition());
     }
-    this->dynamicEnvironmentMap.setCubemapImage(cubemapImages[0], cubemapImages[1], cubemapImages[2], cubemapImages[3], cubemapImages[4], cubemapImages[5]);
-    this->dynamicEnvironmentMap.enableCubemapTextures();
 
-    needToUpdateDynamicEnvironmentMap = false;
+    // Display the scene
+    this->sceneManager.get()->drawScene();
+
+    this->cameraDynamicEnvironmentMap.end();
+
+    // Save the image
+    int size = min(ofGetWidth(), ofGetHeight());
+    cubemapImages[i].grabScreen((ofGetWidth() - size) / 2, (ofGetHeight() - size) / 2, size, size);
+    cubemapImages[i].setImageType(OF_IMAGE_COLOR);
+    cubemapImages[i].getPixels().swapRgb();
+    ajustEnvironmentMapPicture(i, cubemapImages[i]);
   }
+  this->dynamicEnvironmentMap.setCubemapImage(cubemapImages[0], cubemapImages[1], cubemapImages[2], cubemapImages[3], cubemapImages[4], cubemapImages[5]);
+  this->dynamicEnvironmentMap.enableCubemapTextures();
 }
 
 void Scene3D::ajustEnvironmentMapPicture(int faceIndex, ofImage &environmentMapImage) {
@@ -244,7 +235,7 @@ void Scene3D::ajustEnvironmentMapPicture(int faceIndex, ofImage &environmentMapI
   }
 }
 
-void Scene3D::drawReflectiveCube(const glm::vec3 &cameraPosition) {
+void Scene3D::drawReflectiveSphere(const glm::vec3 &cameraPosition) {
   // Render reflective object with reflective shader and environment map
   this->reflectionShader.begin();
 
@@ -256,8 +247,6 @@ void Scene3D::drawReflectiveCube(const glm::vec3 &cameraPosition) {
   // Set the box resolution to 100x100x100 for better reflection quality
   ofSetBoxResolution(100, 100, 100);
 
-  // ofDrawBox(0, 0, 0, 50);
-
   ofDrawSphere(0, 0, 0, 20);
 
   glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
@@ -265,8 +254,8 @@ void Scene3D::drawReflectiveCube(const glm::vec3 &cameraPosition) {
   this->reflectionShader.end();
 }
 
-void Scene3D::drawRefractionCube(const glm::vec3 &cameraPosition) {
-  // Render reflective object with reflective shader and environment map
+void Scene3D::drawRefractionSphere(const glm::vec3 &cameraPosition) {
+  // Render refractive object with refractive shader and environment map
   this->refractionShader.begin();
 
   this->refractionShader.setUniform3f("cameraPosition", cameraPosition);
@@ -275,9 +264,7 @@ void Scene3D::drawRefractionCube(const glm::vec3 &cameraPosition) {
   glBindTexture(GL_TEXTURE_CUBE_MAP, this->dynamicEnvironmentMap.getTextureObjectID());
 
   // Set the box resolution to 100x100x100 for better reflection quality
-  ofSetBoxResolution(100, 100, 100);
-
-  // ofDrawBox(0, 0, 0, 50);
+  ofSetSphereResolution(100);
 
   ofDrawSphere(0, 0, 0, 20);
 

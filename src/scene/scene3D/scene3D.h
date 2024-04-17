@@ -26,6 +26,7 @@ public:
   void moveObjectWithScrollOnly(float scrollAmount);
   void releaseDraggedObject();
   void drawObjectPreview();
+  void updateEnvironmentMap();
 
 private:
   const float SCROLL_POWER = 2.f;
@@ -42,13 +43,11 @@ private:
 
   void setupPerspectiveCamera();
   void setupOrthographicCamera();
-  void updateEnvironmentMap();
   void configureCameraForFace(int faceIndex);
   void ajustEnvironmentMapPicture(int faceIndex, ofImage &environmentMapImage);
-  void drawReflectiveCube(const glm::vec3 &cameraPosition);
-  void drawRefractionCube(const glm::vec3 &cameraPosition);
+  void drawReflectiveSphere(const glm::vec3 &cameraPosition);
+  void drawRefractionSphere(const glm::vec3 &cameraPosition);
 
-  bool needToUpdateDynamicEnvironmentMap{true};
   Cubemap dynamicEnvironmentMap;
   ofShader reflectionShader;
   ofShader refractionShader;

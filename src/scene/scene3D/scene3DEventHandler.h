@@ -20,6 +20,7 @@ private:
   void mousePressed(ofMouseEventArgs &mouseArgs);
   void mouseReleased(ofMouseEventArgs &mouseArgs);
   void mousePressedAndScrolled(ofMouseEventArgs &mouseArgs);
+  void keyPressed(ofKeyEventArgs &keyArgs);
   void leftMouseButtonPressed();
   void leftMouseButtonReleased();
 };

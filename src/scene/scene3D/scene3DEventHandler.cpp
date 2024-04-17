@@ -14,6 +14,7 @@ void Scene3DEventHandler::activateHandler() {
   ofAddListener(ofEvents().mousePressed, this, &Scene3DEventHandler::mousePressed);
   ofAddListener(ofEvents().mouseReleased, this, &Scene3DEventHandler::mouseReleased);
   ofAddListener(ofEvents().mouseScrolled, this, &Scene3DEventHandler::mousePressedAndScrolled);
+  ofAddListener(ofEvents().keyPressed, this, &Scene3DEventHandler::keyPressed);
   this->scene3D->activateCameraMouseInput();
 }
 
@@ -25,6 +26,7 @@ void Scene3DEventHandler::deactivateHandler() {
   ofRemoveListener(ofEvents().mousePressed, this, &Scene3DEventHandler::mousePressed);
   ofRemoveListener(ofEvents().mouseReleased, this, &Scene3DEventHandler::mouseReleased);
   ofRemoveListener(ofEvents().mouseScrolled, this, &Scene3DEventHandler::mousePressedAndScrolled);
+  ofRemoveListener(ofEvents().keyPressed, this, &Scene3DEventHandler::keyPressed);
   this->scene3D->deactivateCameraMouseInput();
 }
 
@@ -70,6 +72,12 @@ void Scene3DEventHandler::mouseReleased(ofMouseEventArgs &mouseArgs) {
 void Scene3DEventHandler::mousePressedAndScrolled(ofMouseEventArgs &mouseArgs) {
   if (this->isMouseInScene() && mouseArgs.button == OF_MOUSE_BUTTON_LEFT) {
     this->scene3D->moveObjectWithScrollOnly(mouseArgs.scrollY);
+  }
+}
+
+void Scene3DEventHandler::keyPressed(ofKeyEventArgs &keyArgs) {
+  if (keyArgs.key == OF_KEY_RIGHT_SHIFT) {
+    this->scene3D->updateEnvironmentMap();
   }
 }
 
