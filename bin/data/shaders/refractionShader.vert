@@ -18,7 +18,7 @@ void main(void)
 	vec3 unitNormal = normalize(normal);
 	vec3 viewVector = normalize(worldPosition.xyz - cameraPosition);
 
-	refractedVector = refract(viewVector, unitNormal, 1.0/1.31);
+	refractedVector = refract(viewVector, unitNormal, 1.0/1.52);
 	
 	
 

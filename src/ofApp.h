@@ -55,7 +55,7 @@ private:
 
   bool isScene2D = false;
   bool isViewOrtho = false;
-  bool isSkyboxEnabled = false;
+  bool isSkyboxEnabled{true};
   bool isBoundingBoxEnabled = false;
   bool isObjectAxisEnabled = false;
   Scene *currentScene;

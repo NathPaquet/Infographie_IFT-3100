@@ -31,7 +31,7 @@ bool Cubemap::enableCubemapTextures() {
   }
 
   if (!this->isCubemapTextureBinded && this->isCubemapTextureLoaded) {
-    // Load cubemap textures
+    // Bind cubemap textures
     // Order: right, left, top, bottom, front, back
     //         x+     x-    y+    y-      z+    z-
     glGenTextures(1, &this->cubemapTextureObjectID);

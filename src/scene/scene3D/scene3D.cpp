@@ -1,6 +1,7 @@
 ﻿#include "scene3D.h"
 
 #include "constants.h"
+#include "utils/LoadingScreen.h"
 
 void Scene3D::setup() {
   this->sphere.enableTextures();
@@ -28,7 +29,7 @@ void Scene3D::setup() {
   // Set up dynamic environment map camera
   this->cameraDynamicEnvironmentMap.disableMouseInput();
   this->cameraDynamicEnvironmentMap.setPosition(0, 0, 0);
-  this->cameraDynamicEnvironmentMap.setNearClip(50);
+  this->cameraDynamicEnvironmentMap.setNearClip(20.0);
   this->cameraDynamicEnvironmentMap.setFarClip(10000);
   this->cameraDynamicEnvironmentMap.setFov(90);
 }
@@ -43,17 +44,22 @@ void Scene3D::update() {
 void Scene3D::drawScene() {
   this->currentCamera->begin();
 
+  if (this->isSkyboxEnabled && !this->skybox.isSkyboxLoaded()) {
+    string message = "Skybox texture not loaded yet";
+    LoadingScreen::drawLoadingScreen(message);
+  }
+
   this->drawSceneFromCamera(this->currentCamera->getGlobalPosition());
 
   this->currentCamera->end();
 }
 
 void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
-  if (this->isSkyboxEnabled && this->currentCamera == this->perspectiveCamera.get()) {
+  if (this->isSkyboxEnabled && this->skybox.isSkyboxLoaded() && this->currentCamera == this->perspectiveCamera.get()) {
     this->skybox.draw(Constants::DEFAULT_SKYBOX_SIZE, cameraPosition);
   }
 
-  ofDrawGrid(10, 100, false, false, true, false);
+  // ofDrawGrid(10, 100, false, false, true, false);
 
   this->sceneManager->drawScene();
 
@@ -254,7 +260,7 @@ void Scene3D::drawReflectiveCube(const glm::vec3 &cameraPosition) {
 
   // ofDrawBox(0, 0, 0, 50);
 
-  ofDrawSphere(0, 0, 0, 50);
+  ofDrawSphere(0, 0, 0, 20);
 
   glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
@@ -275,7 +281,7 @@ void Scene3D::drawRefractionCube(const glm::vec3 &cameraPosition) {
 
   // ofDrawBox(0, 0, 0, 50);
 
-  ofDrawSphere(0, 0, 0, 50);
+  ofDrawSphere(0, 0, 0, 20);
 
   glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 

@@ -1,7 +1,6 @@
 #include "skybox.h"
 
 #include "constants.h"
-#include "utils/loadingScreen.h"
 
 Skybox::Skybox() {
   this->skyboxShader.load("shaders/skybox.vert", "shaders/skybox.frag");
@@ -10,12 +9,13 @@ Skybox::Skybox() {
 }
 
 void Skybox::loadTexture(const string &texturePath) {
+  this->isCubemapLoaded = false;
   this->cubemapTexture.setCubemapTexturePath(texturePath);
   this->cubemapTexture.startThread();
 }
 
 void Skybox::draw(const float &size, const glm::vec3 &cameraPosition) {
-  if (this->cubemapTexture.enableCubemapTextures()) {
+  if (this->isCubemapLoaded) {
     skyboxShader.begin();
     skyboxShader.setUniform1i("skybox", 0);
 
@@ -30,10 +30,14 @@ void Skybox::draw(const float &size, const glm::vec3 &cameraPosition) {
     ofEnableDepthTest();
 
     skyboxShader.end();
-  } else {
-    string message = "Skybox texture not loaded yet";
-    LoadingScreen::drawLoadingScreen(message);
   }
+}
+
+bool Skybox::isSkyboxLoaded() {
+  if (!this->isCubemapLoaded) {
+    this->isCubemapLoaded = this->cubemapTexture.enableCubemapTextures();
+  }
+  return this->isCubemapLoaded;
 }
 
 const unsigned int Skybox::getTextureObjectID() const {
