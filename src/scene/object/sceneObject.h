@@ -9,6 +9,8 @@
 class SceneObject {
 public:
   SceneObject();
+  virtual ~SceneObject() = default;
+
   virtual void draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) = 0;
   const of3dPrimitive &getPrimitive() const;
   const ofVec3f &getPosition() const;

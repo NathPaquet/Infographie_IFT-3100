@@ -2,6 +2,8 @@
 #include "cubemap/skybox.h"
 #include "scene.h"
 
+#include <lights/types/AmbientLight.h>
+
 class Scene3D : public Scene {
 public:
   Scene3D(std::unique_ptr<SceneManager> sceneManager):
@@ -27,16 +29,19 @@ public:
   void releaseDraggedObject();
   void drawObjectPreview();
 
+  bool isAmbientLightEnable() const;
+  void toggleAmbientLight();
+
 private:
   const float SCROLL_POWER = 2.f;
 
-  ofLight light;
   std::unique_ptr<ofEasyCam> perspectiveCamera;
   std::unique_ptr<ofEasyCam> orthographicCamera;
   ofEasyCam *currentCamera;
   Skybox skybox;
   bool isSkyboxEnabled = false;
   Ray ray;
+  AmbientLight ambientLight;
   ofSpherePrimitive sphere = ofSpherePrimitive(20, 60, OF_PRIMITIVE_TRIANGLES);
 
   void setupPerspectiveCamera();

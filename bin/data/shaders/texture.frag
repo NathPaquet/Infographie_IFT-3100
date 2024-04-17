@@ -66,6 +66,7 @@ struct lightData
 uniform lightData lights[MAX_LIGHTS];
 
 
+// Point light
 void pointLight( in lightData light, in vec3 normal, in vec3 ecPosition3, inout vec3 ambient, inout vec3 diffuse, inout vec3 specular ){
 	float nDotVP;       // normal . light direction
 	float nDotHV;       // normal . light half vector
@@ -110,6 +111,58 @@ void pointLight( in lightData light, in vec3 normal, in vec3 ecPosition3, inout 
 	* pow(nDotHV, mat_shininess);
 	specular += mix(vec3(0.0), specularReflection, step(0.0000001, nDotVP));
 #endif
+}
+
+// Spot light
+void spotLight( in lightData light, in vec3 normal, in vec3 ecPosition3, inout vec3 ambient, inout vec3 diffuse, inout vec3 specular ){
+	float nDotVP; // = max(dot(normal,normalize(vec3(light.position))),0.0);
+	float nDotHV;       // normal . light half vector
+	float pf;
+	float d;            // distance from surface to light source
+	vec3  VP;           // direction from surface to light position
+	vec3 eye = -normalize(v_eyePosition);
+	float spotEffect;
+	float attenuation=1.0;
+	vec3  halfVector;   // direction of maximum highlights
+	// Compute vector from surface to light position
+	VP = light.position.xyz - ecPosition3;
+	spotEffect = dot(light.spotDirection, -normalize(VP));
+
+	if (spotEffect > light.spotCosCutoff) {
+		// Compute distance between surface and light position
+		d = length(VP);
+		spotEffect = pow(spotEffect, light.spotExponent);
+		attenuation = spotEffect / (light.constantAttenuation + light.linearAttenuation * d + light.quadraticAttenuation * d * d);
+
+		VP = normalize(VP);
+		halfVector = normalize(VP + eye);
+		nDotHV = max(0.0, dot(normal, halfVector));
+		nDotVP = max(0.0, dot(normal, VP));
+
+		pf = mix(0.0, pow(nDotHV, mat_shininess), step(0.0000001, nDotVP));
+
+		diffuse += light.diffuse.rgb * /* shadow * */ nDotVP * attenuation;
+		specular += light.specular.rgb * /* shadow * */ pf * nDotVP * attenuation;
+
+	}
+
+	ambient += light.ambient.rgb * attenuation;
+}
+
+// Directional light
+void directionalLight( in lightData light, in vec3 normal, inout vec3 ambient, inout vec3 diffuse, inout vec3 specular ){
+	float nDotVP;         // normal . light direction
+    float nDotHV;         // normal . light half vector
+    float pf;             // power factor
+
+    nDotVP = max(0.0, dot(normal, normalize(vec3(light.position))));
+    nDotHV = max(0.0, dot(normal, light.halfVector));
+
+    pf = mix(0.0, pow(nDotHV, mat_shininess), step(0.0000001, nDotVP));
+
+    ambient += light.ambient.rgb;
+    diffuse += light.diffuse.rgb * nDotVP /* * shadow*/;
+    specular += light.specular.rgb * pf * nDotVP /* * shadow*/;
 }
 //--------------------------------------- //
 
@@ -174,6 +227,10 @@ void main() {
 		if(lights[i].enabled<0.5) continue;
 		if(lights[i].type<0.5){
 			pointLight(lights[i], normal, v_eyePosition, ambient, diffuse, specular);
+		} else if (lights[i].type<1.5){
+			directionalLight(lights[i], normal, ambient, diffuse, specular);
+		} else if (lights[i].type<2.5){
+			spotLight(lights[i], normal, v_eyePosition, ambient, diffuse, specular);
 		}
 	}
 	
@@ -194,6 +251,10 @@ void main() {
 		if(lights[i].enabled<0.5) continue;
 		if(lights[i].type<0.5){
 			pointLight(lights[i], mv_normal, v_eyePosition, ambient, diffuse, specular);
+		} else if (lights[i].type<1.5){
+			directionalLight(lights[i], mv_normal, ambient, diffuse, specular);
+		} else if (lights[i].type<2.5){
+			spotLight(lights[i], mv_normal, v_eyePosition, ambient, diffuse, specular);
 		}
 	}
 	

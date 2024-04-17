@@ -41,9 +41,6 @@ private:
   void switchBetweenScenes();
   void switchBetweenProjections();
   void loadDefaultTextures();
-  Tools tools;
-  std::unique_ptr<CameraPanel> cameraPanel;
-  std::unique_ptr<WindowCamera> windowCamera;
 
   std::unique_ptr<SceneGraph> sceneGraph;
   std::unique_ptr<PropertiesPanel> propertiesPanel;
@@ -52,6 +49,10 @@ private:
   std::unique_ptr<Scene2D> scene2D;
   std::unique_ptr<Scene2DEventHandler> scene2DEventHandler;
   std::unique_ptr<Cursor> cursor;
+
+  Tools tools;
+  std::unique_ptr<CameraPanel> cameraPanel;
+  std::unique_ptr<WindowCamera> windowCamera;
 
   bool isScene2D = false;
   bool isViewOrtho = false;
