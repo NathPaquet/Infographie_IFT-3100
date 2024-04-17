@@ -59,8 +59,6 @@ void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
     this->skybox.draw(Constants::DEFAULT_SKYBOX_SIZE, cameraPosition);
   }
 
-  // ofDrawGrid(10, 100, false, false, true, false);
-
   this->sceneManager->drawScene();
 
   if (this->currentObjectToAdd != ElementType::NONE) {
