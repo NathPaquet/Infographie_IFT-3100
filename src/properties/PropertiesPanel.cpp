@@ -29,6 +29,7 @@ PropertiesPanel::PropertiesPanel() {
   propertyDrawFunctions.emplace(PROPERTY_ID::ANGLE_Y, std::make_unique<FloatPropertyDrawer>(MIN_ANGLE_VALUE, MAX_ANGLE_VALUE));
   propertyDrawFunctions.emplace(PROPERTY_ID::ANGLE_Z, std::make_unique<FloatPropertyDrawer>(MIN_ANGLE_VALUE, MAX_ANGLE_VALUE));
   propertyDrawFunctions.emplace(PROPERTY_ID::CATMULL_ROM_ALPHA, std::make_unique<FloatPropertyDrawer>(Constants::MIN_CATMULL_ROM_ALPHA_VALUE, Constants::MAX_CATMULL_ROM_ALPHA_VALUE));
+  propertyDrawFunctions.emplace(PROPERTY_ID::ATTENUATION, std::make_unique<FloatPropertyDrawer>(Constants::MIN_ATTENUATION_VALUE, Constants::MAX_ATTENUATION_VALUE));
   propertyDrawFunctions.emplace(PROPERTY_ID::TEXTURE, std::make_unique<TexturePropertyDrawer>());
 }
 
