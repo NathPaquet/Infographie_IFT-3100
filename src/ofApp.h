@@ -42,9 +42,7 @@ private:
   void generateCornellBox(float size);
   void switchBetweenScenes();
   void switchBetweenProjections();
-  Tools tools;
-  std::unique_ptr<CameraPanel> cameraPanel;
-  std::unique_ptr<WindowCamera> windowCamera;
+  void loadDefaultTextures();
 
   std::unique_ptr<SceneGraph> sceneGraph;
   std::unique_ptr<PropertiesPanel> propertiesPanel;
@@ -54,6 +52,10 @@ private:
   std::unique_ptr<Scene2DEventHandler> scene2DEventHandler;
   std::unique_ptr<Cursor> cursor;
 
+  Tools tools;
+  std::unique_ptr<CameraPanel> cameraPanel;
+  std::unique_ptr<WindowCamera> windowCamera;
+
   bool isScene2D = false;
   bool isViewOrtho = false;
   bool isSkyboxEnabled{true};
@@ -62,4 +64,6 @@ private:
   bool isReflectionSphereDisplayed{false};
   bool isRefractionSphereDisplayed{false};
   Scene *currentScene;
+
+  std::shared_ptr<ofShader> shader;
 };

@@ -14,9 +14,6 @@ CylinderPlanet::CylinderPlanet(const float x, const float y, const float z) {
   this->mainMesh = cylinder.getMesh();
 
   ofDisableArbTex();
-  this->mTex.enableMipmap();
-  this->mTex.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
-  this->mTex.generateMipmap();
 
   this->primitive = std::make_unique<ofCylinderPrimitive>(std::move(cylinder));
   this->primitive->setGlobalPosition(x, y, z);
