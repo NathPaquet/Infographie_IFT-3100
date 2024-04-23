@@ -117,6 +117,11 @@ void ofApp::drawSceneObjectGraph() {
     if (ImGui::Button("Delete Selection", ImVec2(ImGui::GetContentRegionAvail().x, Constants::GRAPH_SCENE_BUTTON_HEIGHT))) {
       this->currentScene->removeAllSelectedObjects();
     }
+
+    if (ImGui::Button("Clear Scene", ImVec2(ImGui::GetContentRegionAvail().x, Constants::GRAPH_SCENE_BUTTON_HEIGHT))) {
+      this->currentScene->clearScene();
+    }
+
     ImGui::PopStyleVar(2);
 
     this->sceneGraph->drawSceneGraphElements();
@@ -165,6 +170,9 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
       ImGui::SeparatorText("Automatic generation");
       if (ImGui::MenuItem("Generate Random Galaxy", "Shift+=")) {
         generateRandomGalaxy(20);
+      }
+      if (ImGui::MenuItem("Generate Cornell Box", "Shift+c")) {
+        generateCornellBox(100);
       }
       ImGui::SeparatorText("3D object");
       if (ImGui::MenuItem("Add Sphere", "Shift+1")) {
@@ -261,6 +269,7 @@ void ofApp::createViewMenu() {
       if (ImGui::MenuItem((this->isSkyboxEnabled ? "Disable skybox" : "Enable skybox"), "Alt+s")) {
         toggleSkyboxFor3DScene();
       }
+      createSphereRayOptionsTopMenu();
     }
 
     if (ImGui::MenuItem((this->isBoundingBoxEnabled ? "Disable bounding box" : "Enable bounding box"), "Alt+b")) {
@@ -280,6 +289,32 @@ void ofApp::createViewMenu() {
 void ofApp::toggleSkyboxFor3DScene() {
   this->isSkyboxEnabled = !this->isSkyboxEnabled;
   this->scene3D.get()->toggleSkyboxActivation();
+}
+
+void ofApp::createSphereRayOptionsTopMenu() {
+  if (ImGui::BeginMenu("Center Sphere Options")) {
+    static int rayOptionSelected = -1;
+    ImGui::SeparatorText("Surface options");
+    if (ImGui::Selectable("Reflective", rayOptionSelected == 0)) {
+      if (rayOptionSelected == 0) {
+        rayOptionSelected = -1;
+        this->scene3D.get()->deactivateCenterSphere();
+      } else {
+        rayOptionSelected = 0;
+        this->scene3D.get()->activateReflectionSphere();
+      }
+    }
+    if (ImGui::Selectable("Refractive", rayOptionSelected == 1)) {
+      if (rayOptionSelected == 1) {
+        rayOptionSelected = -1;
+        this->scene3D.get()->deactivateCenterSphere();
+      } else {
+        rayOptionSelected = 1;
+        this->scene3D.get()->activateRefractionSphere();
+      }
+    }
+    ImGui::EndMenu();
+  }
 }
 
 void ofApp::loadDefaultTextures() {
@@ -408,6 +443,16 @@ void ofApp::generateRandomGalaxy(int nbElements) {
     randomPosition.z = dis(gen);
     this->currentScene->getSceneManager()->addElement(randomPosition, static_cast<ElementType>(intDistribution(gen)));
   }
+}
+
+void ofApp::generateCornellBox(float size) {
+  this->currentScene->getSceneManager()->clearScene();
+  auto offset = glm::vec3(size / 2, size / 2, size / 2);
+  this->currentScene->getSceneManager()->addElement(glm::vec3(size, 0, 0), glm::vec3(size, 0, 0) + offset, ElementType::CUBIC);
+  this->currentScene->getSceneManager()->addElement(glm::vec3(-size, 0, 0), glm::vec3(-size, 0, 0) + offset, ElementType::CUBIC);
+  this->currentScene->getSceneManager()->addElement(glm::vec3(0, size, 0), glm::vec3(0, size, 0) + offset, ElementType::CUBIC);
+  this->currentScene->getSceneManager()->addElement(glm::vec3(0, -size, 0), glm::vec3(0, -size, 0) + offset, ElementType::CUBIC);
+  this->currentScene->getSceneManager()->addElement(glm::vec3(0, 0, size), glm::vec3(0, 0, size) + offset, ElementType::CUBIC);
 }
 
 void ofApp::switchBetweenScenes() {

@@ -7,8 +7,7 @@ Object2D::Object2D() {
   this->addProperty<float>(PROPERTY_ID::ANGLE_Z, 0.f);
 }
 
-void Object2D::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) {
-  this->updateProperties();
+void Object2D::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) const {
   ofPushStyle();
   if (isSelected) {
     ofSetColor(Constants::SELECTED_OBJECT_FRAME_COLOR);
@@ -34,7 +33,7 @@ void Object2D::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxis
   ofPopStyle();
 }
 
-void Object2D::drawAxis() {
+void Object2D::drawAxis() const {
   ofVec3f xAxis = this->primitive->getXAxis();
   ofVec3f yAxis = this->primitive->getYAxis();
 
@@ -55,7 +54,7 @@ void Object2D::drawAxis() {
   ofPopStyle();
 }
 
-void Object2D::drawBoundingBox() {
+void Object2D::drawBoundingBox() const {
   ofPushStyle();
   ofNoFill();
   ofSetColor(ofColor::yellow);

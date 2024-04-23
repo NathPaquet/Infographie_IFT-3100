@@ -7,6 +7,7 @@ public:
   void setCubemapTexturePath(const string &cubemapTexturePath);
   bool enableCubemapTextures();
   const unsigned int getTextureObjectID() const;
+  void setCubemapImage(const ofImage &right, const ofImage &left, const ofImage &top, const ofImage &bottom, const ofImage &front, const ofImage &back);
 
 private:
   void uploadToCubemap(GLenum face, ofImage &image);

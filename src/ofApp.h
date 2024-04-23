@@ -36,8 +36,10 @@ private:
   void createViewMenu();
   void toggleSkyboxFor3DScene();
   void createSkyboxTopMenu();
+  void createSphereRayOptionsTopMenu();
   void updateKeyboardShortcuts();
   void generateRandomGalaxy(int nbElements);
+  void generateCornellBox(float size);
   void switchBetweenScenes();
   void switchBetweenProjections();
   void loadDefaultTextures();
@@ -56,9 +58,11 @@ private:
 
   bool isScene2D = false;
   bool isViewOrtho = false;
-  bool isSkyboxEnabled = false;
+  bool isSkyboxEnabled{true};
   bool isBoundingBoxEnabled = false;
   bool isObjectAxisEnabled = false;
+  bool isReflectionSphereDisplayed{false};
+  bool isRefractionSphereDisplayed{false};
   Scene *currentScene;
 
   std::shared_ptr<ofShader> shader;

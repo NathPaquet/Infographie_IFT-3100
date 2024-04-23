@@ -16,7 +16,7 @@ public:
 
   void removeObject(const SceneObject *sceneObject);
   void removeAllSelectedObjects();
-  void drawScene();
+  void drawScene() const;
   const std::list<std::unique_ptr<SceneObject>> &getObjects() const;
   const std::vector<Camera *> &getCameras() const;
   void setSelectedSceneObject(const SceneObject *sceneObject);
@@ -25,9 +25,10 @@ public:
   std::vector<SceneObject *> &getSelectedObjectsReference();
   void toggleActivationBoundingBox();
   void toggleActivationObjectAxis();
+  void clearScene();
+  void updateObjectProperties();
 
 private:
-  void clearScene();
   void addIfCamera(const SceneObject *sceneObject, const ElementType primitiveType);
   void removeElement(const SceneObject *sceneObject);
   void removeSelectedElement(const SceneObject *sceneObject);

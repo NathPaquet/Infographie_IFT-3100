@@ -1,6 +1,10 @@
 ﻿#include "scene3D.h"
 
 #include "constants.h"
+#include "utils/LoadingScreen.h"
+
+Scene3D::~Scene3D() {
+}
 
 void Scene3D::setup() {
   this->sphere.enableTextures();
@@ -19,14 +23,27 @@ void Scene3D::setup() {
   this->setupOrthographicCamera();
 
   this->currentCamera = this->perspectiveCamera.get();
+
+  // Set up reflective shader
+  this->reflectionShader.load("shaders/reflectionShader.vert", "shaders/reflectionShader.frag");
+
+  // Set up refraction shader
+  this->refractionShader.load("shaders/refractionShader.vert", "shaders/refractionShader.frag");
 }
 
 void Scene3D::update() {
+  this->sceneManager->updateObjectProperties();
+
   this->computeRay(*this->currentCamera, this->ray);
 }
 
 void Scene3D::drawScene() {
   this->currentCamera->begin();
+
+  if (this->skybox.isEnabled() && !this->skybox.isSkyboxLoaded()) {
+    string message = "Skybox texture not loaded yet";
+    LoadingScreen::drawLoadingScreen(message);
+  }
 
   this->drawSceneFromCamera(this->currentCamera->getGlobalPosition());
 
@@ -34,17 +51,28 @@ void Scene3D::drawScene() {
 }
 
 void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
-  if (this->isSkyboxEnabled && this->currentCamera == this->perspectiveCamera.get()) {
+  if (this->skybox.isEnabled() && this->skybox.isSkyboxLoaded() && this->currentCamera == this->perspectiveCamera.get()) {
     this->skybox.draw(Constants::DEFAULT_SKYBOX_SIZE, cameraPosition);
   }
 
-  ofDrawGrid(10, 100, false, false, true, false);
-
-  this->sceneManager.get()->drawScene();
+  this->sceneManager->drawScene();
 
   if (this->currentObjectToAdd != ElementType::NONE) {
     this->drawObjectPreview();
   }
+
+  if (this->currentCamera == this->perspectiveCamera.get()) {
+    if (this->isReflectionSphereEnabled) {
+      this->drawReflectiveSphere(cameraPosition);
+    }
+    if (this->isRefractionSphereEnabled) {
+      this->drawRefractionSphere(cameraPosition);
+    }
+  }
+}
+
+void Scene3D::updateEnvironnementCubmap() {
+  this->lowQualityRenderer.updateEnvironmentCubemap();
 }
 
 void Scene3D::toggleProjectionMode() {
@@ -60,7 +88,7 @@ void Scene3D::toggleProjectionMode() {
 }
 
 void Scene3D::toggleSkyboxActivation() {
-  this->isSkyboxEnabled = !this->isSkyboxEnabled;
+  this->skybox.toggleSkyboxActivation();
 }
 
 void Scene3D::loadSkybox(const string &skyboxTexturePath) {
@@ -166,4 +194,57 @@ void Scene3D::setupOrthographicCamera() {
 
   this->orthographicCamera.get()->setNearClip(-1000000);
   this->orthographicCamera.get()->setFarClip(1000000);
+}
+
+void Scene3D::deactivateCenterSphere() {
+  this->isReflectionSphereEnabled = false;
+  this->isRefractionSphereEnabled = false;
+}
+
+void Scene3D::activateReflectionSphere() {
+  this->isReflectionSphereEnabled = true;
+  this->isRefractionSphereEnabled = false;
+}
+
+void Scene3D::activateRefractionSphere() {
+  this->isRefractionSphereEnabled = true;
+  this->isReflectionSphereEnabled = false;
+}
+
+void Scene3D::drawReflectiveSphere(const glm::vec3 &cameraPosition) {
+  // Render reflective object with reflective shader and environment map
+  this->reflectionShader.begin();
+
+  this->reflectionShader.setUniform3f("cameraPosition", cameraPosition);
+  this->reflectionShader.setUniform1i("environmentMap", 0);
+
+  glBindTexture(GL_TEXTURE_CUBE_MAP, this->lowQualityRenderer.getCubemapTextureID());
+
+  // Set the box resolution to 100x100x100 for better reflection quality
+  ofSetBoxResolution(100, 100, 100);
+
+  ofDrawSphere(0, 0, 0, 20);
+
+  glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+
+  this->reflectionShader.end();
+}
+
+void Scene3D::drawRefractionSphere(const glm::vec3 &cameraPosition) {
+  // Render refractive object with refractive shader and environment map
+  this->refractionShader.begin();
+
+  this->refractionShader.setUniform3f("cameraPosition", cameraPosition);
+  this->refractionShader.setUniform1i("environmentMap", 0);
+
+  glBindTexture(GL_TEXTURE_CUBE_MAP, this->lowQualityRenderer.getCubemapTextureID());
+
+  // Set the box resolution to 100x100x100 for better reflection quality
+  ofSetSphereResolution(100);
+
+  ofDrawSphere(0, 0, 0, 20);
+
+  glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+
+  this->refractionShader.end();
 }

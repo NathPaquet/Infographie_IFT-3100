@@ -1,6 +1,7 @@
 #version 150
 
 in vec3 position;
+
 out vec3 texCoord;
 
 uniform mat4 modelViewProjectionMatrix;

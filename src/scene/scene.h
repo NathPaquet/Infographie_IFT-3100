@@ -14,6 +14,7 @@ public:
 
   SceneManager *getSceneManager();
   void removeAllSelectedObjects();
+  void clearScene();
   vector<SceneObject *> getSelectedObjectsReference();
   bool hasCurrentObjectToAdd();
   void setCurrentObjectToAdd(ElementType elementType);

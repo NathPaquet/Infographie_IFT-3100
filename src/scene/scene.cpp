@@ -10,6 +10,10 @@ void Scene::removeAllSelectedObjects() {
   this->sceneManager->removeAllSelectedObjects();
 }
 
+void Scene::clearScene() {
+  this->sceneManager->clearScene();
+}
+
 vector<SceneObject *> Scene::getSelectedObjectsReference() {
   return this->sceneManager->getSelectedObjectsReference();
 }

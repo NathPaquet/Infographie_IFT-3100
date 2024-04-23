@@ -7,11 +7,10 @@ int main() {
 #if defined(TARGET_OSX)
   settings.setGLVersion(3, 2);
 #else
-  settings.setGLVersion(4, 1);
+  settings.setGLVersion(3, 2);
 #endif
 
   settings.setSize(1280, 720);
   ofCreateWindow(settings);
-
   ofRunApp(new ofApp());
 }
