@@ -3,6 +3,34 @@
 #include "constants.h"
 #include "utils/LoadingScreen.h"
 
+constexpr int RIGHT_FACE_INDEX = 0;
+constexpr int LEFT_FACE_INDEX = 1;
+constexpr int TOP_FACE_INDEX = 2;
+constexpr int BOTTOM_FACE_INDEX = 3;
+constexpr int FRONT_FACE_INDEX = 4;
+constexpr int BACK_FACE_INDEX = 5;
+
+Scene3D::~Scene3D() {
+  if (this->asyncFrontEnvironmentMapThread.joinable()) {
+    this->asyncFrontEnvironmentMapThread.join();
+  }
+  if (this->asyncBackEnvironmentMapThread.joinable()) {
+    this->asyncBackEnvironmentMapThread.join();
+  }
+  if (this->asyncLeftEnvironmentMapThread.joinable()) {
+    this->asyncLeftEnvironmentMapThread.join();
+  }
+  if (this->asyncRightEnvironmentMapThread.joinable()) {
+    this->asyncRightEnvironmentMapThread.join();
+  }
+  if (this->asyncTopEnvironmentMapThread.joinable()) {
+    this->asyncTopEnvironmentMapThread.join();
+  }
+  if (this->asyncBottomEnvironmentMapThread.joinable()) {
+    this->asyncBottomEnvironmentMapThread.join();
+  }
+}
+
 void Scene3D::setup() {
   this->sphere.enableTextures();
   this->ray = Ray();
@@ -26,16 +54,33 @@ void Scene3D::setup() {
   // Set up refraction shader
   this->refractionShader.load("shaders/refractionShader.vert", "shaders/refractionShader.frag");
 
-  // Set up dynamic environment map camera
+  // Set up dynamic environment map cameras
   this->cameraDynamicEnvironmentMap.disableMouseInput();
   this->cameraDynamicEnvironmentMap.setPosition(0, 0, 0);
   this->cameraDynamicEnvironmentMap.setNearClip(20.0);
   this->cameraDynamicEnvironmentMap.setFarClip(10000);
   this->cameraDynamicEnvironmentMap.setFov(90);
+
+  // Set up environment map FBOs
+  for (int i = 0; i < this->environmentMapFbos.size(); ++i) {
+    this->environmentMapFbos[i].allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
+  }
+
+  // Set up environment map cameras
+  this->setupEnvironmentMapCameras();
+
+  // Set up dynamic environment map threads
+  // this->asyncFrontEnvironmentMapThread = std::thread(&Scene3D::asyncFrontEnvironmentMapFunction, this);
+  // this->asyncBackEnvironmentMapThread = std::thread(&Scene3D::asyncBackEnvironmentMapFunction, this);
+  // this->asyncLeftEnvironmentMapThread = std::thread(&Scene3D::asyncLeftEnvironmentMapFunction, this);
+  // this->asyncRightEnvironmentMapThread = std::thread(&Scene3D::asyncRightEnvironmentMapFunction, this);
+  // this->asyncTopEnvironmentMapThread = std::thread(&Scene3D::asyncTopEnvironmentMapFunction, this);
+  // this->asyncBottomEnvironmentMapThread = std::thread(&Scene3D::asyncBottomEnvironmentMapFunction, this);
 }
 
 void Scene3D::update() {
   this->computeRay(*this->currentCamera, this->ray);
+  // TODO : Venir faire l'update de notre cubemap pour le reflection et la réfraction
 }
 
 void Scene3D::drawScene() {
@@ -232,22 +277,22 @@ void Scene3D::activateRefractionSphere() {
 
 void Scene3D::ajustEnvironmentMapPicture(int faceIndex, ofImage &environmentMapImage) {
   switch (faceIndex) {
-    case 0: // Droite
+    case RIGHT_FACE_INDEX: // Droite
       environmentMapImage.mirror(false, true);
       break;
-    case 1: // Gauche
+    case LEFT_FACE_INDEX: // Gauche
       environmentMapImage.mirror(false, true);
       break;
-    case 2: // Haut
+    case TOP_FACE_INDEX: // Haut
       environmentMapImage.mirror(true, false);
       break;
-    case 3: // Bas
+    case BOTTOM_FACE_INDEX: // Bas
       environmentMapImage.mirror(true, false);
       break;
-    case 4: // Devant
+    case FRONT_FACE_INDEX: // Devant
       environmentMapImage.mirror(false, true);
       break;
-    case 5: // Derrière
+    case BACK_FACE_INDEX: // Derrière
       environmentMapImage.mirror(false, true);
       break;
     default:
@@ -291,6 +336,210 @@ void Scene3D::drawRefractionSphere(const glm::vec3 &cameraPosition) {
   glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
   this->refractionShader.end();
+}
+
+void Scene3D::setupEnvironmentMapCameras() {
+  for (int i = 0; i < this->environmentMapCameras.size(); ++i) {
+    this->environmentMapCameras[i].disableMouseInput();
+    this->environmentMapCameras[i].setPosition(0, 0, 0);
+    this->environmentMapCameras[i].setNearClip(20.0);
+    this->environmentMapCameras[i].setFarClip(10000);
+    this->environmentMapCameras[i].setFov(90);
+    this->configureEnvironmentMapCameraOrientation(i, this->environmentMapCameras[i]);
+  }
+}
+
+void Scene3D::configureEnvironmentMapCameraOrientation(int faceIndex, ofEasyCam &currentCamera) {
+  switch (faceIndex) {
+    case RIGHT_FACE_INDEX: // Droite
+      currentCamera.lookAt(currentCamera.getGlobalPosition() + glm::vec3(1, 0, 0));
+      break;
+    case LEFT_FACE_INDEX: // Gauche
+      currentCamera.lookAt(currentCamera.getGlobalPosition() + glm::vec3(-1, 0, 0));
+      break;
+    case TOP_FACE_INDEX: // Haut
+      currentCamera.lookAt(currentCamera.getGlobalPosition() + glm::vec3(0, 1, 0));
+      break;
+    case BOTTOM_FACE_INDEX: // Bas
+      currentCamera.lookAt(currentCamera.getGlobalPosition() + glm::vec3(0, -1, 0));
+      break;
+    case FRONT_FACE_INDEX: // Devant
+      currentCamera.lookAt(currentCamera.getGlobalPosition() + glm::vec3(0, 0, 1));
+      break;
+    case BACK_FACE_INDEX: // Derrière
+      currentCamera.lookAt(currentCamera.getGlobalPosition() + glm::vec3(0, 0, -1));
+      break;
+    default:
+      break;
+  }
+}
+
+void Scene3D::asyncFrontEnvironmentMapFunction() {
+  while (true) {
+    this->environmentMapFbos[FRONT_FACE_INDEX].begin();
+    ofClear(0, 0, 0, 0);
+
+    this->environmentMapCameras[FRONT_FACE_INDEX].begin();
+
+    // Display the skybox
+    if (this->isSkyboxEnabled) {
+      // this->skybox.draw(10000, this->environmentMapCameras[FRONT_FACE_INDEX].getGlobalPosition());
+    }
+
+    // Display the scene
+    this->sceneManager.get()->drawScene();
+
+    this->environmentMapCameras[FRONT_FACE_INDEX].end();
+
+    // Save the image
+    int size = min(ofGetWidth(), ofGetHeight());
+    this->environmentCubemapImages[FRONT_FACE_INDEX].grabScreen((ofGetWidth() - size) / 2, (ofGetHeight() - size) / 2, size, size);
+    this->environmentCubemapImages[FRONT_FACE_INDEX].setImageType(OF_IMAGE_COLOR);
+    this->environmentCubemapImages[FRONT_FACE_INDEX].getPixels().swapRgb();
+    ajustEnvironmentMapPicture(FRONT_FACE_INDEX, this->environmentCubemapImages[FRONT_FACE_INDEX]);
+
+    this->environmentMapFbos[FRONT_FACE_INDEX].end();
+  }
+}
+
+void Scene3D::asyncBackEnvironmentMapFunction() {
+  while (true) {
+    this->environmentMapFbos[BACK_FACE_INDEX].begin();
+    ofClear(0, 0, 0, 0);
+
+    this->environmentMapCameras[BACK_FACE_INDEX].begin();
+
+    // Display the skybox
+    if (this->isSkyboxEnabled) {
+      this->skybox.draw(10000, this->environmentMapCameras[BACK_FACE_INDEX].getGlobalPosition());
+    }
+
+    // Display the scene
+    this->sceneManager.get()->drawScene();
+
+    this->environmentMapCameras[BACK_FACE_INDEX].end();
+
+    // Save the image
+    int size = min(ofGetWidth(), ofGetHeight());
+    this->environmentCubemapImages[BACK_FACE_INDEX].grabScreen((ofGetWidth() - size) / 2, (ofGetHeight() - size) / 2, size, size);
+    this->environmentCubemapImages[BACK_FACE_INDEX].setImageType(OF_IMAGE_COLOR);
+    this->environmentCubemapImages[BACK_FACE_INDEX].getPixels().swapRgb();
+    ajustEnvironmentMapPicture(BACK_FACE_INDEX, this->environmentCubemapImages[BACK_FACE_INDEX]);
+
+    this->environmentMapFbos[BACK_FACE_INDEX].end();
+  }
+}
+
+void Scene3D::asyncLeftEnvironmentMapFunction() {
+  while (true) {
+    this->environmentMapFbos[LEFT_FACE_INDEX].begin();
+    ofClear(0, 0, 0, 0);
+
+    this->environmentMapCameras[LEFT_FACE_INDEX].begin();
+
+    // Display the skybox
+    if (this->isSkyboxEnabled) {
+      this->skybox.draw(10000, this->environmentMapCameras[LEFT_FACE_INDEX].getGlobalPosition());
+    }
+
+    // Display the scene
+    this->sceneManager.get()->drawScene();
+
+    // Save the image
+    int size = min(ofGetWidth(), ofGetHeight());
+    this->environmentCubemapImages[LEFT_FACE_INDEX].grabScreen((ofGetWidth() - size) / 2, (ofGetHeight() - size) / 2, size, size);
+    this->environmentCubemapImages[LEFT_FACE_INDEX].setImageType(OF_IMAGE_COLOR);
+    this->environmentCubemapImages[LEFT_FACE_INDEX].getPixels().swapRgb();
+    ajustEnvironmentMapPicture(LEFT_FACE_INDEX, this->environmentCubemapImages[LEFT_FACE_INDEX]);
+
+    this->environmentMapCameras[LEFT_FACE_INDEX].end();
+
+    this->environmentMapFbos[LEFT_FACE_INDEX].end();
+  }
+}
+
+void Scene3D::asyncRightEnvironmentMapFunction() {
+  while (true) {
+    this->environmentMapFbos[RIGHT_FACE_INDEX].begin();
+    ofClear(0, 0, 0, 0);
+
+    this->environmentMapCameras[RIGHT_FACE_INDEX].begin();
+
+    // Display the skybox
+    if (this->isSkyboxEnabled) {
+      this->skybox.draw(10000, this->environmentMapCameras[RIGHT_FACE_INDEX].getGlobalPosition());
+    }
+
+    // Display the scene
+    this->sceneManager.get()->drawScene();
+
+    // Save the image
+    int size = min(ofGetWidth(), ofGetHeight());
+    this->environmentCubemapImages[RIGHT_FACE_INDEX].grabScreen((ofGetWidth() - size) / 2, (ofGetHeight() - size) / 2, size, size);
+    this->environmentCubemapImages[RIGHT_FACE_INDEX].setImageType(OF_IMAGE_COLOR);
+    this->environmentCubemapImages[RIGHT_FACE_INDEX].getPixels().swapRgb();
+    ajustEnvironmentMapPicture(RIGHT_FACE_INDEX, this->environmentCubemapImages[RIGHT_FACE_INDEX]);
+
+    this->environmentMapCameras[RIGHT_FACE_INDEX].end();
+
+    this->environmentMapFbos[RIGHT_FACE_INDEX].end();
+  }
+}
+
+void Scene3D::asyncTopEnvironmentMapFunction() {
+  while (true) {
+    this->environmentMapFbos[TOP_FACE_INDEX].begin();
+    ofClear(0, 0, 0, 0);
+
+    this->environmentMapCameras[TOP_FACE_INDEX].begin();
+
+    // Display the skybox
+    if (this->isSkyboxEnabled) {
+      this->skybox.draw(10000, this->environmentMapCameras[TOP_FACE_INDEX].getGlobalPosition());
+    }
+
+    // Display the scene
+    this->sceneManager.get()->drawScene();
+
+    this->environmentMapCameras[TOP_FACE_INDEX].end();
+
+    // Save the image
+    int size = min(ofGetWidth(), ofGetHeight());
+    this->environmentCubemapImages[TOP_FACE_INDEX].grabScreen((ofGetWidth() - size) / 2, (ofGetHeight() - size) / 2, size, size);
+    this->environmentCubemapImages[TOP_FACE_INDEX].setImageType(OF_IMAGE_COLOR);
+    this->environmentCubemapImages[TOP_FACE_INDEX].getPixels().swapRgb();
+    ajustEnvironmentMapPicture(TOP_FACE_INDEX, this->environmentCubemapImages[TOP_FACE_INDEX]);
+
+    this->environmentMapFbos[TOP_FACE_INDEX].end();
+  }
+}
+
+void Scene3D::asyncBottomEnvironmentMapFunction() {
+  while (true) {
+    this->environmentMapFbos[BOTTOM_FACE_INDEX].begin();
+    ofClear(0, 0, 0, 0);
+
+    this->environmentMapCameras[BOTTOM_FACE_INDEX].begin();
+
+    // Display the skybox
+    if (this->isSkyboxEnabled) {
+      this->skybox.draw(10000, this->environmentMapCameras[BOTTOM_FACE_INDEX].getGlobalPosition());
+    }
+
+    // Display the scene
+    this->sceneManager.get()->drawScene();
+
+    this->environmentMapCameras[BOTTOM_FACE_INDEX].end();
+
+    // Save the image
+    int size = min(ofGetWidth(), ofGetHeight());
+    this->environmentCubemapImages[BOTTOM_FACE_INDEX].grabScreen((ofGetWidth() - size) / 2, (ofGetHeight() - size) / 2, size, size);
+    this->environmentCubemapImages[BOTTOM_FACE_INDEX].setImageType(OF_IMAGE_COLOR);
+    this->environmentCubemapImages[BOTTOM_FACE_INDEX].getPixels().swapRgb();
+    ajustEnvironmentMapPicture(BOTTOM_FACE_INDEX, this->environmentCubemapImages[BOTTOM_FACE_INDEX]);
+
+    this->environmentMapFbos[BOTTOM_FACE_INDEX].end();
+  }
 }
 
 void Scene3D::configureCameraForFace(int faceIndex) {

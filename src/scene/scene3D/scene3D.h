@@ -6,6 +6,7 @@ class Scene3D : public Scene {
 public:
   Scene3D(std::unique_ptr<SceneManager> sceneManager):
       Scene(std::move(sceneManager)) {}
+  ~Scene3D();
   void setup() override;
   void update() override;
   void drawScene() override;
@@ -57,4 +58,30 @@ private:
   bool isRefractionSphereEnabled{false};
   ofShader refractionShader;
   ofEasyCam cameraDynamicEnvironmentMap;
+
+  array<ofImage, 6> environmentCubemapImages;
+
+  array<ofEasyCam, 6> environmentMapCameras;
+  void setupEnvironmentMapCameras();
+  void configureEnvironmentMapCameraOrientation(int faceIndex, ofEasyCam &currentCamera);
+
+  array<ofFbo, 6> environmentMapFbos;
+
+  std::thread asyncFrontEnvironmentMapThread;
+  void asyncFrontEnvironmentMapFunction();
+
+  std::thread asyncBackEnvironmentMapThread;
+  void asyncBackEnvironmentMapFunction();
+
+  std::thread asyncLeftEnvironmentMapThread;
+  void asyncLeftEnvironmentMapFunction();
+
+  std::thread asyncRightEnvironmentMapThread;
+  void asyncRightEnvironmentMapFunction();
+
+  std::thread asyncTopEnvironmentMapThread;
+  void asyncTopEnvironmentMapFunction();
+
+  std::thread asyncBottomEnvironmentMapThread;
+  void asyncBottomEnvironmentMapFunction();
 };
