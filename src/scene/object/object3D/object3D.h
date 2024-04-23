@@ -3,15 +3,15 @@
 
 class Object3D : public SceneObject {
 public:
-	Object3D();
-	virtual ~Object3D() = default;
-	void draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) const override;
+  Object3D();
+  virtual ~Object3D() = default;
+  void draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) const override;
 
 private:
-	void drawAxis() const override;
-	void drawBoundingBox() const override;
-	void drawAABB() const;
+  void drawAxis() const override;
+  void drawBoundingBox() const override;
+  void drawAABB() const;
 
 protected:
-	void updateProperties() override;
+  void updateProperties() override;
 };

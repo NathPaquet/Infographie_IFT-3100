@@ -35,14 +35,6 @@ void Scene3D::update() {
   this->sceneManager->updateObjectProperties();
 
   this->computeRay(*this->currentCamera, this->ray);
-
-  // if (this->currentCamera == this->perspectiveCamera.get()) {
-  //   if (this->isReflectionSphereEnabled || this->isRefractionSphereEnabled) {
-  //     if (shouldUpdateEnvironmentMap) {
-  //       updateEnvironnementCubmap();
-  //     }
-  //   }
-  // }
 }
 
 void Scene3D::drawScene() {
@@ -77,9 +69,6 @@ void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
       this->drawRefractionSphere(cameraPosition);
     }
   }
-}
-
-void Scene3D::drawLowQualityFromCameraObject(const ofCamera &camera) const {
 }
 
 void Scene3D::updateEnvironnementCubmap() {
