@@ -6,13 +6,14 @@
 void Scene3D::setup() {
   this->sphere.enableTextures();
   this->ray = Ray();
+  this->ambientLight = AmbientLight();
 
-  // Initialize light
-  this->light.setAmbientColor(Constants::AMBIANT_COLOR);
-  this->light.setPosition(Constants::LIGHT_POSITION);
   ofEnableSmoothing();
   ofEnableLighting();
-  this->light.enable();
+
+  /*this->light.setAmbientColor(Constants::AMBIANT_COLOR);
+  this->light.setPosition(Constants::LIGHT_POSITION);
+  this->light.enable();*/
 
   // Initialize camera
   this->setupPerspectiveCamera();
@@ -160,6 +161,14 @@ void Scene3D::drawObjectPreview() {
   if (!found) {
     this->ray.drawPrimitiveDefaultPreview(this->currentObjectToAdd, position);
   }
+}
+
+bool Scene3D::isAmbientLightEnable() const {
+  return this->ambientLight.isEnable();
+}
+
+void Scene3D::toggleAmbientLight() {
+  this->ambientLight.toggle();
 }
 
 void Scene3D::setupPerspectiveCamera() {

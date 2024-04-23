@@ -9,6 +9,10 @@ enum class ElementType {
   CYLINDER,
   MODEL3D,
   CAMERA,
+  // Lights
+  POINT_LIGHT,
+  DIRECTIONAL_LIGHT,
+  SPOT_LIGHT,
   // 2D primitives
   TRIANGLE,
   CIRCLE,

@@ -9,13 +9,7 @@ CubicPlanet::CubicPlanet(const float x, const float y, const float z) {
 
   float size = this->getPropertyValue<float>(PROPERTY_ID::SIZE);
 
-  this->primitive = std::make_unique<ofBoxPrimitive>(size, size, size);
-  this->primitive->setGlobalPosition(x, y, z);
-  this->position = ofVec3f(x, y, z);
-}
-
-CubicPlanet::CubicPlanet(const float x, const float y, const float z, float size) {
-  this->addProperty<float>(PROPERTY_ID::SIZE, size);
+  ofDisableArbTex();
 
   this->primitive = std::make_unique<ofBoxPrimitive>(size, size, size);
   this->primitive->setGlobalPosition(x, y, z);

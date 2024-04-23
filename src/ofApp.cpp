@@ -8,6 +8,7 @@
 #include "utils/loadingScreen.h"
 
 #include <iostream>
+#include <textures/TextureRepository.h>
 
 //--------------------------------------------------------------
 void ofApp::setup() {
@@ -46,6 +47,8 @@ void ofApp::setup() {
   this->backgroundTexture.enableMipmap();
   this->backgroundTexture.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
   this->backgroundTexture.generateMipmap();
+
+  loadDefaultTextures();
 }
 
 //--------------------------------------------------------------
@@ -187,6 +190,21 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
 
+      ImGui::SeparatorText("Lights");
+
+      if (ImGui::MenuItem("Add Point Light", "TODO")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::POINT_LIGHT);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
+      if (ImGui::MenuItem("Add Directional Light", "TODO")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::DIRECTIONAL_LIGHT);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
+      if (ImGui::MenuItem("Add Spot Light", "TODO")) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::SPOT_LIGHT);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      }
+
       ImGui::SeparatorText("3D model");
 
       if (ImGui::MenuItem("Planet earth", "Shift+4")) {
@@ -225,7 +243,7 @@ void ofApp::drawSceneTopMenu() {
       if (!this->isScene2D && this->isSkyboxEnabled) {
         this->createSkyboxTopMenu();
       }
-      tools.createToolsMenu();
+      tools.createToolsMenu(this->scene3D.get());
       cameraPanel.get()->create();
 
       ImGui::EndMenuBar();
@@ -297,6 +315,18 @@ void ofApp::createSphereRayOptionsTopMenu() {
     }
     ImGui::EndMenu();
   }
+}
+
+void ofApp::loadDefaultTextures() {
+  shader = std::make_shared<ofShader>();
+  shader->load("shaders/texture");
+
+  TextureRepository::addTexture("Snow_03");
+  TextureRepository::configureTextureWithShader("Snow_03", shader);
+  TextureRepository::addTexture("Square_floor");
+  TextureRepository::configureTextureWithShader("Square_floor", shader);
+  TextureRepository::addTexture("Mud_cracked_dry_03");
+  TextureRepository::configureTextureWithShader("Mud_cracked_dry_03", shader);
 }
 
 void ofApp::createSkyboxTopMenu() {

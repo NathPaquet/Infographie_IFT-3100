@@ -4,15 +4,20 @@
 #include "ofMain.h"
 #include "properties/Property.h"
 
+#include <textures/TexturePack.h>
+
 class SceneObject {
 public:
   SceneObject();
+  virtual ~SceneObject() = default;
+
   virtual void draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) = 0;
   const of3dPrimitive &getPrimitive() const;
   const ofVec3f &getPosition() const;
   virtual void setPosition(ofVec3f vec);
   virtual void setDraggingPositionOnObject(ofVec3f vec);
   virtual void stopDraggingObject();
+  void setTexture(const TexturePack *texture);
   std::map<PROPERTY_ID, std::unique_ptr<PropertyBase>> &getProperties();
   virtual void displayObjectOptions();
 
@@ -37,5 +42,5 @@ protected:
   glm::vec3 draggingPosition;
   ofMesh mainMesh;
   ofMaterial mMaterial;
-  ofTexture mTex;
+  const TexturePack *texture;
 };
