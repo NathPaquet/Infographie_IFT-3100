@@ -57,4 +57,7 @@ namespace Constants {
   constexpr auto CUBEMAP_TEXTURE_SKYBOX_RED = "cubemaps/red/";
   constexpr auto CUBEMAP_TEXTURE_SKYBOX_LIGHTBLUE = "cubemaps/lightblue/";
 
+  // ENVIRONMENT MAP
+  constexpr int DEFAULT_FRAME_RATE = 60;
+
 }

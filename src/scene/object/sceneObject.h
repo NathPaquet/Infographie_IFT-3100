@@ -16,6 +16,7 @@ public:
   std::map<PROPERTY_ID, std::unique_ptr<PropertyBase>> &getProperties();
   virtual void displayObjectOptions();
   virtual void updateProperties();
+  bool isDirty() const;
 
   template<typename T>
   const T &getPropertyValue(const PROPERTY_ID &propertyName) const {

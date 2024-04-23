@@ -77,7 +77,8 @@ void Scene3DEventHandler::mousePressedAndScrolled(ofMouseEventArgs &mouseArgs) {
 
 void Scene3DEventHandler::keyPressed(ofKeyEventArgs &keyArgs) {
   if (keyArgs.key == OF_KEY_RIGHT_SHIFT) {
-    this->scene3D->updateEnvironmentMap();
+    // TODO : REMOVE THIS
+    // this->scene3D->updateEnvironmentMap();
   }
 }
 

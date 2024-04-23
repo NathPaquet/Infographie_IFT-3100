@@ -17,6 +17,7 @@ void ofApp::setup() {
   ofEnableDepthTest();
   ofSetVerticalSync(true);
   ofDisableArbTex();
+  ofSetFrameRate(Constants::DEFAULT_FRAME_RATE);
   // required call
 
   this->cursor = std::make_unique<Cursor>(CursorMode::NAVIGATION);

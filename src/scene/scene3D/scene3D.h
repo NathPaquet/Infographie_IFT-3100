@@ -2,10 +2,12 @@
 #include "cubemap/skybox.h"
 #include "scene.h"
 
+#include <renderer/lowQualityRenderer.h>
+
 class Scene3D : public Scene {
 public:
   Scene3D(std::unique_ptr<SceneManager> sceneManager):
-      Scene(std::move(sceneManager)) {}
+      Scene(std::move(sceneManager)), lowQualityRenderer(this->sceneManager.get()) {}
   ~Scene3D();
   void setup() override;
   void update() override;
@@ -28,7 +30,6 @@ public:
   void moveObjectWithScrollOnly(float scrollAmount);
   void releaseDraggedObject();
   void drawObjectPreview();
-  void updateEnvironmentMap();
   void deactivateCenterSphere();
   void activateReflectionSphere();
   void activateRefractionSphere();
@@ -48,43 +49,14 @@ private:
 
   void setupPerspectiveCamera();
   void setupOrthographicCamera();
-  void configureCameraForFace(int faceIndex);
-  void ajustEnvironmentMapPicture(int faceIndex, ofImage &environmentMapImage);
+
   void drawReflectiveSphere(const glm::vec3 &cameraPosition);
   void drawRefractionSphere(const glm::vec3 &cameraPosition);
 
-  // DeferredRenderer deferredRenderer;
+  LowQualityRenderer lowQualityRenderer;
 
-  Cubemap dynamicEnvironmentMap;
   bool isReflectionSphereEnabled{false};
   ofShader reflectionShader;
   bool isRefractionSphereEnabled{false};
   ofShader refractionShader;
-  ofEasyCam cameraDynamicEnvironmentMap;
-
-  array<ofImage, 6> environmentCubemapImages;
-
-  array<ofEasyCam, 6> environmentMapCameras;
-  void setupEnvironmentMapCameras();
-  void configureEnvironmentMapCameraOrientation(int faceIndex, ofEasyCam &currentCamera);
-
-  array<ofFbo, 6> environmentMapFbos;
-
-  std::thread asyncFrontEnvironmentMapThread;
-  void asyncFrontEnvironmentMapFunction();
-
-  std::thread asyncBackEnvironmentMapThread;
-  void asyncBackEnvironmentMapFunction();
-
-  std::thread asyncLeftEnvironmentMapThread;
-  void asyncLeftEnvironmentMapFunction();
-
-  std::thread asyncRightEnvironmentMapThread;
-  void asyncRightEnvironmentMapFunction();
-
-  std::thread asyncTopEnvironmentMapThread;
-  void asyncTopEnvironmentMapFunction();
-
-  std::thread asyncBottomEnvironmentMapThread;
-  void asyncBottomEnvironmentMapFunction();
 };

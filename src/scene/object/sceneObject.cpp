@@ -18,6 +18,15 @@ void SceneObject::displayObjectOptions() {
 void SceneObject::updateProperties() {
 }
 
+bool SceneObject::isDirty() const {
+  for (auto &&element : this->properties) {
+    if (element.second.get()->isValueChanged()) {
+      return true;
+    }
+  }
+  return false;
+}
+
 const of3dPrimitive &SceneObject::getPrimitive() const {
   return *this->primitive;
 }

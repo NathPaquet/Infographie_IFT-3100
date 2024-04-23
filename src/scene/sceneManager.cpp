@@ -73,7 +73,7 @@ void SceneManager::removeAllSelectedObjects() {
   this->selectedSceneObjects.clear();
 }
 
-void SceneManager::drawScene() {
+void SceneManager::drawScene() const {
   for (auto &&element : this->sceneObjects) {
     bool isSelected = std::find(this->selectedSceneObjects.begin(), this->selectedSceneObjects.end(), element.get()) != this->selectedSceneObjects.end();
     element.get()->draw(isSelected, this->isBoundingBoxEnabled, this->isObjectAxisEnabled);
@@ -125,6 +125,15 @@ void SceneManager::updateObjectProperties() {
   for (auto &&element : this->sceneObjects) {
     element->updateProperties();
   }
+}
+
+bool SceneManager::isSceneDirty() const {
+  for (auto &&element : this->sceneObjects) {
+    if (element->isDirty()) {
+      return true;
+    }
+  }
+  return false;
 }
 
 void SceneManager::toggleActivationBoundingBox() {
