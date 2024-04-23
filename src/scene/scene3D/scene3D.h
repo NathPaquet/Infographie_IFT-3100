@@ -11,6 +11,7 @@ public:
   void update() override;
   void drawScene() override;
   void drawSceneFromCamera(const glm::vec3 &cameraPosition);
+  void drawLowQualityFromCameraObject(const ofCamera &camera) const;
   inline void activateCameraMouseInput() {
     this->currentCamera->enableMouseInput();
   }
@@ -51,6 +52,8 @@ private:
   void ajustEnvironmentMapPicture(int faceIndex, ofImage &environmentMapImage);
   void drawReflectiveSphere(const glm::vec3 &cameraPosition);
   void drawRefractionSphere(const glm::vec3 &cameraPosition);
+
+  // DeferredRenderer deferredRenderer;
 
   Cubemap dynamicEnvironmentMap;
   bool isReflectionSphereEnabled{false};

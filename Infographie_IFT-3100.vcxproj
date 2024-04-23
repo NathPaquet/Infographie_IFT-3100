@@ -118,6 +118,7 @@
     <ClCompile Include="src\properties\propertiesDraw\FloatPropertyDrawer.cpp" />
     <ClCompile Include="src\properties\propertiesDraw\ImagePropertyDrawer.cpp" />
     <ClCompile Include="src\raycasting\ray.cpp" />
+    <ClCompile Include="src\renderer\lowQualityRenderer.cpp" />
     <ClCompile Include="src\scene\cubemap\cubemap.cpp" />
     <ClCompile Include="src\scene\cubemap\skybox.cpp" />
     <ClCompile Include="src\scene\object\object2D\spline\catmullRomSpline.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="src\properties\propertiesDraw\FloatPropertyDrawer.h" />
     <ClInclude Include="src\properties\propertiesDraw\ImagePropertyDrawer.h" />
     <ClInclude Include="src\raycasting\ray.h" />
+    <ClInclude Include="src\renderer\lowQualityRenderer.h" />
     <ClInclude Include="src\scene\cubemap\cubemap.h" />
     <ClInclude Include="src\scene\cubemap\skybox.h" />
     <ClInclude Include="src\scene\object\object2D\spline\catmullRomSpline.h" />

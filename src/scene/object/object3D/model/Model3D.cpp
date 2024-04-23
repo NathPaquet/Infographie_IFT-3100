@@ -52,7 +52,7 @@ ofVec3f Model3D::getBoundingBoxDimensions(const ofMesh &mesh) const {
       zExtremes.second->z - zExtremes.first->z);
 }
 
-void Model3D::drawAxis() {
+void Model3D::drawAxis() const {
   ofVec3f xAxis = this->primitive.get()->getXAxis();
   ofVec3f yAxis = this->primitive.get()->getYAxis();
   ofVec3f zAxis = this->primitive.get()->getZAxis();

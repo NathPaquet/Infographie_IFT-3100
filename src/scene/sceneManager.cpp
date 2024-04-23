@@ -121,6 +121,12 @@ void SceneManager::clearScene() {
   this->cameras.clear();
 }
 
+void SceneManager::updateObjectProperties() {
+  for (auto &&element : this->sceneObjects) {
+    element->updateProperties();
+  }
+}
+
 void SceneManager::toggleActivationBoundingBox() {
   this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
 }

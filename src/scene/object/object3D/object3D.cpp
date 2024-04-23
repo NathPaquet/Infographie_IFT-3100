@@ -8,10 +8,12 @@ Object3D::Object3D() {
   this->addProperty<float>(PROPERTY_ID::ANGLE_X, 0.f);
   this->addProperty<float>(PROPERTY_ID::ANGLE_Y, 0.f);
   this->addProperty<float>(PROPERTY_ID::ANGLE_Z, 0.f);
+
+  // Set default color
+  this->mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
 }
 
-void Object3D::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) {
-  this->updateProperties();
+void Object3D::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) const {
   ofPushStyle();
   if (isSelected) {
     ofSetColor(Constants::SELECTED_OBJECT_FRAME_COLOR);
@@ -30,13 +32,11 @@ void Object3D::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxis
   if (!this->getPropertyValue<bool>(PROPERTY_ID::SHOW_WIREFRAME)) {
     if (mTex.isAllocated()) {
       this->mTex.bind();
-      mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
       mMaterial.begin();
       primitive->draw();
       mMaterial.end();
       this->mTex.unbind();
     } else {
-      mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
       mMaterial.begin();
       primitive->draw();
       mMaterial.end();
@@ -50,7 +50,7 @@ void Object3D::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxis
   ofPopStyle();
 }
 
-void Object3D::drawAxis() {
+void Object3D::drawAxis() const {
   ofVec3f xAxis = this->primitive->getXAxis();
   ofVec3f yAxis = this->primitive->getYAxis();
   ofVec3f zAxis = this->primitive->getZAxis();
@@ -75,7 +75,7 @@ void Object3D::drawAxis() {
   ofPopStyle();
 }
 
-void Object3D::drawBoundingBox() {
+void Object3D::drawBoundingBox() const {
   ofPushStyle();
   ofNoFill();
   ofSetColor(ofColor::yellow);
@@ -140,5 +140,9 @@ void Object3D::updateProperties() {
     this->properties.at(PROPERTY_ID::ANGLE_X)->setChanged(false);
     this->properties.at(PROPERTY_ID::ANGLE_Y)->setChanged(false);
     this->properties.at(PROPERTY_ID::ANGLE_Z)->setChanged(false);
+  }
+  if (this->properties.at(PROPERTY_ID::COLOR)->isValueChanged()) {
+    this->mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
+    this->properties.at(PROPERTY_ID::COLOR)->setChanged(false);
   }
 }

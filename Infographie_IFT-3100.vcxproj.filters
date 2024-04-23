@@ -238,6 +238,9 @@
     <ClCompile Include="src\scene\object\object2D\spline\catmullRomSpline.cpp">
       <Filter>src\scene\object\object2D\spline</Filter>
     </ClCompile>
+    <ClCompile Include="src\renderer\lowQualityRenderer.cpp">
+      <Filter>src\renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -377,6 +380,9 @@
     </Filter>
     <Filter Include="src\scene\object\object2D\spline">
       <UniqueIdentifier>{319e5531-bf78-445d-bf6e-e37ba36ff792}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\renderer">
+      <UniqueIdentifier>{33f1e25c-0e41-40de-a2bf-fe1e0fadff9d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1045,6 +1051,9 @@
     </ClInclude>
     <ClInclude Include="src\scene\object\object2D\spline\catmullRomSpline.h">
       <Filter>src\scene\object\object2D\spline</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\lowQualityRenderer.h">
+      <Filter>src\renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

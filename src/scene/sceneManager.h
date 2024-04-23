@@ -26,6 +26,7 @@ public:
   void toggleActivationBoundingBox();
   void toggleActivationObjectAxis();
   void clearScene();
+  void updateObjectProperties();
 
 private:
   void addIfCamera(const SceneObject *sceneObject, const ElementType primitiveType);

@@ -79,6 +79,8 @@ void Scene3D::setup() {
 }
 
 void Scene3D::update() {
+  this->sceneManager->updateObjectProperties();
+
   this->computeRay(*this->currentCamera, this->ray);
   // TODO : Venir faire l'update de notre cubemap pour le reflection et la réfraction
 }
@@ -115,6 +117,9 @@ void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
       this->drawRefractionSphere(cameraPosition);
     }
   }
+}
+
+void Scene3D::drawLowQualityFromCameraObject(const ofCamera &camera) const {
 }
 
 void Scene3D::toggleProjectionMode() {

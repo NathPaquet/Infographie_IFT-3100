@@ -7,7 +7,7 @@
 class SceneObject {
 public:
   SceneObject();
-  virtual void draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) = 0;
+  virtual void draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) const = 0;
   const of3dPrimitive &getPrimitive() const;
   const ofVec3f &getPosition() const;
   virtual void setPosition(ofVec3f vec);
@@ -15,9 +15,10 @@ public:
   virtual void stopDraggingObject();
   std::map<PROPERTY_ID, std::unique_ptr<PropertyBase>> &getProperties();
   virtual void displayObjectOptions();
+  virtual void updateProperties();
 
   template<typename T>
-  T getPropertyValue(const PROPERTY_ID &propertyName) {
+  const T &getPropertyValue(const PROPERTY_ID &propertyName) const {
     return dynamic_cast<Property<T> *>(this->properties.at(propertyName).get())->getValue();
   }
 
@@ -27,9 +28,8 @@ public:
   }
 
 protected:
-  virtual void updateProperties();
-  virtual void drawAxis() = 0;
-  virtual void drawBoundingBox() = 0;
+  virtual void drawAxis() const = 0;
+  virtual void drawBoundingBox() const = 0;
 
   std::unique_ptr<of3dPrimitive> primitive;
   std::map<PROPERTY_ID, std::unique_ptr<PropertyBase>> properties;
