@@ -42,9 +42,11 @@ void Light::updateLight() {
 
   auto &orientation = this->primitive.get()->getOrientationQuat();
   light.setOrientation(orientation);
+}
 
+void Light::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) const {
   ofPushStyle();
-  ofSetColor(color);
+  ofSetColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
   light.draw();
   ofPopStyle();
 }

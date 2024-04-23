@@ -62,6 +62,10 @@ void Scene3DEventHandler::mousePressed(ofMouseEventArgs &mouseArgs) {
 }
 
 void Scene3DEventHandler::mouseReleased(ofMouseEventArgs &mouseArgs) {
+  if (this->cursor->getCursorMode() != CursorMode::CAMERA_MOVING) {
+    this->scene3D->updateEnvironnementCubmap();
+  }
+
   if (this->isMouseInScene()) {
     if (mouseArgs.button == OF_MOUSE_BUTTON_LEFT) {
       this->leftMouseButtonReleased();
@@ -77,7 +81,8 @@ void Scene3DEventHandler::mousePressedAndScrolled(ofMouseEventArgs &mouseArgs) {
 
 void Scene3DEventHandler::keyPressed(ofKeyEventArgs &keyArgs) {
   if (keyArgs.key == OF_KEY_RIGHT_SHIFT) {
-    this->scene3D->updateEnvironmentMap();
+    // TODO : REMOVE THIS
+    // this->scene3D->updateEnvironmentMap();
   }
 }
 

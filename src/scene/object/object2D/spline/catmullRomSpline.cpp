@@ -34,8 +34,7 @@ void CatmullRomSpline::drawPreview(const glm::vec3 &startPoint, const glm::vec3 
   }
 }
 
-void CatmullRomSpline::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) {
-  this->updateProperties();
+void CatmullRomSpline::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxisEnable) const {
   ofPushStyle();
   ofSetColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
   for (int i = 0; i < curvePoints.size() - 1; ++i) {
@@ -193,13 +192,13 @@ void CatmullRomSpline::createMeshFromControlPoints() {
   this->position = this->controlPoints[currentSelectedPointIndex];
 }
 
-void CatmullRomSpline::drawAxis() {
+void CatmullRomSpline::drawAxis() const {
   // Not used for this kind of object
   // Smell that the axis should be a property of the object and not a method parameter
   // Same thing for the bounding box
 }
 
-void CatmullRomSpline::drawBoundingBox() {
+void CatmullRomSpline::drawBoundingBox() const {
   ofPushStyle();
   ofNoFill();
   ofSetColor(ofColor::yellow);

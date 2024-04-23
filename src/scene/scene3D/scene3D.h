@@ -3,11 +3,13 @@
 #include "scene.h"
 
 #include <lights/types/AmbientLight.h>
+#include <renderer/lowQualityRenderer.h>
 
 class Scene3D : public Scene {
 public:
   Scene3D(std::unique_ptr<SceneManager> sceneManager):
-      Scene(std::move(sceneManager)) {}
+      Scene(std::move(sceneManager)), lowQualityRenderer(this->sceneManager.get(), &this->skybox) {}
+  ~Scene3D();
   void setup() override;
   void update() override;
   void drawScene() override;
@@ -18,6 +20,7 @@ public:
   inline void deactivateCameraMouseInput() {
     this->currentCamera->disableMouseInput();
   }
+  void updateEnvironnementCubmap();
   void toggleProjectionMode();
   void toggleSkyboxActivation();
   void loadSkybox(const string &texturePath);
@@ -28,7 +31,6 @@ public:
   void moveObjectWithScrollOnly(float scrollAmount);
   void releaseDraggedObject();
   void drawObjectPreview();
-  void updateEnvironmentMap();
   void deactivateCenterSphere();
   void activateReflectionSphere();
   void activateRefractionSphere();
@@ -43,7 +45,6 @@ private:
   std::unique_ptr<ofEasyCam> orthographicCamera;
   ofEasyCam *currentCamera;
   Skybox skybox;
-  bool isSkyboxEnabled{true};
   bool isSkyboxLoaded{false};
   Ray ray;
   AmbientLight ambientLight;
@@ -51,15 +52,13 @@ private:
 
   void setupPerspectiveCamera();
   void setupOrthographicCamera();
-  void configureCameraForFace(int faceIndex);
-  void ajustEnvironmentMapPicture(int faceIndex, ofImage &environmentMapImage);
   void drawReflectiveSphere(const glm::vec3 &cameraPosition);
   void drawRefractionSphere(const glm::vec3 &cameraPosition);
 
-  Cubemap dynamicEnvironmentMap;
+  LowQualityRenderer lowQualityRenderer;
+
   bool isReflectionSphereEnabled{false};
   ofShader reflectionShader;
   bool isRefractionSphereEnabled{false};
   ofShader refractionShader;
-  ofEasyCam cameraDynamicEnvironmentMap;
 };

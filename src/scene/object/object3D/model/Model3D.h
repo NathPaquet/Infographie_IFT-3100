@@ -11,6 +11,6 @@ private:
   float initialScaleFactor;
   void set_size(const float size);
   ofVec3f getBoundingBoxDimensions(const ofMesh &mesh) const;
-  void drawAxis() override;
+  void drawAxis() const override;
   void updateProperties() override;
 };

@@ -12,6 +12,5 @@ int main() {
 
   settings.setSize(1280, 720);
   ofCreateWindow(settings);
-
   ofRunApp(new ofApp());
 }

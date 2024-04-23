@@ -3,5 +3,5 @@
 
 class TexturePicker {
 public:
-  const TexturePack *TexturePicker::drawTexturePicker(const TexturePack *currentTexture);
+  const TexturePack *TexturePicker::drawTexturePicker(bool &changed, const TexturePack *currentTexture);
 };

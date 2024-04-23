@@ -3,6 +3,9 @@
 #include "constants.h"
 #include "utils/LoadingScreen.h"
 
+Scene3D::~Scene3D() {
+}
+
 void Scene3D::setup() {
   this->sphere.enableTextures();
   this->ray = Ray();
@@ -26,23 +29,18 @@ void Scene3D::setup() {
 
   // Set up refraction shader
   this->refractionShader.load("shaders/refractionShader.vert", "shaders/refractionShader.frag");
-
-  // Set up dynamic environment map camera
-  this->cameraDynamicEnvironmentMap.disableMouseInput();
-  this->cameraDynamicEnvironmentMap.setPosition(0, 0, 0);
-  this->cameraDynamicEnvironmentMap.setNearClip(20.0);
-  this->cameraDynamicEnvironmentMap.setFarClip(10000);
-  this->cameraDynamicEnvironmentMap.setFov(90);
 }
 
 void Scene3D::update() {
+  this->sceneManager->updateObjectProperties();
+
   this->computeRay(*this->currentCamera, this->ray);
 }
 
 void Scene3D::drawScene() {
   this->currentCamera->begin();
 
-  if (this->isSkyboxEnabled && !this->skybox.isSkyboxLoaded()) {
+  if (this->skybox.isEnabled() && !this->skybox.isSkyboxLoaded()) {
     string message = "Skybox texture not loaded yet";
     LoadingScreen::drawLoadingScreen(message);
   }
@@ -53,7 +51,7 @@ void Scene3D::drawScene() {
 }
 
 void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
-  if (this->isSkyboxEnabled && this->skybox.isSkyboxLoaded() && this->currentCamera == this->perspectiveCamera.get()) {
+  if (this->skybox.isEnabled() && this->skybox.isSkyboxLoaded() && this->currentCamera == this->perspectiveCamera.get()) {
     this->skybox.draw(Constants::DEFAULT_SKYBOX_SIZE, cameraPosition);
   }
 
@@ -73,6 +71,10 @@ void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
   }
 }
 
+void Scene3D::updateEnvironnementCubmap() {
+  this->lowQualityRenderer.updateEnvironmentCubemap();
+}
+
 void Scene3D::toggleProjectionMode() {
   if (this->currentCamera->getOrtho()) {
     this->perspectiveCamera.get()->enableMouseInput();
@@ -86,7 +88,7 @@ void Scene3D::toggleProjectionMode() {
 }
 
 void Scene3D::toggleSkyboxActivation() {
-  this->isSkyboxEnabled = !this->isSkyboxEnabled;
+  this->skybox.toggleSkyboxActivation();
 }
 
 void Scene3D::loadSkybox(const string &skyboxTexturePath) {
@@ -194,36 +196,6 @@ void Scene3D::setupOrthographicCamera() {
   this->orthographicCamera.get()->setFarClip(1000000);
 }
 
-void Scene3D::updateEnvironmentMap() {
-  std::array<ofImage, 6> cubemapImages;
-  for (int i = 0; i < 6; i++) {
-    ofClear(0, 0, 0, 0);
-
-    configureCameraForFace(i);
-
-    this->cameraDynamicEnvironmentMap.begin();
-
-    // Display the skybox
-    if (this->isSkyboxEnabled) {
-      this->skybox.draw(10000, this->cameraDynamicEnvironmentMap.getGlobalPosition());
-    }
-
-    // Display the scene
-    this->sceneManager.get()->drawScene();
-
-    this->cameraDynamicEnvironmentMap.end();
-
-    // Save the image
-    int size = min(ofGetWidth(), ofGetHeight());
-    cubemapImages[i].grabScreen((ofGetWidth() - size) / 2, (ofGetHeight() - size) / 2, size, size);
-    cubemapImages[i].setImageType(OF_IMAGE_COLOR);
-    cubemapImages[i].getPixels().swapRgb();
-    ajustEnvironmentMapPicture(i, cubemapImages[i]);
-  }
-  this->dynamicEnvironmentMap.setCubemapImage(cubemapImages[0], cubemapImages[1], cubemapImages[2], cubemapImages[3], cubemapImages[4], cubemapImages[5]);
-  this->dynamicEnvironmentMap.enableCubemapTextures();
-}
-
 void Scene3D::deactivateCenterSphere() {
   this->isReflectionSphereEnabled = false;
   this->isRefractionSphereEnabled = false;
@@ -239,31 +211,6 @@ void Scene3D::activateRefractionSphere() {
   this->isReflectionSphereEnabled = false;
 }
 
-void Scene3D::ajustEnvironmentMapPicture(int faceIndex, ofImage &environmentMapImage) {
-  switch (faceIndex) {
-    case 0: // Droite
-      environmentMapImage.mirror(false, true);
-      break;
-    case 1: // Gauche
-      environmentMapImage.mirror(false, true);
-      break;
-    case 2: // Haut
-      environmentMapImage.mirror(true, false);
-      break;
-    case 3: // Bas
-      environmentMapImage.mirror(true, false);
-      break;
-    case 4: // Devant
-      environmentMapImage.mirror(false, true);
-      break;
-    case 5: // Derrière
-      environmentMapImage.mirror(false, true);
-      break;
-    default:
-      break;
-  }
-}
-
 void Scene3D::drawReflectiveSphere(const glm::vec3 &cameraPosition) {
   // Render reflective object with reflective shader and environment map
   this->reflectionShader.begin();
@@ -271,7 +218,7 @@ void Scene3D::drawReflectiveSphere(const glm::vec3 &cameraPosition) {
   this->reflectionShader.setUniform3f("cameraPosition", cameraPosition);
   this->reflectionShader.setUniform1i("environmentMap", 0);
 
-  glBindTexture(GL_TEXTURE_CUBE_MAP, this->dynamicEnvironmentMap.getTextureObjectID());
+  glBindTexture(GL_TEXTURE_CUBE_MAP, this->lowQualityRenderer.getCubemapTextureID());
 
   // Set the box resolution to 100x100x100 for better reflection quality
   ofSetBoxResolution(100, 100, 100);
@@ -290,7 +237,7 @@ void Scene3D::drawRefractionSphere(const glm::vec3 &cameraPosition) {
   this->refractionShader.setUniform3f("cameraPosition", cameraPosition);
   this->refractionShader.setUniform1i("environmentMap", 0);
 
-  glBindTexture(GL_TEXTURE_CUBE_MAP, this->dynamicEnvironmentMap.getTextureObjectID());
+  glBindTexture(GL_TEXTURE_CUBE_MAP, this->lowQualityRenderer.getCubemapTextureID());
 
   // Set the box resolution to 100x100x100 for better reflection quality
   ofSetSphereResolution(100);
@@ -300,29 +247,4 @@ void Scene3D::drawRefractionSphere(const glm::vec3 &cameraPosition) {
   glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
   this->refractionShader.end();
-}
-
-void Scene3D::configureCameraForFace(int faceIndex) {
-  switch (faceIndex) {
-    case 0: // Droite
-      this->cameraDynamicEnvironmentMap.lookAt(this->cameraDynamicEnvironmentMap.getGlobalPosition() + glm::vec3(1, 0, 0));
-      break;
-    case 1: // Gauche
-      this->cameraDynamicEnvironmentMap.lookAt(this->cameraDynamicEnvironmentMap.getGlobalPosition() + glm::vec3(-1, 0, 0));
-      break;
-    case 2: // Haut
-      this->cameraDynamicEnvironmentMap.lookAt(this->cameraDynamicEnvironmentMap.getGlobalPosition() + glm::vec3(0, 1, 0));
-      break;
-    case 3: // Bas
-      this->cameraDynamicEnvironmentMap.lookAt(this->cameraDynamicEnvironmentMap.getGlobalPosition() + glm::vec3(0, -1, 0));
-      break;
-    case 4: // Devant
-      this->cameraDynamicEnvironmentMap.lookAt(this->cameraDynamicEnvironmentMap.getGlobalPosition() + glm::vec3(0, 0, 1));
-      break;
-    case 5: // Derrière
-      this->cameraDynamicEnvironmentMap.lookAt(this->cameraDynamicEnvironmentMap.getGlobalPosition() + glm::vec3(0, 0, -1));
-      break;
-    default:
-      break;
-  }
 }
