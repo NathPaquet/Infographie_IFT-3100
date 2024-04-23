@@ -6,7 +6,7 @@
 Object3D::Object3D() {
   this->addProperty<bool>(PROPERTY_ID::SHOW_WIREFRAME, false);
   this->addProperty<ofImage>(PROPERTY_ID::IMAGE_IMPORT, ofImage());
-  this->addProperty<const TexturePack *>(PROPERTY_ID::TEXTURE, TextureRepository::getTexture("Snow_03"));
+  this->addProperty<const TexturePack *>(PROPERTY_ID::TEXTURE, nullptr);
   this->addProperty<float>(PROPERTY_ID::ANGLE_X, 0.f);
   this->addProperty<float>(PROPERTY_ID::ANGLE_Y, 0.f);
   this->addProperty<float>(PROPERTY_ID::ANGLE_Z, 0.f);
