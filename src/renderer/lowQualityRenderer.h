@@ -1,5 +1,6 @@
 #pragma once
 
+#include "cubemap/skybox.h"
 #include "ofThread.h"
 
 #include <cubemap/cubemap.h>
@@ -8,13 +9,15 @@
 class LowQualityRenderer {
 public:
   LowQualityRenderer() = default;
-  LowQualityRenderer(const SceneManager *sceneManager);
+  LowQualityRenderer(const SceneManager *sceneManager, const Skybox *skybox);
 
   void updateEnvironmentCubemap();
   const unsigned int getCubemapTextureID() const;
 
 private:
   const SceneManager *sceneManager{nullptr};
+  const Skybox *skybox{nullptr};
+
   // ofGLProgrammableRenderer renderer;
 
   Cubemap environmentCubemap;

@@ -127,15 +127,6 @@ void SceneManager::updateObjectProperties() {
   }
 }
 
-bool SceneManager::isSceneDirty() const {
-  for (auto &&element : this->sceneObjects) {
-    if (element->isDirty()) {
-      return true;
-    }
-  }
-  return false;
-}
-
 void SceneManager::toggleActivationBoundingBox() {
   this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
 }

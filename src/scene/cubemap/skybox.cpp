@@ -14,7 +14,7 @@ void Skybox::loadTexture(const string &texturePath) {
   this->cubemapTexture.startThread();
 }
 
-void Skybox::draw(const float &size, const glm::vec3 &cameraPosition) {
+void Skybox::draw(const float &size, const glm::vec3 &cameraPosition) const {
   if (this->isCubemapLoaded) {
     skyboxShader.begin();
     skyboxShader.setUniform1i("skybox", 0);
@@ -40,6 +40,14 @@ bool Skybox::isSkyboxLoaded() {
   return this->isCubemapLoaded;
 }
 
+bool Skybox::isEnabled() const {
+  return this->isSkyboxEnabled;
+}
+
 const unsigned int Skybox::getTextureObjectID() const {
   return this->cubemapTexture.getTextureObjectID();
+}
+
+void Skybox::toggleSkyboxActivation() {
+  this->isSkyboxEnabled = !this->isSkyboxEnabled;
 }

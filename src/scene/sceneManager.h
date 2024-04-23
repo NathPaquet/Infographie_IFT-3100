@@ -27,7 +27,6 @@ public:
   void toggleActivationObjectAxis();
   void clearScene();
   void updateObjectProperties();
-  bool isSceneDirty() const;
 
 private:
   void addIfCamera(const SceneObject *sceneObject, const ElementType primitiveType);

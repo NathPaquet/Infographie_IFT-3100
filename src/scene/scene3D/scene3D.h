@@ -7,7 +7,7 @@
 class Scene3D : public Scene {
 public:
   Scene3D(std::unique_ptr<SceneManager> sceneManager):
-      Scene(std::move(sceneManager)), lowQualityRenderer(this->sceneManager.get()) {}
+      Scene(std::move(sceneManager)), lowQualityRenderer(this->sceneManager.get(), &this->skybox) {}
   ~Scene3D();
   void setup() override;
   void update() override;
@@ -20,6 +20,7 @@ public:
   inline void deactivateCameraMouseInput() {
     this->currentCamera->disableMouseInput();
   }
+  void updateEnvironnementCubmap();
   void toggleProjectionMode();
   void toggleSkyboxActivation();
   void loadSkybox(const string &texturePath);
@@ -42,14 +43,12 @@ private:
   std::unique_ptr<ofEasyCam> orthographicCamera;
   ofEasyCam *currentCamera;
   Skybox skybox;
-  bool isSkyboxEnabled{true};
   bool isSkyboxLoaded{false};
   Ray ray;
   ofSpherePrimitive sphere = ofSpherePrimitive(20, 60, OF_PRIMITIVE_TRIANGLES);
 
   void setupPerspectiveCamera();
   void setupOrthographicCamera();
-
   void drawReflectiveSphere(const glm::vec3 &cameraPosition);
   void drawRefractionSphere(const glm::vec3 &cameraPosition);
 

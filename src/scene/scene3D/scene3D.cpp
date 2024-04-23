@@ -31,25 +31,23 @@ void Scene3D::setup() {
 }
 
 void Scene3D::update() {
-  bool shouldUpdateEnvironmentMap = this->sceneManager->isSceneDirty();
-
   this->sceneManager->updateObjectProperties();
 
   this->computeRay(*this->currentCamera, this->ray);
 
-  if (this->currentCamera == this->perspectiveCamera.get()) {
-    if (this->isReflectionSphereEnabled || this->isRefractionSphereEnabled) {
-      if (shouldUpdateEnvironmentMap) {
-        this->lowQualityRenderer.updateEnvironmentCubemap();
-      }
-    }
-  }
+  // if (this->currentCamera == this->perspectiveCamera.get()) {
+  //   if (this->isReflectionSphereEnabled || this->isRefractionSphereEnabled) {
+  //     if (shouldUpdateEnvironmentMap) {
+  //       updateEnvironnementCubmap();
+  //     }
+  //   }
+  // }
 }
 
 void Scene3D::drawScene() {
   this->currentCamera->begin();
 
-  if (this->isSkyboxEnabled && !this->skybox.isSkyboxLoaded()) {
+  if (this->skybox.isEnabled() && !this->skybox.isSkyboxLoaded()) {
     string message = "Skybox texture not loaded yet";
     LoadingScreen::drawLoadingScreen(message);
   }
@@ -60,7 +58,7 @@ void Scene3D::drawScene() {
 }
 
 void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
-  if (this->isSkyboxEnabled && this->skybox.isSkyboxLoaded() && this->currentCamera == this->perspectiveCamera.get()) {
+  if (this->skybox.isEnabled() && this->skybox.isSkyboxLoaded() && this->currentCamera == this->perspectiveCamera.get()) {
     this->skybox.draw(Constants::DEFAULT_SKYBOX_SIZE, cameraPosition);
   }
 
@@ -83,6 +81,10 @@ void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
 void Scene3D::drawLowQualityFromCameraObject(const ofCamera &camera) const {
 }
 
+void Scene3D::updateEnvironnementCubmap() {
+  this->lowQualityRenderer.updateEnvironmentCubemap();
+}
+
 void Scene3D::toggleProjectionMode() {
   if (this->currentCamera->getOrtho()) {
     this->perspectiveCamera.get()->enableMouseInput();
@@ -96,7 +98,7 @@ void Scene3D::toggleProjectionMode() {
 }
 
 void Scene3D::toggleSkyboxActivation() {
-  this->isSkyboxEnabled = !this->isSkyboxEnabled;
+  this->skybox.toggleSkyboxActivation();
 }
 
 void Scene3D::loadSkybox(const string &skyboxTexturePath) {

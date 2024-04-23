@@ -7,8 +7,9 @@ constexpr int BOTTOM_FACE_INDEX = 3;
 constexpr int FRONT_FACE_INDEX = 4;
 constexpr int BACK_FACE_INDEX = 5;
 
-LowQualityRenderer::LowQualityRenderer(const SceneManager *sceneManager) {
+LowQualityRenderer::LowQualityRenderer(const SceneManager *sceneManager, const Skybox *skybox) {
   this->sceneManager = sceneManager;
+  this->skybox = skybox;
 
   this->setupEnvironmentMapCameras();
 }
@@ -20,9 +21,9 @@ void LowQualityRenderer::updateEnvironmentCubemap() {
     this->environmentMapCameras[i].begin();
 
     // Display the skybox
-    // if (this->isSkyboxEnabled) {
-    //  this->skybox.draw(10000, this->cameraDynamicEnvironmentMap.getGlobalPosition());
-    //}
+    if (this->skybox->isEnabled()) {
+      this->skybox->draw(10000, this->environmentMapCameras[0].getGlobalPosition());
+    }
 
     // Display the scene
     this->sceneManager->drawScene();
