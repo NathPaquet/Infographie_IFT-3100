@@ -13,6 +13,7 @@ void Scene2D::setup() {
 
 void Scene2D::update() {
   this->computeRay(this->camera, this->ray);
+  this->sceneManager->updateObjectProperties();
 }
 
 void Scene2D::drawScene() {
