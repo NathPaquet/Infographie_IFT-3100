@@ -10,11 +10,17 @@ Light::Light(const glm::vec3 &position) {
   this->primitive = std::make_unique<ofSpherePrimitive>(sphere);
 
   setPosition(position);
+  setAttenuation();
   light.enable();
 }
 
 Light::~Light() {
   light.disable();
+}
+
+void Light::setAttenuation() {
+  const auto &attenuation = this->getPropertyValue<float>(PROPERTY_ID::ATTENUATION);
+  light.setAttenuation(attenuation);
 }
 
 void Light::updateProperties() {
@@ -39,8 +45,8 @@ void Light::updateLight() {
   }
 
   if (this->properties.at(PROPERTY_ID::ATTENUATION)->isValueChanged()) {
-    const auto attenuation = this->getPropertyValue<float>(PROPERTY_ID::ATTENUATION);
-    light.setAttenuation(attenuation);
+    setAttenuation();
+    this->properties.at(PROPERTY_ID::ATTENUATION)->setChanged(false);
   }
 
   auto &position = this->primitive.get()->getPosition();
