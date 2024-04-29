@@ -2,12 +2,8 @@
 
 #include "ImHelpers.h"
 #include "constants.h"
-#include "of3dUtils.h"
-#include "scene/object/object3D/primitive/Planet.h"
 #include "scene/object/sceneObjectFactory.h"
-#include "utils/loadingScreen.h"
 
-#include <iostream>
 #include <textures/TextureRepository.h>
 
 //--------------------------------------------------------------
@@ -51,6 +47,22 @@ void ofApp::setup() {
   loadDefaultTextures();
 }
 
+void ofApp::drawTextureEditor() {
+  if (this->shouldDisplayEditor) {
+    ImGui::SetNextWindowPos(ImVec2(ofGetWindowPositionX() + ofGetWidth() / 2 - Constants::TEXTURE_EDITOR_WIDTH / 2, ofGetWindowPositionY() + ofGetHeight() / 2 - Constants::TEXTURE_EDITOR_HEIGHT / 2), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowSize(ImVec2(Constants::TEXTURE_EDITOR_WIDTH, Constants::TEXTURE_EDITOR_HEIGHT), ImGuiCond_FirstUseEver);
+    bool is_open = true;
+    if (ImGui::Begin("Texture Editor", &is_open, ImGuiWindowFlags_NoCollapse)) {
+      ImGui::Text("Texture Editor");
+      this->textureEditor.drawTextureEditor();
+    }
+    if (!is_open) {
+      this->shouldDisplayEditor = false;
+    }
+    ImGui::End();
+  }
+}
+
 //--------------------------------------------------------------
 void ofApp::exit() {
   this->gui.exit();
@@ -67,6 +79,9 @@ void ofApp::draw() {
   this->cursor->drawCursor(ofGetMouseX(), ofGetMouseY());
 
   updateKeyboardShortcuts();
+
+  // Draw texture editor
+  drawTextureEditor();
 
   // Draw properties panel menu
   drawPropertiesPanel();
@@ -254,10 +269,17 @@ void ofApp::drawSceneTopMenu() {
   ImGui::PopStyleColor();
 }
 
+void ofApp::popTextureEditor() {
+  this->shouldDisplayEditor = true;
+}
+
 void ofApp::createViewMenu() {
   if (ImGui::BeginMenu("View")) {
     if (ImGui::MenuItem(this->isScene2D ? "Display 3D Scene" : "Display 2D Scene", "Tab")) {
       switchBetweenScenes();
+    }
+    if (ImGui::MenuItem("Display Texture Editor")) {
+      popTextureEditor();
     }
     if (this->isScene2D) {
       ImGui::SeparatorText("2D scene options");
@@ -329,7 +351,7 @@ void ofApp::loadDefaultTextures() {
   TextureRepository::configureTextureWithShader("Mud_cracked_dry_03", shader);
 }
 
-void ofApp::createSkyboxTopMenu() {
+void ofApp::createSkyboxTopMenu() const {
   if (ImGui::BeginMenu("Skybox")) {
     static int selected = 0;
     ImGui::SeparatorText("Skybox options");
@@ -430,7 +452,7 @@ void ofApp::updateKeyboardShortcuts() {
   }
 }
 
-void ofApp::generateRandomGalaxy(int nbElements) {
+void ofApp::generateRandomGalaxy(int nbElements) const {
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_real_distribution<float> dis(-500, 500);
@@ -445,7 +467,7 @@ void ofApp::generateRandomGalaxy(int nbElements) {
   }
 }
 
-void ofApp::generateCornellBox(float size) {
+void ofApp::generateCornellBox(float size) const {
   this->currentScene->getSceneManager()->clearScene();
   auto offset = glm::vec3(size / 2, size / 2, size / 2);
   this->currentScene->getSceneManager()->addElement(glm::vec3(size, 0, 0), glm::vec3(size, 0, 0) + offset, ElementType::CUBIC);
@@ -478,4 +500,30 @@ void ofApp::switchBetweenProjections() {
   this->isViewOrtho = !this->isViewOrtho;
   assert(this->currentScene != nullptr && this->currentScene == this->scene3D.get());
   this->scene3D.get()->toggleProjectionMode();
+}
+
+void ofApp::generateDisplacementMapping() {
+  // Loop through each pixel in the image
+  ofImage displacementMap;
+
+  int width = 1024;
+  int height = 1024;
+  ofSetRandomSeed(42);
+
+  displacementMap.allocate(width, height, OF_IMAGE_GRAYSCALE);
+  for (int y = 0; y < displacementMap.getHeight(); y++) {
+    for (int x = 0; x < displacementMap.getWidth(); x++) {
+      // Generate a value for displacement based on Perlin noise
+      float noiseValue = ofNoise(x * 0.01, y * 0.01);
+
+      // Map the noise value to the grayscale range (0-255)
+      int pixelValue = ofMap(noiseValue, 0, 1, 0, 255);
+
+      // Set the pixel value in the displacement map
+      displacementMap.setColor(x, y, ofColor(pixelValue));
+    }
+  }
+
+  // Update the image with the modified pixel values
+  displacementMap.update();
 }

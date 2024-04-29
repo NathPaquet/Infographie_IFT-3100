@@ -152,6 +152,7 @@
     <ClCompile Include="src\scene\scene3D\scene3DEventHandler.cpp" />
     <ClCompile Include="src\scene\sceneGraph.cpp" />
     <ClCompile Include="src\scene\sceneManager.cpp" />
+    <ClCompile Include="src\textures\TextureEditor.cpp" />
     <ClCompile Include="src\textures\TexturePicker.cpp" />
     <ClCompile Include="src\textures\TextureRepository.cpp" />
     <ClCompile Include="src\utils\Filtering.cpp" />
@@ -243,6 +244,7 @@
     <ClInclude Include="src\scene\scene3D\scene3DEventHandler.h" />
     <ClInclude Include="src\scene\sceneGraph.h" />
     <ClInclude Include="src\scene\sceneManager.h" />
+    <ClInclude Include="src\textures\TextureEditor.h" />
     <ClInclude Include="src\textures\TexturePack.h" />
     <ClInclude Include="src\textures\TexturePicker.h" />
     <ClInclude Include="src\textures\TextureRepository.h" />
