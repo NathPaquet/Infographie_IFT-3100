@@ -4,6 +4,7 @@
 
 Light::Light(const glm::vec3 &position) {
   this->addProperty<float>(PROPERTY_ID::RADIUS, Constants::DEFAULT_SIZE);
+  this->addProperty<float>(PROPERTY_ID::ATTENUATION, Constants::MAX_ATTENUATION_VALUE);
 
   auto sphere = ofSpherePrimitive(initialPrimitiveRadius, 20, OF_PRIMITIVE_TRIANGLES);
   this->primitive = std::make_unique<ofSpherePrimitive>(sphere);
@@ -11,11 +12,17 @@ Light::Light(const glm::vec3 &position) {
   auto &color = this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR);
   light.setDiffuseColor(color);
   setPosition(position);
+  setAttenuation();
   light.enable();
 }
 
 Light::~Light() {
   light.disable();
+}
+
+void Light::setAttenuation() {
+  const auto &attenuation = this->getPropertyValue<float>(PROPERTY_ID::ATTENUATION);
+  light.setAttenuation(attenuation);
 }
 
 void Light::updateProperties() {
@@ -38,6 +45,11 @@ void Light::updateLight() {
     auto &color = this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR);
     light.setDiffuseColor(color);
     // DO NOT set changed to false because 3dObject have to update the color too
+  }
+
+  if (this->properties.at(PROPERTY_ID::ATTENUATION)->isValueChanged()) {
+    setAttenuation();
+    this->properties.at(PROPERTY_ID::ATTENUATION)->setChanged(false);
   }
 
   auto &position = this->primitive.get()->getPosition();

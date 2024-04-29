@@ -11,6 +11,7 @@ private:
   const float proportionToDraw = 3 / 16.f;
   const float initialPrimitiveRadius = 20 * proportionToDraw;
 
+  void setAttenuation();
   void updateProperties() override;
   void updateLight();
   float getScale(float radius) const;
