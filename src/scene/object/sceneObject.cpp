@@ -37,7 +37,3 @@ void SceneObject::setDraggingPositionOnObject(ofVec3f vec) {
 
 void SceneObject::stopDraggingObject() {
 }
-
-void SceneObject::setTexture(const TexturePack *texture) {
-  this->texture = texture;
-}

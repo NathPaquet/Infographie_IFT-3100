@@ -12,16 +12,18 @@ void TextureEditor::displayEditorOptions() {
   ImGui::Checkbox("Grey", &hasGrey);
 
   if (ImGui::Button("Apply", ImVec2(100.f, 30.f))) {
+    auto &id = currentTexture->packId;
+
     if (hasBlur) {
-      TextureRepository::setTextureDiffuseMap(Filtering::applyBlur, currentTexture);
+      TextureRepository::setTextureDiffuseMap(Filtering::applyBlur, id);
     }
 
     if (hasSharpen) {
-      TextureRepository::setTextureDiffuseMap(Filtering::applySharpen, currentTexture);
+      TextureRepository::setTextureDiffuseMap(Filtering::applySharpen, id);
     }
 
     if (hasGrey) {
-      TextureRepository::setTextureDiffuseMap(Filtering::applyGrey, currentTexture);
+      TextureRepository::setTextureDiffuseMap(Filtering::applyGrey, id);
     }
   }
 
