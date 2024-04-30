@@ -268,6 +268,9 @@
     <ClCompile Include="src\renderer\lowQualityRenderer.cpp">
       <Filter>src\renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\textures\TextureEditor.cpp">
+      <Filter>src\textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -1120,6 +1123,9 @@
     </ClInclude>
     <ClInclude Include="src\renderer\lowQualityRenderer.h">
       <Filter>src\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\textures\TextureEditor.h">
+      <Filter>src\textures</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

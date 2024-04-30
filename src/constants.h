@@ -9,6 +9,8 @@ namespace Constants {
   constexpr float GRAPH_SCENE_BUTTON_HEIGHT = 30.0f;
   constexpr float DEFAULT_SIZE = 20.0f;
   constexpr float DEFAULT_SKYBOX_SIZE = 100.0f;
+  constexpr float TEXTURE_EDITOR_WIDTH = 500.0f;
+  constexpr float TEXTURE_EDITOR_HEIGHT = 500.0f;
 
   // COLORS
   constexpr ImColor MENU_BAR_BACKGROUND_COLOR = ImColor(51, 56, 68, 255);
