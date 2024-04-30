@@ -26,3 +26,11 @@ const TexturePack *TextureRepository::getTexture(const std::string &packId) {
   }
   return it->get();
 }
+
+void TextureRepository::setTextureDiffuseMap(std::function<void(ofTexture &)> callback, const TexturePack *texture) {
+  auto &textureDiffuseMap = texture->textureDiffuseMap;
+  auto &id = texture->packId;
+
+  auto it = std::find_if(textures.begin(), textures.end(), [&](auto &&element) { return element->packId == id; });
+  callback(it->get()->textureDiffuseMap);
+}

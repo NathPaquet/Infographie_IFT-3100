@@ -11,4 +11,8 @@ public:
 private:
   TexturePicker texturePicker;
   const TexturePack *currentTexture{nullptr};
+
+  bool hasBlur{false};
+  bool hasSharpen{false};
+  bool hasGrey{false};
 };

@@ -15,4 +15,5 @@ public:
 
 private:
   static void setTextureDisplacementMap();
+  static void setTextureDiffuseMap(std::function<void(ofTexture &)> callback, const TexturePack *texture);
 };

@@ -16,6 +16,16 @@ void TexturePack::loadSingleImage(const ofImage &image, const std::string &id) {
   }
 }
 
+void TexturePack::setDiffuseMap(ofTexture &texture) {
+  /*textureDiffuseMap.allocate(texture.getWidth(), texture.getHeight(), texture.getTextureData().glInternalFormat);
+  configureTexture(texture);*/
+
+  textureDiffuseMap = texture;
+  if (textureDiffuseMap.isAllocated()) {
+    configureTexture(textureDiffuseMap);
+  }
+}
+
 bool TexturePack::load(const std::string &packName) {
   this->packId = packName;
   std::string filename = ofToLower(packName);

@@ -6,7 +6,6 @@
 
 void ImagePropertyDrawer::draw(std::vector<PropertyBase *> &objectsProperty) {
   drawImport(objectsProperty);
-  drawFiltering(objectsProperty);
 }
 
 void ImagePropertyDrawer::drawImport(const std::vector<PropertyBase *> &objectsProperty) {
@@ -23,29 +22,4 @@ void ImagePropertyDrawer::drawImport(const std::vector<PropertyBase *> &objectsP
       property->setChanged(true);
     }
   }*/
-}
-
-void ImagePropertyDrawer::drawFiltering(const std::vector<PropertyBase *> &objectsProperty) {
-  ImGui::SeparatorText("Filtering");
-
-  ImGui::Checkbox("Blur", &hasBlur);
-  ImGui::Checkbox("Sharpen", &hasSharpen);
-  ImGui::Checkbox("Grey", &hasGrey);
-
-  if (ImGui::Button("Apply", ImVec2(100.f, 30.f))) {
-    if (hasBlur) {
-      filtering.applyBlur(objectsProperty);
-      ofLogNotice("ImagePropertyDrawer") << "Apply Blur!";
-    }
-
-    if (hasSharpen) {
-      filtering.applySharpen(objectsProperty);
-      ofLogNotice("ImagePropertyDrawer") << "Apply Sharpen!";
-    }
-
-    if (hasGrey) {
-      filtering.applyGrey(objectsProperty);
-      ofLogNotice("ImagePropertyDrawer") << "Apply Grey!";
-    }
-  }
 }

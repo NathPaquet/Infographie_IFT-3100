@@ -10,7 +10,7 @@ public:
   TexturePack(const std::string &packName);
 
   void loadSingleImage(const ofImage &image, const std::string &id);
-  void setDiffuseMap(ofImage image);
+  void setDiffuseMap(ofTexture &texture);
 
   bool load(const std::string &packName);
   void configureTexture(ofTexture &texture);
@@ -32,8 +32,4 @@ public:
 
   std::string packId;
   ofPixels defaultPixels;
-
-  bool hasBlur;
-  bool hasSharpen;
-  bool hasGrey;
 };

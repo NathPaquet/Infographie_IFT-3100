@@ -1,5 +1,7 @@
 #include "TextureEditor.h"
 
+#include "Filtering.h"
+#include "TextureRepository.h"
 #include "imgui.h"
 
 void TextureEditor::displayEditorOptions() {
@@ -11,15 +13,15 @@ void TextureEditor::displayEditorOptions() {
 
   if (ImGui::Button("Apply", ImVec2(100.f, 30.f))) {
     if (hasBlur) {
-      filtering.applyBlur(currentTexture);
+      TextureRepository::setTextureDiffuseMap(Filtering::applyBlur, currentTexture);
     }
 
     if (hasSharpen) {
-      filtering.applySharpen(currentTexture);
+      TextureRepository::setTextureDiffuseMap(Filtering::applySharpen, currentTexture);
     }
 
     if (hasGrey) {
-      filtering.applyGrey(currentTexture);
+      TextureRepository::setTextureDiffuseMap(Filtering::applyGrey, currentTexture);
     }
   }
 
@@ -46,5 +48,5 @@ void TextureEditor::setCurrentTexture(const TexturePack *texture) {
 }
 
 void TextureEditor::displayImage(const TexturePack *texture) {
-  ImGui::Image(reinterpret_cast<void *>(static_cast<intptr_t>(texture->textureDisplacementMap.getTextureData().textureID)), ImVec2(1024, 1024));
+  ImGui::Image(reinterpret_cast<void *>(static_cast<intptr_t>(texture->textureDiffuseMap.getTextureData().textureID)), ImVec2(1024, 1024));
 }
