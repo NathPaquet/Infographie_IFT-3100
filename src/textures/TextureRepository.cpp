@@ -27,6 +27,15 @@ const TexturePack *TextureRepository::getTexture(const std::string &packId) {
   return it->get();
 }
 
+void TextureRepository::setDisplacementMap(const std::string &id, const ofTexture &texture) {
+  auto it = std::find_if(textures.begin(), textures.end(), [&](auto &&element) { return element->packId == id; });
+  if (it == textures.end()) {
+    return;
+  }
+  it->get()->textureDisplacementMap = texture;
+  it->get()->configureTexture(it->get()->textureDisplacementMap);
+}
+
 void TextureRepository::setTextureDiffuseMap(std::function<void(ofTexture &)> callback, const std::string &id) {
   auto it = std::find_if(textures.begin(), textures.end(), [&](auto &&element) { return element->packId == id; });
   callback(it->get()->textureDiffuseMap);
