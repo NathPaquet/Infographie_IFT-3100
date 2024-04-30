@@ -3,6 +3,7 @@
 
 class TextureEditor {
 public:
+  void displayEditorOptions();
   void drawTextureEditor();
   void setCurrentTexture(const TexturePack *texture);
   static void displayImage(const TexturePack *texture);

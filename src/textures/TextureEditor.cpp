@@ -2,6 +2,30 @@
 
 #include "imgui.h"
 
+void TextureEditor::displayEditorOptions() {
+  ImGui::BeginGroup();
+  ImGui::SeparatorText("Texture Editor Options");
+  ImGui::Checkbox("Blur", &hasBlur);
+  ImGui::Checkbox("Sharpen", &hasSharpen);
+  ImGui::Checkbox("Grey", &hasGrey);
+
+  if (ImGui::Button("Apply", ImVec2(100.f, 30.f))) {
+    if (hasBlur) {
+      filtering.applyBlur(currentTexture);
+    }
+
+    if (hasSharpen) {
+      filtering.applySharpen(currentTexture);
+    }
+
+    if (hasGrey) {
+      filtering.applyGrey(currentTexture);
+    }
+  }
+
+  ImGui::EndGroup();
+}
+
 void TextureEditor::drawTextureEditor() {
   bool changed = false;
   auto &&pickerResult = texturePicker.drawTexturePicker(changed, currentTexture);
@@ -12,7 +36,8 @@ void TextureEditor::drawTextureEditor() {
   if (!currentTexture) {
     return;
   }
-
+  displayEditorOptions();
+  ImGui::SameLine();
   displayImage(currentTexture);
 }
 
