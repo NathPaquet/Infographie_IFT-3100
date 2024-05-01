@@ -25,4 +25,6 @@ private:
   bool hasBlur{false};
   bool hasSharpen{false};
   bool hasGrey{false};
+
+  void drawMaterialProperties();
 };

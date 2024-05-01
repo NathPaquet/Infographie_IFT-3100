@@ -4,6 +4,7 @@
 #include "ImageImporter.h"
 #include "TextureGenerator.h"
 #include "TextureRepository.h"
+#include "constants.h"
 #include "imgui.h"
 
 void TextureEditor::displayEditorOptions() {
@@ -57,6 +58,8 @@ void TextureEditor::displayTextureSpecificOptions(const TexturePack *texture) {
       TextureRepository::setTextureDiffuseMap(Filtering::applyGrey, id);
     }
   }
+
+  drawMaterialProperties();
 }
 
 void TextureEditor::generateDisplacementMapForTexture(const TexturePack *texture) {
@@ -137,4 +140,18 @@ void TextureEditor::drawImages(const TexturePack *texture) {
   }
 
   ImGui::EndTable();
+}
+
+void TextureEditor::drawMaterialProperties() {
+  auto metallicity = currentTexture->getMetallicity();
+  if (ImGui::SliderFloat("Metallicity", &metallicity, Constants::MIN_METALLICITY_VALUE, Constants::MAX_METALLICITY_VALUE)) {
+    auto &id = currentTexture->packId;
+    TextureRepository::setMetallicity(id, metallicity);
+  }
+
+  auto roughness = currentTexture->getRoughness();
+  if (ImGui::SliderFloat("Roughness", &roughness, Constants::MIN_ROUGHNESS_VALUE, Constants::MAX_ROUGHNESS_VALUE)) {
+    auto &id = currentTexture->packId;
+    TextureRepository::setRoughness(id, roughness);
+  }
 }

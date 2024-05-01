@@ -82,6 +82,12 @@ namespace Constants {
   constexpr float MIN_ATTENUATION_VALUE = 0.0f;
   constexpr float MAX_ATTENUATION_VALUE = 1.0f;
 
+  constexpr float MIN_METALLICITY_VALUE = 0.0f;
+  constexpr float MAX_METALLICITY_VALUE = 1.0f;
+
+  constexpr float MIN_ROUGHNESS_VALUE = 0.0f;
+  constexpr float MAX_ROUGHNESS_VALUE = 1.0f;
+
   // SKYBOX
   constexpr auto CUBEMAP_TEXTURE_SKYBOX_BLUE = "cubemaps/blue/";
   constexpr auto CUBEMAP_TEXTURE_SKYBOX_RED = "cubemaps/red/";

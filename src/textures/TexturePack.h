@@ -14,6 +14,10 @@ public:
   bool load(const std::string &packName);
   void configureTexture(ofTexture &texture);
   void configureMaterial(std::shared_ptr<ofShader> shader);
+  void setMetallicity(float metallicity);
+  void setRoughness(float roughness);
+  float getMetallicity() const;
+  float getRoughness() const;
 
   // diffuse texture map holds the color information
   ofTexture textureDiffuseMap;
@@ -31,7 +35,4 @@ public:
 
   std::string packId;
   ofPixels defaultPixels;
-
-  float roughnessFactor;
-  float metallicFactor;
 };
