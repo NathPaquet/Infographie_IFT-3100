@@ -1,8 +1,8 @@
 #include "TextureEditor.h"
 
+#include "Filtering.h"
 #include "ImageImporter.h"
 #include "TextureGenerator.h"
-#include "Filtering.h"
 #include "TextureRepository.h"
 #include "imgui.h"
 
@@ -38,6 +38,10 @@ void TextureEditor::displayTextureSpecificOptions(const TexturePack *texture) {
   if (ImGui::Button("Generate a new displacement map")) {
     generateDisplacementMapForTexture(texture);
   }
+  ImGui::Checkbox("Blur", &this->hasBlur);
+  ImGui::Checkbox("Sharpen", &this->hasSharpen);
+  ImGui::Checkbox("Grey", &this->hasGrey);
+
   if (ImGui::Button("Apply", ImVec2(100.f, 30.f))) {
     auto &id = currentTexture->packId;
 
@@ -51,6 +55,7 @@ void TextureEditor::displayTextureSpecificOptions(const TexturePack *texture) {
 
     if (hasGrey) {
       TextureRepository::setTextureDiffuseMap(Filtering::applyGrey, id);
+    }
   }
 }
 
