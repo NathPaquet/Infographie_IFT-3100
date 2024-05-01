@@ -32,8 +32,7 @@ void TextureRepository::setDisplacementMap(const std::string &id, const ofTextur
   if (it == textures.end()) {
     return;
   }
-  it->get()->textureDisplacementMap = texture;
-  it->get()->configureTexture(it->get()->textureDisplacementMap);
+  it->get()->setDisplacementTexture(texture);
 }
 
 void TextureRepository::setTextureDiffuseMap(std::function<void(ofTexture &)> callback, const std::string &id) {

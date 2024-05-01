@@ -340,15 +340,12 @@ void ofApp::createSphereRayOptionsTopMenu() {
 }
 
 void ofApp::loadDefaultTextures() {
-  shader = std::make_shared<ofShader>();
-  shader->load("shaders/texture");
-
   TextureRepository::addTexture("Snow_03");
-  TextureRepository::configureTextureWithShader("Snow_03", shader);
+  TextureRepository::configureTextureWithShader("Snow_03", this->textureEditor.getDefaultShader());
   TextureRepository::addTexture("Square_floor");
-  TextureRepository::configureTextureWithShader("Square_floor", shader);
+  TextureRepository::configureTextureWithShader("Square_floor", this->textureEditor.getDefaultShader());
   TextureRepository::addTexture("Mud_cracked_dry_03");
-  TextureRepository::configureTextureWithShader("Mud_cracked_dry_03", shader);
+  TextureRepository::configureTextureWithShader("Mud_cracked_dry_03", this->textureEditor.getDefaultShader());
 }
 
 void ofApp::createSkyboxTopMenu() const {

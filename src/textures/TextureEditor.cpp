@@ -7,6 +7,11 @@
 #include "constants.h"
 #include "imgui.h"
 
+TextureEditor::TextureEditor() {
+  defaultMaterialShader = std::make_shared<ofShader>();
+  defaultMaterialShader->load("shaders/texture");
+}
+
 void TextureEditor::displayEditorOptions() {
   ImGui::SetNextItemWidth(200.f);
   ImGui::BeginGroup();
@@ -25,6 +30,7 @@ void TextureEditor::displayGenericOptions() {
     ofFileDialogResult result = ofSystemLoadDialog("Load Texture folder", true);
     if (result.bSuccess) {
       TextureRepository::addTexture(result.fileName);
+      TextureRepository::configureTextureWithShader(result.fileName, this->defaultMaterialShader);
     }
   }
   if (ImGui::Button("Import single image")) {
@@ -33,6 +39,7 @@ void TextureEditor::displayGenericOptions() {
       ofImage temp;
       temp.load(result.getPath());
       TextureRepository::addTextureFromSingleImage(temp, result.fileName);
+      // TextureRepository::configureTextureWithShader(result.fileName, this->defaultMaterialShader);
     }
   }
 }
@@ -142,6 +149,10 @@ void TextureEditor::drawImages(const TexturePack *texture) {
   }
 
   ImGui::EndTable();
+}
+
+std::shared_ptr<ofShader> TextureEditor::getDefaultShader() {
+  return defaultMaterialShader;
 }
 
 void TextureEditor::drawMaterialProperties() {

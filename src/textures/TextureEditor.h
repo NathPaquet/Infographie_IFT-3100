@@ -10,6 +10,7 @@ enum class TextureType {
 
 class TextureEditor {
 public:
+  TextureEditor();
   void displayEditorOptions();
   void displayGenericOptions();
   void displayTextureSpecificOptions(const TexturePack *texture);
@@ -17,10 +18,12 @@ public:
   void drawTextureEditor();
   void setCurrentTexture(const TexturePack *texture);
   void drawImages(const TexturePack *texture);
+  std::shared_ptr<ofShader> getDefaultShader();
 
 private:
   TexturePicker texturePicker;
   const TexturePack *currentTexture{nullptr};
+  std::shared_ptr<ofShader> defaultMaterialShader;
 
   bool hasBlur{false};
   bool hasSharpen{false};

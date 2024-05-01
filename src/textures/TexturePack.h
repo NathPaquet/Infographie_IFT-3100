@@ -16,6 +16,7 @@ public:
   void configureMaterial(std::shared_ptr<ofShader> shader);
   void setMetallicity(float metallicity);
   void setDisplacementStrength(float displacementStrength);
+  void setDisplacementTexture(const ofTexture &displacementTexture);
   void setRoughness(float roughness);
   float getMetallicity() const;
   float getRoughness() const;
@@ -38,7 +39,7 @@ public:
   std::string packId;
   ofPixels defaultPixels;
 
-  float metallic = 0.5f;
-  float roughness = 0.5f;
-  float displacementStrength = 0.5f;
+  float metallic;
+  float roughness;
+  float displacementStrength;
 };
