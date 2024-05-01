@@ -19,8 +19,6 @@ uniform sampler2D mapInfluence;
 uniform float uIsDrawingInto;
 
 //-- coming in from vertex shader ------//
-in vec3 eyePosition;
-
 in vec2 v_texcoord;
 in vec3 v_transformedNormal;
 in vec3 v_normal;
@@ -45,13 +43,13 @@ uniform vec4 global_ambient;
 //---------------------------------------
 
 // indice de réfraction de l'effet de Fresnel;
-uniform vec3 material_fresnel_ior;
+vec3 material_fresnel_ior = vec3(0.04, 0.04, 0.04);
 
 // facteur d'exposition
-uniform float tone_mapping_exposure;
+float tone_mapping_exposure = 1.0;
 
 // facteur gamma
-uniform float tone_mapping_gamma;
+float tone_mapping_gamma = 2.2;
 
 // -- copied from libs / openFrameworks / gl / shaders --------------- //
 // https://openframeworks.cc/documentation/gl/ofLight%3A%3AData
@@ -59,8 +57,6 @@ uniform float tone_mapping_gamma;
 float light_intensity = 1.0;
 struct lightData
 {
-	vec3 ambientColor;
-
 	float enabled;
 	vec4 ambient;
 	float type; // 0 = pointlight 1 = directionlight
@@ -213,11 +209,13 @@ vec3 schlick_fresnel(float costheta, vec3 f0)
 
 vec3 brdf_cook_torrance()
 {
+	vec3 surface_position = mv_positionVarying.xyz;
+
 	// re-normaliser la normale après interpolation
 	vec3 n = normalize(v_normal);
 
 	// calculer la direction de la surface vers la caméra (v)
-	vec3 v = normalize(-v_eyePosition);
+	vec3 v = normalize(-surface_position);
 
 	// échantillonage de la texture diffuse
 	vec3 texture_sample_diffuse = texture(mapDiffuse, v_texcoord).rgb;
@@ -247,10 +245,10 @@ vec3 brdf_cook_torrance()
 	int num_lights = MAX_LIGHTS;
 	for (int i = 0; i < num_lights; ++i) {
 		// calculer la direction de la surface vers la lumière (l)
-		vec3 l = normalize(lights[i].position.xyz /*light_positions[i]*/ - v_eyePosition);
+		vec3 l = normalize(lights[i].position.xyz /*light_positions[i]*/ - surface_position);
 
 		// calculer la distance entre la position de la lumière et de la surface
-		float light_distance = length(lights[i].position.xyz /*light_positions[i]*/ - v_eyePosition);
+		float light_distance = length(lights[i].position.xyz /*light_positions[i]*/ - surface_position);
 
 		// calculer l'atténuation de l'intensité de la lumière en fonction de la distance
 		float light_attenuation = 1.0 / (light_attenuation_factor_constant + 
@@ -258,7 +256,7 @@ vec3 brdf_cook_torrance()
 											light_attenuation_factor_quadratic * (light_distance * light_distance));
 
 		// calculer la radiance de la lumière
-		vec3 radiance = lights[i].ambientColor /*TODO*/ * light_attenuation * light_intensity /*lights[i].intensity*/ /*TODO*/;
+		vec3 radiance = lights[i].ambient.rgb /*TODO*/ * light_attenuation * light_intensity /*lights[i].intensity*/ /*TODO*/;
 
 		// calculer le niveau de réflexion diffuse (n • l)
 		float diffuse_reflection = max(dot(n, l), 0.0);
