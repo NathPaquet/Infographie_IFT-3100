@@ -69,23 +69,53 @@ void TexturePack::configureTexture(ofTexture &texture) {
 
 void TexturePack::configureMaterial(std::shared_ptr<ofShader> shader) {
   material.setCustomShader(shader);
-  material.setAmbientColor(ofFloatColor(1, 1, 1, 0.6));
-  // set our textures on the material so that they will be passed to our custom shader
-  material.setCustomUniformTexture("mapDiffuse", textureDiffuseMap, 0);
-  material.setCustomUniformTexture("mapNormal", textureNormalMap, 1);
-  material.setCustomUniformTexture("mapDisplacement", textureDisplacementMap, 2);
-  material.setCustomUniformTexture("mapAORoughMetal", textureAORoughMetal, 3);
-  material.setCustomUniform1f("matRoughness", 0.5f);
-  material.setCustomUniform1f("matOcclusion", 1.f);
+  // paramètres du matériau
+  auto material_color_ambient = ofColor(63, 63, 63);
+  auto material_color_diffuse = ofColor(255, 255, 255);
+  auto material_color_specular = ofColor(255, 255, 255);
+
+  float material_metallic = 0.5f;
+  float material_roughness = 0.5f;
+  float material_occlusion = 1.0f;
+  float material_brightness = 1.0f;
+
+  auto material_fresnel_ior = glm::vec3(0.04f, 0.04f, 0.04f);
+
+  // paramètres de la lumière
+  auto light_color = ofColor(255, 255, 255);
+  float light_intensity = 1.0f;
+
+  // paramètres de mappage tonal
+  float tone_mapping_exposure = 1.0f;
+
+  material.setCustomUniform3f("material_color_ambient", {material_color_ambient.r / 255.0f, material_color_ambient.g / 255.0f, material_color_ambient.b / 255.0f});
+  material.setCustomUniform3f("material_color_diffuse", {material_color_diffuse.r / 255.0f, material_color_diffuse.g / 255.0f, material_color_diffuse.b / 255.0f});
+  material.setCustomUniform3f("material_color_specular", {material_color_specular.r / 255.0f, material_color_specular.g / 255.0f, material_color_specular.b / 255.0f});
+
+  material.setCustomUniform1f("material_brightness", material_brightness);
+  setRoughness(material_roughness);
+  setMetallicity(material_metallic);
+  material.setCustomUniform1f("material_occlusion", material_occlusion);
+
+  material.setCustomUniform3f("material_fresnel_ior", material_fresnel_ior);
+
+  material.setCustomUniformTexture("texture_diffuse", textureDiffuseMap, 1);
+  material.setCustomUniformTexture("texture_AORoughMetal", textureAORoughMetal, 2);
+  material.setCustomUniformTexture("texture_displacement", textureDisplacementMap, 3);
+  material.setCustomUniformTexture("texture_normal", textureNormalMap, 4);
+
+  material.setCustomUniform1f("light_intensity", light_intensity);
+  material.setCustomUniform3f("light_color", {light_color.r / 255.0f, light_color.g / 255.0f, light_color.b / 255.0f});
+  material.setCustomUniform3f("light_position", {100.f, 100.f, 100.f});
+
+  material.setCustomUniform1f("tone_mapping_exposure", tone_mapping_exposure);
+  material.setCustomUniform1f("tone_mapping_gamma", 2.2f);
 
   setDisplacementStrength(2.f);
-  material.setCustomUniform1f("matMetallic", 0.5f);
-  material.setCustomUniform1f("matRoughness", 0.5f);
-  material.setCustomUniform1f("matOcclusion", 1.f);
 }
 
 void TexturePack::setMetallicity(float metallicity) {
-  material.setCustomUniform1f("matMetallic", metallicity);
+  material.setCustomUniform1f("material_metallic", metallicity);
   this->metallic = metallicity;
 }
 
@@ -97,11 +127,11 @@ void TexturePack::setDisplacementStrength(float displacementStrength) {
 void TexturePack::setDisplacementTexture(const ofTexture &displacementTexture) {
   textureDisplacementMap = displacementTexture;
   configureTexture(textureDisplacementMap);
-  material.setCustomUniformTexture("mapDisplacement", textureDisplacementMap, 2);
+  material.setCustomUniformTexture("texture_displacement", textureDisplacementMap, 3);
 }
 
 void TexturePack::setRoughness(float roughness) {
-  material.setCustomUniform1f("matRoughness", roughness);
+  material.setCustomUniform1f("material_roughness", roughness);
   this->roughness = roughness;
 }
 
