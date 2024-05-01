@@ -11,8 +11,6 @@ namespace Constants {
   constexpr float DEFAULT_SKYBOX_SIZE = 100.0f;
   constexpr float TEXTURE_EDITOR_WIDTH = 1024.0f;
   constexpr float TEXTURE_EDITOR_HEIGHT = 1024.0f;
-  constexpr float TEXTURE_EDITOR_WIDTH = 500.0f;
-  constexpr float TEXTURE_EDITOR_HEIGHT = 500.0f;
   constexpr float INTERSECTION_POINT_SIZE = 3.0f;
 
   // COLORS
