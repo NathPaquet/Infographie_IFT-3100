@@ -38,7 +38,5 @@ protected:
   std::map<PROPERTY_ID, std::unique_ptr<PropertyBase>> properties;
   ofVec3f position;
   glm::vec3 draggingPosition;
-  ofMesh mainMesh;
   ofMaterial mMaterial;
-  const TexturePack *texture;
 };

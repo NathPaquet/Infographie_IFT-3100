@@ -36,11 +36,7 @@ void TextureEditor::displayGenericOptions() {
 
 void TextureEditor::displayTextureSpecificOptions(const TexturePack *texture) {
   if (ImGui::Button("Generate a new displacement map")) {
-    auto displacementMap = TextureGenerator::generateProceduralTexture(texture->textureDisplacementMap.getWidth(), texture->textureDisplacementMap.getHeight());
-    // loading pixels in texture:
-    ofTexture tex;
-    tex.loadData((uint32_t *)displacementMap.getData(), displacementMap.getWidth(), displacementMap.getHeight(), displacementMap.getPixelFormat());
-    TextureRepository::setDisplacementMap(texture->packId, tex);
+    generateDisplacementMapForTexture(texture);
   }
   if (ImGui::Button("Apply", ImVec2(100.f, 30.f))) {
     auto &id = currentTexture->packId;
@@ -56,6 +52,23 @@ void TextureEditor::displayTextureSpecificOptions(const TexturePack *texture) {
     if (hasGrey) {
       TextureRepository::setTextureDiffuseMap(Filtering::applyGrey, id);
   }
+}
+
+void TextureEditor::generateDisplacementMapForTexture(const TexturePack *texture) {
+  float width;
+  float height;
+  if (!texture->textureDisplacementMap.isAllocated()) {
+    width = 1024;
+    height = 1024;
+  } else {
+    width = texture->textureDisplacementMap.getWidth();
+    height = texture->textureDisplacementMap.getHeight();
+  }
+  auto displacementMap = TextureGenerator::generateProceduralTexture(width, height);
+  // loading pixels in texture:
+  ofTexture tex;
+  tex.loadData(displacementMap.getData(), displacementMap.getWidth(), displacementMap.getHeight(), GL_RGBA);
+  TextureRepository::setDisplacementMap(texture->packId, tex);
 }
 
 void TextureEditor::drawTextureEditor() {
@@ -88,7 +101,9 @@ void TextureEditor::drawImages(const TexturePack *texture) {
     ImGui::Image(reinterpret_cast<void *>(static_cast<intptr_t>(texture->textureDisplacementMap.getTextureData().textureID)), textureSize);
   } else {
     ImGui::Text("No Displacement Map");
-    ImGui::Button("Generate a procedural texture");
+    if (ImGui::Button("Generate a new displacement map")) {
+      generateDisplacementMapForTexture(texture);
+    }
   }
 
   ImGui::TableNextColumn();

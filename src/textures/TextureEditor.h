@@ -13,6 +13,7 @@ public:
   void displayEditorOptions();
   void displayGenericOptions();
   void displayTextureSpecificOptions(const TexturePack *texture);
+  void generateDisplacementMapForTexture(const TexturePack *texture);
   void drawTextureEditor();
   void setCurrentTexture(const TexturePack *texture);
   void drawImages(const TexturePack *texture);
