@@ -31,6 +31,8 @@ uniform vec4 mat_diffuse;
 uniform vec4 mat_specular;
 uniform vec4 mat_emissive;
 uniform float mat_shininess;
+uniform float mat_metallic;
+uniform float mat_roughness;
 uniform vec4 global_ambient;
 //---------------------------------------
 

@@ -501,29 +501,3 @@ void ofApp::switchBetweenProjections() {
   assert(this->currentScene != nullptr && this->currentScene == this->scene3D.get());
   this->scene3D.get()->toggleProjectionMode();
 }
-
-void ofApp::generateDisplacementMapping() {
-  // Loop through each pixel in the image
-  ofImage displacementMap;
-
-  int width = 1024;
-  int height = 1024;
-  ofSetRandomSeed(42);
-
-  displacementMap.allocate(width, height, OF_IMAGE_GRAYSCALE);
-  for (int y = 0; y < displacementMap.getHeight(); y++) {
-    for (int x = 0; x < displacementMap.getWidth(); x++) {
-      // Generate a value for displacement based on Perlin noise
-      float noiseValue = ofNoise(x * 0.01, y * 0.01);
-
-      // Map the noise value to the grayscale range (0-255)
-      int pixelValue = ofMap(noiseValue, 0, 1, 0, 255);
-
-      // Set the pixel value in the displacement map
-      displacementMap.setColor(x, y, ofColor(pixelValue));
-    }
-  }
-
-  // Update the image with the modified pixel values
-  displacementMap.update();
-}
