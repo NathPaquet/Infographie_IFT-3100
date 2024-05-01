@@ -54,13 +54,7 @@ void Filtering::applyConvolution(const ofPixels &inputPixels, ofPixels &outputPi
 }
 
 void Filtering::updateTexture(ofTexture &texture, const ofPixels &outputPixels) {
-  // 1
   texture.loadData(outputPixels);
-
-  // 2
-  /*texture.bind();
-  glTexSubImage2D(texture.texData.textureTarget, 0, 0, 0, outputPixels.getWidth(), outputPixels.getHeight(), ofGetGlInternalFormat(outputPixels), GL_UNSIGNED_BYTE, outputPixels.getData());
-  texture.unbind();*/
 }
 
 void Filtering::applyToAll(ofTexture &texture, std::function<void(const ofPixels &, ofPixels &)> callback) {

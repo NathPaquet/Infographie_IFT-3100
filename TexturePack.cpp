@@ -52,8 +52,6 @@ void TexturePack::configureTexture(ofTexture &texture) {
   glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, fLargest);
   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
   texture.unbind();
-
-  texture.setTextureMinMagFilter(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
 }
 
 void TexturePack::configureMaterial(std::shared_ptr<ofShader> shader) {
