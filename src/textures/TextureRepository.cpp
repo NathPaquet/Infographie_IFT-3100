@@ -32,11 +32,25 @@ void TextureRepository::setDisplacementMap(const std::string &id, const ofTextur
   if (it == textures.end()) {
     return;
   }
-  it->get()->textureDisplacementMap = texture;
-  it->get()->configureTexture(it->get()->textureDisplacementMap);
+  it->get()->setDisplacementTexture(texture);
 }
 
 void TextureRepository::setTextureDiffuseMap(std::function<void(ofTexture &)> callback, const std::string &id) {
   auto it = std::find_if(textures.begin(), textures.end(), [&](auto &&element) { return element->packId == id; });
   callback(it->get()->textureDiffuseMap);
+}
+
+void TextureRepository::setMetallicity(const std::string &id, float metallicity) {
+  auto it = std::find_if(textures.begin(), textures.end(), [&](auto &&element) { return element->packId == id; });
+  it->get()->setMetallicity(metallicity);
+}
+
+void TextureRepository::setRoughness(const std::string &id, float roughness) {
+  auto it = std::find_if(textures.begin(), textures.end(), [&](auto &&element) { return element->packId == id; });
+  it->get()->setRoughness(roughness);
+}
+
+void TextureRepository::setDisplacementStrength(const std::string &id, float displacementStrength) {
+  auto it = std::find_if(textures.begin(), textures.end(), [&](auto &&element) { return element->packId == id; });
+  it->get()->setDisplacementStrength(displacementStrength);
 }

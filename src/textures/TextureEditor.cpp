@@ -4,10 +4,18 @@
 #include "ImageImporter.h"
 #include "TextureGenerator.h"
 #include "TextureRepository.h"
+#include "constants.h"
 #include "imgui.h"
 
+TextureEditor::TextureEditor() {
+  defaultMaterialShader = std::make_shared<ofShader>();
+  defaultMaterialShader->load("shaders/texture");
+}
+
 void TextureEditor::displayEditorOptions() {
+  ImGui::SetNextItemWidth(200.f);
   ImGui::BeginGroup();
+
   ImGui::Text("Texture Options");
   displayGenericOptions();
   ImGui::Separator();
@@ -22,6 +30,7 @@ void TextureEditor::displayGenericOptions() {
     ofFileDialogResult result = ofSystemLoadDialog("Load Texture folder", true);
     if (result.bSuccess) {
       TextureRepository::addTexture(result.fileName);
+      TextureRepository::configureTextureWithShader(result.fileName, this->defaultMaterialShader);
     }
   }
   if (ImGui::Button("Import single image")) {
@@ -30,6 +39,7 @@ void TextureEditor::displayGenericOptions() {
       ofImage temp;
       temp.load(result.getPath());
       TextureRepository::addTextureFromSingleImage(temp, result.fileName);
+      // TextureRepository::configureTextureWithShader(result.fileName, this->defaultMaterialShader);
     }
   }
 }
@@ -57,6 +67,8 @@ void TextureEditor::displayTextureSpecificOptions(const TexturePack *texture) {
       TextureRepository::setTextureDiffuseMap(Filtering::applyGrey, id);
     }
   }
+
+  drawMaterialProperties();
 }
 
 void TextureEditor::generateDisplacementMapForTexture(const TexturePack *texture) {
@@ -137,4 +149,28 @@ void TextureEditor::drawImages(const TexturePack *texture) {
   }
 
   ImGui::EndTable();
+}
+
+std::shared_ptr<ofShader> TextureEditor::getDefaultShader() {
+  return defaultMaterialShader;
+}
+
+void TextureEditor::drawMaterialProperties() {
+  auto metallicity = currentTexture->getMetallicity();
+  ImGui::SetNextItemWidth(200.f);
+  if (ImGui::SliderFloat("Metallicity", &metallicity, Constants::MIN_METALLICITY_VALUE, Constants::MAX_METALLICITY_VALUE)) {
+    TextureRepository::setMetallicity(currentTexture->packId, metallicity);
+  }
+
+  auto roughness = currentTexture->getRoughness();
+  ImGui::SetNextItemWidth(200.f);
+  if (ImGui::SliderFloat("Roughness", &roughness, Constants::MIN_ROUGHNESS_VALUE, Constants::MAX_ROUGHNESS_VALUE)) {
+    TextureRepository::setRoughness(currentTexture->packId, roughness);
+  }
+
+  auto displacementStrenght = currentTexture->getDisplacementStrength();
+  ImGui::SetNextItemWidth(200.f);
+  if (ImGui::SliderFloat("Displacement Strength", &displacementStrenght, 0.f, 10.f)) {
+    TextureRepository::setDisplacementStrength(currentTexture->packId, displacementStrenght);
+  }
 }

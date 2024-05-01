@@ -37,21 +37,23 @@ uniform sampler2D mapDiffuse;
 uniform sampler2D mapNormal;
 uniform sampler2D mapDisplacement;
 uniform sampler2D mapInfluence;
-
+uniform float matDisplacementStrength;
 
 vec2 textureRepeatTimes = vec2(1.0, 1.0);
+float displaceBias = 0.5;
+
+vec4 apply_displacement(vec2 textureCoords){
+	vec4 displacement = texture(mapDisplacement, textureCoords);
+	vec4 newVertexPos = vec4(normal.xyz * (displacement.xyz * matDisplacementStrength - displaceBias), 0.0);
+	newVertexPos += position;
+	
+   return newVertexPos;
+}
 
 void main (void){
 	vec2 newTexcoord = mod(texcoord * textureRepeatTimes, 1.0);
 	newTexcoord = texcoord * textureRepeatTimes;
-	vec4 bumpColor = texture(mapDisplacement, newTexcoord );
-	float df = 0.30 * bumpColor.r + 0.59 * bumpColor.g + 0.11 * bumpColor.b;
-	
-	vec4 newVertexPos = vec4(normal.xyz * df * float(2), 0.0);
-	float influence = texture(mapInfluence, newTexcoord).r;
-	newVertexPos = newVertexPos * influence;
-	newVertexPos += position;
-	
+	vec4 newVertexPos = apply_displacement(newTexcoord);
 	
 	vec4 eyePosition = modelViewMatrix * newVertexPos;
 	mv_positionVarying = eyePosition;

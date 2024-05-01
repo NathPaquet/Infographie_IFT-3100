@@ -9,6 +9,8 @@ namespace Constants {
   constexpr float GRAPH_SCENE_BUTTON_HEIGHT = 30.0f;
   constexpr float DEFAULT_SIZE = 20.0f;
   constexpr float DEFAULT_SKYBOX_SIZE = 100.0f;
+  constexpr float TEXTURE_EDITOR_WIDTH = 1024.0f;
+  constexpr float TEXTURE_EDITOR_HEIGHT = 1024.0f;
   constexpr float TEXTURE_EDITOR_WIDTH = 500.0f;
   constexpr float TEXTURE_EDITOR_HEIGHT = 500.0f;
   constexpr float INTERSECTION_POINT_SIZE = 3.0f;
@@ -83,6 +85,12 @@ namespace Constants {
   // LIGHTS
   constexpr float MIN_ATTENUATION_VALUE = 0.0f;
   constexpr float MAX_ATTENUATION_VALUE = 1.0f;
+
+  constexpr float MIN_METALLICITY_VALUE = 0.0f;
+  constexpr float MAX_METALLICITY_VALUE = 1.0f;
+
+  constexpr float MIN_ROUGHNESS_VALUE = 0.0f;
+  constexpr float MAX_ROUGHNESS_VALUE = 1.0f;
 
   // SKYBOX
   constexpr auto CUBEMAP_TEXTURE_SKYBOX_BLUE = "cubemaps/blue/";
