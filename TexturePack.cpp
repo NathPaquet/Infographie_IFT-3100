@@ -75,9 +75,13 @@ void TexturePack::configureMaterial(std::shared_ptr<ofShader> shader) {
   material.setCustomUniformTexture("mapNormal", textureNormalMap, 1);
   material.setCustomUniformTexture("mapDisplacement", textureDisplacementMap, 2);
   material.setCustomUniformTexture("mapAORoughMetal", textureAORoughMetal, 3);
-  setMetallicity(0.5f);
-  setRoughness(0.5f);
+  material.setCustomUniform1f("matRoughness", 0.5f);
+  material.setCustomUniform1f("matOcclusion", 1.f);
+
   setDisplacementStrength(2.f);
+  material.setCustomUniform1f("matMetallic", 0.5f);
+  material.setCustomUniform1f("matRoughness", 0.5f);
+  material.setCustomUniform1f("matOcclusion", 1.f);
 }
 
 void TexturePack::setMetallicity(float metallicity) {
