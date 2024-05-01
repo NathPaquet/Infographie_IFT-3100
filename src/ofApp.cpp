@@ -294,14 +294,16 @@ void ofApp::createViewMenu() {
       createSphereRayOptionsTopMenu();
     }
 
-    if (ImGui::MenuItem((this->isBoundingBoxEnabled ? "Disable bounding box" : "Enable bounding box"), "Alt+b")) {
-      this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
+    if (ImGui::MenuItem((this->currentScene->getIsBoundingBoxEnabled() ? "Disable bounding box" : "Enable bounding box"), "Alt+b")) {
       this->currentScene->getSceneManager()->toggleActivationBoundingBox();
     }
 
-    if (ImGui::MenuItem((this->isObjectAxisEnabled ? "Disable object axis" : "Enable object axis"), "Alt+a")) {
-      this->isObjectAxisEnabled = !this->isObjectAxisEnabled;
+    if (ImGui::MenuItem((this->currentScene->getIsObjectAxisEnabled() ? "Disable object axis" : "Enable object axis"), "Alt+a")) {
       this->currentScene->getSceneManager()->toggleActivationObjectAxis();
+    }
+
+    if (ImGui::MenuItem((this->currentScene->getIsIntersectionPointDisplay() ? "Disable intersection point" : "Enable intersection point"))) {
+      this->currentScene->toggleIntersectionPointDisplay();
     }
 
     ImGui::EndMenu();
@@ -377,11 +379,9 @@ void ofApp::updateKeyboardShortcuts() {
   }
   if (ImGui::IsKeyDown(ImGuiKey_LeftAlt)) {
     if (ImGui::IsKeyPressed(ImGuiKey_A)) {
-      this->isObjectAxisEnabled = !this->isObjectAxisEnabled;
       this->currentScene->getSceneManager()->toggleActivationObjectAxis();
     }
     if (ImGui::IsKeyPressed(ImGuiKey_B)) {
-      this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
       this->currentScene->getSceneManager()->toggleActivationBoundingBox();
     }
     if (ImGui::IsKeyPressed(ImGuiKey_S) && this->currentScene == this->scene3D.get()) {

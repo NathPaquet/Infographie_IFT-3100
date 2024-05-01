@@ -127,6 +127,14 @@ void SceneManager::updateObjectProperties() {
   }
 }
 
+const bool SceneManager::getIsBoundingBoxEnabled() const {
+  return this->isBoundingBoxEnabled;
+}
+
+const bool SceneManager::getIsObjectAxisEnabled() const {
+  return this->isObjectAxisEnabled;
+}
+
 void SceneManager::toggleActivationBoundingBox() {
   this->isBoundingBoxEnabled = !this->isBoundingBoxEnabled;
 }

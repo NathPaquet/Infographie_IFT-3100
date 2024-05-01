@@ -27,6 +27,8 @@ public:
   void toggleActivationObjectAxis();
   void clearScene();
   void updateObjectProperties();
+  const bool getIsBoundingBoxEnabled() const;
+  const bool getIsObjectAxisEnabled() const;
 
 private:
   void addIfCamera(const SceneObject *sceneObject, const ElementType primitiveType);

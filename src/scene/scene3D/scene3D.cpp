@@ -32,11 +32,13 @@ void Scene3D::setup() {
 }
 
 void Scene3D::update() {
-  this->getObjectCollidingWithRay(this->sceneManager->getObjects(), *this->currentCamera, this->ray);
-
   this->sceneManager->updateObjectProperties();
 
   this->computeRay(*this->currentCamera, this->ray);
+
+  if (this->isIntersectionPointDisplay) {
+    this->getObjectCollidingWithRay(this->sceneManager->getObjects(), *this->currentCamera, this->ray);
+  }
 }
 
 void Scene3D::drawScene() {
@@ -49,8 +51,9 @@ void Scene3D::drawScene() {
 
   this->drawSceneFromCamera(this->currentCamera->getGlobalPosition());
 
-  // TODO : Add condition to display the intersection point
-  this->drawIntersectionPoint(*this->currentCamera, this->ray);
+  if (this->isIntersectionPointDisplay) {
+    this->drawIntersectionPoint(*this->currentCamera, this->ray);
+  }
 
   this->currentCamera->end();
 }

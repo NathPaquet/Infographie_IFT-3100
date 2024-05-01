@@ -62,8 +62,6 @@ private:
   bool isScene2D = false;
   bool isViewOrtho = false;
   bool isSkyboxEnabled{true};
-  bool isBoundingBoxEnabled = false;
-  bool isObjectAxisEnabled = false;
   bool isReflectionSphereDisplayed{false};
   bool isRefractionSphereDisplayed{false};
   Scene *currentScene;

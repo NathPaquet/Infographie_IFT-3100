@@ -12,8 +12,13 @@ void Scene2D::setup() {
 }
 
 void Scene2D::update() {
-  this->computeRay(this->camera, this->ray);
   this->sceneManager->updateObjectProperties();
+
+  this->computeRay(this->camera, this->ray);
+
+  if (this->isIntersectionPointDisplay) {
+    this->getObjectCollidingWithRay(this->sceneManager->getObjects(), this->camera, this->ray);
+  }
 }
 
 void Scene2D::drawScene() {
@@ -25,6 +30,10 @@ void Scene2D::drawScene() {
 
   if (this->currentObjectToAdd != ElementType::NONE) {
     this->drawObjectPreview();
+  }
+
+  if (this->isIntersectionPointDisplay) {
+    this->drawIntersectionPoint(this->camera, this->ray);
   }
 
   this->camera.end();
