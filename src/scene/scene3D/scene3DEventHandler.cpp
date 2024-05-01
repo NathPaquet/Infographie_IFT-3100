@@ -63,7 +63,7 @@ void Scene3DEventHandler::mousePressed(ofMouseEventArgs &mouseArgs) {
 
 void Scene3DEventHandler::mouseReleased(ofMouseEventArgs &mouseArgs) {
   if (this->cursor->getCursorMode() != CursorMode::CAMERA_MOVING) {
-    this->scene3D->updateEnvironnementCubmap();
+    this->scene3D->setFrameToUpdateEnvironmentCubemap();
   }
 
   if (this->isMouseInScene()) {

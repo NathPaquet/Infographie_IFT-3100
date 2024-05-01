@@ -35,6 +35,14 @@ void Scene3D::update() {
   this->sceneManager->updateObjectProperties();
 
   this->computeRay(*this->currentCamera, this->ray);
+
+  if (this->isIntersectionPointDisplay) {
+    this->getObjectCollidingWithRay(this->sceneManager->getObjects(), *this->currentCamera, this->ray);
+  }
+
+  if (this->frameNumberToUpdateEnvironmentCubemap == ofGetFrameNum()) {
+    this->lowQualityRenderer.updateEnvironmentCubemap();
+  }
 }
 
 void Scene3D::drawScene() {
@@ -46,6 +54,10 @@ void Scene3D::drawScene() {
   }
 
   this->drawSceneFromCamera(this->currentCamera->getGlobalPosition());
+
+  if (this->isIntersectionPointDisplay) {
+    this->drawIntersectionPoint(*this->currentCamera, this->ray);
+  }
 
   this->currentCamera->end();
 }
@@ -71,8 +83,8 @@ void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
   }
 }
 
-void Scene3D::updateEnvironnementCubmap() {
-  this->lowQualityRenderer.updateEnvironmentCubemap();
+void Scene3D::setFrameToUpdateEnvironmentCubemap() {
+  this->frameNumberToUpdateEnvironmentCubemap = ofGetFrameNum() + 1;
 }
 
 void Scene3D::toggleProjectionMode() {
@@ -220,9 +232,10 @@ void Scene3D::drawReflectiveSphere(const glm::vec3 &cameraPosition) {
 
   glBindTexture(GL_TEXTURE_CUBE_MAP, this->lowQualityRenderer.getCubemapTextureID());
 
+  int defaultSphereResolution = ofGetSphereResolution();
   ofSetSphereResolution(100);
-
   ofDrawSphere(0, 0, 0, 20);
+  ofSetSphereResolution(defaultSphereResolution);
 
   glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
@@ -238,9 +251,10 @@ void Scene3D::drawRefractionSphere(const glm::vec3 &cameraPosition) {
 
   glBindTexture(GL_TEXTURE_CUBE_MAP, this->lowQualityRenderer.getCubemapTextureID());
 
+  int defaultSphereResolution = ofGetSphereResolution();
   ofSetSphereResolution(100);
-
   ofDrawSphere(0, 0, 0, 20);
+  ofSetSphereResolution(defaultSphereResolution);
 
   glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 

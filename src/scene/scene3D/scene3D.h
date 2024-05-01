@@ -20,7 +20,7 @@ public:
   inline void deactivateCameraMouseInput() {
     this->currentCamera->disableMouseInput();
   }
-  void updateEnvironnementCubmap();
+  void setFrameToUpdateEnvironmentCubemap();
   void toggleProjectionMode();
   void toggleSkyboxActivation();
   void loadSkybox(const string &texturePath);
@@ -61,4 +61,6 @@ private:
   ofShader reflectionShader;
   bool isRefractionSphereEnabled{false};
   ofShader refractionShader;
+
+  uint64_t frameNumberToUpdateEnvironmentCubemap{0};
 };
