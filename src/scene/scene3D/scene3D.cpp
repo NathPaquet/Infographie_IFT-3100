@@ -39,6 +39,10 @@ void Scene3D::update() {
   if (this->isIntersectionPointDisplay) {
     this->getObjectCollidingWithRay(this->sceneManager->getObjects(), *this->currentCamera, this->ray);
   }
+
+  if (this->frameNumberToUpdateEnvironmentCubemap == ofGetFrameNum()) {
+    this->lowQualityRenderer.updateEnvironmentCubemap();
+  }
 }
 
 void Scene3D::drawScene() {
@@ -79,8 +83,8 @@ void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
   }
 }
 
-void Scene3D::updateEnvironnementCubmap() {
-  this->lowQualityRenderer.updateEnvironmentCubemap();
+void Scene3D::setFrameToUpdateEnvironmentCubemap() {
+  this->frameNumberToUpdateEnvironmentCubemap = ofGetFrameNum() + 1;
 }
 
 void Scene3D::toggleProjectionMode() {
