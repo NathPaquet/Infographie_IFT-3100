@@ -21,9 +21,21 @@ bool TexturePack::load(const std::string &packName) {
   std::string filename = ofToLower(packName);
 
   bool was_success = ofLoadImage(textureDiffuseMap, "textures/" + packName + "/" + filename + "_diff.jpg");
-  was_success |= ofLoadImage(textureNormalMap, "textures/" + packName + "/" + filename + "_nor_gl.jpg");
-  was_success |= ofLoadImage(textureDisplacementMap, "textures/" + packName + "/" + filename + "_disp.png");
-  was_success |= ofLoadImage(textureAORoughMetal, "textures/" + packName + "/" + filename + "_arm.jpg");
+  if (!was_success) {
+    ofLoadImage(textureDiffuseMap, "textures/" + packName + "/" + filename + "_diff.png");
+  }
+  was_success = ofLoadImage(textureNormalMap, "textures/" + packName + "/" + filename + "_nor_gl.jpg");
+  if (!was_success) {
+    ofLoadImage(textureNormalMap, "textures/" + packName + "/" + filename + "_nor_gl.png");
+  }
+  was_success = ofLoadImage(textureDisplacementMap, "textures/" + packName + "/" + filename + "_disp.png");
+  if (!was_success) {
+    ofLoadImage(textureDisplacementMap, "textures/" + packName + "/" + filename + "_disp.jpg");
+  }
+  was_success = ofLoadImage(textureAORoughMetal, "textures/" + packName + "/" + filename + "_arm.jpg");
+  if (!was_success) {
+    ofLoadImage(textureAORoughMetal, "textures/" + packName + "/" + filename + "_arm.png");
+  }
 
   if (textureDiffuseMap.isAllocated()) {
     configureTexture(textureDiffuseMap);

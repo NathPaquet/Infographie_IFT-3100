@@ -11,7 +11,6 @@ CylinderPlanet::CylinderPlanet(const float x, const float y, const float z) {
 
   auto cylinder = ofCylinderPrimitive(radius, height, 20, 20, 20, true, OF_PRIMITIVE_TRIANGLES);
   cylinder.setGlobalPosition(x, y, z);
-  this->mainMesh = cylinder.getMesh();
 
   ofDisableArbTex();
 

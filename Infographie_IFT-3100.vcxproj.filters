@@ -274,6 +274,9 @@
     <ClCompile Include="TexturePack.cpp">
       <Filter>src\textures</Filter>
     </ClCompile>
+    <ClCompile Include="src\textures\TextureGenerator.cpp">
+      <Filter>src\textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -1128,6 +1131,9 @@
       <Filter>src\renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\textures\TextureEditor.h">
+      <Filter>src\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\textures\TextureGenerator.h">
       <Filter>src\textures</Filter>
     </ClInclude>
   </ItemGroup>

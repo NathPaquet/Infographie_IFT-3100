@@ -31,4 +31,7 @@ public:
 
   std::string packId;
   ofPixels defaultPixels;
+
+  float roughnessFactor;
+  float metallicFactor;
 };
