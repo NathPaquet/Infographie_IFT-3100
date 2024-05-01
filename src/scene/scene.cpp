@@ -62,5 +62,15 @@ std::optional<const SceneObject *> Scene::getObjectCollidingWithRay(const std::l
       distanceToClosestIntersection = distance;
     }
   }
+  this->lastIntersectionDistance = distanceToClosestIntersection;
   return foundSceneObject ? std::optional(foundSceneObject) : std::nullopt;
+}
+
+void Scene::drawIntersectionPoint(const ofEasyCam &camera, const Ray &ray) const {
+  if (this->lastIntersectionDistance != numeric_limits<float>::max()) {
+    auto intersectionPoint = ray.getOrigin() + ray.getDirection() * this->lastIntersectionDistance;
+    ofSetColor((ImVec4)Constants::INTERSECTION_POINT_COLOR);
+    ofDrawSphere(intersectionPoint, Constants::INTERSECTION_POINT_SIZE);
+    ofPopStyle();
+  }
 }

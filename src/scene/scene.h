@@ -27,8 +27,11 @@ protected:
   glm::highp_vec3 findMouseDirectionInWorld(const ofEasyCam &camera) const;
   std::optional<const SceneObject *> getObjectCollidingWithRay(const std::list<std::unique_ptr<SceneObject>> &objects, const ofEasyCam &camera, Ray &ray);
 
+  void drawIntersectionPoint(const ofEasyCam &camera, const Ray &ray) const;
+
   std::unique_ptr<SceneManager> sceneManager;
   bool shouldDragObject = false;
   SceneObject *draggedObject = nullptr;
   ElementType currentObjectToAdd = ElementType::NONE;
+  float lastIntersectionDistance;
 };

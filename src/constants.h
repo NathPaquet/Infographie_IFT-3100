@@ -11,6 +11,7 @@ namespace Constants {
   constexpr float DEFAULT_SKYBOX_SIZE = 100.0f;
   constexpr float TEXTURE_EDITOR_WIDTH = 500.0f;
   constexpr float TEXTURE_EDITOR_HEIGHT = 500.0f;
+  constexpr float INTERSECTION_POINT_SIZE = 3.0f;
 
   // COLORS
   constexpr ImColor MENU_BAR_BACKGROUND_COLOR = ImColor(51, 56, 68, 255);
@@ -19,6 +20,7 @@ namespace Constants {
   constexpr ImColor PRIMITIVE_PREVIEW_COLOR = ImColor(240, 233, 233, 255);
   const ofColor SELECTED_OBJECT_FRAME_COLOR = ofColor(255, 255, 255, 100);
   const ofColor AMBIANT_COLOR = ofColor(0, 0, 0);
+  const ofColor INTERSECTION_POINT_COLOR = ofColor(255, 0, 0);
 
   // CAMERA
   constexpr float DEFAULT_CAMERA_NEAR_CLIP = 0.1f;
