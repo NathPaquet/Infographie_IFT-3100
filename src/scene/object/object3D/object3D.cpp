@@ -35,7 +35,6 @@ void Object3D::draw(bool isSelected, bool isBoundingBoxEnable, bool isObjectAxis
     if (this->getPropertyValue<const TexturePack *>(PROPERTY_ID::TEXTURE) && this->getPropertyValue<const TexturePack *>(PROPERTY_ID::TEXTURE)->textureDiffuseMap.isAllocated()) {
       this->getPropertyValue<const TexturePack *>(PROPERTY_ID::TEXTURE)->textureDiffuseMap.bind();
       this->getPropertyValue<const TexturePack *>(PROPERTY_ID::TEXTURE)->material.begin();
-      // mMaterial.setDiffuseColor(this->getPropertyValue<ofColor>(PROPERTY_ID::COLOR));
       primitive->draw();
 
       this->getPropertyValue<const TexturePack *>(PROPERTY_ID::TEXTURE)->material.end();
