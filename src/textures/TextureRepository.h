@@ -18,4 +18,5 @@ private:
   static void setTextureDiffuseMap(std::function<void(ofTexture &)> callback, const std::string &id);
   static void setMetallicity(const std::string &id, float metallicity);
   static void setRoughness(const std::string &id, float roughness);
+  static void setDisplacementStrength(const std::string &id, float displacementStrength);
 };

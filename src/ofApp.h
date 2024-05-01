@@ -18,7 +18,6 @@
 class ofApp : public ofBaseApp {
 public:
   void setup();
-  void drawTextureEditor();
   void draw();
   void update();
   void exit();
@@ -30,6 +29,7 @@ public:
 
 private:
   void drawPropertiesPanel();
+  void drawTextureEditor();
   void drawSceneObjectGraph();
   void drawSceneObjectGraphCreationMenu();
   void drawSceneTopMenu();
@@ -44,7 +44,6 @@ private:
   void createSkyboxTopMenu() const;
   void generateRandomGalaxy(int nbElements) const;
   void generateCornellBox(float size) const;
-  void generateDisplacementMapping();
 
   Tools tools;
   std::unique_ptr<CameraPanel> cameraPanel;

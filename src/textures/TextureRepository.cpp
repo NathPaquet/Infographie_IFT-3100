@@ -50,3 +50,8 @@ void TextureRepository::setRoughness(const std::string &id, float roughness) {
   auto it = std::find_if(textures.begin(), textures.end(), [&](auto &&element) { return element->packId == id; });
   it->get()->setRoughness(roughness);
 }
+
+void TextureRepository::setDisplacementStrength(const std::string &id, float displacementStrength) {
+  auto it = std::find_if(textures.begin(), textures.end(), [&](auto &&element) { return element->packId == id; });
+  it->get()->setDisplacementStrength(displacementStrength);
+}

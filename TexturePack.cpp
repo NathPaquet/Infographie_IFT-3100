@@ -74,20 +74,39 @@ void TexturePack::configureMaterial(std::shared_ptr<ofShader> shader) {
   material.setCustomUniformTexture("mapNormal", textureNormalMap, 1);
   material.setCustomUniformTexture("mapDisplacement", textureDisplacementMap, 2);
   material.setCustomUniformTexture("mapAORoughMetal", textureAORoughMetal, 3);
+  material.setCustomUniform1f("matMetallic", 0.5f);
+  material.setCustomUniform1f("matRoughness", 0.5f);
+  //  material.setDisplacementNormalsStrength(0.5);
+  //  material.setDisplacementStrength(0.5f);
+  //  material.setDisplacementTexture(textureDisplacementMap);
+  //  material.setDiffuseTexture(textureDiffuseMap);
+  //  material.setNormalTexture(textureNormalMap);
+  //  material.setAoRoughnessMetallicTexture(textureAORoughMetal);
 }
 
 void TexturePack::setMetallicity(float metallicity) {
-  material.setMetallic(metallicity);
+  material.setCustomUniform1f("matMetallic", metallicity);
+  this->metallic = metallicity;
+}
+
+void TexturePack::setDisplacementStrength(float displacementStrength) {
+  material.setCustomUniform1f("matDisplacementStrength", displacementStrength);
+  this->displacementStrength = displacementStrength;
 }
 
 void TexturePack::setRoughness(float roughness) {
-  material.setRoughness(roughness);
+  material.setCustomUniform1f("matRoughness", roughness);
+  this->roughness = roughness;
 }
 
 float TexturePack::getMetallicity() const {
-  return material.getMetallic();
+  return metallic;
 }
 
 float TexturePack::getRoughness() const {
-  return material.getRoughness();
+  return roughness;
+}
+
+float TexturePack::getDisplacementStrength() const {
+  return displacementStrength;
 }

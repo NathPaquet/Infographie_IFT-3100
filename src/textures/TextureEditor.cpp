@@ -8,7 +8,9 @@
 #include "imgui.h"
 
 void TextureEditor::displayEditorOptions() {
+  ImGui::SetNextItemWidth(200.f);
   ImGui::BeginGroup();
+
   ImGui::Text("Texture Options");
   displayGenericOptions();
   ImGui::Separator();
@@ -144,14 +146,20 @@ void TextureEditor::drawImages(const TexturePack *texture) {
 
 void TextureEditor::drawMaterialProperties() {
   auto metallicity = currentTexture->getMetallicity();
+  ImGui::SetNextItemWidth(200.f);
   if (ImGui::SliderFloat("Metallicity", &metallicity, Constants::MIN_METALLICITY_VALUE, Constants::MAX_METALLICITY_VALUE)) {
-    auto &id = currentTexture->packId;
-    TextureRepository::setMetallicity(id, metallicity);
+    TextureRepository::setMetallicity(currentTexture->packId, metallicity);
   }
 
   auto roughness = currentTexture->getRoughness();
+  ImGui::SetNextItemWidth(200.f);
   if (ImGui::SliderFloat("Roughness", &roughness, Constants::MIN_ROUGHNESS_VALUE, Constants::MAX_ROUGHNESS_VALUE)) {
-    auto &id = currentTexture->packId;
-    TextureRepository::setRoughness(id, roughness);
+    TextureRepository::setRoughness(currentTexture->packId, roughness);
+  }
+
+  auto displacementStrenght = currentTexture->getDisplacementStrength();
+  ImGui::SetNextItemWidth(200.f);
+  if (ImGui::SliderFloat("Displacement Strength", &displacementStrenght, 0.f, 10.f)) {
+    TextureRepository::setDisplacementStrength(currentTexture->packId, displacementStrenght);
   }
 }
