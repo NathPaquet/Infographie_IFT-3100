@@ -228,10 +228,10 @@ void Scene3D::drawReflectiveSphere(const glm::vec3 &cameraPosition) {
 
   glBindTexture(GL_TEXTURE_CUBE_MAP, this->lowQualityRenderer.getCubemapTextureID());
 
-  // Set the box resolution to 100x100x100 for better reflection quality
-  ofSetBoxResolution(100, 100, 100);
-
+  int defaultSphereResolution = ofGetSphereResolution();
+  ofSetSphereResolution(100);
   ofDrawSphere(0, 0, 0, 20);
+  ofSetSphereResolution(defaultSphereResolution);
 
   glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
@@ -247,10 +247,10 @@ void Scene3D::drawRefractionSphere(const glm::vec3 &cameraPosition) {
 
   glBindTexture(GL_TEXTURE_CUBE_MAP, this->lowQualityRenderer.getCubemapTextureID());
 
-  // Set the box resolution to 100x100x100 for better reflection quality
+  int defaultSphereResolution = ofGetSphereResolution();
   ofSetSphereResolution(100);
-
   ofDrawSphere(0, 0, 0, 20);
+  ofSetSphereResolution(defaultSphereResolution);
 
   glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
