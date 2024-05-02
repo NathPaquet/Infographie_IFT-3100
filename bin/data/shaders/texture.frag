@@ -2,7 +2,7 @@
 
 #version 330
 
-#define MAX_LIGHTS 2
+#define MAX_LIGHTS 6
 
 const float PI = 3.1415926535897932384626433832795;
 
@@ -195,7 +195,7 @@ vec3 spotLight( in lightData light, in vec3 normal, in vec3 surface_position, in
 		l = normalize(l);
 		h = normalize(l + v);
 
-    compute_reflectance(light.diffuse.rgb, attenuation, light_intensity, normal, l, v, h, albedo, roughness, metallic);
+    return compute_reflectance(light.diffuse.rgb, attenuation, light_intensity, normal, l, v, h, albedo, roughness, metallic);
 	}
 
   return vec3(0.0);
