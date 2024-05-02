@@ -84,7 +84,9 @@ void Scene3D::drawSceneFromCamera(const glm::vec3 &cameraPosition) {
 }
 
 void Scene3D::setFrameToUpdateEnvironmentCubemap() {
-  this->frameNumberToUpdateEnvironmentCubemap = ofGetFrameNum() + 1;
+  if (this->isReflectionSphereEnabled || this->isRefractionSphereEnabled) {
+    this->frameNumberToUpdateEnvironmentCubemap = ofGetFrameNum() + 1;
+  }
 }
 
 void Scene3D::toggleProjectionMode() {
@@ -128,15 +130,10 @@ bool Scene3D::attemptToClickOnObjectWithMouse() {
 }
 
 bool Scene3D::attemptToAddObjectWithMouse() {
-  auto &&maybeObject = this->getObjectCollidingWithRay(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
-  auto &&found = maybeObject.has_value();
-
-  if (!found) {
-    this->sceneManager.get()->addElement(this->ray.getOrigin() + this->ray.getDirection() * Constants::DEFAULT_DISTANCE_TO_DRAW, this->currentObjectToAdd);
-    this->sceneManager.get()->setSelectedSceneObject(this->sceneManager.get()->getObjects().front().get());
-    this->currentObjectToAdd = ElementType::NONE;
-  }
-  return !found;
+  this->sceneManager.get()->addElement(this->ray.getOrigin() + this->ray.getDirection() * Constants::DEFAULT_DISTANCE_TO_DRAW, this->currentObjectToAdd);
+  this->sceneManager.get()->setSelectedSceneObject(this->sceneManager.get()->getObjects().front().get());
+  this->currentObjectToAdd = ElementType::NONE;
+  return true;
 }
 
 bool Scene3D::attemptToRemoveObjectWihMouse() {
@@ -168,13 +165,11 @@ void Scene3D::releaseDraggedObject() {
 }
 
 void Scene3D::drawObjectPreview() {
-  auto &&maybeObject = this->getObjectCollidingWithRay(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
-  auto &&found = maybeObject.has_value();
+  // auto &&maybeObject = this->getObjectCollidingWithRay(this->sceneManager.get()->getObjects(), *this->currentCamera, this->ray);
+  // auto &&found = maybeObject.has_value();
   auto position = this->ray.getOrigin() + this->ray.getDirection() * Constants::DEFAULT_DISTANCE_TO_DRAW;
 
-  if (!found) {
-    this->ray.drawPrimitiveDefaultPreview(this->currentObjectToAdd, position);
-  }
+  this->ray.drawPrimitiveDefaultPreview(this->currentObjectToAdd, position);
 }
 
 bool Scene3D::isAmbientLightEnable() const {

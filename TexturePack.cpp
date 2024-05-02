@@ -69,7 +69,7 @@ void TexturePack::configureTexture(ofTexture &texture) {
 
 void TexturePack::configureMaterial(std::shared_ptr<ofShader> shader) {
   material.setCustomShader(shader);
-  // paramètres du matériau
+  // paramètres du matériau par defaut
   auto material_color_ambient = ofColor(63, 63, 63);
   auto material_color_diffuse = ofColor(255);
   auto material_color_specular = ofColor(255, 255, 255);
@@ -78,16 +78,14 @@ void TexturePack::configureMaterial(std::shared_ptr<ofShader> shader) {
   float material_roughness = 0.5f;
   float material_occlusion = 1.0f;
   float material_brightness = 1.0f;
-
   auto material_fresnel_ior = glm::vec3(0.04f, 0.04f, 0.04f); // glm::vec3(1.f);
 
   // paramètres de la lumière
   float light_intensity = 1.0f;
 
-  material.setCustomUniform3f("material_color_ambient", {material_color_ambient.r / 255.0f, material_color_ambient.g / 255.0f, material_color_ambient.b / 255.0f});
-  material.setCustomUniform3f("material_color_diffuse", {material_color_diffuse.r / 255.0f, material_color_diffuse.g / 255.0f, material_color_diffuse.b / 255.0f});
-  material.setCustomUniform3f("material_color_specular", {material_color_specular.r / 255.0f, material_color_specular.g / 255.0f, material_color_specular.b / 255.0f});
-
+  setMaterialAmbientColor(material_color_ambient);
+  setMaterialDiffuseColor(material_color_diffuse);
+  setMaterialSpecularColor(material_color_specular);
   setBrightness(material_brightness);
   setRoughness(material_roughness);
   setMetallicity(material_metallic);
@@ -154,4 +152,31 @@ float TexturePack::getRoughness() const {
 
 float TexturePack::getDisplacementStrength() const {
   return displacementStrength;
+}
+
+ofColor TexturePack::getMaterialDiffuseColor() const {
+  return materialDiffuse;
+}
+
+ofColor TexturePack::getMaterialSpecularColor() const {
+  return materialSpecular;
+}
+
+ofColor TexturePack::getMaterialAmbientColor() const {
+  return materialAmbient;
+}
+
+void TexturePack::setMaterialDiffuseColor(const ofColor &color) {
+  material.setCustomUniform3f("material_color_diffuse", {color.r / 255.0f, color.g / 255.0f, color.b / 255.0f});
+  materialDiffuse = color;
+}
+
+void TexturePack::setMaterialSpecularColor(const ofColor &color) {
+  material.setCustomUniform3f("material_color_specular", {color.r / 255.0f, color.g / 255.0f, color.b / 255.0f});
+  materialSpecular = color;
+}
+
+void TexturePack::setMaterialAmbientColor(const ofColor &color) {
+  material.setCustomUniform3f("material_color_ambient", {color.r / 255.0f, color.g / 255.0f, color.b / 255.0f});
+  materialAmbient = color;
 }

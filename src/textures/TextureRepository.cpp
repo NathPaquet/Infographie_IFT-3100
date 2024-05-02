@@ -64,3 +64,18 @@ void TextureRepository::setReinhardToneMapping(const std::string &id, bool tone_
   auto it = std::find_if(textures.begin(), textures.end(), [&](auto &&element) { return element->packId == id; });
   it->get()->setReinhardToneMapping(tone_mapping);
 }
+
+void TextureRepository::setMaterialDiffuseColor(const std::string &id, const ofColor &color) {
+  auto it = std::find_if(textures.begin(), textures.end(), [&](auto &&element) { return element->packId == id; });
+  it->get()->setMaterialDiffuseColor(color);
+}
+
+void TextureRepository::setMaterialSpecularColor(const std::string &id, const ofColor &color) {
+  auto it = std::find_if(textures.begin(), textures.end(), [&](auto &&element) { return element->packId == id; });
+  it->get()->setMaterialSpecularColor(color);
+}
+
+void TextureRepository::setMaterialAmbientColor(const std::string &id, const ofColor &color) {
+  auto it = std::find_if(textures.begin(), textures.end(), [&](auto &&element) { return element->packId == id; });
+  it->get()->setMaterialAmbientColor(color);
+}

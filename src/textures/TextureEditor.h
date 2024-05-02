@@ -1,4 +1,6 @@
 #pragma once
+
+#include "ColorPicker.h"
 #include "TexturePicker.h"
 
 enum class TextureType {
@@ -22,6 +24,7 @@ public:
 
 private:
   TexturePicker texturePicker;
+  ColorPicker colorPicker;
   const TexturePack *currentTexture{nullptr};
   std::shared_ptr<ofShader> defaultMaterialShader;
 

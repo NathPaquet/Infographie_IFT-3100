@@ -21,4 +21,7 @@ private:
   static void setBrightness(const std::string &id, float brightness);
   static void setDisplacementStrength(const std::string &id, float displacementStrength);
   static void setReinhardToneMapping(const std::string &id, bool tone_mapping);
+  static void setMaterialDiffuseColor(const std::string &id, const ofColor &color);
+  static void setMaterialSpecularColor(const std::string &id, const ofColor &color);
+  static void setMaterialAmbientColor(const std::string &id, const ofColor &color);
 };
