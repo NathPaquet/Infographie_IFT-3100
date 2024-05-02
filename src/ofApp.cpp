@@ -14,7 +14,7 @@ void ofApp::setup() {
   ofEnableDepthTest();
   ofSetVerticalSync(true);
   ofDisableArbTex();
-  // required call
+  //  required call
 
   this->cursor = std::make_unique<Cursor>(CursorMode::NAVIGATION);
 

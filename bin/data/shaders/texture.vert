@@ -40,7 +40,7 @@ float displaceBias = 0.5;
 
 vec4 apply_displacement(vec2 textureCoords){
 	vec4 displacement = texture(texture_displacement, textureCoords);
-	vec4 newVertexPos = vec4(normal.xyz * (displacement.xyz * matDisplacementStrength - displaceBias), 0.0);
+	vec4 newVertexPos = vec4(normal.xyz * (displacement.r * matDisplacementStrength - displaceBias), 0.0);
 	newVertexPos += position;
 	
    return newVertexPos;
