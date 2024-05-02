@@ -18,5 +18,7 @@ private:
   static void setTextureDiffuseMap(std::function<void(ofTexture &)> callback, const std::string &id);
   static void setMetallicity(const std::string &id, float metallicity);
   static void setRoughness(const std::string &id, float roughness);
+  static void setBrightness(const std::string &id, float brightness);
   static void setDisplacementStrength(const std::string &id, float displacementStrength);
+  static void setReinhardToneMapping(const std::string &id, bool tone_mapping);
 };

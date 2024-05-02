@@ -74,7 +74,8 @@ std::unique_ptr<SceneObject> SceneObjectFactory::createSceneObject(const glm::ve
       return std::make_unique<Model3D>(centerPosition, Constants::FREDDY_PLUSH_MODEL_PATH);
     case ElementType::SPACE_SHIP:
       return std::make_unique<Model3D>(centerPosition, Constants::SPACE_SHIP_MODEL_PATH);
-
+    case ElementType::POINT_LIGHT:
+      return std::make_unique<PointLight>(centerPosition);
     case ElementType::TRIANGLE:
       return std::make_unique<Triangle>(centerPosition, outerPosition);
     case ElementType::SQUARE:

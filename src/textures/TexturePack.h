@@ -14,10 +14,13 @@ public:
   bool load(const std::string &packName);
   void configureTexture(ofTexture &texture);
   void configureMaterial(std::shared_ptr<ofShader> shader);
+  void setReinhardToneMapping(bool has_reinhard_tone_mapping);
   void setMetallicity(float metallicity);
   void setDisplacementStrength(float displacementStrength);
   void setDisplacementTexture(const ofTexture &displacementTexture);
   void setRoughness(float roughness);
+  void setBrightness(float brightness);
+  float getBrightness() const;
   float getMetallicity() const;
   float getRoughness() const;
   float getDisplacementStrength() const;
@@ -42,4 +45,6 @@ public:
   float metallic;
   float roughness;
   float displacementStrength;
+  bool has_reinhard_tone_mapping;
+  float brightness;
 };

@@ -28,6 +28,9 @@ private:
   bool hasBlur{false};
   bool hasSharpen{false};
   bool hasGrey{false};
+  float displacementGenerationDensity = 0.01;
+
+  bool has_reinhard_tone_mapping{false};
 
   void drawMaterialProperties();
 };

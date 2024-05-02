@@ -33,7 +33,8 @@ uniform sampler2D texture_normal;
 // intensité de la source de lumière
 uniform float light_intensity;
 
-uniform vec4 global_ambient;
+uniform vec4 global_ambient; // couleur de la lumière ambiante globale
+uniform bool has_reinhard_tone_mapping;
 
 struct lightData {
 	float enabled;
@@ -334,8 +335,12 @@ void main()
   // if (tone_mapping_toggle)
   //   color = tone_mapping_aces_filmic(color);
   // else
-    
-  color = tone_mapping_reinhard(color);
+  
+  if (has_reinhard_tone_mapping) {
+    color = tone_mapping_reinhard(color);
+  } else {
+    color = tone_mapping_aces_filmic(color);
+  }
 
   // conversion de couleur de l'espace linéaire vers l'espace gamma
   color = pow(color, vec3(1.0 / tone_mapping_gamma));
