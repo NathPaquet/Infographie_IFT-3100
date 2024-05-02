@@ -71,7 +71,7 @@ void TexturePack::configureMaterial(std::shared_ptr<ofShader> shader) {
   material.setCustomShader(shader);
   // paramètres du matériau
   auto material_color_ambient = ofColor(63, 63, 63);
-  auto material_color_diffuse = ofColor(255, 255, 255);
+  auto material_color_diffuse = ofColor(255);
   auto material_color_specular = ofColor(255, 255, 255);
 
   float material_metallic = 0.5f;
@@ -79,14 +79,10 @@ void TexturePack::configureMaterial(std::shared_ptr<ofShader> shader) {
   float material_occlusion = 1.0f;
   float material_brightness = 1.0f;
 
-  auto material_fresnel_ior = glm::vec3(0.04f, 0.04f, 0.04f);
+  auto material_fresnel_ior = glm::vec3(1.f); // glm::vec3(0.04f, 0.04f, 0.04f);
 
   // paramètres de la lumière
-  auto light_color = ofColor(255, 255, 255);
   float light_intensity = 1.0f;
-
-  // paramètres de mappage tonal
-  float tone_mapping_exposure = 1.0f;
 
   material.setCustomUniform3f("material_color_ambient", {material_color_ambient.r / 255.0f, material_color_ambient.g / 255.0f, material_color_ambient.b / 255.0f});
   material.setCustomUniform3f("material_color_diffuse", {material_color_diffuse.r / 255.0f, material_color_diffuse.g / 255.0f, material_color_diffuse.b / 255.0f});
@@ -106,7 +102,7 @@ void TexturePack::configureMaterial(std::shared_ptr<ofShader> shader) {
 
   material.setCustomUniform1f("light_intensity", light_intensity);
 
-  material.setCustomUniform1f("tone_mapping_exposure", tone_mapping_exposure);
+  material.setCustomUniform1f("tone_mapping_exposure", 1.0f);
   material.setCustomUniform1f("tone_mapping_gamma", 2.2f);
 
   setDisplacementStrength(2.f);

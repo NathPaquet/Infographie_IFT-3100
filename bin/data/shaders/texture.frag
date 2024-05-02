@@ -196,8 +196,6 @@ vec3 spotLight( in lightData light, in vec3 normal, in vec3 surface_position, in
 		h = normalize(l + v);
 
     compute_reflectance(light.diffuse.rgb, attenuation, light_intensity, normal, l, v, h, albedo, roughness, metallic);
-		// diffuse += light.diffuse.rgb * nDotVP * attenuation;
-		// specular += light.specular.rgb * pf * nDotVP * attenuation;
 	}
 
   return vec3(0.0);
