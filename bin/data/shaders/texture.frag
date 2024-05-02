@@ -33,6 +33,7 @@ uniform sampler2D texture_normal;
 // intensité de la source de lumière
 uniform float light_intensity;
 
+uniform vec4 global_ambient; // couleur de la lumière ambiante globale
 uniform bool has_reinhard_tone_mapping;
 
 struct lightData {
@@ -62,6 +63,11 @@ struct lightData {
 };
 
 uniform lightData lights[MAX_LIGHTS];
+
+// Éviter division par zéro
+float max_denominator(float x) {
+  return max(x, 0.001);
+}
 
 // fonction de distribution des microfacettes (Trowbridge-Reitz)
 float trowbridge_reitz(vec3 n, vec3 h, float roughness) {
@@ -130,7 +136,7 @@ vec3 compute_reflectance(in vec3 light_color, in float attenuation, in float lig
   float coor_torrance_denominator = 4.0 * max(dot(normal, v), 0.0) * w_i;
 
   // calculer le résultat de l'équation avec le numérateur et de dénominateur
-  vec3 specular = coor_torrance_numerator / max(coor_torrance_denominator, 0.001);
+  vec3 specular = coor_torrance_numerator / max_denominator(coor_torrance_denominator);
 
   // mixer avec la couleur spéculaire du matériau
   specular = specular * material_color_specular;
@@ -160,7 +166,7 @@ vec3 pointLight( in lightData light, in vec3 normal, in vec3 surface_position, i
 	vec3 h = normalize(l + v);   // direction of maximum highlights
 	
 	// Compute attenuation
-	attenuation = 1.0 / (light.constantAttenuation + light.linearAttenuation * light_distance + light.quadraticAttenuation * (light_distance * light_distance));
+	attenuation = 1.0 / max_denominator(light.constantAttenuation + light.linearAttenuation * light_distance + light.quadraticAttenuation * (light_distance * light_distance));
 	
 	return compute_reflectance(light.diffuse.rgb, attenuation, light_intensity, normal, l, v, h, albedo, roughness, metallic);
 }
@@ -192,7 +198,7 @@ vec3 spotLight( in lightData light, in vec3 normal, in vec3 surface_position, in
 	if (spotEffect > light.spotCosCutoff) {
 		// Compute distance between surface and light position
 		light_distance = length(l);
-    attenuation = pow(spotEffect, light.spotExponent) / (light.constantAttenuation + light.linearAttenuation * light_distance + light.quadraticAttenuation * (light_distance * light_distance));
+    attenuation = pow(spotEffect, light.spotExponent) / max_denominator(light.constantAttenuation + light.linearAttenuation * light_distance + light.quadraticAttenuation * (light_distance * light_distance));
 
 		l = normalize(l);
 		h = normalize(l + v);
@@ -201,6 +207,11 @@ vec3 spotLight( in lightData light, in vec3 normal, in vec3 surface_position, in
 	}
 
   return vec3(0.0);
+}
+
+// Ambient light
+vec3 ambientLight(in vec3 albedo) {
+	return global_ambient.rgb * albedo;
 }
 
 mat3 cotangent_frame(vec3 N, vec3 p, vec2 uv){
@@ -302,6 +313,8 @@ vec3 brdf_cook_torrance() {
 			reflectance_result += spotLight(lights[i], normal, surface_position, albedo, roughness, metallic);
 		}
   }
+
+  reflectance_result += ambientLight(albedo);
 
   // mixer la couleur des composantes de réflexion
   vec3 color = (ambient + reflectance_result) * material_brightness;

@@ -4,6 +4,7 @@
 
 AmbientLight::AmbientLight() {
   color.set(127, 127, 127);
+  update();
 }
 
 void AmbientLight::toggle() {
@@ -16,9 +17,5 @@ bool AmbientLight::isEnable() const {
 }
 
 void AmbientLight::update() {
-  if (isEnableStatus) {
-    ofSetGlobalAmbientColor(color);
-  } else {
-    ofSetGlobalAmbientColor(ofColor::black);
-  }
+  ofSetGlobalAmbientColor(isEnableStatus ? color : ofColor::black);
 }
