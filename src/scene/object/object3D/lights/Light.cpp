@@ -4,7 +4,7 @@
 
 Light::Light(const glm::vec3 &position) {
   this->addProperty<float>(PROPERTY_ID::RADIUS, Constants::DEFAULT_SIZE);
-  this->addProperty<float>(PROPERTY_ID::ATTENUATION, Constants::MAX_ATTENUATION_VALUE);
+  this->addProperty<float>(PROPERTY_ID::ATTENUATION, (Constants::MAX_ATTENUATION_VALUE - Constants::MIN_ATTENUATION_VALUE) / 2);
 
   auto sphere = ofSpherePrimitive(initialPrimitiveRadius, 20, OF_PRIMITIVE_TRIANGLES);
   this->primitive = std::make_unique<ofSpherePrimitive>(sphere);

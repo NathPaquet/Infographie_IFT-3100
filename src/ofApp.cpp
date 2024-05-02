@@ -14,7 +14,7 @@ void ofApp::setup() {
   ofEnableDepthTest();
   ofSetVerticalSync(true);
   ofDisableArbTex();
-  // required call
+  //  required call
 
   this->cursor = std::make_unique<Cursor>(CursorMode::NAVIGATION);
 
@@ -344,10 +344,15 @@ void ofApp::createSphereRayOptionsTopMenu() {
 void ofApp::loadDefaultTextures() {
   TextureRepository::addTexture("Snow_03");
   TextureRepository::configureTextureWithShader("Snow_03", this->textureEditor.getDefaultShader());
+
   TextureRepository::addTexture("Square_floor");
   TextureRepository::configureTextureWithShader("Square_floor", this->textureEditor.getDefaultShader());
+
   TextureRepository::addTexture("Mud_cracked_dry_03");
   TextureRepository::configureTextureWithShader("Mud_cracked_dry_03", this->textureEditor.getDefaultShader());
+
+  TextureRepository::addTexture("metal_plate");
+  TextureRepository::configureTextureWithShader("metal_plate", this->textureEditor.getDefaultShader());
 }
 
 void ofApp::createSkyboxTopMenu() const {
