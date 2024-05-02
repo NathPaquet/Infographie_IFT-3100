@@ -33,6 +33,8 @@ uniform sampler2D texture_normal;
 // intensité de la source de lumière
 uniform float light_intensity;
 
+uniform vec4 global_ambient;
+
 struct lightData {
 	float enabled;
 	vec4 ambient;
@@ -206,6 +208,11 @@ vec3 spotLight( in lightData light, in vec3 normal, in vec3 surface_position, in
   return vec3(0.0);
 }
 
+// Ambient light
+vec3 ambientLight(in vec3 albedo) {
+	return global_ambient.rgb * albedo;
+}
+
 mat3 cotangent_frame(vec3 N, vec3 p, vec2 uv){
     // get edge vectors of the pixel triangle
     vec3 dp1 = dFdx( p );
@@ -305,6 +312,8 @@ vec3 brdf_cook_torrance() {
 			reflectance_result += spotLight(lights[i], normal, surface_position, albedo, roughness, metallic);
 		}
   }
+
+  reflectance_result += ambientLight(albedo);
 
   // mixer la couleur des composantes de réflexion
   vec3 color = (ambient + reflectance_result) * material_brightness;

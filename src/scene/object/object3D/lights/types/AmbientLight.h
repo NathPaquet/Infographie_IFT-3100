@@ -9,7 +9,7 @@ public:
 
 private:
   ofColor color;
-  bool isEnableStatus = true;
+  bool isEnableStatus{true};
 
   void update();
 };
