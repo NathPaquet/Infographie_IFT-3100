@@ -33,7 +33,7 @@ uniform sampler2D texture_normal;
 // intensité de la source de lumière
 uniform float light_intensity;
 
-uniform bool has_tone_mapping_reinhard;
+uniform bool has_reinhard_tone_mapping;
 
 struct lightData {
 	float enabled;
@@ -323,7 +323,7 @@ void main()
   //   color = tone_mapping_aces_filmic(color);
   // else
   
-  if (has_tone_mapping_reinhard) {
+  if (has_reinhard_tone_mapping) {
     color = tone_mapping_reinhard(color);
   } else {
     color = tone_mapping_aces_filmic(color);

@@ -110,7 +110,7 @@ void TexturePack::configureMaterial(std::shared_ptr<ofShader> shader) {
 }
 
 void TexturePack::setReinhardToneMapping(bool has_tone_mapping) {
-  material.setCustomUniform1i("has_tone_mapping_reinhard", has_tone_mapping);
+  material.setCustomUniform1i("has_reinhard_tone_mapping", has_tone_mapping);
 }
 
 void TexturePack::setMetallicity(float metallicity) {
