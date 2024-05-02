@@ -177,7 +177,7 @@ void TextureEditor::drawMaterialProperties() {
     TextureRepository::setBrightness(currentTexture->packId, brightness);
     
   ImGui::SetNextItemWidth(200.f);
-  if (ImGui::Checkbox(has_reinhard_tone_mapping ? "ACES Filmic Enable" : "Reinhard Enable", &has_reinhard_tone_mapping)) {
+  if (ImGui::Checkbox(has_reinhard_tone_mapping ? "Reinhard Enable" : "ACES Filmic Enable", &has_reinhard_tone_mapping)) {
     TextureRepository::setReinhardToneMapping(currentTexture->packId, has_reinhard_tone_mapping);
   }
 }
