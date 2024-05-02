@@ -59,3 +59,8 @@ void TextureRepository::setDisplacementStrength(const std::string &id, float dis
   auto it = std::find_if(textures.begin(), textures.end(), [&](auto &&element) { return element->packId == id; });
   it->get()->setDisplacementStrength(displacementStrength);
 }
+
+void TextureRepository::setReinhardToneMapping(const std::string &id, bool tone_mapping) {
+  auto it = std::find_if(textures.begin(), textures.end(), [&](auto &&element) { return element->packId == id; });
+  it->get()->setReinhardToneMapping(tone_mapping);
+}
