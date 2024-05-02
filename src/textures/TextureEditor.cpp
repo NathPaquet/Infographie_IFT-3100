@@ -1,7 +1,6 @@
 #include "TextureEditor.h"
 
 #include "Filtering.h"
-#include "ImageImporter.h"
 #include "TextureGenerator.h"
 #include "TextureRepository.h"
 #include "constants.h"
@@ -45,6 +44,8 @@ void TextureEditor::displayGenericOptions() {
 }
 
 void TextureEditor::displayTextureSpecificOptions(const TexturePack *texture) {
+  ImGui::SetNextItemWidth(200.f);
+  ImGui::SliderFloat("Perlin Noise Density", &displacementGenerationDensity, 0.0f, 0.025f);
   if (ImGui::Button("Generate a new displacement map")) {
     generateDisplacementMapForTexture(texture);
   }
@@ -81,7 +82,7 @@ void TextureEditor::generateDisplacementMapForTexture(const TexturePack *texture
     width = texture->textureDisplacementMap.getWidth();
     height = texture->textureDisplacementMap.getHeight();
   }
-  auto displacementMap = TextureGenerator::generateProceduralTexture(width, height);
+  auto displacementMap = TextureGenerator::generateProceduralTexture(width, height, displacementGenerationDensity);
   // loading pixels in texture:
   ofTexture tex;
   tex.loadData(displacementMap.getData(), displacementMap.getWidth(), displacementMap.getHeight(), GL_RGBA);
@@ -118,9 +119,6 @@ void TextureEditor::drawImages(const TexturePack *texture) {
     ImGui::Image(reinterpret_cast<void *>(static_cast<intptr_t>(texture->textureDisplacementMap.getTextureData().textureID)), textureSize);
   } else {
     ImGui::Text("No Displacement Map");
-    if (ImGui::Button("Generate a new displacement map")) {
-      generateDisplacementMapForTexture(texture);
-    }
   }
 
   ImGui::TableNextColumn();
@@ -129,7 +127,6 @@ void TextureEditor::drawImages(const TexturePack *texture) {
     ImGui::Image(reinterpret_cast<void *>(static_cast<intptr_t>(texture->textureDiffuseMap.getTextureData().textureID)), textureSize);
   } else {
     ImGui::Text("No Diffuse Map");
-    ImGui::Button("DO SOMETHING");
   }
 
   ImGui::TableNextColumn();
@@ -172,5 +169,11 @@ void TextureEditor::drawMaterialProperties() {
   ImGui::SetNextItemWidth(200.f);
   if (ImGui::SliderFloat("Displacement Strength", &displacementStrenght, 0.f, 10.f)) {
     TextureRepository::setDisplacementStrength(currentTexture->packId, displacementStrenght);
+  }
+
+  auto brightness = currentTexture->getBrightness();
+  ImGui::SetNextItemWidth(200.f);
+  if (ImGui::SliderFloat("Brightness", &brightness, 0.f, 1.f)) {
+    TextureRepository::setBrightness(currentTexture->packId, brightness);
   }
 }

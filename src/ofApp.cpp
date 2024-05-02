@@ -477,6 +477,7 @@ void ofApp::generateCornellBox(float size) const {
   this->currentScene->getSceneManager()->addElement(glm::vec3(0, size, 0), glm::vec3(0, size, 0) + offset, ElementType::CUBIC);
   this->currentScene->getSceneManager()->addElement(glm::vec3(0, -size, 0), glm::vec3(0, -size, 0) + offset, ElementType::CUBIC);
   this->currentScene->getSceneManager()->addElement(glm::vec3(0, 0, size), glm::vec3(0, 0, size) + offset, ElementType::CUBIC);
+  this->currentScene->getSceneManager()->addElement(glm::vec3(0, size / 2 - 10.f, 0), glm::vec3(0, size / 2 - 10.f, 0) + offset, ElementType::POINT_LIGHT);
 }
 
 void ofApp::switchBetweenScenes() {

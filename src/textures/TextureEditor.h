@@ -28,6 +28,6 @@ private:
   bool hasBlur{false};
   bool hasSharpen{false};
   bool hasGrey{false};
-
+  float displacementGenerationDensity = 0.01;
   void drawMaterialProperties();
 };

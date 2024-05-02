@@ -79,7 +79,7 @@ void TexturePack::configureMaterial(std::shared_ptr<ofShader> shader) {
   float material_occlusion = 1.0f;
   float material_brightness = 1.0f;
 
-  auto material_fresnel_ior = glm::vec3(1.f); // glm::vec3(0.04f, 0.04f, 0.04f);
+  auto material_fresnel_ior = glm::vec3(0.04f, 0.04f, 0.04f); // glm::vec3(1.f);
 
   // paramètres de la lumière
   float light_intensity = 1.0f;
@@ -88,9 +88,10 @@ void TexturePack::configureMaterial(std::shared_ptr<ofShader> shader) {
   material.setCustomUniform3f("material_color_diffuse", {material_color_diffuse.r / 255.0f, material_color_diffuse.g / 255.0f, material_color_diffuse.b / 255.0f});
   material.setCustomUniform3f("material_color_specular", {material_color_specular.r / 255.0f, material_color_specular.g / 255.0f, material_color_specular.b / 255.0f});
 
-  material.setCustomUniform1f("material_brightness", material_brightness);
+  setBrightness(material_brightness);
   setRoughness(material_roughness);
   setMetallicity(material_metallic);
+
   material.setCustomUniform1f("material_occlusion", material_occlusion);
 
   material.setCustomUniform3f("material_fresnel_ior", material_fresnel_ior);
@@ -127,6 +128,15 @@ void TexturePack::setDisplacementTexture(const ofTexture &displacementTexture) {
 void TexturePack::setRoughness(float roughness) {
   material.setCustomUniform1f("material_roughness", roughness);
   this->roughness = roughness;
+}
+
+void TexturePack::setBrightness(float brightness) {
+  material.setCustomUniform1f("material_brightness", brightness);
+  this->brightness = brightness;
+}
+
+float TexturePack::getBrightness() const {
+  return brightness;
 }
 
 float TexturePack::getMetallicity() const {
