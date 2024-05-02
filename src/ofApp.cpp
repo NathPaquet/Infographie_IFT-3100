@@ -186,7 +186,7 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
       if (ImGui::MenuItem("Generate Random Galaxy", "Shift+=")) {
         generateRandomGalaxy(20);
       }
-      if (ImGui::MenuItem("Generate Cornell Box", "Shift+c")) {
+      if (ImGui::MenuItem("Generate Cornell Box", "Shift+b")) {
         generateCornellBox(100);
       }
       ImGui::SeparatorText("3D object");
@@ -207,15 +207,15 @@ void ofApp::drawSceneObjectGraphCreationMenu() {
 
       ImGui::SeparatorText("Lights");
 
-      if (ImGui::MenuItem("Add Point Light", "TODO")) {
+      if (ImGui::MenuItem("Add Point Light", "Shift+p")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::POINT_LIGHT);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
-      if (ImGui::MenuItem("Add Directional Light", "TODO")) {
+      if (ImGui::MenuItem("Add Directional Light", "Shift+d")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::DIRECTIONAL_LIGHT);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
-      if (ImGui::MenuItem("Add Spot Light", "TODO")) {
+      if (ImGui::MenuItem("Add Spot Light", "Shift+s")) {
         this->currentScene->setCurrentObjectToAdd(ElementType::SPOT_LIGHT);
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
@@ -445,6 +445,17 @@ void ofApp::updateKeyboardShortcuts() {
         this->cursor.get()->setCursorMode(CursorMode::ADDING);
       } else if (ImGui::IsKeyPressed(ImGuiKey_Equal)) {
         generateRandomGalaxy(20);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_B)) {
+        generateCornellBox(100);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_P)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::POINT_LIGHT);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_D)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::DIRECTIONAL_LIGHT);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
+      } else if (ImGui::IsKeyPressed(ImGuiKey_S)) {
+        this->currentScene->setCurrentObjectToAdd(ElementType::SPOT_LIGHT);
+        this->cursor.get()->setCursorMode(CursorMode::ADDING);
       }
     }
   } else {
