@@ -105,8 +105,6 @@ void TexturePack::configureMaterial(std::shared_ptr<ofShader> shader) {
   material.setCustomUniformTexture("texture_normal", textureNormalMap, 4);
 
   material.setCustomUniform1f("light_intensity", light_intensity);
-  material.setCustomUniform3f("light_color", {light_color.r / 255.0f, light_color.g / 255.0f, light_color.b / 255.0f});
-  material.setCustomUniform3f("light_position", {100.f, 100.f, 100.f});
 
   material.setCustomUniform1f("tone_mapping_exposure", tone_mapping_exposure);
   material.setCustomUniform1f("tone_mapping_gamma", 2.2f);

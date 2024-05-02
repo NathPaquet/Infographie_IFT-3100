@@ -14,7 +14,6 @@ out vec3 surface_position;
 out vec3 surface_normal;
 out vec2 surface_texcoord;
 
-
 //-- set automatically by OF ---------//
 // these are passed in from OF programmable renderer
 uniform mat4 modelMatrix;
@@ -53,8 +52,8 @@ void main (void){
 	vec4 newVertexPos = apply_displacement(newTexcoord);
 	
 	surface_position = vec3(modelViewMatrix * newVertexPos);
-	
-	surface_normal = vec3(normalMatrix * normal);
+
+	surface_normal = normalize(vec3(normalMatrix * normal));
 	
 	surface_texcoord = newTexcoord;
 	
