@@ -61,6 +61,11 @@ struct lightData {
 
 uniform lightData lights[MAX_LIGHTS];
 
+// Éviter division par zéro
+float max_denominator(float x) {
+  return max(x, 0.001);
+}
+
 // fonction de distribution des microfacettes (Trowbridge-Reitz)
 float trowbridge_reitz(vec3 n, vec3 h, float roughness) {
   float a = roughness * roughness;
@@ -128,7 +133,7 @@ vec3 compute_reflectance(in vec3 light_color, in float attenuation, in float lig
   float coor_torrance_denominator = 4.0 * max(dot(normal, v), 0.0) * w_i;
 
   // calculer le résultat de l'équation avec le numérateur et de dénominateur
-  vec3 specular = coor_torrance_numerator / max(coor_torrance_denominator, 0.001);
+  vec3 specular = coor_torrance_numerator / max_denominator(coor_torrance_denominator);
 
   // mixer avec la couleur spéculaire du matériau
   specular = specular * material_color_specular;
@@ -158,7 +163,7 @@ vec3 pointLight( in lightData light, in vec3 normal, in vec3 surface_position, i
 	vec3 h = normalize(l + v);   // direction of maximum highlights
 	
 	// Compute attenuation
-	attenuation = 1.0 / (light.constantAttenuation + light.linearAttenuation * light_distance + light.quadraticAttenuation * (light_distance * light_distance));
+	attenuation = 1.0 / max_denominator(light.constantAttenuation + light.linearAttenuation * light_distance + light.quadraticAttenuation * (light_distance * light_distance));
 	
 	return compute_reflectance(light.diffuse.rgb, attenuation, light_intensity, normal, l, v, h, albedo, roughness, metallic);
 }
@@ -190,7 +195,7 @@ vec3 spotLight( in lightData light, in vec3 normal, in vec3 surface_position, in
 	if (spotEffect > light.spotCosCutoff) {
 		// Compute distance between surface and light position
 		light_distance = length(l);
-    attenuation = pow(spotEffect, light.spotExponent) / (light.constantAttenuation + light.linearAttenuation * light_distance + light.quadraticAttenuation * (light_distance * light_distance));
+    attenuation = pow(spotEffect, light.spotExponent) / max_denominator(light.constantAttenuation + light.linearAttenuation * light_distance + light.quadraticAttenuation * (light_distance * light_distance));
 
 		l = normalize(l);
 		h = normalize(l + v);
