@@ -24,6 +24,12 @@ public:
   float getMetallicity() const;
   float getRoughness() const;
   float getDisplacementStrength() const;
+  ofColor getMaterialDiffuseColor() const;
+  ofColor getMaterialSpecularColor() const;
+  ofColor getMaterialAmbientColor() const;
+  void setMaterialDiffuseColor(const ofColor &color);
+  void setMaterialSpecularColor(const ofColor &color);
+  void setMaterialAmbientColor(const ofColor &color);
 
   // diffuse texture map holds the color information
   ofTexture textureDiffuseMap;
@@ -47,4 +53,7 @@ public:
   float displacementStrength;
   bool has_reinhard_tone_mapping;
   float brightness;
+  ofColor materialSpecular;
+  ofColor materialAmbient;
+  ofColor materialDiffuse;
 };

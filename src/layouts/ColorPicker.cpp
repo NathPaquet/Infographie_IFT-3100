@@ -8,6 +8,7 @@ bool ColorPicker::createColorPicker(ofColor &color) {
   bool changed = false;
   normalizedColor = color;
   ImGui::Text("Color picker:");
+
   if (ImGui::ColorPicker3("Color Picker", (float *)&normalizedColor, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel)) {
     color = normalizedColor;
     changed = true;
@@ -44,6 +45,19 @@ bool ColorPicker::createColorPicker(ofColor &color) {
     sSlider = hsb.y;
     BSlider = hsb.z;
   }
+  return changed;
+}
+
+bool ColorPicker::createSimplifiedColorPicker(ofColor &color) {
+  bool changed = false;
+  normalizedColor = color;
+  ImGui::Text("Color picker:");
+  ImGui::SetNextItemWidth(200.f);
+  if (ImGui::ColorPicker3("Color Picker", (float *)&normalizedColor, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel)) {
+    color = normalizedColor;
+    changed = true;
+  }
+
   return changed;
 }
 

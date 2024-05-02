@@ -181,4 +181,30 @@ void TextureEditor::drawMaterialProperties() {
   if (ImGui::Checkbox(has_reinhard_tone_mapping ? "Reinhard Enable" : "ACES Filmic Enable", &has_reinhard_tone_mapping)) {
     TextureRepository::setReinhardToneMapping(currentTexture->packId, has_reinhard_tone_mapping);
   }
+
+  if (ImGui::TreeNode("Diffuse Color")) {
+    auto color = currentTexture->getMaterialDiffuseColor();
+    if (colorPicker.createSimplifiedColorPicker(color)) {
+      TextureRepository::setMaterialDiffuseColor(currentTexture->packId, color);
+    }
+    ImGui::TreePop();
+  }
+
+  if (ImGui::TreeNode("Ambient Color")) {
+    auto color = currentTexture->getMaterialAmbientColor();
+    if (colorPicker.createSimplifiedColorPicker(color)) {
+      TextureRepository::setMaterialAmbientColor(currentTexture->packId, color);
+    }
+    ImGui::TreePop();
+  }
+
+  if (ImGui::TreeNode("Specular Color")) {
+    ImGui::BeginGroup();
+    auto color = currentTexture->getMaterialSpecularColor();
+    if (colorPicker.createSimplifiedColorPicker(color)) {
+      TextureRepository::setMaterialSpecularColor(currentTexture->packId, color);
+    }
+    ImGui::TreePop();
+    ImGui::EndGroup();
+  }
 }

@@ -6,6 +6,7 @@ class ColorPicker {
 public:
   ImVec4 getNormalizedColor() const;
   bool createColorPicker(ofColor &color);
+  bool createSimplifiedColorPicker(ofColor &color);
 
 private:
   ImVec4 normalizedColor;
