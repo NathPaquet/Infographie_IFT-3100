@@ -18,6 +18,8 @@ public:
   void setDisplacementStrength(float displacementStrength);
   void setDisplacementTexture(const ofTexture &displacementTexture);
   void setRoughness(float roughness);
+  void setBrightness(float brightness);
+  float getBrightness() const;
   float getMetallicity() const;
   float getRoughness() const;
   float getDisplacementStrength() const;
@@ -42,4 +44,5 @@ public:
   float metallic;
   float roughness;
   float displacementStrength;
+  float brightness;
 };
