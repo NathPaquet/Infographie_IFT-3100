@@ -20,4 +20,5 @@ private:
   static void setRoughness(const std::string &id, float roughness);
   static void setBrightness(const std::string &id, float brightness);
   static void setDisplacementStrength(const std::string &id, float displacementStrength);
+  static void setReinhardToneMapping(const std::string &id, bool tone_mapping);
 };

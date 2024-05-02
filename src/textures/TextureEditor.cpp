@@ -175,5 +175,9 @@ void TextureEditor::drawMaterialProperties() {
   ImGui::SetNextItemWidth(200.f);
   if (ImGui::SliderFloat("Brightness", &brightness, 0.f, 1.f)) {
     TextureRepository::setBrightness(currentTexture->packId, brightness);
+    
+  ImGui::SetNextItemWidth(200.f);
+  if (ImGui::Checkbox("Enable Reinhard", &has_reinhard_tone_mapping)) {
+    TextureRepository::setReinhardToneMapping(currentTexture->packId, has_reinhard_tone_mapping);
   }
 }
