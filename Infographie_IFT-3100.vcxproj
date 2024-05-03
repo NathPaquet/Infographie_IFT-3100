@@ -193,7 +193,7 @@
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_tables.cpp" />
     <ClCompile Include="..\..\addons\ofxImGui\libs\imgui\src\imgui_widgets.cpp" />
     <ClCompile Include="..\..\addons\ofxSvg\src\ofxSvg.cpp" />
-    <ClCompile Include="TexturePack.cpp" />
+    <ClCompile Include="src\textures\TexturePack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h" />

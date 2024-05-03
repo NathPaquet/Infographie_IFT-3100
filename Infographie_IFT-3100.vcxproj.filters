@@ -271,7 +271,7 @@
     <ClCompile Include="src\textures\TextureEditor.cpp">
       <Filter>src\textures</Filter>
     </ClCompile>
-    <ClCompile Include="TexturePack.cpp">
+    <ClCompile Include="src\textures\TexturePack.cpp">
       <Filter>src\textures</Filter>
     </ClCompile>
     <ClCompile Include="src\textures\TextureGenerator.cpp">
