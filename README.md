@@ -28,3 +28,8 @@ dépendances.
 Une fois toutes ces étapes complétées, il suffit de venir lancer l’application à partir de Visual Studio en
 ouvrant la solution. Il est important d’avoir le Workloads : Desktop development with C++ sur Visual
 Studio Community 2022 pour faire le développement.
+
+
+## Application
+
+![Image de l'application](documentation/assets/application.png)
