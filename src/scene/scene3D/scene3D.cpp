@@ -211,11 +211,15 @@ void Scene3D::deactivateCenterSphere() {
 void Scene3D::activateReflectionSphere() {
   this->isReflectionSphereEnabled = true;
   this->isRefractionSphereEnabled = false;
+
+  this->frameNumberToUpdateEnvironmentCubemap = ofGetFrameNum() + 1;
 }
 
 void Scene3D::activateRefractionSphere() {
   this->isRefractionSphereEnabled = true;
   this->isReflectionSphereEnabled = false;
+
+  this->frameNumberToUpdateEnvironmentCubemap = ofGetFrameNum() + 1;
 }
 
 void Scene3D::drawReflectiveSphere(const glm::vec3 &cameraPosition) {
